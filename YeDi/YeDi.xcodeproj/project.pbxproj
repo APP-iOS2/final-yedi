@@ -14,6 +14,9 @@
 		3B8BCA9C2AC142170006C79F /* BoardBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCA9B2AC142170006C79F /* BoardBubble.swift */; };
 		3B8BCA9E2AC145480006C79F /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCA9D2AC145480006C79F /* MessageType.swift */; };
 		3B8BCAA22AC156090006C79F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B8BCAA12AC156090006C79F /* GoogleService-Info.plist */; };
+		1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067162AC150D60028A660 /* DmDesignerModels.swift */; };
+		1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067182AC151A80028A660 /* DMAsyncImage.swift */; };
+		639DB6262AC10DD0002692E5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 639DB6252AC10DD0002692E5 /* GoogleService-Info.plist */; };
 		639DB6332AC10E44002692E5 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 639DB6322AC10E44002692E5 /* FirebaseAppCheck */; };
 		639DB6352AC10E44002692E5 /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 639DB6342AC10E44002692E5 /* FirebaseAppDistribution-Beta */; };
 		639DB6372AC10E44002692E5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 639DB6362AC10E44002692E5 /* FirebaseAuth */; };
@@ -63,6 +66,9 @@
 		3B8BCA9B2AC142170006C79F /* BoardBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardBubble.swift; sourceTree = "<group>"; };
 		3B8BCA9D2AC145480006C79F /* MessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
 		3B8BCAA12AC156090006C79F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1D9067162AC150D60028A660 /* DmDesignerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmDesignerModels.swift; sourceTree = "<group>"; };
+		1D9067182AC151A80028A660 /* DMAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMAsyncImage.swift; sourceTree = "<group>"; };
+		639DB6252AC10DD0002692E5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		639DB6602AC10F13002692E5 /* DesignerMainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignerMainTabView.swift; sourceTree = "<group>"; };
 		639DB6682AC10F7E002692E5 /* ClientMainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientMainTabView.swift; sourceTree = "<group>"; };
 		639DB66F2AC119FE002692E5 /* CMHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHomeView.swift; sourceTree = "<group>"; };
@@ -164,6 +170,7 @@
 				639DB6642AC10F27002692E5 /* ViewModel */,
 				639DB6622AC10F19002692E5 /* View */,
 				639DB6602AC10F13002692E5 /* DesignerMainTabView.swift */,
+				63CD89B02ABD85C300E70A56 /* YeDiApp.swift */,
 			);
 			path = Designer;
 			sourceTree = "<group>";
@@ -183,6 +190,7 @@
 		639DB6632AC10F1E002692E5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1D9067162AC150D60028A660 /* DmDesignerModels.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -190,6 +198,7 @@
 		639DB6642AC10F27002692E5 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				1D9067182AC151A80028A660 /* DMAsyncImage.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -330,7 +339,6 @@
 				3B8BCAA12AC156090006C79F /* GoogleService-Info.plist */,
 				639DB6272AC10DE3002692E5 /* Client */,
 				639DB6282AC10DED002692E5 /* Designer */,
-				63CD89B02ABD85C300E70A56 /* YeDiApp.swift */,
 				63CD89B22ABD85C300E70A56 /* ContentView.swift */,
 				63CD89B42ABD85C500E70A56 /* Assets.xcassets */,
 				63CD89B62ABD85C500E70A56 /* Preview Content */,
@@ -461,10 +469,12 @@
 				639DB67A2AC11AC2002692E5 /* DMReviewView.swift in Sources */,
 				639DB6762AC11A52002692E5 /* CMMainChattingView.swift in Sources */,
 				3B8BCA9C2AC142170006C79F /* BoardBubble.swift in Sources */,
+				1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */,
 				63CD89B32ABD85C300E70A56 /* ContentView.swift in Sources */,
 				63CD89B12ABD85C300E70A56 /* YeDiApp.swift in Sources */,
 				639DB6612AC10F13002692E5 /* DesignerMainTabView.swift in Sources */,
 				639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */,
+				1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
