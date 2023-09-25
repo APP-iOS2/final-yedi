@@ -13,22 +13,20 @@ class UserAuth: ObservableObject {
 }
 
 struct ContentView: View {
-    
-    //@EnvironmentObject var userAuth: UserAuth
-    
-    @State private var isClientLogin: Bool = false
-    @State private var isDesignerLogin: Bool = false
-    
+
+    @ObservedObject var chattingViewModel: ChattingViewModel = ChattingViewModel()
     var body: some View {
-        VStack{
-            if isClientLogin {
-                ClientMainTabView()
-            } else if isDesignerLogin {
-                DesignerMainTabView()
-            } else {
-                TempSelectionView(client: $isClientLogin, designer: $isDesignerLogin)
-                    .environmentObject(UserAuth())
-            }
+        VStack {
+            Image(systemName: "globe")
+                .imageScale(.large)
+                .foregroundStyle(.tint)
+            Text("Hello, world!")
+            
+            Button(action: {
+                chattingViewModel.setDataStructure()
+            }, label: {
+                Text("파베 구조체 만들기")
+            })
         }
     }
 }
