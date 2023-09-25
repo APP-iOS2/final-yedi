@@ -14,6 +14,10 @@
 		638C1BAD2AC169050088E63F /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C1BA82AC169050088E63F /* MessageType.swift */; };
 		638C1BAE2AC169050088E63F /* TextBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C1BA92AC169050088E63F /* TextBubble.swift */; };
 		639DB6262AC10DD0002692E5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 639DB6252AC10DD0002692E5 /* GoogleService-Info.plist */; };
+		3B8BCAAF2AC16D280006C79F /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCAAE2AC16D280006C79F /* ImageViewModel.swift */; };
+		3B8BCAB32AC16DEB0006C79F /* SelectImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCAB22AC16DEB0006C79F /* SelectImageView.swift */; };
+		3B8BCAB72AC1707A0006C79F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B8BCAB62AC1707A0006C79F /* GoogleService-Info.plist */; };
+		3B8BCAB92AC172160006C79F /* ChatUtilityMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCAB82AC172160006C79F /* ChatUtilityMenuView.swift */; };
 		639DB6332AC10E44002692E5 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 639DB6322AC10E44002692E5 /* FirebaseAppCheck */; };
 		639DB6352AC10E44002692E5 /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 639DB6342AC10E44002692E5 /* FirebaseAppDistribution-Beta */; };
 		639DB6372AC10E44002692E5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 639DB6362AC10E44002692E5 /* FirebaseAuth */; };
@@ -63,6 +67,10 @@
 		638C1BA82AC169050088E63F /* MessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
 		638C1BA92AC169050088E63F /* TextBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextBubble.swift; sourceTree = "<group>"; };
 		639DB6252AC10DD0002692E5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3B8BCAAE2AC16D280006C79F /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageViewModel.swift; path = YeDi/Shared/ViewModel/ImageViewModel.swift; sourceTree = SOURCE_ROOT; };
+		3B8BCAB22AC16DEB0006C79F /* SelectImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectImageView.swift; path = YeDi/Shared/View/SelectImageView.swift; sourceTree = SOURCE_ROOT; };
+		3B8BCAB62AC1707A0006C79F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3B8BCAB82AC172160006C79F /* ChatUtilityMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUtilityMenuView.swift; sourceTree = "<group>"; };
 		639DB6602AC10F13002692E5 /* DesignerMainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignerMainTabView.swift; sourceTree = "<group>"; };
 		639DB6682AC10F7E002692E5 /* ClientMainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientMainTabView.swift; sourceTree = "<group>"; };
 		639DB66F2AC119FE002692E5 /* CMHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHomeView.swift; sourceTree = "<group>"; };
@@ -141,6 +149,8 @@
 		638C1BA02AC164530088E63F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3B8BCAB22AC16DEB0006C79F /* SelectImageView.swift */,
+				3B8BCAB82AC172160006C79F /* ChatUtilityMenuView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -157,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				638C1BA32AC168FD0088E63F /* ChattingViewModel.swift */,
+				3B8BCAAE2AC16D280006C79F /* ImageViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -231,7 +242,6 @@
 		639DB6672AC10F4C002692E5 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				3B8BCA932AC1408B0006C79F /* ChattingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -321,7 +331,6 @@
 			children = (
 				63CD89AF2ABD85C300E70A56 /* YeDi */,
 				63CD89AE2ABD85C300E70A56 /* Products */,
-				3B8BCAA32AC16BCD0006C79F /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -336,6 +345,7 @@
 		63CD89AF2ABD85C300E70A56 /* YeDi */ = {
 			isa = PBXGroup;
 			children = (
+				3B8BCAB62AC1707A0006C79F /* GoogleService-Info.plist */,
 				638C1B9F2AC163520088E63F /* Shared */,
 				639DB6272AC10DE3002692E5 /* Client */,
 				639DB6282AC10DED002692E5 /* Designer */,
@@ -443,7 +453,7 @@
 			files = (
 				63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */,
 				63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */,
-				3B8BCAA22AC156090006C79F /* GoogleService-Info.plist in Resources */,
+				3B8BCAB72AC1707A0006C79F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,18 +469,21 @@
 				639DB6722AC11A3A002692E5 /* CMFilterView.swift in Sources */,
 				639DB6692AC10F7E002692E5 /* ClientMainTabView.swift in Sources */,
 				638C1BAC2AC169050088E63F /* ImageBubble.swift in Sources */,
+				3B8BCAAF2AC16D280006C79F /* ImageViewModel.swift in Sources */,
+				639DB6722AC11A3A002692E5 /* CMFilterView.swift in Sources */,
+				639DB6692AC10F7E002692E5 /* ClientMainTabView.swift in Sources */,
 				639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */,
 				638C1BAD2AC169050088E63F /* MessageType.swift in Sources */,
 				639DB6872AC11B56002692E5 /* DMPostView.swift in Sources */,
-				3B8BCA982AC141F90006C79F /* TextBubble.swift in Sources */,
 				639DB6742AC11A46002692E5 /* CMReservationView.swift in Sources */,
 				638C1BAA2AC169050088E63F /* ChatRoom.swift in Sources */,
 				639DB6842AC11B3B002692E5 /* DMReservationView.swift in Sources */,
 				639DB6782AC11A5D002692E5 /* CMProfileView.swift in Sources */,
 				639DB6702AC119FE002692E5 /* CMHomeView.swift in Sources */,
+				3B8BCAB92AC172160006C79F /* ChatUtilityMenuView.swift in Sources */,
 				639DB67A2AC11AC2002692E5 /* DMReviewView.swift in Sources */,
 				639DB6762AC11A52002692E5 /* CMMainChattingView.swift in Sources */,
-				3B8BCA9C2AC142170006C79F /* BoardBubble.swift in Sources */,
+				3B8BCAB32AC16DEB0006C79F /* SelectImageView.swift in Sources */,
 				63CD89B32ABD85C300E70A56 /* ContentView.swift in Sources */,
 				63CD89B12ABD85C300E70A56 /* YeDiApp.swift in Sources */,
 				638C1BAB2AC169050088E63F /* BoardBubble.swift in Sources */,
