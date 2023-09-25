@@ -13,7 +13,7 @@ class UserAuth: ObservableObject {
 }
 
 struct ContentView: View {
-    
+
     //@EnvironmentObject var userAuth: UserAuth
     
     @State private var isClientLogin: Bool = false
