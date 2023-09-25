@@ -14,19 +14,21 @@ class UserAuth: ObservableObject {
 
 struct ContentView: View {
 
-    @ObservedObject var chattingViewModel: ChattingViewModel = ChattingViewModel()
+    //@EnvironmentObject var userAuth: UserAuth
+    
+    @State private var isClientLogin: Bool = false
+    @State private var isDesignerLogin: Bool = false
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-            
-            Button(action: {
-                chattingViewModel.setDataStructure()
-            }, label: {
-                Text("파베 구조체 만들기")
-            })
+        VStack{
+            if isClientLogin {
+                ClientMainTabView()
+            } else if isDesignerLogin {
+                DesignerMainTabView()
+            } else {
+                TempSelectionView(client: $isClientLogin, designer: $isDesignerLogin)
+                    .environmentObject(UserAuth())
+            }
         }
     }
 }
