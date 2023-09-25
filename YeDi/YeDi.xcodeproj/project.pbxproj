@@ -284,6 +284,7 @@
 		639DB6672AC10F4C002692E5 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				3B8BCA932AC1408B0006C79F /* ChattingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -521,6 +522,7 @@
 				DC2921982AC267A5001FEDFD /* BoardBubbleCell.swift in Sources */,
 				638C1BAD2AC169050088E63F /* MessageType.swift in Sources */,
 				639DB6872AC11B56002692E5 /* DMPostView.swift in Sources */,
+				3B8BCA982AC141F90006C79F /* TextBubble.swift in Sources */,
 				639DB6742AC11A46002692E5 /* CMReservationView.swift in Sources */,
 				638C1BAA2AC169050088E63F /* ChatRoom.swift in Sources */,
 				639DB6842AC11B3B002692E5 /* DMReservationView.swift in Sources */,
