@@ -12,6 +12,7 @@ struct CMFeedDetailView: View {
         GeometryReader { proxy in
             let safeArea = proxy.safeAreaInsets
             let size = proxy.size
+            
             CMFeedDetailContentView(safeArea: safeArea, size: size)
                 .ignoresSafeArea(.container, edges: .top)
         }

@@ -16,16 +16,14 @@ struct CMFeedDetailContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             ScrollView(.vertical, showsIndicators: true) {
-                VStack(alignment: .leading, spacing: 0) {
-                    imageTabView()
-                    feedInfoView()
-                    designerProfileView()
-                }
-                .overlay(alignment: .top) {
-                    headerView()
-                }
+                imageTabView()
+                feedInfoView()
+                designerProfileView()
             }
             .coordinateSpace(name: "SCROLL")
+            .overlay(alignment: .top) {
+                headerView()
+            }
             
             footerView()
         }
@@ -37,7 +35,7 @@ struct CMFeedDetailContentView: View {
     }
     
     // 불투명 반환타입이기 때문에 코드가 하나의 컨텍스트로 되어있지 않으면 @ViewBuilder를 명시해주어야 한다.
-    func headerView() -> some View {
+    private func headerView() -> some View {
         GeometryReader { proxy in
             let minY = proxy.frame(in: .named("SCORLL")).minY
             HStack {
@@ -67,7 +65,7 @@ struct CMFeedDetailContentView: View {
     }
     
     @ViewBuilder
-    func imageTabView() -> some View {
+    private func imageTabView() -> some View {
         let height = size.height * 0.4
         GeometryReader { proxy in
             let size = proxy.size
@@ -75,7 +73,6 @@ struct CMFeedDetailContentView: View {
             
             TabView {
                 ForEach(images, id: \.self) { imageString in
-                    
                     AsyncImage(url: URL(string: imageString)) { image in
                         image
                             .resizable()
@@ -110,36 +107,37 @@ struct CMFeedDetailContentView: View {
         .frame(height: height + safeArea.top)
     }
     
-    @ViewBuilder
-    func feedInfoView() -> some View {
-        HStack {
-            ForEach(0...1, id: \.self) { index in
-                Text("#레이어드")
-                    .font(.caption)
-                    .fontWeight(.bold)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(Color(UIColor(red: 0, green: 0, blue: 1, alpha: 0.45)))
-                    .clipShape(RoundedRectangle(cornerRadius:5))
-                    .foregroundStyle(.white)
+    private func feedInfoView() -> some View {
+        VStack(alignment: .leading) {
+            HStack {
+                ForEach(0...1, id: \.self) { _ in
+                    Text("#레이어드")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(Color(UIColor(red: 0, green: 0, blue: 1, alpha: 0.45)))
+                        .clipShape(RoundedRectangle(cornerRadius:5))
+                        .foregroundStyle(.white)
+                }
             }
+            .padding([.leading, .top])
+            .padding(.bottom, 8)
+            
+            Text("무겁게 축 쳐지는 머리 ➡️ 가벼운 허쉬 레이어드")
+                .padding(.horizontal)
+            
+            Divider()
+                .frame(height: 7)
+                .background(.gray)
+                .padding(.top)
+                .padding(.bottom, 10)
+            
+            //TODO: 이거도 팔고 있어요 View
         }
-        .padding([.leading, .top])
-        .padding(.bottom, 8)
-        
-        Text("무겁게 축 쳐지는 머리 ➡️ 가벼운 허쉬 레이어드")
-            .padding(.horizontal)
-        
-        Divider()
-            .frame(height: 7)
-            .background(.gray)
-            .padding(.top)
-            .padding(.bottom, 10)
-        
-        //TODO: 이거도 팔고 있어요 View
     }
     
-    func designerProfileView() -> some View {
+    private func designerProfileView() -> some View {
         HStack(alignment: .center) {
             AsyncImage(url: URL(string: images[0])) { image in
                 image
@@ -180,7 +178,7 @@ struct CMFeedDetailContentView: View {
         .padding(.horizontal)
     }
     
-    func footerView() -> some View {
+    private func footerView() -> some View {
         VStack(spacing: 0) {
             Divider()
             
