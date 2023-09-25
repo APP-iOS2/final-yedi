@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		094759802AC1656C0066484F /* CMHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0947597F2AC1656C0066484F /* CMHomeCell.swift */; };
 		2FFE87272AC12C3600A7A728 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FFE87262AC12C3600A7A728 /* GoogleService-Info.plist */; };
 		2FFE87292AC12C4D00A7A728 /* CMSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE87282AC12C4D00A7A728 /* CMSearchView.swift */; };
 		2FFE872B2AC1462B00A7A728 /* CMSearchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE872A2AC1462B00A7A728 /* CMSearchHistoryView.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0947597F2AC1656C0066484F /* CMHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHomeCell.swift; sourceTree = "<group>"; };
 		2FFE87262AC12C3600A7A728 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2FFE87282AC12C4D00A7A728 /* CMSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSearchView.swift; sourceTree = "<group>"; };
 		2FFE872A2AC1462B00A7A728 /* CMSearchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSearchHistoryView.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				639DB66F2AC119FE002692E5 /* CMHomeView.swift */,
+				0947597F2AC1656C0066484F /* CMHomeCell.swift */,
 				2FFE87282AC12C4D00A7A728 /* CMSearchView.swift */,
 				2FFE872A2AC1462B00A7A728 /* CMSearchHistoryView.swift */,
 				2FFE872C2AC1464100A7A728 /* CMSearchResultView.swift */,
@@ -418,6 +421,7 @@
 				2FFE87292AC12C4D00A7A728 /* CMSearchView.swift in Sources */,
 				63CD89B32ABD85C300E70A56 /* ContentView.swift in Sources */,
 				63CD89B12ABD85C300E70A56 /* YeDiApp.swift in Sources */,
+				094759802AC1656C0066484F /* CMHomeCell.swift in Sources */,
 				639DB6612AC10F13002692E5 /* DesignerMainTabView.swift in Sources */,
 				639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */,
 				2FFE872D2AC1464100A7A728 /* CMSearchResultView.swift in Sources */,

@@ -8,8 +8,43 @@
 import SwiftUI
 
 struct CMHomeView: View {
+    var regions = ["서울", "경기", "인천"]
+    @State private var selectedRegion = ""
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            HStack {
+                Picker("Choose a color", selection: $selectedRegion) {
+                    ForEach(regions, id: \.self) {
+                        Text($0)
+                    }
+                }
+                .pickerStyle(.menu)
+                .font(.largeTitle)
+                Spacer()
+            }
+            .padding(.horizontal)
+            ScrollView {
+                LazyVStack(content: {
+                    ForEach(1...10, id: \.self) { count in
+                        CMHomeCell()
+                    }
+                })
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Text("YeDi")
+                        .font(.title)
+                        .fontWeight(.bold)
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.black)
+                    })
+                }
+            }
+        }
     }
 }
 
