@@ -10,7 +10,7 @@ import Firebase
 import FirebaseCore
 import FirebaseFirestore
 
-class TempChatbubbleStore: ObservableObject {
+class ChattingViewModel: ObservableObject {
     
     let dbRef = Firestore.firestore().collection("") //채팅방 모음이 있는 파이어스토어 데이터베이스 이름
     @Published var userEmail: String = "None"
