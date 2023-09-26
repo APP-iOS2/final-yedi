@@ -33,7 +33,7 @@ struct CMSegmentedControl: View {
             
             switch selectedSegment {
             case "찜한 게시물":
-                CMLikeListView()
+                CMLikePostListView()
             case "팔로잉":
                 CMFollowingListView()
             case "리뷰":
