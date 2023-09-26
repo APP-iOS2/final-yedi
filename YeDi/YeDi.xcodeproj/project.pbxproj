@@ -13,6 +13,9 @@
 		1D90671F2AC17DA10028A660 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D90671E2AC17DA10028A660 /* GoogleService-Info.plist */; };
 		1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067202AC1F61D0028A660 /* DMGridView.swift */; };
 		1D9067232AC1F62D0028A660 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067222AC1F62D0028A660 /* PostDetailView.swift */; };
+		1DADB83B2AC25E2B0021748D /* SharedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DADB83A2AC25E2B0021748D /* SharedViewModel.swift */; };
+		1DADB83D2AC25E3A0021748D /* SharedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DADB83C2AC25E3A0021748D /* SharedModel.swift */; };
+		1DADB83F2AC25E470021748D /* SharedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DADB83E2AC25E470021748D /* SharedView.swift */; };
 		3B8BCA942AC1408B0006C79F /* ChattingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCA932AC1408B0006C79F /* ChattingViewModel.swift */; };
 		3B8BCA962AC1419C0006C79F /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCA952AC1419C0006C79F /* ChatRoom.swift */; };
 		3B8BCA982AC141F90006C79F /* TextBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCA972AC141F90006C79F /* TextBubble.swift */; };
@@ -67,6 +70,9 @@
 		1D90671E2AC17DA10028A660 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1D9067202AC1F61D0028A660 /* DMGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMGridView.swift; sourceTree = "<group>"; };
 		1D9067222AC1F62D0028A660 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
+		1DADB83A2AC25E2B0021748D /* SharedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SharedViewModel.swift; path = YeDi/Designer/View/DMPostView/SharedViewModel.swift; sourceTree = SOURCE_ROOT; };
+		1DADB83C2AC25E3A0021748D /* SharedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SharedModel.swift; path = YeDi/Designer/View/DMPostView/SharedModel.swift; sourceTree = SOURCE_ROOT; };
+		1DADB83E2AC25E470021748D /* SharedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SharedView.swift; path = YeDi/Designer/View/DMPostView/SharedView.swift; sourceTree = SOURCE_ROOT; };
 		3B8BCA932AC1408B0006C79F /* ChattingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewModel.swift; sourceTree = "<group>"; };
 		3B8BCA952AC1419C0006C79F /* ChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		3B8BCA972AC141F90006C79F /* TextBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBubble.swift; sourceTree = "<group>"; };
@@ -126,6 +132,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1DADB8402AC25E820021748D /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Shared;
+			path = Shared/Shared;
+			sourceTree = "<group>";
+		};
 		638C1B9F2AC163520088E63F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +153,7 @@
 		638C1BA02AC164530088E63F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1DADB83E2AC25E470021748D /* SharedView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -146,6 +161,7 @@
 		638C1BA12AC164590088E63F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1DADB83C2AC25E3A0021748D /* SharedModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -153,6 +169,7 @@
 		638C1BA22AC164620088E63F /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				1DADB83A2AC25E2B0021748D /* SharedViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -344,6 +361,7 @@
 			children = (
 				1D90671E2AC17DA10028A660 /* GoogleService-Info.plist */,
 				638C1B9F2AC163520088E63F /* Shared */,
+				1DADB8402AC25E820021748D /* Shared */,
 				639DB6272AC10DE3002692E5 /* Client */,
 				639DB6282AC10DED002692E5 /* Designer */,
 				63CD89B22ABD85C300E70A56 /* ContentView.swift */,
@@ -465,15 +483,18 @@
 				639DB6692AC10F7E002692E5 /* ClientMainTabView.swift in Sources */,
 				3B8BCA9E2AC145480006C79F /* MessageType.swift in Sources */,
 				3B8BCA9A2AC142040006C79F /* ImageBubble.swift in Sources */,
+				1DADB83B2AC25E2B0021748D /* SharedViewModel.swift in Sources */,
 				639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */,
 				639DB6872AC11B56002692E5 /* DMPostView.swift in Sources */,
 				3B8BCA982AC141F90006C79F /* TextBubble.swift in Sources */,
+				1DADB83F2AC25E470021748D /* SharedView.swift in Sources */,
 				639DB6742AC11A46002692E5 /* CMReservationView.swift in Sources */,
 				3B8BCA962AC1419C0006C79F /* ChatRoom.swift in Sources */,
 				639DB6842AC11B3B002692E5 /* DMReservationView.swift in Sources */,
 				639DB6782AC11A5D002692E5 /* CMProfileView.swift in Sources */,
 				639DB6702AC119FE002692E5 /* CMHomeView.swift in Sources */,
 				1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */,
+				1DADB83D2AC25E3A0021748D /* SharedModel.swift in Sources */,
 				639DB67A2AC11AC2002692E5 /* DMReviewView.swift in Sources */,
 				639DB6762AC11A52002692E5 /* CMMainChattingView.swift in Sources */,
 				3B8BCA9C2AC142170006C79F /* BoardBubble.swift in Sources */,

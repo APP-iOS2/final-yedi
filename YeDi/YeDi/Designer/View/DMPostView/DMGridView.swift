@@ -20,53 +20,67 @@ struct DMGridView: View {
     ]
     
     
-    // 그리드 레이아웃
-    let columns = [
+    // 그리드 레이아웃 설정
+    let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)
     ]
     
-    // 이미지 크기
+    // 썸네일 이미지 크기
     let imageSize: CGFloat = 174
     
-    // 메인 뷰
     var body: some View {
         NavigationView {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(samplePosts, id: \.id) { post in
-                        NavigationLink(destination: DMPostView(selectedPost: post)) {
-                            PostThumbnail(post: post, imageSize: imageSize)
-                        }
-                    }
-                }
-                .padding()
-            }
-            .background(Color.gray.opacity(0.1))
-            .navigationTitle("내 게시물")
+            GridContentView(posts: samplePosts, columns: columns, imageSize: imageSize)
+                .background(Color.gray.opacity(0.1))
+                .navigationTitle("내 게시물")
         }
     }
 }
 
-// 게시물 썸네일 컴포넌트
+struct GridContentView: View {
+    // 게시물, 그리드 설정, 이미지 크기 정보
+    let posts: [Post]
+    let columns: [GridItem]
+    let imageSize: CGFloat
+    
+    var body: some View {
+        ScrollView {
+            // 게시물을 그리드 형태로 표시
+            LazyVGrid(columns: columns, spacing: 16) {
+                ForEach(posts, id: \.id) { post in
+                    // 각 게시물을 선택하면 DMPostView로 이동
+                    NavigationLink(destination: DMPostView(selectedPost: post)) {
+                        // 썸네일 표시
+                        PostThumbnail(post: post, imageSize: imageSize)
+                    }
+                }
+            }
+            .padding()
+        }
+    }
+}
+
 struct PostThumbnail: View {
+    // 게시물과 이미지 크기 정보
     let post: Post
     let imageSize: CGFloat
     
     var body: some View {
+        // 썸네일과 제목을 세로로 배치
         VStack(alignment: .center, spacing: 8) {
-            // 이미지
+            // 비동기 이미지 로딩
             AsyncImage(url: post.photos.first?.imageURL ?? "")
                 .scaledToFill()
                 .frame(width: imageSize, height: imageSize)
                 .cornerRadius(12)
                 .clipped()
-            // 이미지 스타일링
-            .background(Color.white)
-            .cornerRadius(16)
-            .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 5)
+                // 배경 및 그림자 설정
+                .background(Color.white)
+                .cornerRadius(16)
+                .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 5)
             
-            // 제목
+            // 게시물 제목
             Text(post.title)
                 .font(.caption)
                 .foregroundColor(.black)
