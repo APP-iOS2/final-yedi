@@ -73,9 +73,7 @@ struct CMFeedDetailContentView: View {
             
             TabView {
                 ForEach(images, id: \.self) { imageString in
-                    AsyncImage(url: URL(string: imageString)) { image in
-                        image
-                            .resizable()
+                    AsyncImage(url: imageString)
                             .aspectRatio(contentMode: .fill)
                             .frame(width: size.width, height: size.height + (minY > 0 ? minY : 0))
                             .clipped()
@@ -89,9 +87,6 @@ struct CMFeedDetailContentView: View {
                                 .zIndex(1),
                                 alignment: .top
                             )
-                    } placeholder: {
-                        ProgressView()
-                    }
                     .onTapGesture {
                         withAnimation(.default) {
                             // TODO: 선택한 이미지 배열에
@@ -139,15 +134,10 @@ struct CMFeedDetailContentView: View {
     
     private func designerProfileView() -> some View {
         HStack(alignment: .center) {
-            AsyncImage(url: URL(string: images[0])) { image in
-                image
-                    .resizable()
+            AsyncImage(url: images[0])
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: 50)
                     .clipShape(Circle())
-            } placeholder: {
-                ProgressView()
-            }
             
             VStack(alignment: .leading) {
                 Text("elwkdlsj_dkdlel")
