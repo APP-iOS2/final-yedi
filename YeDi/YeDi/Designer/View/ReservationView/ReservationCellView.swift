@@ -16,6 +16,7 @@ struct ReservationCellView: View {
                 RoundedRectangle(cornerRadius: 5)
                     .frame(width: 300, height: 100)
                     .foregroundColor(.gray)
+                    .shadow(radius: 4)
                 
                 HStack {
                     VStack(alignment: .leading) {

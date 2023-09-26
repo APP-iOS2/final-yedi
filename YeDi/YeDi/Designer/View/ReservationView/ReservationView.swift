@@ -10,7 +10,8 @@ import SwiftUI
 struct ReservationView: View {
     
     @State var isClicked: Bool = false
-    let times: [String] = ["10:00", ""]
+    let times: [String] = ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00"]
+    
     var body: some View {
         NavigationStack {
             HStack {
@@ -75,28 +76,30 @@ struct ReservationView: View {
             }
             .padding(.horizontal)
             .padding(.bottom, 20)
+            
             HStack {
                 ScrollView {
                     HStack {
                         VStack {
-                            ForEach(0..<10, id: \.self) { index  in
+                            ForEach(times, id: \.self) { time  in
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 5)
                                         .frame(width: .infinity, height: 100)
-                                        .foregroundColor(.gray)
+                                        .foregroundColor(.clear)
                                     
                                     HStack {
                                         VStack {
-                                            VStack(alignment: .leading) {
-                                                Text("10:00")
+                                            HStack(alignment: .top ) {
+                                                Text("\(time)")
                                             }
                                         }
                                     }
                                 }
                             }
                         }
+                        
                         VStack {
-                            ForEach(0..<10, id: \.self) { index  in
+                            ForEach(0..<15, id: \.self) { index  in
                                 ReservationCellView()
                             }
                         }
