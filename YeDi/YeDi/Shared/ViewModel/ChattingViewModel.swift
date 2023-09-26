@@ -12,9 +12,9 @@ import FirebaseFirestore
 
 class TempChatbubbleStore: ObservableObject {
     
-    let dbRef = Firestore.firestore().collection("") //채팅방 모음이 있는 파이어스토어 데이터베이스 이름
+    //let dbRef = Firestore.firestore().collection("") //채팅방 모음이 있는 파이어스토어 데이터베이스 이름
     @Published var userEmail: String = "None"
-    @Published var chats: [Any] = []
+    @Published var chattings: [CommonBubble] = []
     
     var ref: DatabaseReference! = Database.database().reference()
     var chatRoomID: String //채팅방의 키값이 전달되어야 함
@@ -29,27 +29,56 @@ class TempChatbubbleStore: ObservableObject {
         self.userEmail = Auth.auth().currentUser?.email ?? "nil@gmail.com"
     }
     
-    func loadAndUpdateChatting() {
-        
-        let chatbubbleRef = ref
-                .child("chatRooms")
-                .child(chatRoomID)
-                .child("chatBubbles") //채팅방 경로 (Firebae Realtime Database)
-                .queryOrdered(byChild: "date") //date 프로퍼티로 정렬
-        
-        chatbubbleRef.observe(.value) { snapshot in
-            
-            guard let value = snapshot.value as? [String: [String: Any]] else {
-                print("Error: Unable to parse snapshot data")
-                return
-            }
-            
-            var tempBubbles = self.decodeToBubble(snapshotValue: value)
-            
-            DispatchQueue.main.async {
-                self.chats = tempBubbles
+    func fetchChattingBubble(chatRomsId: String) {
+            self.ref.child("chatRooms").child(chatRomsId).child("chatBubbles").observe(.value) { snapshot  in
+                guard let chatData = snapshot.value as? [String : Any] else {
+                      print("Error reading data")
+                      return
+                }
+                var bubbles: [CommonBubble] = []
+                
+                for (key, value) in chatData {
+                    do {
+                        var value = value as! [String : Any]
+                        value["id"] = key
+                        
+                        let jsonData = try JSONSerialization.data(withJSONObject: value)
+                    
+                        let bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
+                        bubbles.append(bubble)
+                    } catch {
+                        print("Error decoding bubble data")
+                    }
+                }
+                bubbles.sort(by: {$0.date < $1.date})
+                self.chattings = bubbles
             }
         }
+    
+    func loadAndUpdateChatting() {
+//
+//        let chatbubbleRef = ref
+//            .child("chatRooms")
+//            .child(chatRoomID)
+//            .child("chatBubbles") //채팅방 경로 (Firebae Realtime Database)
+//            .queryOrdered(byChild: "date") //date 프로퍼티로 정렬
+//
+//        chatbubbleRef.observe(.value) { snapshot in
+//
+//            guard let value = snapshot.value as? [String: [String: Any]] else {
+//                print("Error: Unable to parse snapshot data")
+//                return
+//            }
+//
+//            var tempBubbles = self.decodeToBubble(snapshotValue: value)
+//
+//            DispatchQueue.main.async { // UI 업데이트는 메인 스레드에서 실행되어야 합니다.
+//                self.chats = tempBubbles
+//                //print("==========chats")
+//                //print(self.chats)
+//            }
+//
+//        }
     }
     
     func sendBoardBubble(content: String, imagePath: String, sender: String) {
@@ -113,7 +142,7 @@ class TempChatbubbleStore: ObservableObject {
             else {
                 return nil // 필수 필드가 없는 경우는 무시
             }
-            
+            print("MT is : \(messageType)")
             switch messageType {
             case MessageType.boardBubble.rawValue:
                 guard
