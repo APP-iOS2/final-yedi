@@ -4,7 +4,6 @@
 //
 //  Created by yunjikim on 2023/09/25.
 //
-
 import SwiftUI
 
 extension View {
