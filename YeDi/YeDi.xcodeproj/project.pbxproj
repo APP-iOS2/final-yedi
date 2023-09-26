@@ -59,6 +59,10 @@
 		63CD89B32ABD85C300E70A56 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CD89B22ABD85C300E70A56 /* ContentView.swift */; };
 		63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63CD89B42ABD85C500E70A56 /* Assets.xcassets */; };
 		63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63CD89B72ABD85C500E70A56 /* Preview Assets.xcassets */; };
+		DC2921972AC267A5001FEDFD /* ChatRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2921942AC267A4001FEDFD /* ChatRoomView.swift */; };
+		DC2921982AC267A5001FEDFD /* BoardBubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2921952AC267A4001FEDFD /* BoardBubbleCell.swift */; };
+		DC2921992AC267A5001FEDFD /* ImageBubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2921962AC267A5001FEDFD /* ImageBubbleCell.swift */; };
+		DC29219E2AC267C3001FEDFD /* ChatBubbleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29219D2AC267C3001FEDFD /* ChatBubbleModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +96,10 @@
 		63CD89B22ABD85C300E70A56 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		63CD89B42ABD85C500E70A56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63CD89B72ABD85C500E70A56 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DC2921942AC267A4001FEDFD /* ChatRoomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomView.swift; sourceTree = "<group>"; };
+		DC2921952AC267A4001FEDFD /* BoardBubbleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardBubbleCell.swift; sourceTree = "<group>"; };
+		DC2921962AC267A5001FEDFD /* ImageBubbleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageBubbleCell.swift; sourceTree = "<group>"; };
+		DC29219D2AC267C3001FEDFD /* ChatBubbleModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatBubbleModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,7 +182,7 @@
 		638C1BA02AC164530088E63F /* View */ = {
 			isa = PBXGroup;
 			children = (
-				3B696FAE2AC27763000EE92E /* Chatting */,
+				DC2921932AC26773001FEDFD /* Chatting */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -388,6 +396,25 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		DC2921932AC26773001FEDFD /* Chatting */ = {
+			isa = PBXGroup;
+			children = (
+				DC29219C2AC267BA001FEDFD /* Modifier */,
+				DC2921952AC267A4001FEDFD /* BoardBubbleCell.swift */,
+				DC2921942AC267A4001FEDFD /* ChatRoomView.swift */,
+				DC2921962AC267A5001FEDFD /* ImageBubbleCell.swift */,
+			);
+			path = Chatting;
+			sourceTree = "<group>";
+		};
+		DC29219C2AC267BA001FEDFD /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				DC29219D2AC267C3001FEDFD /* ChatBubbleModifier.swift */,
+			);
+			path = Modifier;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -495,14 +522,17 @@
 				639DB6692AC10F7E002692E5 /* ClientMainTabView.swift in Sources */,
 				638C1BAC2AC169050088E63F /* ImageBubble.swift in Sources */,
 				639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */,
+				DC2921982AC267A5001FEDFD /* BoardBubbleCell.swift in Sources */,
 				638C1BAD2AC169050088E63F /* MessageType.swift in Sources */,
 				639DB6872AC11B56002692E5 /* DMPostView.swift in Sources */,
 				639DB6742AC11A46002692E5 /* CMReservationView.swift in Sources */,
 				638C1BAA2AC169050088E63F /* ChatRoom.swift in Sources */,
 				639DB6842AC11B3B002692E5 /* DMReservationView.swift in Sources */,
+				DC2921972AC267A5001FEDFD /* ChatRoomView.swift in Sources */,
 				639DB6782AC11A5D002692E5 /* CMProfileView.swift in Sources */,
 				3B696FBB2AC27763000EE92E /* ImageBubbleCell.swift in Sources */,
 				3B696FB82AC27763000EE92E /* BoardBubbleCell.swift in Sources */,
+				DC29219E2AC267C3001FEDFD /* ChatBubbleModifier.swift in Sources */,
 				639DB6702AC119FE002692E5 /* CMHomeView.swift in Sources */,
 				639DB67A2AC11AC2002692E5 /* DMReviewView.swift in Sources */,
 				639DB6762AC11A52002692E5 /* CMMainChattingView.swift in Sources */,
@@ -512,6 +542,7 @@
 				63CD89B12ABD85C300E70A56 /* YeDiApp.swift in Sources */,
 				638C1BAB2AC169050088E63F /* BoardBubble.swift in Sources */,
 				639DB6612AC10F13002692E5 /* DesignerMainTabView.swift in Sources */,
+				DC2921992AC267A5001FEDFD /* ImageBubbleCell.swift in Sources */,
 				639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
