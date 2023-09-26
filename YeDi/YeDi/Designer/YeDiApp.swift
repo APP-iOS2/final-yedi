@@ -19,10 +19,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct YeDiApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject var userAuth = UserAuth()
     
     var body: some Scene {
         WindowGroup {
-            DesignerMainTabView()
+            ContentView()
+                .environmentObject(userAuth)
         }
     }
 }

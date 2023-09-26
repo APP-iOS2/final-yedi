@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DMPostView: View {
     let selectedPost: Post  // 선택된 게시글
+    @State private var selectedTab = 0  // 현재 선택된 탭 페이지
 
     var body: some View {
         // 스크롤뷰 추가
@@ -32,21 +33,42 @@ struct DMPostView: View {
                     Spacer()
                 }
                 .padding(.horizontal)
+                
                 // 게시글 사진
-                ForEach(selectedPost.photos, id: \.id) { photo in
-                    AsyncImage(url: photo.imageURL)
-                        .scaledToFill()
-                        .frame(height: 300)
-                        .clipped()
-                        .cornerRadius(10)
-                        .padding(.bottom, 8)
+                TabView(selection: $selectedTab) {
+                    ForEach(Array(selectedPost.photos.enumerated()), id: \.element.id) { index, photo in
+                        AsyncImage(url: photo.imageURL)
+                            .aspectRatio(contentMode: .fill)
+                            .frame(height: 350)
+                            .clipped()
+                            .tag(index)
+                    }
                 }
+                .frame(height: 300)
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: selectedPost.photos.count > 1 ? .automatic : .never))
+
+
+//                // 커스텀 페이지 인디케이터
+//                if selectedPost.photos.count > 1 {
+//                    HStack {
+//                        Spacer()
+//                        ForEach(0..<selectedPost.photos.count, id: \.self) { index in
+//                            Circle()
+//                                .frame(width: index == selectedTab ? 12 : 8, height: index == selectedTab ? 12 : 8)
+//                                .foregroundColor(index == selectedTab ? Color.blue : Color.gray.opacity(0.5))
+//                        }
+//                        Spacer()
+//                    }
+//                    .padding(.vertical, 8)
+//                }
+                
                 // 게시글 설명
                 if let description = selectedPost.description {
                     Text(description)
                         .foregroundColor(Color.black)
                         .padding(.horizontal)
                 }
+                
                 // 게시 시간
                 Text(selectedPost.timestamp)
                     .font(.caption)
