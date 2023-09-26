@@ -8,26 +8,14 @@
 import SwiftUI
 
 struct ChatRoomView: View {
-    private var name: String = "김윤지"
+    @ObservedObject var temp = TempChatbubbleStore(chatRoomID: "C314A8A6-A495-4023-882B-07D2902917C0")
+    
+    private var name: String = "customerUser1"
     @State private var inputText: String = ""
     
     private var isInputTextEmpty: Bool {
         inputText.isEmpty ? true : false
     }
-    
-    var sampleChattingList: ChatRoom = ChatRoom(
-        textBubbles: [
-            TextBubble(content: "안녕하세요.", date: "2023.01.01", sender: "김윤지"),
-            TextBubble(content: "안녕하세요. 상대방이 보낸 텍스트 버블 테스트입니다. 텍스트 버블 테스트입니다.", date: "2023.01.01", sender: "디자이너 수"),
-        ],
-        imageBubbles: [
-            ImageBubble(imagePath: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2370&q=80", date: "2023.01.02", sender: "김윤지"),
-            ImageBubble(imagePath: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2487&q=80", date: "2023.01.02", sender: "디자이너 수")
-        ],
-        boardBubbles: [
-            BoardBubble(content: "게시물 버블 테스트", imagePath: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2487&q=80", date: "2023.01.04", sender: "김윤지")
-        ]
-    )
     
     var body: some View {
         VStack(spacing: 0) {
@@ -36,11 +24,14 @@ struct ChatRoomView: View {
         }
         .navigationTitle("디자이너 수")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear{
+            temp.fetchChattingBubble(chatRomsId: "C314A8A6-A495-4023-882B-07D2902917C0")
+        }
     }
     
     private var chatScroll: some View {
         ScrollView {
-            ForEach(sampleChattingList.boardBubbles!, id: \.sender) { chat in
+            ForEach(temp.chattings) { chat in
                 var isMyChat: Bool {
                     chat.sender == name ? true : false
                 }
@@ -64,12 +55,16 @@ struct ChatRoomView: View {
                             }
                         }
                         
-//                        Text("\(chat.content)")
-//                            .chatBubbleModifier(isMyChat)
-                        
-//                        ImageBubbleCell(imageBubble: chat)
-                        
-                        BoardBubbleCell(boardBubble: chat, isMyChat: isMyChat)
+                        if chat.messageType == MessageType.textBubble {
+                            Text(chat.content ?? "")
+                                .chatBubbleModifier(isMyChat)
+                        }
+                        if chat.messageType == MessageType.imageBubble {
+                            ImageBubbleCell(imagePath: chat.imagePath ?? "")
+                        }
+                        if chat.messageType == MessageType.boardBubble {
+                            BoardBubbleCell(boardBubble: chat, isMyChat: isMyChat)
+                        }
                     }
                     
                     isMyChat ? nil: Spacer()
@@ -99,7 +94,6 @@ struct ChatRoomView: View {
             
             Button(action: {
                 if !isInputTextEmpty {
-                    let newTextBubble = TextBubble(content: inputText, date: Date().description, sender: name)
                     inputText = ""
                 }
             }, label: {
