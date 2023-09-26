@@ -210,7 +210,6 @@
 			isa = PBXGroup;
 			children = (
 				638C1BA32AC168FD0088E63F /* ChattingViewModel.swift */,
-				3B8BCAAE2AC16D280006C79F /* ImageViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -518,7 +517,6 @@
 				639DB6722AC11A3A002692E5 /* CMFilterView.swift in Sources */,
 				639DB6692AC10F7E002692E5 /* ClientMainTabView.swift in Sources */,
 				638C1BAC2AC169050088E63F /* ImageBubble.swift in Sources */,
-				3B8BCAAF2AC16D280006C79F /* ImageViewModel.swift in Sources */,
 				639DB6722AC11A3A002692E5 /* CMFilterView.swift in Sources */,
 				639DB6692AC10F7E002692E5 /* ClientMainTabView.swift in Sources */,
 				639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */,
