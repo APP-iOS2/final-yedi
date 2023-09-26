@@ -16,6 +16,12 @@
 		1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90671C2AC176020028A660 /* DMPostViewModel.swift */; };
 		1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067202AC1F61D0028A660 /* DMGridView.swift */; };
 		1D9067232AC1F62D0028A660 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067222AC1F62D0028A660 /* PostDetailView.swift */; };
+		094759842AC16D440066484F /* CMReservationHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094759832AC16D440066484F /* CMReservationHistoryView.swift */; };
+		094759862AC16EF00066484F /* CMReservationHistoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094759852AC16EF00066484F /* CMReservationHistoryDetailView.swift */; };
+		094759882AC262710066484F /* CMUpcomingReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094759872AC262710066484F /* CMUpcomingReservationView.swift */; };
+		0947598A2AC262900066484F /* CMLastReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094759892AC262900066484F /* CMLastReservationView.swift */; };
+		0947598C2AC2671A0066484F /* CMReservationCancelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0947598B2AC2671A0066484F /* CMReservationCancelView.swift */; };
+		2FFE87272AC12C3600A7A728 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FFE87262AC12C3600A7A728 /* GoogleService-Info.plist */; };
 		2FFE87292AC12C4D00A7A728 /* CMSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE87282AC12C4D00A7A728 /* CMSearchView.swift */; };
 		2FFE872B2AC1462B00A7A728 /* CMSearchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE872A2AC1462B00A7A728 /* CMSearchHistoryView.swift */; };
 		2FFE872D2AC1464100A7A728 /* CMSearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE872C2AC1464100A7A728 /* CMSearchResultView.swift */; };
@@ -85,6 +91,12 @@
 		1D90671C2AC176020028A660 /* DMPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostViewModel.swift; sourceTree = "<group>"; };
 		1D9067202AC1F61D0028A660 /* DMGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMGridView.swift; sourceTree = "<group>"; };
 		1D9067222AC1F62D0028A660 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
+		094759832AC16D440066484F /* CMReservationHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReservationHistoryView.swift; sourceTree = "<group>"; };
+		094759852AC16EF00066484F /* CMReservationHistoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReservationHistoryDetailView.swift; sourceTree = "<group>"; };
+		094759872AC262710066484F /* CMUpcomingReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMUpcomingReservationView.swift; sourceTree = "<group>"; };
+		094759892AC262900066484F /* CMLastReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLastReservationView.swift; sourceTree = "<group>"; };
+		0947598B2AC2671A0066484F /* CMReservationCancelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReservationCancelView.swift; sourceTree = "<group>"; };
+		2FFE87262AC12C3600A7A728 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2FFE87282AC12C4D00A7A728 /* CMSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSearchView.swift; sourceTree = "<group>"; };
 		2FFE872A2AC1462B00A7A728 /* CMSearchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSearchHistoryView.swift; sourceTree = "<group>"; };
 		2FFE872C2AC1464100A7A728 /* CMSearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSearchResultView.swift; sourceTree = "<group>"; };
@@ -301,6 +313,11 @@
 			isa = PBXGroup;
 			children = (
 				639DB6732AC11A46002692E5 /* CMReservationView.swift */,
+				094759832AC16D440066484F /* CMReservationHistoryView.swift */,
+				094759872AC262710066484F /* CMUpcomingReservationView.swift */,
+				094759892AC262900066484F /* CMLastReservationView.swift */,
+				094759852AC16EF00066484F /* CMReservationHistoryDetailView.swift */,
+				0947598B2AC2671A0066484F /* CMReservationCancelView.swift */,
 			);
 			path = CMReservation;
 			sourceTree = "<group>";
@@ -527,6 +544,11 @@
 				639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */,
 				639DB6872AC11B56002692E5 /* DMPostView.swift in Sources */,
 				3B8BCA982AC141F90006C79F /* TextBubble.swift in Sources */,
+				094759842AC16D440066484F /* CMReservationHistoryView.swift in Sources */,
+				0947598C2AC2671A0066484F /* CMReservationCancelView.swift in Sources */,
+				639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */,
+				639DB6872AC11B56002692E5 /* DMPostView.swift in Sources */,
+				094759882AC262710066484F /* CMUpcomingReservationView.swift in Sources */,
 				639DB6742AC11A46002692E5 /* CMReservationView.swift in Sources */,
 				3B8BCA962AC1419C0006C79F /* ChatRoom.swift in Sources */,
 				2FFE87312AC171FF00A7A728 /* CMNotificationView.swift in Sources */,
@@ -551,10 +573,12 @@
 				639DB6612AC10F13002692E5 /* DesignerMainTabView.swift in Sources */,
 				1D9067232AC1F62D0028A660 /* PostDetailView.swift in Sources */,
 				1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */,
+				094759862AC16EF00066484F /* CMReservationHistoryDetailView.swift in Sources */,
 				639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */,
 				1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */,
 				2FFE87372AC17D2A00A7A728 /* CMReviewListView.swift in Sources */,
 				2FFE872D2AC1464100A7A728 /* CMSearchResultView.swift in Sources */,
+				0947598A2AC262900066484F /* CMLastReservationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
