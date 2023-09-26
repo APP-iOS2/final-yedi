@@ -388,7 +388,7 @@
 		63CD89AF2ABD85C300E70A56 /* YeDi */ = {
 			isa = PBXGroup;
 			children = (
-				3B1D7BE72AC2646E00F02E4C /* GoogleService-Info.plist */,
+				3B696FA92AC273A6000EE92E /* GoogleService-Info.plist */,
 				638C1B9F2AC163520088E63F /* Shared */,
 				639DB6272AC10DE3002692E5 /* Client */,
 				639DB6282AC10DED002692E5 /* Designer */,
@@ -496,7 +496,7 @@
 			files = (
 				63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */,
 				63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */,
-				3B1D7BE82AC2646F00F02E4C /* GoogleService-Info.plist in Resources */,
+				3B696FAA2AC273A6000EE92E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,7 +507,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B696F9E2AC26A5B000EE92E /* ChatUtilityMenuView.swift in Sources */,
 				638C1BAE2AC169050088E63F /* TextBubble.swift in Sources */,
 				638C1BA42AC168FD0088E63F /* ChattingViewModel.swift in Sources */,
 				3B696FB72AC27763000EE92E /* ChatBubbleModifier.swift in Sources */,
@@ -519,7 +518,6 @@
 				639DB6692AC10F7E002692E5 /* ClientMainTabView.swift in Sources */,
 				638C1BAC2AC169050088E63F /* ImageBubble.swift in Sources */,
 				639DB6722AC11A3A002692E5 /* CMFilterView.swift in Sources */,
-				3B696F9A2AC26A5B000EE92E /* SelectImageView.swift in Sources */,
 				639DB6692AC10F7E002692E5 /* ClientMainTabView.swift in Sources */,
 				639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */,
 				DC2921982AC267A5001FEDFD /* BoardBubbleCell.swift in Sources */,
