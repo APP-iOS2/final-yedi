@@ -507,6 +507,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B696F9E2AC26A5B000EE92E /* ChatUtilityMenuView.swift in Sources */,
 				638C1BAE2AC169050088E63F /* TextBubble.swift in Sources */,
 				638C1BA42AC168FD0088E63F /* ChattingViewModel.swift in Sources */,
 				3B696FB72AC27763000EE92E /* ChatBubbleModifier.swift in Sources */,
@@ -518,6 +519,7 @@
 				639DB6692AC10F7E002692E5 /* ClientMainTabView.swift in Sources */,
 				638C1BAC2AC169050088E63F /* ImageBubble.swift in Sources */,
 				639DB6722AC11A3A002692E5 /* CMFilterView.swift in Sources */,
+				3B696F9A2AC26A5B000EE92E /* SelectImageView.swift in Sources */,
 				639DB6692AC10F7E002692E5 /* ClientMainTabView.swift in Sources */,
 				639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */,
 				DC2921982AC267A5001FEDFD /* BoardBubbleCell.swift in Sources */,
