@@ -132,14 +132,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1DADB8402AC25E820021748D /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Shared;
-			path = Shared/Shared;
-			sourceTree = "<group>";
-		};
 		638C1B9F2AC163520088E63F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,7 +353,6 @@
 			children = (
 				1D90671E2AC17DA10028A660 /* GoogleService-Info.plist */,
 				638C1B9F2AC163520088E63F /* Shared */,
-				1DADB8402AC25E820021748D /* Shared */,
 				639DB6272AC10DE3002692E5 /* Client */,
 				639DB6282AC10DED002692E5 /* Designer */,
 				63CD89B22ABD85C300E70A56 /* ContentView.swift */,
