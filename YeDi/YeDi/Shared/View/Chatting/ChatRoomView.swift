@@ -12,6 +12,9 @@ struct ChatRoomView: View {
     
     private var name: String = "customerUser1"
     @State private var inputText: String = ""
+    @State private var isShowingUtilityMenu: Bool = false
+    
+    @State private var offset: CGFloat = .zero
     
     private var isInputTextEmpty: Bool {
         inputText.isEmpty ? true : false
@@ -20,6 +23,9 @@ struct ChatRoomView: View {
     var body: some View {
         VStack(spacing: 0) {
             chatScroll
+            if isShowingUtilityMenu {
+                ChatUtilityMenuView()
+            }
             inputchatTextField
         }
         .navigationTitle("디자이너 수")
@@ -55,14 +61,13 @@ struct ChatRoomView: View {
                             }
                         }
                         
-                        if chat.messageType == MessageType.textBubble {
+                        switch chat.messageType {
+                        case .textBubble:
                             Text(chat.content ?? "")
                                 .chatBubbleModifier(isMyChat)
-                        }
-                        if chat.messageType == MessageType.imageBubble {
+                        case .imageBubble:
                             ImageBubbleCell(imagePath: chat.imagePath ?? "")
-                        }
-                        if chat.messageType == MessageType.boardBubble {
+                        case .boardBubble:
                             BoardBubbleCell(boardBubble: chat, isMyChat: isMyChat)
                         }
                     }
@@ -83,7 +88,9 @@ struct ChatRoomView: View {
     private var inputchatTextField: some View {
         HStack {
             Button(action: {
-                // action...
+                withAnimation {
+                    isShowingUtilityMenu.toggle()
+                }
             }, label: {
                 Image(systemName: "plus")
                     .foregroundColor(.gray)

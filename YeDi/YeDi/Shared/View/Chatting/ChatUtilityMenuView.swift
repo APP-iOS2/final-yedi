@@ -41,10 +41,7 @@ struct ChatUtilityMenuView: View {
             Spacer()
         }
         .padding()
-        .background(content: {
-            Rectangle()
-                .stroke()
-        })
+        .background(.gray.opacity(0.4))
         //MARK: 색상 변경시 여기 수정
         .foregroundStyle(.primary)
         .frame(minWidth: 0, maxWidth: .infinity)
