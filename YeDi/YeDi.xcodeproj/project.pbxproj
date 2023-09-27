@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3BBE0F902AC2842B00F8D704 /* ChatUtilityMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE0F8F2AC2842B00F8D704 /* ChatUtilityMenuView.swift */; };
+		3BBE0F9A2AC2CC3B00F8D704 /* ChattingListRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE0F992AC2CC3B00F8D704 /* ChattingListRoomViewModel.swift */; };
+		3BBE0F9C2AC2CC4A00F8D704 /* ChattingListRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE0F9B2AC2CC4A00F8D704 /* ChattingListRoomView.swift */; };
 		638C1BA42AC168FD0088E63F /* ChattingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C1BA32AC168FD0088E63F /* ChattingViewModel.swift */; };
 		638C1BAA2AC169050088E63F /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C1BA52AC169050088E63F /* ChatRoom.swift */; };
 		638C1BAB2AC169050088E63F /* BoardBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C1BA62AC169050088E63F /* BoardBubble.swift */; };
@@ -63,6 +65,8 @@
 
 /* Begin PBXFileReference section */
 		3BBE0F8F2AC2842B00F8D704 /* ChatUtilityMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUtilityMenuView.swift; sourceTree = "<group>"; };
+		3BBE0F992AC2CC3B00F8D704 /* ChattingListRoomViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingListRoomViewModel.swift; sourceTree = "<group>"; };
+		3BBE0F9B2AC2CC4A00F8D704 /* ChattingListRoomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingListRoomView.swift; sourceTree = "<group>"; };
 		638C1BA32AC168FD0088E63F /* ChattingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewModel.swift; sourceTree = "<group>"; };
 		638C1BA52AC169050088E63F /* ChatRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		638C1BA62AC169050088E63F /* BoardBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardBubble.swift; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 		638C1BA22AC164620088E63F /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				3BBE0F992AC2CC3B00F8D704 /* ChattingListRoomViewModel.swift */,
 				638C1BA32AC168FD0088E63F /* ChattingViewModel.swift */,
 			);
 			path = ViewModel;
@@ -376,6 +381,7 @@
 				DC2921962AC267A5001FEDFD /* ImageBubbleCell.swift */,
 				DC2921952AC267A4001FEDFD /* BoardBubbleCell.swift */,
 				3BBE0F8F2AC2842B00F8D704 /* ChatUtilityMenuView.swift */,
+				3BBE0F9B2AC2CC4A00F8D704 /* ChattingListRoomView.swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -490,6 +496,7 @@
 				638C1BAE2AC169050088E63F /* TextBubble.swift in Sources */,
 				638C1BA42AC168FD0088E63F /* ChattingViewModel.swift in Sources */,
 				639DB6722AC11A3A002692E5 /* CMFilterView.swift in Sources */,
+				3BBE0F9C2AC2CC4A00F8D704 /* ChattingListRoomView.swift in Sources */,
 				639DB6692AC10F7E002692E5 /* ClientMainTabView.swift in Sources */,
 				638C1BAC2AC169050088E63F /* ImageBubble.swift in Sources */,
 				639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */,
@@ -510,6 +517,7 @@
 				63CD89B32ABD85C300E70A56 /* ContentView.swift in Sources */,
 				63CD89B12ABD85C300E70A56 /* YeDiApp.swift in Sources */,
 				638C1BAB2AC169050088E63F /* BoardBubble.swift in Sources */,
+				3BBE0F9A2AC2CC3B00F8D704 /* ChattingListRoomViewModel.swift in Sources */,
 				639DB6612AC10F13002692E5 /* DesignerMainTabView.swift in Sources */,
 				DC2921992AC267A5001FEDFD /* ImageBubbleCell.swift in Sources */,
 				639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */,
