@@ -39,37 +39,43 @@ struct CMReservationHistoryDetailView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 30) {
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("유매리 디자이너")
-                        .font(.title3)
-                    Text("디자인 컷")
-                        .font(.title)
+                Group {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("유매리 디자이너")
+                            .font(.title3)
+                        Text("디자인 컷")
+                            .font(.title)
+                    }
+                    .fontWeight(.semibold)
+                    
+                    HStack {
+                        Text(formatDate(date: myDate))
+                            .onAppear {
+                                self.myDate = createDate(year: 2023, month: 10, day: 10, hour: 14, minute: 45)
+                            }
+                        Spacer()
+                        Text(reservationStatusText)
+                            .foregroundStyle(.white)
+                            .padding(EdgeInsets(top: 7, leading: 15, bottom: 7, trailing: 15))
+                            .background(
+                                Capsule(style: /*@START_MENU_TOKEN@*/.continuous/*@END_MENU_TOKEN@*/)
+                                    .foregroundColor(.black)
+                            )
+                    }
                 }
-                .fontWeight(.semibold)
-                
-                HStack {
-                    Text(formatDate(date: myDate))
-                        .onAppear {
-                            self.myDate = createDate(year: 2023, month: 10, day: 10, hour: 14, minute: 45)
-                        }
-                    Spacer()
-                    Text(reservationStatusText)
-                        .foregroundStyle(.white)
-                        .padding(5)
-                        .background(
-                            RoundedRectangle(cornerRadius: 5)
-                                .foregroundColor(.black)
-                        )
-                }
+                .offset(y: 50)
             }
-            .padding()
+            .padding(30)
             .background(
-                RoundedRectangle(cornerRadius: 10)
+                RoundedRectangle(cornerRadius: 50)
+                    .frame(height: 300)
                     .foregroundColor(.white)
-                    .shadow(color: .gray, radius: 0, x: 0, y: 5)
+                    .shadow(color: .gray, radius: 5, x: 0, y: 5)
                     .opacity(0.3)
             )
+            .offset(y: -10)
+            
+            Spacer(minLength: 50)
             
             VStack(alignment: .leading) {
                 Text("샵 정보")
@@ -129,6 +135,8 @@ struct CMReservationHistoryDetailView: View {
                 .tint(isUpcomingReservation ? .red : .black)
             }
             .padding()
+            
+            Spacer()
         }
         .sheet(isPresented: $isShowingCancelSheet, content: {
             CMReservationCancelView(isShowingCancelSheet: $isShowingCancelSheet)
