@@ -42,7 +42,7 @@ struct CMHomeCell: View {
                     Image(systemName: "heart")
                         .resizable()
                         .frame(width: 25, height: 25)
-                        .foregroundColor(.black)
+                        .foregroundStyle(.black)
                 })
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                     HStack {

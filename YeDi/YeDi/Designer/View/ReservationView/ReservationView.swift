@@ -45,13 +45,13 @@ struct ReservationView: View {
                                 //오늘 날짜부터 한달 간격으로 보이게 만들 예정
                                 Text("6월20일")
                                     .frame(width: 50, height: 50)
-                                    .foregroundColor(Color.gray)
+                                    .foregroundStyle(Color.gray)
                                     .background(Color.black)
                                     .cornerRadius(6)
                             } else {
                                 Text("6월20일")
                                     .frame(width: 50, height: 50)
-                                    .foregroundColor(Color.black)
+                                    .foregroundStyle(Color.black)
                                     .background(Color.gray)
                                     .cornerRadius(6)
                             }
@@ -68,7 +68,7 @@ struct ReservationView: View {
                 }
                 Text("영업시작")
                     .font(.caption)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
                 VStack {
                     Divider().padding(.trailing)
                 }
@@ -83,7 +83,7 @@ struct ReservationView: View {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 5)
                                         .frame(width: .infinity, height: 100)
-                                        .foregroundColor(.gray)
+                                        .foregroundStyle(.gray)
                                     
                                     HStack {
                                         VStack {

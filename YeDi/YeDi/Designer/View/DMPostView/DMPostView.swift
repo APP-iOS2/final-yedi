@@ -22,12 +22,12 @@ struct DMPostView: View {
                         NavigationLink(destination: DMProfileView()) {
                             Text(selectedPost.designerID)
                                 .font(.headline)
-                                .foregroundColor(Color.black)
+                                .foregroundStyle(Color.black)
                         }
                         NavigationLink(destination: DMProfileView()) {
                             Text("\(selectedPost.location) | \(selectedPost.title)")
                                 .font(.caption)
-                                .foregroundColor(Color.gray)
+                                .foregroundStyle(Color.gray)
                         }
                     }
                     Spacer()
@@ -55,7 +55,7 @@ struct DMPostView: View {
 //                        ForEach(0..<selectedPost.photos.count, id: \.self) { index in
 //                            Circle()
 //                                .frame(width: index == selectedTab ? 12 : 8, height: index == selectedTab ? 12 : 8)
-//                                .foregroundColor(index == selectedTab ? Color.blue : Color.gray.opacity(0.5))
+//                                .foregroundStyle(index == selectedTab ? Color.blue : Color.gray.opacity(0.5))
 //                        }
 //                        Spacer()
 //                    }
@@ -65,14 +65,14 @@ struct DMPostView: View {
                 // 게시글 설명
                 if let description = selectedPost.description {
                     Text(description)
-                        .foregroundColor(Color.black)
+                        .foregroundStyle(Color.black)
                         .padding(.horizontal)
                 }
                 
                 // 게시 시간
                 Text(selectedPost.timestamp)
                     .font(.caption)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
                     .padding(.horizontal)
             }
         }

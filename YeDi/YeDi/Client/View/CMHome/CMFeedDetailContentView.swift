@@ -44,7 +44,7 @@ struct CMFeedDetailContentView: View {
                 } label: {
                     Image(systemName: "chevron.left")
                         .font(.title)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                 }
                 
                 Spacer()
@@ -230,7 +230,7 @@ struct CMFeedDetailContentView: View {
 //                    }
 //                } label: {
 //                    Image(systemName: "xmark")
-//                        .foregroundColor(.white)
+//                        .foregroundStyle(.white)
 //                        .padding()
 //                }
 //                    .padding(.top, safeArea.top)

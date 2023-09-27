@@ -25,15 +25,16 @@ struct DMGridView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             GridContentView(posts: posts, columns: columns, imageSize: imageSize)
                 .background(Color.gray.opacity(0.1))  // 배경색 설정
                 .navigationTitle("내 게시물")  // 네비게이션 타이틀
                 .navigationBarItems(trailing:
-                    NavigationLink(destination: NewPostView()) {  // 새 게시물 버튼
+                    NavigationLink(destination: DMNewPostView()) {  // 새 게시물 버튼
                         Image(systemName: "plus")
                             .resizable()
-                            .frame(width: 24, height: 24)
+                            .foregroundStyle(.black)
+//                            .frame(width: 15, height: 24)
                     }
                 )
                 .onAppear() {  // 뷰가 나타날 때
@@ -112,7 +113,7 @@ struct DMGridView: View {
                 
                 Text(post.title)  // 게시물 제목
                     .font(.caption)
-                    .foregroundColor(.black)
+                    .foregroundStyle(.black)
                     .multilineTextAlignment(.center)
             }
         }
