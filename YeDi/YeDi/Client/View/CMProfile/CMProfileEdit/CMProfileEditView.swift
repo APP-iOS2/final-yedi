@@ -13,12 +13,12 @@ struct CMProfileEditView: View {
     
     @State private var selectedPhoto: PhotosPickerItem? = nil
     
-    @State var clientName: String = "김고객"
-    @State var clientGender: String = "여성"
-    @State var clientBirthDate: String = "2000.07.11."
+    @State private var clientName: String = "김고객"
+    @State private var clientGender: String = "여성"
+    @State private var clientBirthDate: String = "2000.07.11."
     
-    @State var accountEmail: String = "yedi1234@gmail.com"
-    @State var accountPhoneNumber: String = "010-1234-5678"
+    @State private var accountEmail: String = "yedi1234@gmail.com"
+    @State private var accountPhoneNumber: String = "010-1234-5678"
     
     var body: some View {
         VStack {

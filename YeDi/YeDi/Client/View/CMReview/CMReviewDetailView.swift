@@ -56,6 +56,7 @@ struct CMReviewDetailView: View {
                 
                 Spacer()
             }
+            .toolbar(.hidden, for: .tabBar)
         }
         
         func formatDate(date: Date) -> String {

@@ -24,8 +24,8 @@ struct CMReservationHistoryDetailView: View {
         return isUpcomingReservation ? "다가오는 예약" : "지난 예약"
     }
     
-    var scheduleOrRiveiw: () -> Void {
-        return isUpcomingReservation ? 
+    var scheduleOrReview: () -> Void {
+        return isUpcomingReservation ?
         { /* 다가오는 예약일 때의 액션 */ } :
         { /* 지난 예약일 때의 액션 */ }
     }
@@ -112,7 +112,7 @@ struct CMReservationHistoryDetailView: View {
             
             HStack {
                 Button(action: {
-                    scheduleOrRiveiw()
+                    scheduleOrReview()
                 },label: {
                     HStack {
                         Spacer()
