@@ -1,40 +1,73 @@
+// DMPostView.swift
+// YeDi
 //
-//  DMPostView.swift
-//  YeDi
-//
-//  Created by 이승준 on 2023/09/25.
+// Created by 이승준 on 2023/09/25.
 //
 
 import SwiftUI
+import FirebaseFirestore
 
+// MARK: - DMPostView
 struct DMPostView: View {
     let selectedPost: Post  // 선택된 게시글
     @State private var selectedTab = 0  // 현재 선택된 탭 페이지
+    @State private var showActionSheet = false  // 액션 시트 표시 여부
+    @State private var showDeleteAlert = false  // 삭제 확인 알림 표시 여부
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>  // 이전 화면으로 돌아가기 위한 변수
 
+    // MARK: - Body
     var body: some View {
         // 스크롤뷰 추가
         ScrollView {
             // 컨텐츠 배치
             VStack(alignment: .leading, spacing: 16) {
-                // 디자이너 정보와 위치
+                // MARK: - 디자이너 정보와 위치
                 HStack {
                     VStack(alignment: .leading) {
                         NavigationLink(destination: DMProfileView()) {
                             Text(selectedPost.designerID)
                                 .font(.headline)
-                                .foregroundStyle(Color.black)
+                                .foregroundColor(Color.black)
                         }
                         NavigationLink(destination: DMProfileView()) {
                             Text("\(selectedPost.location) | \(selectedPost.title)")
                                 .font(.caption)
-                                .foregroundStyle(Color.gray)
+                                .foregroundColor(Color.gray)
                         }
                     }
                     Spacer()
+                    
+                    // 수정, 삭제 메뉴
+                    Button(action: {
+                        showActionSheet = true
+                    }) {
+                        Image(systemName: "ellipsis")
+                            .imageScale(.large)
+                            .foregroundColor(Color.black)
+                    }
+                    .actionSheet(isPresented: $showActionSheet) {
+                        ActionSheet(title: Text("선택"), buttons: [
+                            .default(Text("수정"), action: {
+                                // 수정 로직
+                            }),
+                            .destructive(Text("삭제"), action: {
+                                showDeleteAlert = true
+                            }),
+                            .cancel()
+                        ])
+                    }
                 }
                 .padding(.horizontal)
+                .alert(isPresented: $showDeleteAlert) {
+                    Alert(
+                        title: Text("삭제 확인"),
+                        message: Text("이 게시물을 정말로 삭제하시겠습니까?"),
+                        primaryButton: .default(Text("취소")),
+                        secondaryButton: .destructive(Text("삭제"), action: deletePost)
+                    )
+                }
                 
-                // 게시글 사진
+                // MARK: - 게시글 사진
                 TabView(selection: $selectedTab) {
                     ForEach(Array(selectedPost.photos.enumerated()), id: \.element.id) { index, photo in
                         AsyncImage(url: photo.imageURL)
@@ -46,37 +79,40 @@ struct DMPostView: View {
                 }
                 .frame(height: 300)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: selectedPost.photos.count > 1 ? .automatic : .never))
-
-
-//                // 커스텀 페이지 인디케이터
-//                if selectedPost.photos.count > 1 {
-//                    HStack {
-//                        Spacer()
-//                        ForEach(0..<selectedPost.photos.count, id: \.self) { index in
-//                            Circle()
-//                                .frame(width: index == selectedTab ? 12 : 8, height: index == selectedTab ? 12 : 8)
-//                                .foregroundStyle(index == selectedTab ? Color.blue : Color.gray.opacity(0.5))
-//                        }
-//                        Spacer()
-//                    }
-//                    .padding(.vertical, 8)
-//                }
                 
-                // 게시글 설명
+                // MARK: - 게시글 설명
                 if let description = selectedPost.description {
                     Text(description)
-                        .foregroundStyle(Color.black)
+                        .foregroundColor(Color.black)
                         .padding(.horizontal)
                 }
                 
-                // 게시 시간
+                // MARK: - 게시 시간
                 Text(selectedPost.timestamp)
                     .font(.caption)
-                    .foregroundStyle(.gray)
+                    .foregroundColor(Color.gray)
                     .padding(.horizontal)
             }
         }
         .navigationBarTitle("", displayMode: .inline)
+    }
+
+    // MARK: - Helper Functions
+    private func deletePost() {
+        guard let postId = selectedPost.id else { return }
+        
+        let db = Firestore.firestore()
+        db.collection("posts").document(postId).delete() { error in
+            if let error = error {
+                print("Error removing document: \(error)")
+            } else {
+                print("Document successfully removed!")
+                // 삭제 완료 알림
+                DispatchQueue.main.async {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
+        }
     }
 }
 
