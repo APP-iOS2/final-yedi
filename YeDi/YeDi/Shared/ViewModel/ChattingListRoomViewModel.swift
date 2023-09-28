@@ -52,16 +52,15 @@ final class ChattingListRoomViewModel: ObservableObject {
     }
     
     /// 채팅방의 메세지 내역을 가지고오는 메소드
+    /// - 채팅방에서 가장 최근 메세지 한 개만 조회
     private final func fetchChattingBubble(chatRooms id: String) {
-        let query = self.realTimeService.child("chatRoomsTest").child("044C0F3A-6C93-4B96-8066-FE61B7716E07").child("chatBubbles").queryOrdered(byChild: "date").queryLimited(toLast: 1)
+        let query = self.realTimeService.child("chatRooms").child(id).child("chatBubbles").queryOrdered(byChild: "date").queryLimited(toLast: 1)
         query.observe(.value) { snapshot  in
-            print(snapshot.value)
             var bubbles: [CommonBubble] = []
             guard let chatData = snapshot.value as? [String : Any] else {
                   debugPrint("Error bubble reading data")
                   return
             }
-//            debugPrint(chatData)
             for (key, value) in chatData {
                 do {
                     var value = value as! [String : Any]
