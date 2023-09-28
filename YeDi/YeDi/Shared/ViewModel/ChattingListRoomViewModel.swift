@@ -12,7 +12,7 @@ import Firebase
 final class ChattingListRoomViewModel: ObservableObject {
     @Published var chattingRooms: [ChatRoom] = []
     let realTimeService = Database.database().reference()
-
+    let storeService = Firestore.firestore()
     /// 채팅리스트 및 채팅방 메세지를 가지고오는 메소드
     func fetchChattingList() {
         // MARK: 로그인 구현시 사용할 메소드
@@ -20,27 +20,48 @@ final class ChattingListRoomViewModel: ObservableObject {
         //     return
         // }
         
-        // MARK: 채팅방 임시 ID
-        let tempChatRoomId = "C314A8A6-A495-4023-882B-07D2902917C0"
+        // MARK: 유저ID 임시값
+        let userId = "CR3Ld8rMseTsgBkz2VgH3YTRmeI2"
+        fetchChattingRoomIdList(user: userId)
         
-        fetchChattingBubble(chatRooms: tempChatRoomId)
     }
     
     /// 로그인한 User토큰으로 UserUID를 가지고오는 메소드
     /// - returns: userUID
-    private func fetchUserUID() -> String? {
+    private final func fetchUserUID() -> String? {
         return  Auth.auth().currentUser?.uid
     }
     
+    /// 전달된 user UUID 값으로 채팅방 UUID리스트를 추출
+    /// - 유저 Document의 이벤트 리스너가 채팅방 리스트가 추가 될 때마다 채팅방 정보를 갱신
+    private final func fetchChattingRoomIdList(user uid: String) {
+        storeService.collection("chattingUserTest").whereField("userId", isEqualTo: uid)
+            .addSnapshotListener { querySnapshot, error in
+                guard let documents = querySnapshot?.documents else {
+                    debugPrint("Error fetching chatting List id: \(error!)")
+                    return
+                }
+                let chattingList = documents.flatMap({ document in
+                    document["chattingList"] as? [String] ?? []
+                })
+                
+                for chatRoomId in chattingList {
+                    self.fetchChattingBubble(chatRooms: chatRoomId)
+                }
+            }
+    }
+    
     /// 채팅방의 메세지 내역을 가지고오는 메소드
-    private func fetchChattingBubble(chatRooms id: String) {
-        self.realTimeService.child("chatRooms").child(id).child("chatBubbles").observe(.value) { snapshot  in
+    private final func fetchChattingBubble(chatRooms id: String) {
+        let query = self.realTimeService.child("chatRoomsTest").child("044C0F3A-6C93-4B96-8066-FE61B7716E07").child("chatBubbles").queryOrdered(byChild: "date").queryLimited(toLast: 1)
+        query.observe(.value) { snapshot  in
+            print(snapshot.value)
             var bubbles: [CommonBubble] = []
             guard let chatData = snapshot.value as? [String : Any] else {
-                  debugPrint("Error reading data")
+                  debugPrint("Error bubble reading data")
                   return
             }
-            
+//            debugPrint(chatData)
             for (key, value) in chatData {
                 do {
                     var value = value as! [String : Any]
@@ -50,7 +71,6 @@ final class ChattingListRoomViewModel: ObservableObject {
                 
                     let bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
                     bubbles.append(bubble)
-                    
                     if let index = self.chattingRooms.firstIndex(where: { $0.id == id}) {
                         self.chattingRooms.remove(at: index)
                     }
@@ -61,8 +81,8 @@ final class ChattingListRoomViewModel: ObservableObject {
                     debugPrint("Error decoding bubble data")
                 }
             }
+            
         }
-    
     }
     
     /// 채팅방의 가장 최근 메세지를 가지고오는 함수

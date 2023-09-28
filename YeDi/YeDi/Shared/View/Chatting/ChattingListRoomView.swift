@@ -12,6 +12,9 @@ struct ChattingListRoomView: View {
     @ObservedObject var chattingListRoomViewModel = ChattingListRoomViewModel()
     var body: some View {
         VStack {
+            Button(action: {chattingListRoomViewModel.fetchChattingList()}, label: {
+                Text("Button")
+            })
             List {
                 ForEach(chattingListRoomViewModel.chattingRooms, id: \.id) { chattingRoom in
                     HStack(alignment: .center) {
