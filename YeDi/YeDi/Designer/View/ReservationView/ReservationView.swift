@@ -10,6 +10,7 @@ import SwiftUI
 struct ReservationView: View {
     
     @State var isClicked: Bool = false
+    @State var isShowing: Bool = false
     let times: [String] = ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00"]
     
     var body: some View {
@@ -100,15 +101,24 @@ struct ReservationView: View {
                         
                         VStack {
                             ForEach(0..<15, id: \.self) { index  in
-                                ReservationCellView()
+                                Button {
+                                    isShowing.toggle()
+                                } label: {
+                                    ReservationCellView()
+                                }
                             }
+                            .sheet(isPresented: $isShowing, content: {
+                                ReservationDetail(isShowing: $isShowing)
+                                    .presentationDetents([.height(630)])
+                            })
+                            
                         }
-                        
                     }
                     .padding(.horizontal)
                 }
                 .scrollIndicators(.hidden)
             }
+            
         }
     }
 }
