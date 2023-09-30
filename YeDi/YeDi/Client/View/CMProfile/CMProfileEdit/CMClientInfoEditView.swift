@@ -86,7 +86,7 @@ struct CMClientInfoEditView: View {
                     
                     isShowingDatePicker.toggle()
                 }, label: {
-                    Text("저장")
+                    Text("선택 완료")
                         .frame(width: 330, height: 30)
                 })
                 .buttonStyle(.borderedProminent)
