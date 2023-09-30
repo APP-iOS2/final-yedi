@@ -30,11 +30,15 @@ class TempChatbubbleStore: ObservableObject {
     }
     
     func fetchChattingBubble(chatRomsId: String) {
-        self.ref.child("chatRooms").child(chatRomsId).child("chatBubbles").observe(.value) { snapshot  in
+        self.ref.child("chatRooms").child(chatRomsId).child("chatBubbles")
+            .queryOrdered(byChild: "date")
+            .observe(.value) { snapshot  in
+                
             guard let chatData = snapshot.value as? [String : Any] else {
                 print("Error reading data")
                 return
             }
+            
             var bubbles: [CommonBubble] = []
             
             for (key, value) in chatData {
@@ -62,8 +66,9 @@ class TempChatbubbleStore: ObservableObject {
             date: "\(Date())",
             sender: sender)
         
-        self.ref.child("chatRooms").child(chatRoomID).child("chatBubbles").child(bubble.id)
+        self.ref.child("chatRooms").child(chatRoomID).child("chatBubbles").child("\(bubble.date + bubble.id)")
             .setValue([
+                "id": bubble.id,
                 "content": bubble.content,
                 "imagePath": bubble.imagePath,
                 "date": bubble.date,
@@ -81,8 +86,9 @@ class TempChatbubbleStore: ObservableObject {
             sender: sender
         )
         
-        self.ref.child("chatRooms").child(chatRoomID).child("chatBubbles").child(bubble.id)
+        self.ref.child("chatRooms").child(chatRoomID).child("chatBubbles").child("\(bubble.date + bubble.id)")
             .setValue([
+                "id": bubble.id,
                 "content": bubble.content,
                 "date": bubble.date,
                 "messageType": bubble.messageType.rawValue,
@@ -99,8 +105,9 @@ class TempChatbubbleStore: ObservableObject {
             sender: sender
         )
         
-        self.ref.child("chatRooms").child(chatRoomID).child("chatBubbles").child(bubble.id)
+        self.ref.child("chatRooms").child(chatRoomID).child("chatBubbles").child("\(bubble.date + bubble.id)")
             .setValue([
+                "id": bubble.id,
                 "imagePath": bubble.imagePath,
                 "date": bubble.date,
                 "messageType": bubble.messageType.rawValue,
