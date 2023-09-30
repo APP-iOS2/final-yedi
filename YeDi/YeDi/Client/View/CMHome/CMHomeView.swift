@@ -8,26 +8,53 @@
 import SwiftUI
 
 struct CMHomeView: View {
+    @ObservedObject var postViewModel = CMPostViewModel()
+    
+    @State var selectedSegment: String = "회원님을 위한 추천"
+    let segments: [String] = ["회원님을 위한 추천", "팔로잉"]
+    
     var regions = ["서울", "경기", "인천"]
     @State private var selectedRegion = ""
     
     var body: some View {
         NavigationStack {
             HStack {
-                Picker("Choose a color", selection: $selectedRegion) {
-                    ForEach(regions, id: \.self) {
-                        Text($0)
-                    }
+                ForEach(segments, id: \.self) { segment in
+                    Button(action: {
+                        selectedSegment = segment
+                    }, label: {
+                        VStack {
+                            Text(segment)
+                                .fontWeight(selectedSegment == segment ? .semibold : .medium)
+                                .foregroundStyle(.black)
+                            Rectangle()
+                                .fill(selectedSegment == segment ? .black : .white)
+                                .frame(width: 180, height: 3)
+                        }
+                    })
                 }
-                .pickerStyle(.menu)
-                .font(.largeTitle)
+            }
+            .padding(.top)
+ 
+            HStack {
+                Menu {
+                    ForEach(regions, id: \.self) { region in
+                        Button(action: { selectedRegion = region },
+                               label: { Text(region)})
+                    }
+                } label: {
+                    Label(selectedRegion.isEmpty ? "위치 선택" : selectedRegion, systemImage: "location")
+                }
+                .font(.title3)
+                .foregroundStyle(.black)
                 Spacer()
             }
-            .padding(.horizontal)
+            .padding()
+            
             ScrollView {
                 LazyVStack(content: {
-                    ForEach(1...10, id: \.self) { count in
-                        CMHomeCell()
+                    ForEach(postViewModel.posts, id: \.id) { post in
+                        CMHomeCell(post: post)
                     }
                 })
             }
@@ -43,6 +70,9 @@ struct CMHomeView: View {
                             .foregroundColor(.black)
                     })
                 }
+            }
+            .onAppear {
+                postViewModel.fetchPosts()
             }
         }
     }
