@@ -14,47 +14,49 @@ class CMPostViewModel: ObservableObject {
     
     let dbRef = Firestore.firestore().collection("posts")
     
-    func fetchPosts() {
-        dbRef.getDocuments { (snapshot, error) in
+    func fetchPosts() async {
+        do {
+            let snapshot = try await dbRef.getDocuments()
             self.posts.removeAll()
             
-            if let snapshot = snapshot {
-                var tempPosts: [Post] = []
+            var tempPosts: [Post] = []
+            
+            for document in snapshot.documents {
+                let id = document.documentID
                 
-                for document in snapshot.documents {
-                    let id = document.documentID
+                if let docData = document.data() as? [String:Any],
+                   let designerID = docData["designerID"] as? String,
+                   let location = docData["location"] as? String,
+                   let title = docData["title"] as? String,
+                   let description = docData["description"] as? String,
+                   let photosDataArray = docData["photos"] as? [[String:Any]] {
+
+                    // photos 필드 처리
+                    var photos: [Photo] = []
                     
-                    if let docData = document.data() as? [String:Any],
-                       let designerID = docData["designerID"] as? String,
-                       let location = docData["location"] as? String,
-                       let title = docData["title"] as? String,
-                       let photosDataArray = docData["photos"] as? [[String:Any]] {
+                    for photoData in photosDataArray {
+                        if let photoID = photoData["id"] as? String,
+                           let imageURLString = photoData["imageURL"] as? String {
 
-                        // photos 필드 처리
-                        var photos: [Photo] = []
-                        
-                        for photoData in photosDataArray {
-                            if let photoID = photoData["id"] as? String,
-                               let imageURLString = photoData["imageURL"] as? String {
-
-                                // Photo 객체 생성 및 배열에 추가
-                                let photo = Photo(id: photoID, imageURL:imageURLString)
-                                photos.append(photo)
-                            }
+                            // Photo 객체 생성 및 배열에 추가
+                            let photo = Photo(id: photoID, imageURL: imageURLString)
+                            photos.append(photo)
                         }
-                        
-                        // Post 객체 생성 및 배열에 추가
-                        let post = Post(id:id, designerID:designerID, location :location, title:title, description:nil, photos :photos , comments :0 , timestamp :"")
-                        
-                        tempPosts.append(post)
                     }
+                    
+                    let post = Post(id: id, designerID: designerID, location: location, title: title, description: description, photos: photos, comments: 0, timestamp: "")
+                    
+                    tempPosts.append(post)
                 }
-                
-                self.posts = tempPosts
-                
             }
+            
+            self.posts = tempPosts
+            
+        } catch {
+            print("Error fetching documents: \(error)")
         }
     }
 }
+
 
 
