@@ -13,7 +13,7 @@ struct CMReviewCreateMainView: View {
     @State private var myDate = Date()
     
     @State private var selectedPhoto: PhotosPickerItem? = nil
-    @State private var selectedPhotos: [String] = []
+    @State private var selectedPhotoData: [Data]? = []
     
     @State private var selectedKeywords: [String] = []
     @State private var designerScore: Int = 0
@@ -52,33 +52,7 @@ struct CMReviewCreateMainView: View {
             
             Spacer(minLength: 55)
             
-            Section {
-                ScrollView(.horizontal) {
-                    PhotosPicker(selection: $selectedPhoto, matching: .images, photoLibrary: .shared()) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(Color(white: 0.9))
-                                .frame(width: 100, height: 100)
-                            VStack(spacing: 10) {
-                                Image(systemName: "plus")
-                                Text("사진 추가")
-                            }
-                            .foregroundStyle(.gray)
-                        }
-                        .padding(EdgeInsets(top: 0, leading: 20, bottom: 40, trailing: 0))
-                    }
-                }
-            } header: {
-                HStack {
-                    Text("시술 사진 추가을 추가해주세요")
-                        .padding(.leading)
-                        .fontWeight(.semibold)
-                    Spacer()
-                }
-                Divider()
-                    .frame(width: 360)
-                    .padding(.bottom, 10)
-            }
+            CMReviewCreatePhotosView(selectedPhoto: $selectedPhoto, selectedPhotoData: $selectedPhotoData)
             
             CMReviewCreateKeywordsView(selectedKeywords: $selectedKeywords)
             
