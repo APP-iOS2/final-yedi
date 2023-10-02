@@ -12,17 +12,15 @@ struct BubbleCell: View {
     var messageType: MessageType
     var isMyBubble: Bool
     
-    // temp properties
-    var isReadBubble: Bool = false
     private var chatDate: String {
-        let formatter = DateFormatter()
-        let date = formatter.date(from: chat.date) ?? Date()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.string(from: date)
+        return getCalendarComponents()
     }
     
+    // temp properties
+    var isReadBubble: Bool = false
+    
     var body: some View {
-        VStack(alignment: isMyBubble ? .trailing : .leading) {
+        VStack(alignment: isMyBubble ? .trailing : .leading, spacing: 0) {
             HStack(alignment: .top) {
                 if !isMyBubble { profileImage }
                 messageBubble
@@ -30,6 +28,7 @@ struct BubbleCell: View {
         }
         .frame(maxWidth: .infinity, alignment: isMyBubble ? .trailing : .leading)
         .padding(.horizontal, 10)
+        .padding(.bottom, 5)
     }
     
     private var profileImage: some View {
@@ -47,15 +46,12 @@ struct BubbleCell: View {
     private var messageBubble: some View {
         HStack(alignment: .bottom) {
             if isMyBubble {
-                if !isReadBubble {
-                    Text("1")
-                        .font(.caption)
-                        .foregroundStyle(.blue)
+                HStack(alignment: .center) {
+                    if !isReadBubble {
+                        readMarkCircle
+                    }
+                    chatDateMark
                 }
-                
-                Text("\(chatDate)")
-                    .font(.caption2)
-                    .foregroundStyle(.gray)
             }
             
             switch chat.messageType {
@@ -69,16 +65,44 @@ struct BubbleCell: View {
             }
             
             if !isMyBubble {
-                Text("\(chatDate)")
-                    .font(.caption2)
-                    .foregroundStyle(.gray)
-                
-                if !isReadBubble {
-                    Text("1")
-                        .font(.caption)
-                        .foregroundStyle(.blue)
+                HStack(alignment: .center) {
+                    chatDateMark
+                    if !isReadBubble {
+                        readMarkCircle
+                    }
                 }
             }
         }
+    }
+    
+    private var chatDateMark: some View {
+        Text("\(chatDate)")
+            .font(.caption2)
+            .foregroundStyle(.gray)
+    }
+    
+    private var readMarkCircle: some View {
+        Circle()
+            .frame(width: 8, height: 8)
+            .foregroundStyle(Color(red: 1, green: 0.19, blue: 0.53))
+    }
+    
+    private func getCalendarComponents() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZ"
+        let date = dateFormatter.date(from: chat.date)!
+        
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        
+        guard let month = components.month,
+           let day = components.day,
+           let hour = components.hour,
+           let minute = components.minute else {
+            return ""
+        }
+        
+        return "\(month)월 \(day)일 \(hour):\(minute)"
     }
 }
