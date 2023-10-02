@@ -63,11 +63,19 @@ enum Rank: String, Codable {
     case Intern
 }
 
-struct Photo: Codable {
-    /// 사진의 고유 ID
+struct Photo: Identifiable, Codable {
     var id: String
-    var imageURL : String
+    var imageURL: String
+    
+    // Firestore에 저장하기 적합한 Dictionary로 변환
+    var dictionary: [String: Any] {
+        return [
+            "id": id,
+            "imageURL": imageURL
+        ]
+    }
 }
+
 
 struct Post: Codable {
     @DocumentID var id: String?  // Firestore 문서 ID

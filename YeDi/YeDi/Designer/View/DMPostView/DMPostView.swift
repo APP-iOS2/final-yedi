@@ -1,3 +1,4 @@
+//
 // DMPostView.swift
 // YeDi
 //
@@ -7,22 +8,29 @@
 import SwiftUI
 import FirebaseFirestore
 
-// MARK: - DMPostView
+// MARK: - DMPostView 구조체
+// 작성자: 박찬호
 struct DMPostView: View {
-    let selectedPost: Post  // 선택된 게시글
-    @State private var selectedTab = 0  // 현재 선택된 탭 페이지
-    @State private var showActionSheet = false  // 액션 시트 표시 여부
-    @State private var showDeleteAlert = false  // 삭제 확인 알림 표시 여부
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>  // 이전 화면으로 돌아가기 위한 변수
+    // 상태 변수 선언
+    @State var selectedPost: Post
+    @State private var selectedTab = 0
+    @State private var showActionSheet = false
+    @State private var showDeleteAlert = false
+    @State private var navigateToEditView = false
+    @State private var shouldRefresh = false
+    @State private var expanded: Bool = false
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
-    // MARK: - Body
+    // MARK: - 본문 (Body)
     var body: some View {
         // 스크롤뷰 추가
         ScrollView {
-            // 컨텐츠 배치
+            // 주요 컨텐츠 배치
             VStack(alignment: .leading, spacing: 16) {
                 // MARK: - 디자이너 정보와 위치
                 HStack {
+                    // 디자이너 정보와 위치
                     VStack(alignment: .leading) {
                         NavigationLink(destination: DMProfileView()) {
                             Text(selectedPost.designerID)
@@ -37,18 +45,22 @@ struct DMPostView: View {
                     }
                     Spacer()
                     
-                    // 수정, 삭제 메뉴
-                    Button(action: {
-                        showActionSheet = true
-                    }) {
-                        Image(systemName: "ellipsis")
-                            .imageScale(.large)
-                            .foregroundColor(Color.black)
+                    // 수정, 삭제 액션 버튼
+                    HStack {
+                        NavigationLink("", destination: DMEditPostView(post: $selectedPost, shouldRefresh: $shouldRefresh), isActive: $navigateToEditView)
+                        Button(action: {
+                            showActionSheet = true
+                        }) {
+                            Image(systemName: "ellipsis")
+                                .imageScale(.large)
+                                .foregroundColor(Color.black)
+                        }
                     }
+                    // 액션 시트
                     .actionSheet(isPresented: $showActionSheet) {
                         ActionSheet(title: Text("선택"), buttons: [
                             .default(Text("수정"), action: {
-                                // 수정 로직
+                                navigateToEditView = true
                             }),
                             .destructive(Text("삭제"), action: {
                                 showDeleteAlert = true
@@ -58,6 +70,7 @@ struct DMPostView: View {
                     }
                 }
                 .padding(.horizontal)
+                // 삭제 확인 알럿
                 .alert(isPresented: $showDeleteAlert) {
                     Alert(
                         title: Text("삭제 확인"),
@@ -82,8 +95,7 @@ struct DMPostView: View {
                 
                 // MARK: - 게시글 설명
                 if let description = selectedPost.description {
-                    Text(description)
-                        .foregroundColor(Color.black)
+                    DMExpandableText(text: description)
                         .padding(.horizontal)
                 }
                 
@@ -93,14 +105,50 @@ struct DMPostView: View {
                     .foregroundColor(Color.gray)
                     .padding(.horizontal)
             }
+            // 새로고침 기능
+            .refreshable {
+                refreshPost()
+            }
         }
         .navigationBarTitle("", displayMode: .inline)
+        .navigationBarItems(trailing: Button(action: refreshPost) {
+            Image(systemName: "arrow.clockwise")  // 새로고침 아이콘
+                .foregroundStyle(Color.black)
+        })
+        .onAppear {
+            if shouldRefresh {
+                refreshPost()
+                shouldRefresh = false
+            }
+        }
     }
 
-    // MARK: - Helper Functions
-    private func deletePost() {
+    // MARK: - 새로고침 함수
+    private func refreshPost() {
+        // 게시글 ID 확인
         guard let postId = selectedPost.id else { return }
         
+        // Firestore에서 게시글 정보 업데이트
+        let db = Firestore.firestore()
+        db.collection("posts").document(postId).getDocument { document, error in
+            if let error = error {
+                print("Error fetching document: \(error)")
+            } else if let document = document, document.exists {
+                if let refreshedPost = try? document.data(as: Post.self) {
+                    self.selectedPost = refreshedPost
+                } else {
+                    print("Error decoding post.")
+                }
+            }
+        }
+    }
+
+    // MARK: - 게시글 삭제 함수
+    private func deletePost() {
+        // 게시글 ID 확인
+        guard let postId = selectedPost.id else { return }
+        
+        // Firestore에서 게시글 삭제
         let db = Firestore.firestore()
         db.collection("posts").document(postId).delete() { error in
             if let error = error {
@@ -116,9 +164,10 @@ struct DMPostView: View {
     }
 }
 
+// MARK: - 미리보기
 struct DMPostView_Previews: PreviewProvider {
     static var previews: some View {
-        let samplePost = Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전")
+        let samplePost = Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1 This is post 1 Thisㅁㅁㅁㅁㅁㅁㅁㅁㄴㄴㅁㅁ", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전")
         
         DMPostView(selectedPost: samplePost)
     }
