@@ -57,12 +57,10 @@ class TempChatbubbleStore: ObservableObject {
             }
             bubbles.sort(by: {$0.date < $1.date})
                 
-            DispatchQueue.main.async {
-                self.chattings = bubbles
-                
-                if let id = bubbles.last?.id {
-                    self.lastBubbleId = id
-                }
+            self.chattings = bubbles
+            
+            if let id = bubbles.last?.id {
+                self.lastBubbleId = id
             }
             
         }
