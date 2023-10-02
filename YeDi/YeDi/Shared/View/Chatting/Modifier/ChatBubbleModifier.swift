@@ -22,7 +22,7 @@ struct ChatBubbleModifier: ViewModifier {
             .foregroundColor(isMyChat ? .white : .black)
             .background {
                 RoundedRectangle(cornerRadius: 15)
-                    .fill(isMyChat ? .blue : .gray.opacity(0.4))
+                    .fill(isMyChat ? .black : Color(red: 0.85, green: 0.85, blue: 0.85))
             }
     }
 }
