@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BoardBubbleCell: View {
     var boardBubble: CommonBubble
-    var isMyChat: Bool
+    var isMyBubble: Bool
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -24,6 +24,6 @@ struct BoardBubbleCell: View {
             
             Text(boardBubble.content ?? "")
         }
-        .chatBubbleModifier(isMyChat)
+        .chatBubbleModifier(isMyBubble)
     }
 }

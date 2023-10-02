@@ -61,6 +61,7 @@
 		DC2921992AC267A5001FEDFD /* ImageBubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2921962AC267A5001FEDFD /* ImageBubbleCell.swift */; };
 		DC29219E2AC267C3001FEDFD /* ChatBubbleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29219D2AC267C3001FEDFD /* ChatBubbleModifier.swift */; };
 		DC2921A22AC2C9C0001FEDFD /* CommonBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2921A12AC2C9C0001FEDFD /* CommonBubble.swift */; };
+		DC2921A42AC8053A001FEDFD /* BubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2921A32AC8053A001FEDFD /* BubbleCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +97,7 @@
 		DC2921962AC267A5001FEDFD /* ImageBubbleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageBubbleCell.swift; sourceTree = "<group>"; };
 		DC29219D2AC267C3001FEDFD /* ChatBubbleModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatBubbleModifier.swift; sourceTree = "<group>"; };
 		DC2921A12AC2C9C0001FEDFD /* CommonBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonBubble.swift; sourceTree = "<group>"; };
+		DC2921A32AC8053A001FEDFD /* BubbleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -386,6 +388,7 @@
 			children = (
 				DC29219C2AC267BA001FEDFD /* Modifier */,
 				DC2921942AC267A4001FEDFD /* ChatRoomView.swift */,
+				DC2921A32AC8053A001FEDFD /* BubbleCell.swift */,
 				DC2921962AC267A5001FEDFD /* ImageBubbleCell.swift */,
 				DC2921952AC267A4001FEDFD /* BoardBubbleCell.swift */,
 				3BBE0F8F2AC2842B00F8D704 /* ChatUtilityMenuView.swift */,
@@ -527,6 +530,7 @@
 				638C1BAB2AC169050088E63F /* BoardBubble.swift in Sources */,
 				3BBE0F9A2AC2CC3B00F8D704 /* ChattingListRoomViewModel.swift in Sources */,
 				639DB6612AC10F13002692E5 /* DesignerMainTabView.swift in Sources */,
+				DC2921A42AC8053A001FEDFD /* BubbleCell.swift in Sources */,
 				DC2921992AC267A5001FEDFD /* ImageBubbleCell.swift in Sources */,
 				639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */,
 			);

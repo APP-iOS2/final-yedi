@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ChatRoomView: View {
+    // temp properties
     @ObservedObject var temp = TempChatbubbleStore(chatRoomID: "C314A8A6-A495-4023-882B-07D2902917C0")
-    
     private var name: String = "customerUser1"
+    
     @State private var inputText: String = ""
     @State private var isShowingUtilityMenu: Bool = false
-    
-    @State private var offset: CGFloat = .zero
     
     private var isInputTextEmpty: Bool {
         inputText.isEmpty ? true : false
@@ -30,59 +30,34 @@ struct ChatRoomView: View {
         }
         .navigationTitle("디자이너 수")
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear{
+        .onAppear {
             temp.fetchChattingBubble(chatRomsId: "C314A8A6-A495-4023-882B-07D2902917C0")
         }
     }
     
     private var chatScroll: some View {
-        ScrollView {
-            ForEach(temp.chattings) { chat in
-                var isMyChat: Bool {
-                    chat.sender == name ? true : false
-                }
-                
-                HStack {
-                    isMyChat ? Spacer() : nil
-                    
-                    HStack(alignment: .top) {
-                        if !isMyChat {
-                            VStack {
-                                AsyncImage(url: URL(string: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2487&q=80")) { image in
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .background(.gray)
-                                        .clipShape(Circle())
-                                        .frame(height: 50)
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                            }
-                        }
-                        
-                        switch chat.messageType {
-                        case .textBubble:
-                            Text(chat.content ?? "")
-                                .chatBubbleModifier(isMyChat)
-                        case .imageBubble:
-                            ImageBubbleCell(imagePath: chat.imagePath ?? "")
-                        case .boardBubble:
-                            BoardBubbleCell(boardBubble: chat, isMyChat: isMyChat)
-                        }
+        ScrollViewReader { proxy in
+            ScrollView {
+                ForEach(temp.chattings) { chat in
+                    var isMyBubble: Bool {
+                        chat.sender == name ? true : false
                     }
-                    
-                    isMyChat ? nil: Spacer()
+                    BubbleCell(chat: chat, messageType: chat.messageType, isMyBubble: isMyBubble)
                 }
-                .padding(.horizontal, 12)
-                .padding(.bottom, 10)
-                .frame(maxWidth: .infinity)
+                .rotationEffect(Angle(degrees: 180))
+                .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
             }
             .rotationEffect(Angle(degrees: 180))
             .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
+            .onReceive(temp.$lastBubbleId) { id in
+                withAnimation {
+                    proxy.scrollTo(id, anchor: .bottom)
+                }
+            }
         }
-        .rotationEffect(Angle(degrees: 180))
-        .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
+        .onTapGesture {
+            hideKeyboard()
+        }
     }
     
     private var inputchatTextField: some View {
@@ -96,21 +71,36 @@ struct ChatRoomView: View {
                     .foregroundColor(.gray)
             })
             
-            TextField("메시지를 입력해주세요.", text: $inputText)
-                .textFieldStyle(.roundedBorder)
-            
-            Button(action: {
-                if !isInputTextEmpty {
-                    inputText = ""
-                }
-            }, label: {
-                Image(systemName: "paperplane.fill")
-                    .foregroundColor(isInputTextEmpty ? .gray : .primary)
-            })
-            .disabled(isInputTextEmpty)
+            HStack {
+                TextField("메시지를 입력해주세요.", text: $inputText, axis: .vertical)
+                
+                Button(action: {
+                    if !isInputTextEmpty {
+                        temp.sendTextBubble(content: inputText, sender: name)
+                        inputText = ""
+                    }
+                }, label: {
+                    Image(systemName: "arrow.up.circle.fill")
+                        .font(.title)
+                        .foregroundColor(isInputTextEmpty ? .gray : .black)
+                })
+                .disabled(isInputTextEmpty)
+            }
+            .padding(.leading)
+            .padding([.trailing, .vertical], 8)
+            .background {
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(.white)
+            }
         }
         .padding()
-        .background(.gray.opacity(0.4))
+        .background(Color(red: 0.85, green: 0.85, blue: 0.85))
+    }
+}
+
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 
