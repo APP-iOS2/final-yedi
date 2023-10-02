@@ -13,6 +13,8 @@
 		094759882AC262710066484F /* CMUpcomingReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094759872AC262710066484F /* CMUpcomingReservationView.swift */; };
 		0947598A2AC262900066484F /* CMLastReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094759892AC262900066484F /* CMLastReservationView.swift */; };
 		0947598C2AC2671A0066484F /* CMReservationCancelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0947598B2AC2671A0066484F /* CMReservationCancelView.swift */; };
+		096BE6D42AC86E30006754CE /* CMRecommendPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BE6D32AC86E30006754CE /* CMRecommendPostView.swift */; };
+		096BE6D82AC86EC0006754CE /* CMFollowingPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BE6D72AC86EC0006754CE /* CMFollowingPostView.swift */; };
 		097320302AC3AFA8004352B1 /* CMPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0973202F2AC3AFA8004352B1 /* CMPostViewModel.swift */; };
 		1D4A9FC72AC26F28006C4937 /* SharedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A9FC22AC26F28006C4937 /* SharedViewModel.swift */; };
 		1D4A9FC82AC26F28006C4937 /* SharedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A9FC42AC26F28006C4937 /* SharedModel.swift */; };
@@ -99,6 +101,8 @@
 		094759872AC262710066484F /* CMUpcomingReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMUpcomingReservationView.swift; sourceTree = "<group>"; };
 		094759892AC262900066484F /* CMLastReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLastReservationView.swift; sourceTree = "<group>"; };
 		0947598B2AC2671A0066484F /* CMReservationCancelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReservationCancelView.swift; sourceTree = "<group>"; };
+		096BE6D32AC86E30006754CE /* CMRecommendPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMRecommendPostView.swift; sourceTree = "<group>"; };
+		096BE6D72AC86EC0006754CE /* CMFollowingPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFollowingPostView.swift; sourceTree = "<group>"; };
 		0973202F2AC3AFA8004352B1 /* CMPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMPostViewModel.swift; sourceTree = "<group>"; };
 		1D4A9FC22AC26F28006C4937 /* SharedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedViewModel.swift; sourceTree = "<group>"; };
 		1D4A9FC42AC26F28006C4937 /* SharedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedModel.swift; sourceTree = "<group>"; };
@@ -340,6 +344,8 @@
 			isa = PBXGroup;
 			children = (
 				639DB66F2AC119FE002692E5 /* CMHomeView.swift */,
+				096BE6D32AC86E30006754CE /* CMRecommendPostView.swift */,
+				096BE6D72AC86EC0006754CE /* CMFollowingPostView.swift */,
 				0947597F2AC1656C0066484F /* CMHomeCell.swift */,
 				2FFE87282AC12C4D00A7A728 /* CMSearchView.swift */,
 				2FFE872A2AC1462B00A7A728 /* CMSearchHistoryView.swift */,
@@ -591,6 +597,7 @@
 				3B8BCA9E2AC145480006C79F /* MessageType.swift in Sources */,
 				3B8BCA9A2AC142040006C79F /* ImageBubble.swift in Sources */,
 				2FFE87352AC17D0D00A7A728 /* CMFollowingListView.swift in Sources */,
+				096BE6D82AC86EC0006754CE /* CMFollowingPostView.swift in Sources */,
 				1D4A9FC72AC26F28006C4937 /* SharedViewModel.swift in Sources */,
 				639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */,
 				2FFA8A132AC3E65900FF933B /* CMReviewCreateKeywordsView.swift in Sources */,
@@ -615,6 +622,7 @@
 				639DB6782AC11A5D002692E5 /* CMProfileView.swift in Sources */,
 				2FFE872B2AC1462B00A7A728 /* CMSearchHistoryView.swift in Sources */,
 				639DB6702AC119FE002692E5 /* CMHomeView.swift in Sources */,
+				096BE6D42AC86E30006754CE /* CMRecommendPostView.swift in Sources */,
 				2FEDDDC32AC2BEC4000CB3B4 /* CMLikePostListView.swift in Sources */,
 				1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */,
 				2FEDDDC62AC2BF04000CB3B4 /* CMProfileEditView.swift in Sources */,
