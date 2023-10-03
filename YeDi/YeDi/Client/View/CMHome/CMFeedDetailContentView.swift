@@ -76,15 +76,15 @@ struct CMFeedDetailContentView: View {
             let minY = proxy.frame(in: .named("SCROLL")).minY
             
             TabView {
-                ForEach(images, id: \.self) { photo in
-                    AsyncImage(url: photo)
+                ForEach(post.photos, id: \.id) { photo in
+                    AsyncImage(url: photo.imageURL)
                             .aspectRatio(contentMode: .fill)
                             .frame(width: size.width, height: size.height + (minY > 0 ? minY : 0))
                             .clipped()
                             .onTapGesture {
                                 withAnimation(.easeInOut) {
                                     postViewModel.selectedImages = post.photos.map { $0.imageURL }
-                                    postViewModel.selectedImageID = photo
+                                    postViewModel.selectedImageID = photo.imageURL
                                 }
                             }
                             .overlay(
@@ -124,7 +124,7 @@ struct CMFeedDetailContentView: View {
             .padding([.leading, .top])
             .padding(.bottom, 8)
             
-            Text("무겁게 축 쳐지는 머리 ➡️ 가벼운 허쉬 레이어드")
+            Text("\(post.description ?? "")")
                 .padding(.horizontal)
             
             Divider()
@@ -142,7 +142,7 @@ struct CMFeedDetailContentView: View {
                     .clipShape(Circle())
             
             VStack(alignment: .leading) {
-                Text("elwkdlsj_dkdlel")
+                Text("\(post.designerID)")
                     .font(.system(size: 16, design: .serif))
                 
                 Group {
@@ -235,5 +235,5 @@ struct CMFeedDetailContentView: View {
 }
 
 #Preview {
-    CMFeedDetailView()
+    CMFeedDetailView(post: Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg"),Photo(id: "p2", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전"))
 }
