@@ -45,23 +45,23 @@ struct CMHomeCell: View {
             if post.photos.count == 1 {
                 // TODO: 이미지 누르면 DetailVeiw로 이동
                 // 이 주석 아래에 있는 4개의 주석을 풀고 디테일 뷰에서 imageURL 받기
-                //                NavigationLink(destination: CMFeedDetailView(imageURL: post.photos[0].imageURL)) {
-                AsyncImage(url: post.photos[0].imageURL, placeholder: Image(systemName: "photo"))
-                    .frame(width: 360, height: 360)
-                    .aspectRatio(contentMode: .fit)
-                    .cornerRadius(8)
-                    .onTapGesture(count: 2) { // 이미지를 2번 연속 눌렀을 때
-                        isLiked = true
-                        showHeartImage = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            showHeartImage = false
+                NavigationLink(destination: CMFeedDetailView(post: post)) {
+                    AsyncImage(url: post.photos[0].imageURL, placeholder: Image(systemName: "photo"))
+                        .frame(width: 360, height: 360)
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(8)
+                        .onTapGesture(count: 2) { // 이미지를 2번 연속 눌렀을 때
+                            isLiked = true
+                            showHeartImage = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                showHeartImage = false
+                            }
                         }
-                    }
-                //                }
+                }
             } else {
                 TabView(selection: $selectedImageIndex) {
                     ForEach(0..<post.photos.count, id: \.self) { index in
-                        //                        NavigationLink(destination: CMFeedDetailView(imageURL: post.photos[index].imageURL)) {
+                        NavigationLink(destination: CMFeedDetailView(post: post)) {
                         AsyncImage(url: post.photos[index].imageURL, placeholder: Image(systemName: "photo"))
                             .frame(width: 360, height: 360)
                             .aspectRatio(contentMode:.fit)
@@ -81,7 +81,7 @@ struct CMHomeCell: View {
                                 }
                                     .frame(maxWidth: .infinity, alignment: .topTrailing),alignment: .topTrailing
                             )
-                        //                        }
+                        }
                     }
                     .onTapGesture(count: 2) { // 이미지를 2번 연속 눌렀을 때
                         isLiked = true
