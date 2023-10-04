@@ -72,6 +72,11 @@
 		63CD89B32ABD85C300E70A56 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CD89B22ABD85C300E70A56 /* ContentView.swift */; };
 		63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63CD89B42ABD85C500E70A56 /* Assets.xcassets */; };
 		63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63CD89B72ABD85C500E70A56 /* Preview Assets.xcassets */; };
+		96CBD4002AC3AFCC0055CC7F /* TimeSettingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD3FF2AC3AFCC0055CC7F /* TimeSettingDetail.swift */; };
+		96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */; };
+		96CBD4042AC3C4250055CC7F /* ReservationSDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4032AC3C4250055CC7F /* ReservationSDetail.swift */; };
+		96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */; };
+		96CBD4082AC4140C0055CC7F /* CustomCalender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4072AC4140C0055CC7F /* CustomCalender.swift */; };
 		96F637D82AC2A96D00EF74FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96F637D72AC2A96D00EF74FF /* GoogleService-Info.plist */; };
 		96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F637DA2AC2AA1200EF74FF /* ReservationView.swift */; };
 		96F637DF2AC2BCFD00EF74FF /* ReservationCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */; };
@@ -125,6 +130,11 @@
 		63CD89B22ABD85C300E70A56 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		63CD89B42ABD85C500E70A56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63CD89B72ABD85C500E70A56 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		96CBD3FF2AC3AFCC0055CC7F /* TimeSettingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSettingDetail.swift; sourceTree = "<group>"; };
+		96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetail.swift; sourceTree = "<group>"; };
+		96CBD4032AC3C4250055CC7F /* ReservationSDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationSDetail.swift; sourceTree = "<group>"; };
+		96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WkDaySettingDetail.swift; sourceTree = "<group>"; };
+		96CBD4072AC4140C0055CC7F /* CustomCalender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalender.swift; sourceTree = "<group>"; };
 		96F637D72AC2A96D00EF74FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		96F637DA2AC2AA1200EF74FF /* ReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationView.swift; sourceTree = "<group>"; };
 		96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCellView.swift; sourceTree = "<group>"; };
@@ -427,6 +437,11 @@
 			children = (
 				96F637DA2AC2AA1200EF74FF /* ReservationView.swift */,
 				96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */,
+				96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */,
+				96CBD4032AC3C4250055CC7F /* ReservationSDetail.swift */,
+				96CBD3FF2AC3AFCC0055CC7F /* TimeSettingDetail.swift */,
+				96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */,
+				96CBD4072AC4140C0055CC7F /* CustomCalender.swift */,
 			);
 			path = ReservationView;
 			sourceTree = "<group>";
@@ -553,13 +568,16 @@
 				639DB6742AC11A46002692E5 /* CMReservationView.swift in Sources */,
 				3B8BCA962AC1419C0006C79F /* ChatRoom.swift in Sources */,
 				2FFE87312AC171FF00A7A728 /* CMNotificationView.swift in Sources */,
+				96CBD4042AC3C4250055CC7F /* ReservationSDetail.swift in Sources */,
 				639DB6842AC11B3B002692E5 /* DMReservationView.swift in Sources */,
 				2FFE87332AC174C700A7A728 /* CMSegmentedControl.swift in Sources */,
+				96CBD4002AC3AFCC0055CC7F /* TimeSettingDetail.swift in Sources */,
 				639DB6782AC11A5D002692E5 /* CMProfileView.swift in Sources */,
 				2FFE872B2AC1462B00A7A728 /* CMSearchHistoryView.swift in Sources */,
 				639DB6702AC119FE002692E5 /* CMHomeView.swift in Sources */,
 				1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */,
 				639DB67A2AC11AC2002692E5 /* DMReviewView.swift in Sources */,
+				96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */,
 				D8D70F252AC181970025291F /* CMFeedDetailView.swift in Sources */,
 				639DB6762AC11A52002692E5 /* CMMainChattingView.swift in Sources */,
 				3B8BCA9C2AC142170006C79F /* BoardBubble.swift in Sources */,
@@ -574,12 +592,15 @@
 				2FFE87392AC17E2C00A7A728 /* CMLikeListView.swift in Sources */,
 				1D4A9FC82AC26F28006C4937 /* SharedModel.swift in Sources */,
 				639DB6612AC10F13002692E5 /* DesignerMainTabView.swift in Sources */,
+				1D9067232AC1F62D0028A660 /* PostDetailView.swift in Sources */,
+				96CBD4082AC4140C0055CC7F /* CustomCalender.swift in Sources */,
 				1D9067232AC1F62D0028A660 /* DMPostDetailView.swift in Sources */,
 				1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */,
 				1D3AFE542ACB3D33008F8582 /* DMExpandableText.swift in Sources */,
 				639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */,
 				1DA52F562AC2CB69002E0D75 /* DMNewPostView.swift in Sources */,
 				1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */,
+				96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */,
 				96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */,
 				2FFE87372AC17D2A00A7A728 /* CMReviewListView.swift in Sources */,
 				2FFE872D2AC1464100A7A728 /* CMSearchResultView.swift in Sources */,
