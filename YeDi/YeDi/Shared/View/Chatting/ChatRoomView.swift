@@ -92,6 +92,7 @@ struct ChatRoomView: View {
                 RoundedRectangle(cornerRadius: 4)
                     .fill(.white)
             }
+
         }
         .padding()
         .background(Color(red: 0.85, green: 0.85, blue: 0.85))

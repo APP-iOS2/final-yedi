@@ -9,21 +9,22 @@ import Foundation
 import Firebase
 import FirebaseCore
 import FirebaseFirestore
+import FirebaseStorage
 
 class TempChatbubbleStore: ObservableObject {
     
-    //let dbRef = Firestore.firestore().collection("") //채팅방 모음이 있는 파이어스토어 데이터베이스 이름
     @Published var userEmail: String = "None"
     @Published var chattings: [CommonBubble] = []
     @Published var lastBubbleId: String = ""
     
     var ref: DatabaseReference! = Database.database().reference()
-    var chatRoomID: String //채팅방의 키값이 전달되어야 함
-    //임시 채팅방 키 값
+    var chatRoomID: String ///채팅방의 키값이 전달되어야 함
+    var storageRef = Storage.storage().reference() ///스토리지 참조 생성
     
     init(chatRoomID: String) {
         self.chatRoomID = chatRoomID
         self.setUserEmail()
+        self.storageRef = storageRef.child("chatRooms/\(chatRoomID)")
     }
     
     func setUserEmail() { //현재 사용자의 이메일을 세팅하는 함수
@@ -66,6 +67,72 @@ class TempChatbubbleStore: ObservableObject {
         }
     }
     
+    ///텍스트 버블을 보내는 메소드
+    func sendTextBubble(content: String, sender: String) {
+        let bubble = CommonBubble(
+            content: content,
+            date: "\(Date())",
+            sender: sender
+        )
+        
+        self.ref.child("chatRooms").child(chatRoomID).child("chatBubbles").child("\(bubble.date + bubble.id)")
+            .setValue([
+                "id": bubble.id,
+                "content": bubble.content,
+                "date": bubble.date,
+                "messageType": bubble.messageType.rawValue,
+                "sender": bubble.sender
+            ])
+        
+        fetchChattingBubble(chatRomsId: chatRoomID)
+    }
+    
+    ///이미지 버블을 보내는 메소드
+    func sendImageBubble(imageData: Data, sender: String) {
+        
+        var imageURL: String = ""
+        var bubble: CommonBubble = CommonBubble(imagePath: "", date: "", sender: "")
+        self.storageRef = storageRef.child("\(bubble.id).jpg")
+        
+        let uploadTask = storageRef.putData(imageData, metadata: nil) {
+            (metadata, error) in
+            
+            guard let metadata = metadata else {
+                print("이미지 업로드 중 에러 발생")
+                return
+            }
+            
+            ///You can also access to download URL after upload.
+            self.storageRef.downloadURL { (url, error) in
+                
+                guard let downloadURL = url else {
+                    print("이미지 URL생성 중 에러 발생")
+                    return
+                }
+                
+                imageURL = "\(String(describing: url!))"
+                
+                bubble = CommonBubble(
+                    imagePath: "\(imageURL)",
+                    date: "\(Date())",
+                    sender: sender
+                )
+                
+                self.ref.child("chatRooms").child(self.chatRoomID).child("chatBubbles").child("\(bubble.date + bubble.id)")
+                    .setValue([
+                        "id": bubble.id,
+                        "imagePath": bubble.imagePath,
+                        "date": bubble.date,
+                        "messageType": bubble.messageType.rawValue,
+                        "sender": bubble.sender
+                    ])
+                
+                self.fetchChattingBubble(chatRomsId: self.chatRoomID)
+            }
+        }
+    }
+    
+    ///게시물 버블을 보내는 메소드
     func sendBoardBubble(content: String, imagePath: String, sender: String) {
         let bubble = CommonBubble(
             content: content,
@@ -86,45 +153,24 @@ class TempChatbubbleStore: ObservableObject {
         fetchChattingBubble(chatRomsId: chatRoomID)
     }
     
-    func sendTextBubble(content: String, sender: String) {
-        let bubble = CommonBubble(
-            content: content,
-            date: "\(Date())",
-            sender: sender
-        )
+    ///상담하기를 누르면 채팅방이 생성된 이후에 자동으로 고객에서 디자이너에게 "이 게시물을 보고 상담하러 왔습니다."
+    ///매개변수 : 게시물 아이디 값
+    func startingBoardBubble(postID: String) {
+        ///게시물들이 있는 파이어스토어 데이터베이스 이름
+        let databasePosts = Firestore.firestore().collection("posts/\(postID)")	
         
-        self.ref.child("chatRooms").child(chatRoomID).child("chatBubbles").child("\(bubble.date + bubble.id)")
-            .setValue([
-                "id": bubble.id,
-                "content": bubble.content,
-                "date": bubble.date,
-                "messageType": bubble.messageType.rawValue,
-                "sender": bubble.sender
-            ])
+        ///게시물을 지정된 구조체형에 맞게 변환
+        databasePosts.getDocuments { (snapshot, error) in
+            
+        }
         
-        fetchChattingBubble(chatRomsId: chatRoomID)
+        ///새로 생성된 채팅방에 바로 게시물 버블 보내기
+        //sendBoardBubble(content: "위 게시물을 보고 상담신청했어요~")
     }
     
-    func sendImageBubble(imagePath: String, sender: String) {
-        let bubble = CommonBubble(
-            imagePath: imagePath,
-            date: "\(Date())",
-            sender: sender
-        )
+    private func loadImage() {
         
-        self.ref.child("chatRooms").child(chatRoomID).child("chatBubbles").child("\(bubble.date + bubble.id)")
-            .setValue([
-                "id": bubble.id,
-                "imagePath": bubble.imagePath,
-                "date": bubble.date,
-                "messageType": bubble.messageType.rawValue,
-                "sender": bubble.sender
-            ])
-        
-        fetchChattingBubble(chatRomsId: chatRoomID)
     }
-    
-    
     
 }
 

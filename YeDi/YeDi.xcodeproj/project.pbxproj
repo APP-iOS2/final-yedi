@@ -10,6 +10,7 @@
 		3BBE0F902AC2842B00F8D704 /* ChatUtilityMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE0F8F2AC2842B00F8D704 /* ChatUtilityMenuView.swift */; };
 		3BBE0F9A2AC2CC3B00F8D704 /* ChattingListRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE0F992AC2CC3B00F8D704 /* ChattingListRoomViewModel.swift */; };
 		3BBE0F9C2AC2CC4A00F8D704 /* ChattingListRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE0F9B2AC2CC4A00F8D704 /* ChattingListRoomView.swift */; };
+		633D7B7F2ACC641F0039014C /* TempPhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7B7E2ACC641F0039014C /* TempPhotoPickerView.swift */; };
 		634388782AC80AFC00983B8F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 634388772AC80AFC00983B8F /* GoogleService-Info.plist */; };
 		638C1BA42AC168FD0088E63F /* ChattingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C1BA32AC168FD0088E63F /* ChattingViewModel.swift */; };
 		638C1BAA2AC169050088E63F /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C1BA52AC169050088E63F /* ChatRoom.swift */; };
@@ -68,6 +69,7 @@
 		3BBE0F8F2AC2842B00F8D704 /* ChatUtilityMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUtilityMenuView.swift; sourceTree = "<group>"; };
 		3BBE0F992AC2CC3B00F8D704 /* ChattingListRoomViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingListRoomViewModel.swift; sourceTree = "<group>"; };
 		3BBE0F9B2AC2CC4A00F8D704 /* ChattingListRoomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingListRoomView.swift; sourceTree = "<group>"; };
+		633D7B7E2ACC641F0039014C /* TempPhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempPhotoPickerView.swift; sourceTree = "<group>"; };
 		634388772AC80AFC00983B8F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		638C1BA32AC168FD0088E63F /* ChattingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewModel.swift; sourceTree = "<group>"; };
 		638C1BA52AC169050088E63F /* ChatRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 				DC2921952AC267A4001FEDFD /* BoardBubbleCell.swift */,
 				3BBE0F8F2AC2842B00F8D704 /* ChatUtilityMenuView.swift */,
 				3BBE0F9B2AC2CC4A00F8D704 /* ChattingListRoomView.swift */,
+				633D7B7E2ACC641F0039014C /* TempPhotoPickerView.swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				639DB6782AC11A5D002692E5 /* CMProfileView.swift in Sources */,
 				DC29219E2AC267C3001FEDFD /* ChatBubbleModifier.swift in Sources */,
 				639DB6702AC119FE002692E5 /* CMHomeView.swift in Sources */,
+				633D7B7F2ACC641F0039014C /* TempPhotoPickerView.swift in Sources */,
 				639DB67A2AC11AC2002692E5 /* DMReviewView.swift in Sources */,
 				DC2921A22AC2C9C0001FEDFD /* CommonBubble.swift in Sources */,
 				639DB6762AC11A52002692E5 /* CMMainChattingView.swift in Sources */,
