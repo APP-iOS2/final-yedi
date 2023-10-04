@@ -5,49 +5,65 @@
 //  Created by 박찬호 on 2023/09/25.
 //
 
-// SwiftUI와 Combine 프레임워크를 임포트합니다.
 import SwiftUI
 import Combine
+import Foundation
 
-// 이미지를 로드하는 클래스를 정의합니다. 이 클래스는 ObservableObject 프로토콜을 채택
+// MARK: - 이미지 로더 클래스
 class ImageLoader: ObservableObject {
-    // 로드한 이미지를 저장할 변수입니다.
+    // MARK: - Published 변수
     @Published var image: UIImage?
     
-    // 데이터 로딩 작업을 취소할 수 있는 변수입니다.
+    // MARK: - 캐시 관리
+    private static let imageCache = NSCache<NSString, UIImage>()
+    
+    // MARK: - URLSession 관리 변수
     var cancellable: AnyCancellable?
-
-    // 이미지를 로드하는 함수입니다.
+    
+    // MARK: - 이미지 로딩 메소드
     func load(from url: String) {
-        // 주어진 URL 문자열을 URL 객체로 변환합니다.
+        // 메모리 캐시에서 이미지를 먼저 검색
+        if let cachedImage = ImageLoader.imageCache.object(forKey: url as NSString) {
+            self.image = cachedImage
+            return
+        }
+        
+        // URL 유효성 검사
         guard let imageURL = URL(string: url) else {
             return
         }
         
-        // URLSession을 이용하여 이미지를 비동기적으로 로드합니다.
+        // URLSession을 이용하여 네트워크에서 이미지 로딩
         cancellable = URLSession.shared.dataTaskPublisher(for: imageURL)
-            .map { UIImage(data: $0.data) }  // 데이터를 UIImage로 변환합니다.
-            .replaceError(with: nil)  // 에러가 발생하면 nil을 반환합니다.
-            .receive(on: DispatchQueue.main)  // 메인 스레드에서 결과를 받습니다.
-            .assign(to: \.image, on: self)  // 결과를 self.image에 할당합니다.
+            .map { UIImage(data: $0.data) }  // 받은 데이터를 UIImage로 변환
+            .replaceError(with: nil)  // 에러 처리
+            .receive(on: DispatchQueue.main)  // 메인 스레드에서 처리
+            .sink { [weak self] in
+                // 로드된 이미지를 캐시에 저장
+                if let image = $0 {
+                    ImageLoader.imageCache.setObject(image, forKey: url as NSString)
+                }
+                // 이미지를 화면에 표시
+                self?.image = $0
+            }
     }
 }
 
-// 비동기로 이미지를 로드하여 표시
 struct DMAsyncImage: View {
-    // ImageLoader 인스턴스를 생성하고 관찰합니다.
     @ObservedObject var imageLoader = ImageLoader()
     
+    // MARK: - 플레이스홀더 이미지
     var placeholder: Image
-
-    // 초기화 함수입니다. URL과 플레이스홀더 이미지를 인자로 받습니다.
+    
+    // MARK: - 초기화 메소드
     init(url: String, placeholder: Image = Image(systemName: "photo")) {
         self.placeholder = placeholder
-        imageLoader.load(from: url)  // ImageLoader를 이용하여 이미지를 로드합니다.
+        imageLoader.load(from: url)
     }
-
+    
+    // MARK: - 뷰 본문
     var body: some View {
-        // 이미지가 로드되면 그 이미지를 표시하고, 그렇지 않으면 플레이스홀더를 표시합니다.
+        // 이미지가 로드되면 표시, 그렇지 않으면 플레이스홀더 표시
         if let image = imageLoader.image {
             Image(uiImage: image)
                 .resizable()

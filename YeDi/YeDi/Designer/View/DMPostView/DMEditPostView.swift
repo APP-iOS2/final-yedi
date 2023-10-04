@@ -92,14 +92,27 @@ struct DMEditPostView: View {
         VStack(alignment: .leading) {
             Text("이미지 URL")
                 .font(.headline)
-            ForEach(imageUrls, id: \.self) { imageUrl in
-                Text(imageUrl)
+            ForEach(Array(zip(imageUrls.indices, imageUrls)), id: \.0) { index, imageUrl in
+                HStack {
+                    Text(imageUrl)
+                    Spacer()
+                    Button("수정") {
+                        // 수정 버튼을 누를 경우, 수정할 수 있도록 구현
+                        newImageUrl = imageUrl
+                        imageUrls.remove(at: index)
+                    }
+                    Button("삭제") {
+                        imageUrls.remove(at: index)
+                    }
+                }
             }
             HStack {
                 TextField("이미지 URL을 입력해주세요.", text: $newImageUrl)
                 Button("추가") {
-                    imageUrls.append(newImageUrl)
-                    newImageUrl = ""
+                    if !newImageUrl.isEmpty {
+                        imageUrls.append(newImageUrl)
+                        newImageUrl = ""
+                    }
                 }
             }
         }
@@ -112,7 +125,6 @@ struct DMEditPostView: View {
         
         let db = Firestore.firestore()
         let updatedPhotos = imageUrls.map { Photo(id: UUID().uuidString, imageURL: $0) }
-        
         let updatedPhotosDicts = updatedPhotos.map { $0.dictionary } // Photo 객체를 Dictionary로 변환
         
         db.collection("posts").document(postId).updateData([

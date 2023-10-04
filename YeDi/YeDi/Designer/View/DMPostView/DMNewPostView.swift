@@ -179,7 +179,6 @@ struct InputField: View {
 // MARK: - TextEditorView
 /// 텍스트 편집기 뷰
 struct TextEditorView: View {
-    // MARK: - Enums
     enum Field {
         case editor
     }

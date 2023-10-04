@@ -20,6 +20,7 @@ struct DMPostView: View {
     @State private var shouldRefresh = false
     @State private var expanded: Bool = false
     
+    @EnvironmentObject var userAuth: UserAuth
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     // MARK: - 본문 (Body)
@@ -127,22 +128,25 @@ struct DMPostView: View {
     private func refreshPost() {
         // 게시글 ID 확인
         guard let postId = selectedPost.id else { return }
-        
+        guard let currentDesignerID = userAuth.currentDesignerID else { return }
+
         // Firestore에서 게시글 정보 업데이트
         let db = Firestore.firestore()
-        db.collection("posts").document(postId).getDocument { document, error in
-            if let error = error {
-                print("Error fetching document: \(error)")
-            } else if let document = document, document.exists {
-                if let refreshedPost = try? document.data(as: Post.self) {
-                    self.selectedPost = refreshedPost
-                } else {
-                    print("Error decoding post.")
+        db.collection("posts")
+            .whereField("designerID", isEqualTo: currentDesignerID) // 현재 디자이너의 게시물만 쿼리
+            .whereField("id", isEqualTo: postId) // 게시글 ID로 필터링
+            .getDocuments { (snapshot, error) in
+                if let error = error {
+                    print("Error fetching document: \(error)")
+                } else if let documents = snapshot?.documents, let document = documents.first {
+                    if let refreshedPost = try? document.data(as: Post.self) {
+                        self.selectedPost = refreshedPost
+                    } else {
+                        print("Error decoding post.")
+                    }
                 }
             }
-        }
     }
-
     // MARK: - 게시글 삭제 함수
     private func deletePost() {
         // 게시글 ID 확인

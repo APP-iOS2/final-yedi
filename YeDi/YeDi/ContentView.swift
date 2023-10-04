@@ -15,9 +15,7 @@ class UserAuth: ObservableObject {
 }
 
 struct ContentView: View {
-
-    //@EnvironmentObject var userAuth: UserAuth
-    
+    @EnvironmentObject var userAuth: UserAuth
     @State private var isClientLogin: Bool = false
     @State private var isDesignerLogin: Bool = false
     
@@ -25,11 +23,13 @@ struct ContentView: View {
         VStack{
             if isClientLogin {
                 ClientMainTabView()
+                    .environmentObject(userAuth)
             } else if isDesignerLogin {
                 DesignerMainTabView()
+                    .environmentObject(userAuth)
             } else {
                 TempSelectionView(client: $isClientLogin, designer: $isDesignerLogin)
-                    .environmentObject(UserAuth())
+                    .environmentObject(userAuth)
             }
         }
     }
