@@ -86,9 +86,9 @@ struct TempSelectionView: View {
                 .tint(.white)
                 .padding()
             }
-            HStack{
+            HStack {
                 Button(action: {
-                    self.signIn("d1@gmail.com", "111111"){ success in
+                    self.signInDesigner("d1@gmail.com", "111111") { success in
                         if success {
                             designer = true
                         }
@@ -98,11 +98,11 @@ struct TempSelectionView: View {
                 })
                 .frame(width: 100, height: 100)
                 .background(Color(.gray))
-                .tint(.white)
+                .foregroundColor(.white)
                 .padding()
                 
                 Button(action: {
-                    self.signIn("d2@gmail.com", "111111"){ success in
+                    self.signInDesigner("d2@gmail.com", "111111") { success in
                         if success {
                             designer = true
                         }
@@ -112,11 +112,11 @@ struct TempSelectionView: View {
                 })
                 .frame(width: 100, height: 100)
                 .background(Color(.gray))
-                .tint(.white)
+                .foregroundColor(.white)
                 .padding()
                 
                 Button(action: {
-                    self.signIn("d3@gmail.com", "111111"){ success in
+                    self.signInDesigner("d3@gmail.com", "111111") { success in
                         if success {
                             designer = true
                         }
@@ -126,12 +126,13 @@ struct TempSelectionView: View {
                 })
                 .frame(width: 100, height: 100)
                 .background(Color(.gray))
-                .tint(.white)
+                .foregroundColor(.white)
                 .padding()
             }
         }
     }
 
+    
     func signIn(_ email: String, _ password: String, _ completion: @escaping (Bool) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if let error = error {
@@ -184,6 +185,59 @@ struct TempSelectionView: View {
                 }
                 
                 return
+            }
+        }
+    }
+    
+    // 디자이너 로그인을 위한 함수
+    func signInDesigner(_ email: String, _ password: String, _ completion: @escaping (Bool) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+            if let error = error {
+                print("Sign in error:", error.localizedDescription)
+                completion(false)
+                return
+            }
+            
+            guard result?.user != nil else {
+                completion(false)
+                return
+            }
+            
+            // Firestore에서 디자이너 정보 가져오기
+            let db = Firestore.firestore()
+            
+            db.collection("designers").whereField("email", isEqualTo: email).getDocuments { snapshot, error in
+                if let error = error {
+                    print("Firestore query error:", error.localizedDescription)
+                    completion(false)
+                    return
+                }
+                
+                guard let documents = snapshot?.documents else {
+                    print("User data not found")
+                    completion(false)
+                    return
+                }
+                
+                if let userData = documents.first?.data() {
+                    // 디자이너 정보 업데이트
+                    if let name = userData["name"] as? String,
+                       let email = userData["email"] as? String {
+                        print("Name:", name)
+                        print("Email:", email)
+                        
+                        self.userAuth.isLogged = true
+                        self.userAuth.currentDesignerID = email // 디자이너 ID 설정
+                        
+                        completion(true)
+                    } else {
+                        print("Invalid user data")
+                        completion(false)
+                    }
+                } else {
+                    print("User data not found")
+                    completion(false)
+                }
             }
         }
     }

@@ -13,6 +13,7 @@
 		1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90671C2AC176020028A660 /* DMPostViewModel.swift */; };
 		1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067202AC1F61D0028A660 /* DMGridView.swift */; };
 		1DA52F562AC2CB69002E0D75 /* DMNewPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */; };
+		1DB59C672ACD9C9C008EAD5E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1DB59C662ACD9C9C008EAD5E /* GoogleService-Info.plist */; };
 		3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */; };
 		3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */; };
 		3BAB00F32ACD97EB009053A4 /* ReservationSDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */; };
@@ -75,7 +76,6 @@
 		3BCF2C8E2ACD4248009C18C2 /* CMNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C662ACD4248009C18C2 /* CMNotificationView.swift */; };
 		3BCF2C8F2ACD4248009C18C2 /* CMSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C672ACD4248009C18C2 /* CMSettingsView.swift */; };
 		3BCF2C902ACD4248009C18C2 /* CMProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C682ACD4248009C18C2 /* CMProfileView.swift */; };
-		3BCF2C942ACD8A0E009C18C2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BCF2C932ACD8A0D009C18C2 /* GoogleService-Info.plist */; };
 		639DB6332AC10E44002692E5 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 639DB6322AC10E44002692E5 /* FirebaseAppCheck */; };
 		639DB6352AC10E44002692E5 /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 639DB6342AC10E44002692E5 /* FirebaseAppDistribution-Beta */; };
 		639DB6372AC10E44002692E5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 639DB6362AC10E44002692E5 /* FirebaseAuth */; };
@@ -123,6 +123,7 @@
 		1D90671C2AC176020028A660 /* DMPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostViewModel.swift; sourceTree = "<group>"; };
 		1D9067202AC1F61D0028A660 /* DMGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMGridView.swift; sourceTree = "<group>"; };
 		1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMNewPostView.swift; sourceTree = "<group>"; };
+		1DB59C662ACD9C9C008EAD5E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMAccount.swift; sourceTree = "<group>"; };
 		3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMExpandableText.swift; sourceTree = "<group>"; };
 		3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReservationSDetail.swift; sourceTree = "<group>"; };
@@ -186,8 +187,6 @@
 		3BCF2C662ACD4248009C18C2 /* CMNotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMNotificationView.swift; sourceTree = "<group>"; };
 		3BCF2C672ACD4248009C18C2 /* CMSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMSettingsView.swift; sourceTree = "<group>"; };
 		3BCF2C682ACD4248009C18C2 /* CMProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMProfileView.swift; sourceTree = "<group>"; };
-		3BCF2C932ACD8A0D009C18C2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		3BCF2C952ACD8A34009C18C2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		639DB6602AC10F13002692E5 /* DesignerMainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignerMainTabView.swift; sourceTree = "<group>"; };
 		639DB6792AC11AC2002692E5 /* DMReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMReviewView.swift; sourceTree = "<group>"; };
 		639DB67D2AC11AF5002692E5 /* DMProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMProfileView.swift; sourceTree = "<group>"; };
@@ -539,7 +538,6 @@
 		63CD89A42ABD85C300E70A56 = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C952ACD8A34009C18C2 /* GoogleService-Info.plist */,
 				63CD89AF2ABD85C300E70A56 /* YeDi */,
 				63CD89AE2ABD85C300E70A56 /* Products */,
 			);
@@ -556,7 +554,7 @@
 		63CD89AF2ABD85C300E70A56 /* YeDi */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C932ACD8A0D009C18C2 /* GoogleService-Info.plist */,
+				1DB59C662ACD9C9C008EAD5E /* GoogleService-Info.plist */,
 				3BCF2C362ACD4247009C18C2 /* Client */,
 				3BCF2C032ACD3E72009C18C2 /* Shared */,
 				639DB6282AC10DED002692E5 /* Designer */,
@@ -675,8 +673,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DB59C672ACD9C9C008EAD5E /* GoogleService-Info.plist in Resources */,
 				63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */,
-				3BCF2C942ACD8A0E009C18C2 /* GoogleService-Info.plist in Resources */,
 				63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
