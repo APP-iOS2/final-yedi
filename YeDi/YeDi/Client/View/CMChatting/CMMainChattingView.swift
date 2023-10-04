@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CMMainChattingView: View {
     var body: some View {
-        ChattingListRoomView()
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
