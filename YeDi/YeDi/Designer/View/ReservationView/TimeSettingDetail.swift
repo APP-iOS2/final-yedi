@@ -2,7 +2,7 @@
 //  TimeSettingDetail.swift
 //  YeDi
 //
-//  Created by 송성욱 on 2023/09/27.
+//  Created by 송성욱 on 10/5/23.
 //
 
 import SwiftUI
@@ -12,8 +12,6 @@ struct TimeSettingDetail: View {
         Text("브레이크 타임 설정")
     }
 }
-
-
 
 #Preview {
     TimeSettingDetail()
