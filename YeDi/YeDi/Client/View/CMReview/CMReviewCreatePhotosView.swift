@@ -10,7 +10,7 @@ import PhotosUI
 
 struct CMReviewCreatePhotosView: View {
     @Binding var selectedPhoto: PhotosPickerItem?
-    @Binding var selectedPhotoData: [Data]?
+    @Binding var selectedPhotoData: [Data]
     
     var body: some View {
         Section {
@@ -35,32 +35,31 @@ struct CMReviewCreatePhotosView: View {
                     .onChange(of: selectedPhoto) { newItem in
                         Task {
                             if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                                selectedPhotoData?.append(data)
+                                selectedPhotoData.append(data)
                             }
                         }
                     }
                     
-                    // TODO: x 버튼을 누르면 배열에서 사라지는데 뷰에도 반영할 것
-                    if var selectedPhotoData {
-                        ForEach(selectedPhotoData, id: \.self) { photoData in
-                            if let image = UIImage(data: photoData) {
-                                ZStack {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .frame(width: 100, height: 100)
-                                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                                    
-                                    Button(action: {
+                    ForEach(selectedPhotoData, id: \.self) { photoData in
+                        if let image = UIImage(data: photoData) {
+                            ZStack {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .frame(width: 100, height: 100)
+                                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                                
+                                Button(action: {
+                                    DispatchQueue.main.async {
                                         selectedPhotoData.removeAll(where: { $0 == photoData })
-                                    }, label: {
-                                        Image(systemName: "x.circle.fill")
-                                            .font(.title3)
-                                            .foregroundStyle(.black)
-                                    })
-                                    .offset(x: 50, y: -50)
-                                }
-                                .padding(EdgeInsets(top: 10, leading: 5, bottom: 40, trailing: 0))
+                                    }
+                                }, label: {
+                                    Image(systemName: "x.circle.fill")
+                                        .font(.title3)
+                                        .foregroundStyle(.black)
+                                })
+                                .offset(x: 50, y: -50)
                             }
+                            .padding(EdgeInsets(top: 10, leading: 5, bottom: 40, trailing: 0))
                         }
                     }
                 }
