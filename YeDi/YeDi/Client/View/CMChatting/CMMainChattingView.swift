@@ -9,12 +9,7 @@ import SwiftUI
 
 struct CMMainChattingView: View {
     var body: some View {
-        NavigationLink {
-            ChatRoomView()
-        } label: {
-            Text("Go to ChatRoomView")
-        }
-
+        ChattingListRoomView()
     }
 }
 
