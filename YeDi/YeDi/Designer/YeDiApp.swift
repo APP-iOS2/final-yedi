@@ -22,7 +22,7 @@ struct YeDiApp: App {
     
     var body: some Scene {
         WindowGroup {
-            DesignerMainTabView()
+            ContentView()
         }
     }
 }

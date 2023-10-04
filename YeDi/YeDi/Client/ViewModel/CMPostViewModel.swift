@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+@MainActor
 class CMPostViewModel: ObservableObject {
     @Published var posts: [Post] = []
     
