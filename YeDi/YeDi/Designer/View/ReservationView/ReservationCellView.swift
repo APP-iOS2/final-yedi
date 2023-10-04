@@ -14,7 +14,6 @@ struct ReservationCellView: View {
                 .frame(width: 300, height: 100)
                 .foregroundColor(.gray)
                 .shadow(radius: 4)
-            
             HStack {
                 VStack(alignment: .leading) {
                     Text("회원명")

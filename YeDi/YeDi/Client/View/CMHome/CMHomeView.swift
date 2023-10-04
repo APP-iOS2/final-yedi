@@ -40,7 +40,7 @@ struct CMHomeView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                         Image(systemName: "magnifyingglass")
-                            .foregroundColor(.black)
+                            .foregroundStyle(.black)
                     })
                 }
             }
