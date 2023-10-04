@@ -17,7 +17,7 @@ struct ReservationView: View {
         NavigationStack {
             HStack {
                 NavigationLink {
-                    
+                    WkDaySettingDetail()
                 } label: {
                     Text("휴무일 설정")
                         .frame(width: 150, height: 40)
@@ -26,7 +26,7 @@ struct ReservationView: View {
                 }
                 Spacer().frame(width: 25)
                 NavigationLink {
-                    
+                    TimeSettingDetail()
                 } label: {
                     Text("브레이크 타임 설정")
                         .frame(width: 150, height: 40)

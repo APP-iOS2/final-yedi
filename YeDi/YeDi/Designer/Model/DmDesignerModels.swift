@@ -50,6 +50,8 @@ var reviewCount: Int
 var followerCount: Int
 /// 스킬
 var skill: [String] // 디자이너가 적은 스킬을 태그화 시키기 ?? 어렵긴하겠다.
+///채팅방의 아이디
+var chatRooms: [String]
 }
 
 /// 직급

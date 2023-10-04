@@ -9,9 +9,11 @@ import SwiftUI
 
 struct TimeSettingDetail: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("브레이크 타임 설정")
     }
 }
+
+
 
 #Preview {
     TimeSettingDetail()

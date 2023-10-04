@@ -101,9 +101,13 @@ private struct CellView: View {
                 .foregroundColor(.blue)
             
             if clicked {
-                Text("Click")
-                    .font(.caption)
-                    .foregroundColor(.red)
+//                Text("Click")
+//                    .font(.caption)
+//                    .foregroundColor(.red)
+                RoundedRectangle(cornerRadius: 5)
+                    .opacity(0)
+                    .overlay(Text(String(day)))
+                    .foregroundColor(.blue)
             }
         }
     }
