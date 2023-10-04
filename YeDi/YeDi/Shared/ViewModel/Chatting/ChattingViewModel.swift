@@ -15,6 +15,7 @@ class TempChatbubbleStore: ObservableObject {
     
     @Published var userEmail: String = "None"
     @Published var chattings: [CommonBubble] = []
+    @Published var lastBubbleId: String = ""
     
     var ref: DatabaseReference! = Database.database().reference()
     var chatRoomID: String ///채팅방의 키값이 전달되어야 함
@@ -56,7 +57,13 @@ class TempChatbubbleStore: ObservableObject {
                 }
             }
             bubbles.sort(by: {$0.date < $1.date})
+                
             self.chattings = bubbles
+            
+            if let id = bubbles.last?.id {
+                self.lastBubbleId = id
+            }
+            
         }
     }
     
