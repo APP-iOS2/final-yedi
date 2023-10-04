@@ -1,20 +1,20 @@
 //
-//  CMHomeView.swift
+//  CMSegmentedControl.swift
 //  YeDi
 //
-//  Created by Jaehui Yu on 2023/09/25.
+//  Created by 박채영 on 2023/09/25.
 //
 
 import SwiftUI
 
-struct CMHomeView: View {
+struct CMSegmentedControl: View {
+    @State private var selectedSegment: String = "찜한 게시물"
     
-    @State var selectedSegment: String = "회원님을 위한 추천"
-    let segments: [String] = ["회원님을 위한 추천", "팔로잉"]
+    let segments: [String] = ["찜한 게시물", "팔로잉", "리뷰"]
     
     var body: some View {
-        NavigationStack {
-            HStack {
+        VStack {
+            HStack(spacing: 0) {
                 ForEach(segments, id: \.self) { segment in
                     Button(action: {
                         selectedSegment = segment
@@ -25,18 +25,19 @@ struct CMHomeView: View {
                                 .foregroundStyle(.black)
                             Rectangle()
                                 .fill(selectedSegment == segment ? .black : .white)
-                                .frame(width: 180, height: 3)
+                                .frame(width: 120, height: 3)
                         }
                     })
                 }
             }
-            .padding(.top)
             
             switch selectedSegment {
-            case "회원님을 위한 추천":
-                CMRecommendPostView()
+            case "찜한 게시물":
+                CMLikePostListView()
             case "팔로잉":
-                CMFollowingPostView()
+                CMFollowingListView()
+            case "리뷰":
+                CMReviewListView()
             default:
                 Text("")
             }
@@ -45,5 +46,5 @@ struct CMHomeView: View {
 }
 
 #Preview {
-    CMHomeView()
+    CMSegmentedControl()
 }

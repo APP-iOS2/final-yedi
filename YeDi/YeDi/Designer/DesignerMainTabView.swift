@@ -12,55 +12,31 @@ struct DesignerMainTabView: View {
     
     var body: some View {
         TabView(selection: $selectedIndex) {
-            NavigationStack {
-                DMReviewView()
-            }
-            .onTapGesture {
-                self.selectedIndex = 0
-            }
-            .tabItem {
-                Label("리뷰", systemImage: "")
-            }.tag(0)
+            DMReviewView()
+                .tabItem {
+                    Label("리뷰", systemImage: "star.fill")
+                }.tag(0)
             
-            NavigationStack {
-                DMPostView()
-            }
-            .onTapGesture {
-                self.selectedIndex = 1
-            }
-            .tabItem {
-                Label("게시물", systemImage: "")
-            }.tag(1)
+            DMGridView()
+                .tabItem {
+                    Label("게시물", systemImage: "photo.fill")
+                }
+                .tag(1)
             
-            NavigationStack {
-                DMReservationView()
-            }
-            .onTapGesture {
-                self.selectedIndex = 2
-            }
-            .tabItem {
-                Label("예약", systemImage: "")
-            }.tag(2)
+            DMReservationView()
+                .tabItem {
+                    Label("예약", systemImage: "calendar")
+                }.tag(2)
             
-            NavigationStack {
-                DMMainChattingView()
-            }
-            .onTapGesture {
-                self.selectedIndex = 3
-            }
-            .tabItem {
-                Label("채팅", systemImage: "")
-            }.tag(3)
+            DMMainChattingView()
+                .tabItem {
+                    Label("채팅", systemImage: "message.fill")
+                }.tag(3)
             
-            NavigationStack {
-                DMProfileView()
-            }
-            .onTapGesture {
-                self.selectedIndex = 4
-            }
-            .tabItem {
-                Label("프로필", systemImage: "")
-            }.tag(4)
+            DMProfileView()
+                .tabItem {
+                    Label("프로필", systemImage: "person.fill")
+                }.tag(4)
         }
     }
 }
