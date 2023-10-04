@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CMSegmentedControl: View {
-    @State var selectedSegment: String = "찜한 게시물"
+    @State private var selectedSegment: String = "찜한 게시물"
     
     let segments: [String] = ["찜한 게시물", "팔로잉", "리뷰"]
     
@@ -33,7 +33,7 @@ struct CMSegmentedControl: View {
             
             switch selectedSegment {
             case "찜한 게시물":
-                CMLikeListView()
+                CMLikePostListView()
             case "팔로잉":
                 CMFollowingListView()
             case "리뷰":

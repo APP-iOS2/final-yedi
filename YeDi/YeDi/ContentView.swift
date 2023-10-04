@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestore
 
 class UserAuth: ObservableObject {
     @Published var isLogged = false
@@ -130,25 +131,61 @@ struct TempSelectionView: View {
         }
     }
 
-    func signIn(_ email: String, _ password: String, completion: @escaping (Bool) -> Void) {
-            Auth.auth().signIn(withEmail: email, password: password) { result, error in
+    func signIn(_ email: String, _ password: String, _ completion: @escaping (Bool) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+            if let error = error {
+                print("Sign in error:", error.localizedDescription)
+                completion(false)
+                return
+            }
+            
+            guard let user = result?.user else {
+                completion(false)
+                return
+            }
+            
+            // Firebase Authentication에 로그인 성공
+            
+            // Firestore에서 사용자 정보 가져오기
+            let db = Firestore.firestore()
+            
+            db.collection("clients").whereField("email", isEqualTo: email).getDocuments { snapshot, error in
                 if let error = error {
-                    print("DEBUG: signIn Error \(error.localizedDescription)")
-                    completion(false) // 로그인 실패 시 false 반환
+                    print("Firestore query error:", error.localizedDescription)
+                    completion(false)
                     return
                 }
                 
-                guard let user = result?.user else {
-                    completion(false) // 사용자가 nil일 경우 false 반환
+                guard let documents = snapshot?.documents,
+                      let userData = documents.first?.data() else {
+                    print("User data not found")
+                    completion(false)
                     return
                 }
                 
-                print("DEBUG: signIn User successfully")
+                // 사용자 프로필 업데이트
                 
-                completion(true) // 로그인 성공 시 true 반환
+                // 이름과 이메일 출력
+                if let name = userData["name"] as? String,
+                   let email = userData["email"] as? String {
+                    print("Name:", name)
+                    print("Email:", email)
+                    
+                    // 여기서 UserAuth 클래스의 isLogged 속성을 true로 설정
+                    // 필요한 다른 사용자 정보도 업데이트 가능
+                    
+                    self.userAuth.isLogged = true
+                    
+                    completion(true)
+                } else {
+                    print("Invalid user data")
+                    completion(false)
+                }
+                
+                return
             }
         }
-    
+    }
 }
 
 #Preview {
