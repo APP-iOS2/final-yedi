@@ -13,7 +13,7 @@ struct CMProfileView: View {
             VStack {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("@@@님")
+                        Text("김고객님")
                         Text("오늘도 빛나는 하루 보내세요")
                     }
                     .font(.system(size: 20, weight: .bold))
@@ -23,11 +23,14 @@ struct CMProfileView: View {
                 }
                 .padding()
                 
-                Text("정보 수정")
-                    .font(.system(size: 15))
-                    .frame(width: 350, height: 35)
-                    .border(.gray)
-                    .padding(.bottom, 40)
+                NavigationLink(destination: CMProfileEditView()) {
+                    Text("정보 수정")
+                        .frame(width: 350, height: 40)
+                        .background(.black)
+                        .foregroundStyle(.white)
+                        .clipShape(.rect(cornerRadius: 5))
+                        .padding(.bottom, 40)
+                }
                 
                 CMSegmentedControl()
                 

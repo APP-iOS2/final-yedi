@@ -13,7 +13,7 @@ struct BoardBubble: Codable {
     /// 텍스트내용
     var content: String
     /// 내용
-    var ImagePath: String
+    var imagePath: String
     /// 보낸시간
     var date: String
     /// 보낸사람 UserID
@@ -21,10 +21,10 @@ struct BoardBubble: Codable {
     
     var messageType: MessageType = MessageType.boardBubble
     
-    init(id: String = UUID().uuidString, content: String, ImagePath: String, date: String, sender: String) {
+    init(id: String = UUID().uuidString, content: String, imagePath: String, date: String, sender: String) {
         self.id = id
         self.content = content
-        self.ImagePath = ImagePath
+        self.imagePath = imagePath
         self.date = date
         self.sender = sender
     }

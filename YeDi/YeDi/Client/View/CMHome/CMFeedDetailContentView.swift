@@ -9,9 +9,12 @@ import SwiftUI
 
 struct CMFeedDetailContentView: View {
     @Environment(\.dismiss) var dismiss
+    @StateObject var postViewModel: PostDetailViewModel = PostDetailViewModel()
+    @State private var isLiked: Bool = false
+    let post: Post
     let images: [String] = ["https://images.pexels.com/photos/18005100/pexels-photo-18005100/free-photo-of-fa1-vsco.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/17410647/pexels-photo-17410647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"]
-    var safeArea: EdgeInsets
-    var size: CGSize
+    let safeArea: EdgeInsets
+    let size: CGSize
     
     var body: some View {
         VStack(spacing: 0) {
@@ -29,12 +32,13 @@ struct CMFeedDetailContentView: View {
         }
         .overlay(
             ZStack {
-                // TODO: Image DetailView
+                if !postViewModel.selectedImages.isEmpty {
+                    imageDetailView
+                }
             }
         )
     }
     
-    // 불투명 반환타입이기 때문에 코드가 하나의 컨텍스트로 되어있지 않으면 @ViewBuilder를 명시해주어야 한다.
     private func headerView() -> some View {
         GeometryReader { proxy in
             let minY = proxy.frame(in: .named("SCORLL")).minY
@@ -50,17 +54,17 @@ struct CMFeedDetailContentView: View {
                 Spacer()
                 
                 Button {
-                    
+                      isLiked.toggle()
                 } label: {
-                    Image(systemName: "heart.fill")
+                    Image(systemName: isLiked ? "heart.fill" : "heart")
                         .font(.title)
-                        .foregroundStyle(.pink)
+                        .foregroundStyle(isLiked ? .pink : .white)
                 }
-
             }
             .padding(.top, safeArea.top)
             .padding([.horizontal, .bottom], 20)
             .offset(y: -minY)
+            // TODO: 스크롤시에 헤더 배경이 이미지를 벗어날 경우에 background displaying
         }
     }
     
@@ -72,11 +76,19 @@ struct CMFeedDetailContentView: View {
             let minY = proxy.frame(in: .named("SCROLL")).minY
             
             TabView {
-                ForEach(images, id: \.self) { imageString in
-                    AsyncImage(url: imageString)
+                ForEach(post.photos, id: \.id) { photo in
+                    AsyncImage(url: URL(string: "\(photo.imageURL)")){ image in
+                        image
+                            .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: size.width, height: size.height + (minY > 0 ? minY : 0))
                             .clipped()
+                            .onTapGesture {
+                                withAnimation(.easeInOut) {
+                                    postViewModel.selectedImages = post.photos.map { $0.imageURL }
+                                    postViewModel.selectedImageID = photo.imageURL
+                                }
+                            }
                             .overlay(
                                 LinearGradient(
                                     gradient: Gradient(colors: [Color.black.opacity(0.5), Color.clear]),
@@ -87,10 +99,8 @@ struct CMFeedDetailContentView: View {
                                 .zIndex(1),
                                 alignment: .top
                             )
-                    .onTapGesture {
-                        withAnimation(.default) {
-                            // TODO: 선택한 이미지 배열에
-                        }
+                    } placeholder: {
+                        ProgressView()
                     }
                 }
             }
@@ -103,7 +113,7 @@ struct CMFeedDetailContentView: View {
     }
     
     private func feedInfoView() -> some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
             HStack {
                 ForEach(0...1, id: \.self) { _ in
                     Text("#레이어드")
@@ -119,28 +129,25 @@ struct CMFeedDetailContentView: View {
             .padding([.leading, .top])
             .padding(.bottom, 8)
             
-            Text("무겁게 축 쳐지는 머리 ➡️ 가벼운 허쉬 레이어드")
+            Text("\(post.description ?? "")")
                 .padding(.horizontal)
             
             Divider()
                 .frame(height: 7)
                 .background(.gray)
                 .padding(.top)
-                .padding(.bottom, 10)
-            
-            //TODO: 이거도 팔고 있어요 View
         }
     }
     
     private func designerProfileView() -> some View {
         HStack(alignment: .center) {
-            AsyncImage(url: images[0])
+            DMAsyncImage(url: images[0])
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: 50)
                     .clipShape(Circle())
             
             VStack(alignment: .leading) {
-                Text("elwkdlsj_dkdlel")
+                Text("\(post.designerID)")
                     .font(.system(size: 16, design: .serif))
                 
                 Group {
@@ -163,7 +170,6 @@ struct CMFeedDetailContentView: View {
                     .background(.black)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
             }
-            
         }
         .padding(.horizontal)
     }
@@ -197,7 +203,6 @@ struct CMFeedDetailContentView: View {
                 .background(.pink)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 
-                //TODO: 작성자인지 구분하여 버튼을 다르게
             }
             .padding(.horizontal)
             .padding(.vertical, 10)
@@ -205,41 +210,35 @@ struct CMFeedDetailContentView: View {
         }
     }
     
-    // TODO: Image DetailView
-//    var imageDetailView: some View {
-//        ZStack {
-//            Color.black
-//                .ignoresSafeArea()
-//            
-//            TabView(selection: $postViewModel.selectedImageID) {
-//                ForEach(postViewModel.selectedImages, id: \.self) { imageString in
-//                    AsyncImage(url: URL(string: imageString)) { image in
-//                        image
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                    } placeholder: {
-//                        ProgressView()
-//                    }
-//                }
-//            }
-//            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-//            .overlay(
-//                Button {
-//                    withAnimation(.default) {
-//                        postViewModel.selectedImages.removeAll()
-//                    }
-//                } label: {
-//                    Image(systemName: "xmark")
-//                        .foregroundStyle(.white)
-//                        .padding()
-//                }
-//                    .padding(.top, safeArea.top)
-//                ,alignment: .topTrailing
-//            )
-//        }
-//    }
+    var imageDetailView: some View {
+        ZStack {
+            Color.black
+                .ignoresSafeArea()
+            
+            TabView(selection: $postViewModel.selectedImageID) {
+                ForEach(postViewModel.selectedImages, id: \.self) { imageString in
+                    DMAsyncImage(url:imageString)
+                            .aspectRatio(contentMode: .fit)
+                }
+            }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+            .overlay(
+                Button {
+                    withAnimation(.default) {
+                        postViewModel.selectedImages.removeAll()
+                    }
+                } label: {
+                    Image(systemName: "xmark")
+                        .foregroundColor(.white)
+                        .padding()
+                }
+                    .padding(.top, safeArea.top)
+                ,alignment: .topTrailing
+            )
+        }
+    }
 }
 
 #Preview {
-    CMFeedDetailView()
+    CMFeedDetailView(post: Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg"),Photo(id: "p2", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전"))
 }

@@ -33,6 +33,68 @@
 		3B8BCA9A2AC142040006C79F /* ImageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCA992AC142040006C79F /* ImageBubble.swift */; };
 		3B8BCA9C2AC142170006C79F /* BoardBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCA9B2AC142170006C79F /* BoardBubble.swift */; };
 		3B8BCA9E2AC145480006C79F /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCA9D2AC145480006C79F /* MessageType.swift */; };
+		1D9067232AC1F62D0028A660 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067222AC1F62D0028A660 /* PostDetailView.swift */; };
+		2FB87FD12ACCF18F00FC9B5D /* (null) in Resources */ = {isa = PBXBuildFile; };
+		3BCF2C1E2ACD3E73009C18C2 /* SharedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C052ACD3E72009C18C2 /* SharedViewModel.swift */; };
+		3BCF2C1F2ACD3E73009C18C2 /* ChattingListRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C072ACD3E72009C18C2 /* ChattingListRoomViewModel.swift */; };
+		3BCF2C212ACD3E73009C18C2 /* SharedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0A2ACD3E72009C18C2 /* SharedModel.swift */; };
+		3BCF2C222ACD3E73009C18C2 /* TextBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0C2ACD3E72009C18C2 /* TextBubble.swift */; };
+		3BCF2C232ACD3E73009C18C2 /* BoardBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0D2ACD3E72009C18C2 /* BoardBubble.swift */; };
+		3BCF2C242ACD3E73009C18C2 /* ImageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0E2ACD3E72009C18C2 /* ImageBubble.swift */; };
+		3BCF2C252ACD3E73009C18C2 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0F2ACD3E72009C18C2 /* ChatRoom.swift */; };
+		3BCF2C262ACD3E73009C18C2 /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C102ACD3E72009C18C2 /* MessageType.swift */; };
+		3BCF2C272ACD3E73009C18C2 /* CommonBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C112ACD3E72009C18C2 /* CommonBubble.swift */; };
+		3BCF2C282ACD3E73009C18C2 /* ChatBubbleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C152ACD3E72009C18C2 /* ChatBubbleModifier.swift */; };
+		3BCF2C292ACD3E73009C18C2 /* BoardBubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C162ACD3E72009C18C2 /* BoardBubbleCell.swift */; };
+		3BCF2C2A2ACD3E73009C18C2 /* ChatRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C172ACD3E72009C18C2 /* ChatRoomView.swift */; };
+		3BCF2C2B2ACD3E73009C18C2 /* ChattingListRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C182ACD3E72009C18C2 /* ChattingListRoomView.swift */; };
+		3BCF2C2C2ACD3E73009C18C2 /* BubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C192ACD3E72009C18C2 /* BubbleCell.swift */; };
+		3BCF2C2D2ACD3E73009C18C2 /* TempPhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C1A2ACD3E72009C18C2 /* TempPhotoPickerView.swift */; };
+		3BCF2C2E2ACD3E73009C18C2 /* ChatUtilityMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C1B2ACD3E72009C18C2 /* ChatUtilityMenuView.swift */; };
+		3BCF2C2F2ACD3E73009C18C2 /* ImageBubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C1C2ACD3E72009C18C2 /* ImageBubbleCell.swift */; };
+		3BCF2C302ACD3E73009C18C2 /* SharedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C1D2ACD3E72009C18C2 /* SharedView.swift */; };
+		3BCF2C332ACD3F6A009C18C2 /* ChattingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C322ACD3F69009C18C2 /* ChattingViewModel.swift */; };
+		3BCF2C352ACD40C2009C18C2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BCF2C342ACD40C2009C18C2 /* GoogleService-Info.plist */; };
+		3BCF2C692ACD4248009C18C2 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C382ACD4247009C18C2 /* PostDetailViewModel.swift */; };
+		3BCF2C6A2ACD4248009C18C2 /* CMPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C392ACD4247009C18C2 /* CMPostViewModel.swift */; };
+		3BCF2C6B2ACD4248009C18C2 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C3B2ACD4247009C18C2 /* Client.swift */; };
+		3BCF2C6C2ACD4248009C18C2 /* Keyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C3C2ACD4247009C18C2 /* Keyword.swift */; };
+		3BCF2C6D2ACD4248009C18C2 /* CMReviewCreatePhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C3F2ACD4247009C18C2 /* CMReviewCreatePhotosView.swift */; };
+		3BCF2C6E2ACD4248009C18C2 /* CMReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C402ACD4247009C18C2 /* CMReviewDetailView.swift */; };
+		3BCF2C6F2ACD4248009C18C2 /* CMReviewCreateContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C412ACD4247009C18C2 /* CMReviewCreateContentView.swift */; };
+		3BCF2C702ACD4248009C18C2 /* CMReviewCreateDesignerScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C422ACD4247009C18C2 /* CMReviewCreateDesignerScoreView.swift */; };
+		3BCF2C712ACD4248009C18C2 /* CMReviewCreateMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C432ACD4247009C18C2 /* CMReviewCreateMainView.swift */; };
+		3BCF2C722ACD4248009C18C2 /* CMReviewCreateKeywordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C442ACD4247009C18C2 /* CMReviewCreateKeywordsView.swift */; };
+		3BCF2C732ACD4248009C18C2 /* CMUpcomingReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C462ACD4247009C18C2 /* CMUpcomingReservationView.swift */; };
+		3BCF2C742ACD4248009C18C2 /* CMLastReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C472ACD4247009C18C2 /* CMLastReservationView.swift */; };
+		3BCF2C752ACD4248009C18C2 /* CMReservationHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C482ACD4247009C18C2 /* CMReservationHistoryView.swift */; };
+		3BCF2C762ACD4248009C18C2 /* CMReservationDateTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C492ACD4247009C18C2 /* CMReservationDateTimeView.swift */; };
+		3BCF2C772ACD4248009C18C2 /* CMReservationHistoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C4A2ACD4247009C18C2 /* CMReservationHistoryDetailView.swift */; };
+		3BCF2C782ACD4248009C18C2 /* CMReservationCancelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C4B2ACD4247009C18C2 /* CMReservationCancelView.swift */; };
+		3BCF2C792ACD4248009C18C2 /* CMReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C4C2ACD4247009C18C2 /* CMReservationView.swift */; };
+		3BCF2C7A2ACD4248009C18C2 /* CMSearchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C4E2ACD4247009C18C2 /* CMSearchHistoryView.swift */; };
+		3BCF2C7B2ACD4248009C18C2 /* CMSearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C4F2ACD4247009C18C2 /* CMSearchResultView.swift */; };
+		3BCF2C7C2ACD4248009C18C2 /* CMFeedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C502ACD4247009C18C2 /* CMFeedDetailView.swift */; };
+		3BCF2C7D2ACD4248009C18C2 /* CMHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C512ACD4247009C18C2 /* CMHomeCell.swift */; };
+		3BCF2C7E2ACD4248009C18C2 /* CMSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C522ACD4247009C18C2 /* CMSearchView.swift */; };
+		3BCF2C7F2ACD4248009C18C2 /* CMFeedDetailContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C532ACD4247009C18C2 /* CMFeedDetailContentView.swift */; };
+		3BCF2C802ACD4248009C18C2 /* CMHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C542ACD4247009C18C2 /* CMHomeView.swift */; };
+		3BCF2C812ACD4248009C18C2 /* CMFollowingPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C552ACD4248009C18C2 /* CMFollowingPostView.swift */; };
+		3BCF2C822ACD4248009C18C2 /* CMRecommendPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C562ACD4248009C18C2 /* CMRecommendPostView.swift */; };
+		3BCF2C832ACD4248009C18C2 /* CMFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C582ACD4248009C18C2 /* CMFilterView.swift */; };
+		3BCF2C842ACD4248009C18C2 /* CMMainChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C5A2ACD4248009C18C2 /* CMMainChattingView.swift */; };
+		3BCF2C852ACD4248009C18C2 /* ClientMainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C5B2ACD4248009C18C2 /* ClientMainTabView.swift */; };
+		3BCF2C862ACD4248009C18C2 /* CMLikePostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C5D2ACD4248009C18C2 /* CMLikePostListView.swift */; };
+		3BCF2C872ACD4248009C18C2 /* CMAccountInfoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C5F2ACD4248009C18C2 /* CMAccountInfoEditView.swift */; };
+		3BCF2C882ACD4248009C18C2 /* CMProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C602ACD4248009C18C2 /* CMProfileEditView.swift */; };
+		3BCF2C892ACD4248009C18C2 /* CMCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C612ACD4248009C18C2 /* CMCustomTextField.swift */; };
+		3BCF2C8A2ACD4248009C18C2 /* CMClientInfoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C622ACD4248009C18C2 /* CMClientInfoEditView.swift */; };
+		3BCF2C8B2ACD4248009C18C2 /* CMSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C632ACD4248009C18C2 /* CMSegmentedControl.swift */; };
+		3BCF2C8C2ACD4248009C18C2 /* CMFollowingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C642ACD4248009C18C2 /* CMFollowingListView.swift */; };
+		3BCF2C8D2ACD4248009C18C2 /* CMReviewListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C652ACD4248009C18C2 /* CMReviewListView.swift */; };
+		3BCF2C8E2ACD4248009C18C2 /* CMNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C662ACD4248009C18C2 /* CMNotificationView.swift */; };
+		3BCF2C8F2ACD4248009C18C2 /* CMSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C672ACD4248009C18C2 /* CMSettingsView.swift */; };
+		3BCF2C902ACD4248009C18C2 /* CMProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C682ACD4248009C18C2 /* CMProfileView.swift */; };
 		639DB6332AC10E44002692E5 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 639DB6322AC10E44002692E5 /* FirebaseAppCheck */; };
 		639DB6352AC10E44002692E5 /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 639DB6342AC10E44002692E5 /* FirebaseAppDistribution-Beta */; };
 		639DB6372AC10E44002692E5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 639DB6362AC10E44002692E5 /* FirebaseAuth */; };
@@ -57,12 +119,6 @@
 		639DB65D2AC10E44002692E5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 639DB65C2AC10E44002692E5 /* FirebaseStorage */; };
 		639DB65F2AC10E44002692E5 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 639DB65E2AC10E44002692E5 /* FirebaseStorageCombine-Community */; };
 		639DB6612AC10F13002692E5 /* DesignerMainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6602AC10F13002692E5 /* DesignerMainTabView.swift */; };
-		639DB6692AC10F7E002692E5 /* ClientMainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6682AC10F7E002692E5 /* ClientMainTabView.swift */; };
-		639DB6702AC119FE002692E5 /* CMHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB66F2AC119FE002692E5 /* CMHomeView.swift */; };
-		639DB6722AC11A3A002692E5 /* CMFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6712AC11A3A002692E5 /* CMFilterView.swift */; };
-		639DB6742AC11A46002692E5 /* CMReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6732AC11A46002692E5 /* CMReservationView.swift */; };
-		639DB6762AC11A52002692E5 /* CMMainChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6752AC11A52002692E5 /* CMMainChattingView.swift */; };
-		639DB6782AC11A5D002692E5 /* CMProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6772AC11A5D002692E5 /* CMProfileView.swift */; };
 		639DB67A2AC11AC2002692E5 /* DMReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6792AC11AC2002692E5 /* DMReviewView.swift */; };
 		639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB67D2AC11AF5002692E5 /* DMProfileView.swift */; };
 		639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6802AC11B21002692E5 /* DMMainChattingView.swift */; };
@@ -114,13 +170,68 @@
 		3B8BCA992AC142040006C79F /* ImageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBubble.swift; sourceTree = "<group>"; };
 		3B8BCA9B2AC142170006C79F /* BoardBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardBubble.swift; sourceTree = "<group>"; };
 		3B8BCA9D2AC145480006C79F /* MessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
+		1D9067222AC1F62D0028A660 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
+		3BCF2C052ACD3E72009C18C2 /* SharedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedViewModel.swift; sourceTree = "<group>"; };
+		3BCF2C072ACD3E72009C18C2 /* ChattingListRoomViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingListRoomViewModel.swift; sourceTree = "<group>"; };
+		3BCF2C0A2ACD3E72009C18C2 /* SharedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedModel.swift; sourceTree = "<group>"; };
+		3BCF2C0C2ACD3E72009C18C2 /* TextBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextBubble.swift; sourceTree = "<group>"; };
+		3BCF2C0D2ACD3E72009C18C2 /* BoardBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardBubble.swift; sourceTree = "<group>"; };
+		3BCF2C0E2ACD3E72009C18C2 /* ImageBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageBubble.swift; sourceTree = "<group>"; };
+		3BCF2C0F2ACD3E72009C18C2 /* ChatRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
+		3BCF2C102ACD3E72009C18C2 /* MessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
+		3BCF2C112ACD3E72009C18C2 /* CommonBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonBubble.swift; sourceTree = "<group>"; };
+		3BCF2C152ACD3E72009C18C2 /* ChatBubbleModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatBubbleModifier.swift; sourceTree = "<group>"; };
+		3BCF2C162ACD3E72009C18C2 /* BoardBubbleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardBubbleCell.swift; sourceTree = "<group>"; };
+		3BCF2C172ACD3E72009C18C2 /* ChatRoomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomView.swift; sourceTree = "<group>"; };
+		3BCF2C182ACD3E72009C18C2 /* ChattingListRoomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingListRoomView.swift; sourceTree = "<group>"; };
+		3BCF2C192ACD3E72009C18C2 /* BubbleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleCell.swift; sourceTree = "<group>"; };
+		3BCF2C1A2ACD3E72009C18C2 /* TempPhotoPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempPhotoPickerView.swift; sourceTree = "<group>"; };
+		3BCF2C1B2ACD3E72009C18C2 /* ChatUtilityMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUtilityMenuView.swift; sourceTree = "<group>"; };
+		3BCF2C1C2ACD3E72009C18C2 /* ImageBubbleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageBubbleCell.swift; sourceTree = "<group>"; };
+		3BCF2C1D2ACD3E72009C18C2 /* SharedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedView.swift; sourceTree = "<group>"; };
+		3BCF2C322ACD3F69009C18C2 /* ChattingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingViewModel.swift; sourceTree = "<group>"; };
+		3BCF2C342ACD40C2009C18C2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3BCF2C382ACD4247009C18C2 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
+		3BCF2C392ACD4247009C18C2 /* CMPostViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMPostViewModel.swift; sourceTree = "<group>"; };
+		3BCF2C3B2ACD4247009C18C2 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
+		3BCF2C3C2ACD4247009C18C2 /* Keyword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keyword.swift; sourceTree = "<group>"; };
+		3BCF2C3F2ACD4247009C18C2 /* CMReviewCreatePhotosView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMReviewCreatePhotosView.swift; sourceTree = "<group>"; };
+		3BCF2C402ACD4247009C18C2 /* CMReviewDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMReviewDetailView.swift; sourceTree = "<group>"; };
+		3BCF2C412ACD4247009C18C2 /* CMReviewCreateContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMReviewCreateContentView.swift; sourceTree = "<group>"; };
+		3BCF2C422ACD4247009C18C2 /* CMReviewCreateDesignerScoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMReviewCreateDesignerScoreView.swift; sourceTree = "<group>"; };
+		3BCF2C432ACD4247009C18C2 /* CMReviewCreateMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMReviewCreateMainView.swift; sourceTree = "<group>"; };
+		3BCF2C442ACD4247009C18C2 /* CMReviewCreateKeywordsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMReviewCreateKeywordsView.swift; sourceTree = "<group>"; };
+		3BCF2C462ACD4247009C18C2 /* CMUpcomingReservationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMUpcomingReservationView.swift; sourceTree = "<group>"; };
+		3BCF2C472ACD4247009C18C2 /* CMLastReservationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMLastReservationView.swift; sourceTree = "<group>"; };
+		3BCF2C482ACD4247009C18C2 /* CMReservationHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMReservationHistoryView.swift; sourceTree = "<group>"; };
+		3BCF2C492ACD4247009C18C2 /* CMReservationDateTimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMReservationDateTimeView.swift; sourceTree = "<group>"; };
+		3BCF2C4A2ACD4247009C18C2 /* CMReservationHistoryDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMReservationHistoryDetailView.swift; sourceTree = "<group>"; };
+		3BCF2C4B2ACD4247009C18C2 /* CMReservationCancelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMReservationCancelView.swift; sourceTree = "<group>"; };
+		3BCF2C4C2ACD4247009C18C2 /* CMReservationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMReservationView.swift; sourceTree = "<group>"; };
+		3BCF2C4E2ACD4247009C18C2 /* CMSearchHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMSearchHistoryView.swift; sourceTree = "<group>"; };
+		3BCF2C4F2ACD4247009C18C2 /* CMSearchResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMSearchResultView.swift; sourceTree = "<group>"; };
+		3BCF2C502ACD4247009C18C2 /* CMFeedDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMFeedDetailView.swift; sourceTree = "<group>"; };
+		3BCF2C512ACD4247009C18C2 /* CMHomeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMHomeCell.swift; sourceTree = "<group>"; };
+		3BCF2C522ACD4247009C18C2 /* CMSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMSearchView.swift; sourceTree = "<group>"; };
+		3BCF2C532ACD4247009C18C2 /* CMFeedDetailContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMFeedDetailContentView.swift; sourceTree = "<group>"; };
+		3BCF2C542ACD4247009C18C2 /* CMHomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMHomeView.swift; sourceTree = "<group>"; };
+		3BCF2C552ACD4248009C18C2 /* CMFollowingPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMFollowingPostView.swift; sourceTree = "<group>"; };
+		3BCF2C562ACD4248009C18C2 /* CMRecommendPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMRecommendPostView.swift; sourceTree = "<group>"; };
+		3BCF2C582ACD4248009C18C2 /* CMFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMFilterView.swift; sourceTree = "<group>"; };
+		3BCF2C5A2ACD4248009C18C2 /* CMMainChattingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMMainChattingView.swift; sourceTree = "<group>"; };
+		3BCF2C5B2ACD4248009C18C2 /* ClientMainTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientMainTabView.swift; sourceTree = "<group>"; };
+		3BCF2C5D2ACD4248009C18C2 /* CMLikePostListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMLikePostListView.swift; sourceTree = "<group>"; };
+		3BCF2C5F2ACD4248009C18C2 /* CMAccountInfoEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMAccountInfoEditView.swift; sourceTree = "<group>"; };
+		3BCF2C602ACD4248009C18C2 /* CMProfileEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMProfileEditView.swift; sourceTree = "<group>"; };
+		3BCF2C612ACD4248009C18C2 /* CMCustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMCustomTextField.swift; sourceTree = "<group>"; };
+		3BCF2C622ACD4248009C18C2 /* CMClientInfoEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMClientInfoEditView.swift; sourceTree = "<group>"; };
+		3BCF2C632ACD4248009C18C2 /* CMSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMSegmentedControl.swift; sourceTree = "<group>"; };
+		3BCF2C642ACD4248009C18C2 /* CMFollowingListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMFollowingListView.swift; sourceTree = "<group>"; };
+		3BCF2C652ACD4248009C18C2 /* CMReviewListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMReviewListView.swift; sourceTree = "<group>"; };
+		3BCF2C662ACD4248009C18C2 /* CMNotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMNotificationView.swift; sourceTree = "<group>"; };
+		3BCF2C672ACD4248009C18C2 /* CMSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMSettingsView.swift; sourceTree = "<group>"; };
+		3BCF2C682ACD4248009C18C2 /* CMProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMProfileView.swift; sourceTree = "<group>"; };
 		639DB6602AC10F13002692E5 /* DesignerMainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignerMainTabView.swift; sourceTree = "<group>"; };
-		639DB6682AC10F7E002692E5 /* ClientMainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientMainTabView.swift; sourceTree = "<group>"; };
-		639DB66F2AC119FE002692E5 /* CMHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHomeView.swift; sourceTree = "<group>"; };
-		639DB6712AC11A3A002692E5 /* CMFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFilterView.swift; sourceTree = "<group>"; };
-		639DB6732AC11A46002692E5 /* CMReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReservationView.swift; sourceTree = "<group>"; };
-		639DB6752AC11A52002692E5 /* CMMainChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMMainChattingView.swift; sourceTree = "<group>"; };
-		639DB6772AC11A5D002692E5 /* CMProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMProfileView.swift; sourceTree = "<group>"; };
 		639DB6792AC11AC2002692E5 /* DMReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMReviewView.swift; sourceTree = "<group>"; };
 		639DB67D2AC11AF5002692E5 /* DMProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMProfileView.swift; sourceTree = "<group>"; };
 		639DB6802AC11B21002692E5 /* DMMainChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMMainChattingView.swift; sourceTree = "<group>"; };
@@ -179,48 +290,223 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1D4A9FC02AC26F28006C4937 /* Shared */ = {
+		3BCF2C032ACD3E72009C18C2 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				1D4A9FC12AC26F28006C4937 /* ViewModel */,
-				1D4A9FC32AC26F28006C4937 /* Model */,
-				1D4A9FC52AC26F28006C4937 /* View */,
+				3BCF2C042ACD3E72009C18C2 /* ViewModel */,
+				3BCF2C092ACD3E72009C18C2 /* Model */,
+				3BCF2C122ACD3E72009C18C2 /* View */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		1D4A9FC12AC26F28006C4937 /* ViewModel */ = {
+		3BCF2C042ACD3E72009C18C2 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				1D4A9FC22AC26F28006C4937 /* SharedViewModel.swift */,
+				3BCF2C052ACD3E72009C18C2 /* SharedViewModel.swift */,
+				3BCF2C062ACD3E72009C18C2 /* Chatting */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		1D4A9FC32AC26F28006C4937 /* Model */ = {
+		3BCF2C062ACD3E72009C18C2 /* Chatting */ = {
 			isa = PBXGroup;
 			children = (
-				1D4A9FC42AC26F28006C4937 /* SharedModel.swift */,
+				3BCF2C322ACD3F69009C18C2 /* ChattingViewModel.swift */,
+				3BCF2C072ACD3E72009C18C2 /* ChattingListRoomViewModel.swift */,
+			);
+			path = Chatting;
+			sourceTree = "<group>";
+		};
+		3BCF2C092ACD3E72009C18C2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3BCF2C0A2ACD3E72009C18C2 /* SharedModel.swift */,
+				3BCF2C0B2ACD3E72009C18C2 /* Chatting */,
 			);
 			path = Model;
 			sourceTree = "<group>";
 		};
-		1D4A9FC52AC26F28006C4937 /* View */ = {
+		3BCF2C0B2ACD3E72009C18C2 /* Chatting */ = {
 			isa = PBXGroup;
 			children = (
-				1D4A9FC62AC26F28006C4937 /* SharedView.swift */,
+				3BCF2C0C2ACD3E72009C18C2 /* TextBubble.swift */,
+				3BCF2C0D2ACD3E72009C18C2 /* BoardBubble.swift */,
+				3BCF2C0E2ACD3E72009C18C2 /* ImageBubble.swift */,
+				3BCF2C0F2ACD3E72009C18C2 /* ChatRoom.swift */,
+				3BCF2C102ACD3E72009C18C2 /* MessageType.swift */,
+				3BCF2C112ACD3E72009C18C2 /* CommonBubble.swift */,
+			);
+			path = Chatting;
+			sourceTree = "<group>";
+		};
+		3BCF2C122ACD3E72009C18C2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3BCF2C132ACD3E72009C18C2 /* Chatting */,
+				3BCF2C1D2ACD3E72009C18C2 /* SharedView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		639DB6272AC10DE3002692E5 /* Client */ = {
+		3BCF2C132ACD3E72009C18C2 /* Chatting */ = {
 			isa = PBXGroup;
 			children = (
-				639DB6652AC10F3E002692E5 /* Model */,
-				639DB6672AC10F4C002692E5 /* ViewModel */,
-				639DB6662AC10F44002692E5 /* View */,
+				3BCF2C142ACD3E72009C18C2 /* Modifier */,
+				3BCF2C162ACD3E72009C18C2 /* BoardBubbleCell.swift */,
+				3BCF2C172ACD3E72009C18C2 /* ChatRoomView.swift */,
+				3BCF2C182ACD3E72009C18C2 /* ChattingListRoomView.swift */,
+				3BCF2C192ACD3E72009C18C2 /* BubbleCell.swift */,
+				3BCF2C1A2ACD3E72009C18C2 /* TempPhotoPickerView.swift */,
+				3BCF2C1B2ACD3E72009C18C2 /* ChatUtilityMenuView.swift */,
+				3BCF2C1C2ACD3E72009C18C2 /* ImageBubbleCell.swift */,
+			);
+			path = Chatting;
+			sourceTree = "<group>";
+		};
+		3BCF2C142ACD3E72009C18C2 /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				96F637D92AC2A9C900EF74FF /* ReservationView */,
+				639DB67B2AC11AD5002692E5 /* DMReview */,
+				639DB6852AC11B4A002692E5 /* DMPostView */,
+				639DB6822AC11B29002692E5 /* DMReservationView */,
+				639DB67F2AC11B17002692E5 /* DMChattingView */,
+				639DB67C2AC11AE7002692E5 /* ProfileView */,
+				3BCF2C152ACD3E72009C18C2 /* ChatBubbleModifier.swift */,
+			);
+			path = Modifier;
+			sourceTree = "<group>";
+		};
+		3BCF2C362ACD4247009C18C2 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				3BCF2C372ACD4247009C18C2 /* ViewModel */,
+				3BCF2C3A2ACD4247009C18C2 /* Model */,
+				3BCF2C3D2ACD4247009C18C2 /* View */,
 			);
 			path = Client;
+			sourceTree = "<group>";
+		};
+		3BCF2C372ACD4247009C18C2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				1D9067182AC151A80028A660 /* DMAsyncImage.swift */,
+				1D90671C2AC176020028A660 /* DMPostViewModel.swift */,
+				1D3AFE532ACB3D33008F8582 /* DMExpandableText.swift */,
+				962A8DF52ACD21800021F2F6 /* DMAccount.swift */,
+				3BCF2C382ACD4247009C18C2 /* PostDetailViewModel.swift */,
+				3BCF2C392ACD4247009C18C2 /* CMPostViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3BCF2C3A2ACD4247009C18C2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3BCF2C3B2ACD4247009C18C2 /* Client.swift */,
+				3BCF2C3C2ACD4247009C18C2 /* Keyword.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3BCF2C3D2ACD4247009C18C2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3BCF2C3E2ACD4247009C18C2 /* CMReview */,
+				3BCF2C452ACD4247009C18C2 /* CMReservation */,
+				3BCF2C4D2ACD4247009C18C2 /* CMHome */,
+				3BCF2C572ACD4248009C18C2 /* CMFilter */,
+				3BCF2C592ACD4248009C18C2 /* CMChatting */,
+				3BCF2C5B2ACD4248009C18C2 /* ClientMainTabView.swift */,
+				3BCF2C5C2ACD4248009C18C2 /* CMProfile */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3BCF2C3E2ACD4247009C18C2 /* CMReview */ = {
+			isa = PBXGroup;
+			children = (
+				3BCF2C3F2ACD4247009C18C2 /* CMReviewCreatePhotosView.swift */,
+				3BCF2C402ACD4247009C18C2 /* CMReviewDetailView.swift */,
+				3BCF2C412ACD4247009C18C2 /* CMReviewCreateContentView.swift */,
+				3BCF2C422ACD4247009C18C2 /* CMReviewCreateDesignerScoreView.swift */,
+				3BCF2C432ACD4247009C18C2 /* CMReviewCreateMainView.swift */,
+				3BCF2C442ACD4247009C18C2 /* CMReviewCreateKeywordsView.swift */,
+			);
+			path = CMReview;
+			sourceTree = "<group>";
+		};
+		3BCF2C452ACD4247009C18C2 /* CMReservation */ = {
+			isa = PBXGroup;
+			children = (
+				3BCF2C462ACD4247009C18C2 /* CMUpcomingReservationView.swift */,
+				3BCF2C472ACD4247009C18C2 /* CMLastReservationView.swift */,
+				3BCF2C482ACD4247009C18C2 /* CMReservationHistoryView.swift */,
+				3BCF2C492ACD4247009C18C2 /* CMReservationDateTimeView.swift */,
+				3BCF2C4A2ACD4247009C18C2 /* CMReservationHistoryDetailView.swift */,
+				3BCF2C4B2ACD4247009C18C2 /* CMReservationCancelView.swift */,
+				3BCF2C4C2ACD4247009C18C2 /* CMReservationView.swift */,
+			);
+			path = CMReservation;
+			sourceTree = "<group>";
+		};
+		3BCF2C4D2ACD4247009C18C2 /* CMHome */ = {
+			isa = PBXGroup;
+			children = (
+				3BCF2C4E2ACD4247009C18C2 /* CMSearchHistoryView.swift */,
+				3BCF2C4F2ACD4247009C18C2 /* CMSearchResultView.swift */,
+				3BCF2C502ACD4247009C18C2 /* CMFeedDetailView.swift */,
+				3BCF2C512ACD4247009C18C2 /* CMHomeCell.swift */,
+				3BCF2C522ACD4247009C18C2 /* CMSearchView.swift */,
+				3BCF2C532ACD4247009C18C2 /* CMFeedDetailContentView.swift */,
+				3BCF2C542ACD4247009C18C2 /* CMHomeView.swift */,
+				3BCF2C552ACD4248009C18C2 /* CMFollowingPostView.swift */,
+				3BCF2C562ACD4248009C18C2 /* CMRecommendPostView.swift */,
+			);
+			path = CMHome;
+			sourceTree = "<group>";
+		};
+		3BCF2C572ACD4248009C18C2 /* CMFilter */ = {
+			isa = PBXGroup;
+			children = (
+				3BCF2C582ACD4248009C18C2 /* CMFilterView.swift */,
+			);
+			path = CMFilter;
+			sourceTree = "<group>";
+		};
+		3BCF2C592ACD4248009C18C2 /* CMChatting */ = {
+			isa = PBXGroup;
+			children = (
+				3BCF2C5A2ACD4248009C18C2 /* CMMainChattingView.swift */,
+			);
+			path = CMChatting;
+			sourceTree = "<group>";
+		};
+		3BCF2C5C2ACD4248009C18C2 /* CMProfile */ = {
+			isa = PBXGroup;
+			children = (
+				3BCF2C5D2ACD4248009C18C2 /* CMLikePostListView.swift */,
+				3BCF2C5E2ACD4248009C18C2 /* CMProfileEdit */,
+				3BCF2C632ACD4248009C18C2 /* CMSegmentedControl.swift */,
+				3BCF2C642ACD4248009C18C2 /* CMFollowingListView.swift */,
+				3BCF2C652ACD4248009C18C2 /* CMReviewListView.swift */,
+				3BCF2C662ACD4248009C18C2 /* CMNotificationView.swift */,
+				3BCF2C672ACD4248009C18C2 /* CMSettingsView.swift */,
+				3BCF2C682ACD4248009C18C2 /* CMProfileView.swift */,
+			);
+			path = CMProfile;
+			sourceTree = "<group>";
+		};
+		3BCF2C5E2ACD4248009C18C2 /* CMProfileEdit */ = {
+			isa = PBXGroup;
+			children = (
+				3BCF2C5F2ACD4248009C18C2 /* CMAccountInfoEditView.swift */,
+				3BCF2C602ACD4248009C18C2 /* CMProfileEditView.swift */,
+				3BCF2C612ACD4248009C18C2 /* CMCustomTextField.swift */,
+				3BCF2C622ACD4248009C18C2 /* CMClientInfoEditView.swift */,
+			);
+			path = CMProfileEdit;
 			sourceTree = "<group>";
 		};
 		639DB6282AC10DED002692E5 /* Designer */ = {
@@ -238,7 +524,6 @@
 		639DB6622AC10F19002692E5 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				96F637D92AC2A9C900EF74FF /* ReservationView */,
 				639DB67B2AC11AD5002692E5 /* DMReview */,
 				639DB6852AC11B4A002692E5 /* DMPostView */,
 				639DB6822AC11B29002692E5 /* DMReservationView */,
@@ -261,95 +546,8 @@
 			children = (
 				1D9067182AC151A80028A660 /* DMAsyncImage.swift */,
 				1D90671C2AC176020028A660 /* DMPostViewModel.swift */,
-				1D3AFE532ACB3D33008F8582 /* DMExpandableText.swift */,
-				962A8DF52ACD21800021F2F6 /* DMAccount.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		639DB6652AC10F3E002692E5 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				3B8BCA952AC1419C0006C79F /* ChatRoom.swift */,
-				3B8BCA972AC141F90006C79F /* TextBubble.swift */,
-				3B8BCA992AC142040006C79F /* ImageBubble.swift */,
-				3B8BCA9B2AC142170006C79F /* BoardBubble.swift */,
-				3B8BCA9D2AC145480006C79F /* MessageType.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		639DB6662AC10F44002692E5 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				639DB6682AC10F7E002692E5 /* ClientMainTabView.swift */,
-				639DB66A2AC1196C002692E5 /* CMHome */,
-				639DB66B2AC119B0002692E5 /* CMFilter */,
-				639DB66C2AC119BD002692E5 /* CMReservation */,
-				639DB66D2AC119D0002692E5 /* CMChatting */,
-				639DB66E2AC119DC002692E5 /* CMProfile */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		639DB6672AC10F4C002692E5 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				3B8BCA932AC1408B0006C79F /* ChattingViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		639DB66A2AC1196C002692E5 /* CMHome */ = {
-			isa = PBXGroup;
-			children = (
-				639DB66F2AC119FE002692E5 /* CMHomeView.swift */,
-				0947597F2AC1656C0066484F /* CMHomeCell.swift */,
-				2FFE87282AC12C4D00A7A728 /* CMSearchView.swift */,
-				2FFE872A2AC1462B00A7A728 /* CMSearchHistoryView.swift */,
-				2FFE872C2AC1464100A7A728 /* CMSearchResultView.swift */,
-				D8D70F242AC181970025291F /* CMFeedDetailView.swift */,
-				D8D70F262AC181A70025291F /* CMFeedDetailContentView.swift */,
-			);
-			path = CMHome;
-			sourceTree = "<group>";
-		};
-		639DB66B2AC119B0002692E5 /* CMFilter */ = {
-			isa = PBXGroup;
-			children = (
-				639DB6712AC11A3A002692E5 /* CMFilterView.swift */,
-			);
-			path = CMFilter;
-			sourceTree = "<group>";
-		};
-		639DB66C2AC119BD002692E5 /* CMReservation */ = {
-			isa = PBXGroup;
-			children = (
-				639DB6732AC11A46002692E5 /* CMReservationView.swift */,
-			);
-			path = CMReservation;
-			sourceTree = "<group>";
-		};
-		639DB66D2AC119D0002692E5 /* CMChatting */ = {
-			isa = PBXGroup;
-			children = (
-				639DB6752AC11A52002692E5 /* CMMainChattingView.swift */,
-			);
-			path = CMChatting;
-			sourceTree = "<group>";
-		};
-		639DB66E2AC119DC002692E5 /* CMProfile */ = {
-			isa = PBXGroup;
-			children = (
-				639DB6772AC11A5D002692E5 /* CMProfileView.swift */,
-				2FFE87322AC174C700A7A728 /* CMSegmentedControl.swift */,
-				2FFE87382AC17E2C00A7A728 /* CMLikeListView.swift */,
-				2FFE87342AC17D0D00A7A728 /* CMFollowingListView.swift */,
-				2FFE87362AC17D2A00A7A728 /* CMReviewListView.swift */,
-				2FFE87302AC171FF00A7A728 /* CMNotificationView.swift */,
-				2FFE872E2AC171A300A7A728 /* CMSettingsView.swift */,
-			);
-			path = CMProfile;
 			sourceTree = "<group>";
 		};
 		639DB67B2AC11AD5002692E5 /* DMReview */ = {
@@ -399,9 +597,9 @@
 		63CD89A42ABD85C300E70A56 = {
 			isa = PBXGroup;
 			children = (
+				3BCF2C342ACD40C2009C18C2 /* GoogleService-Info.plist */,
 				63CD89AF2ABD85C300E70A56 /* YeDi */,
 				63CD89AE2ABD85C300E70A56 /* Products */,
-				D85500DD2AC275CB00D1D2E2 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -416,9 +614,8 @@
 		63CD89AF2ABD85C300E70A56 /* YeDi */ = {
 			isa = PBXGroup;
 			children = (
-				96F637D72AC2A96D00EF74FF /* GoogleService-Info.plist */,
-				1D4A9FC02AC26F28006C4937 /* Shared */,
-				639DB6272AC10DE3002692E5 /* Client */,
+				3BCF2C362ACD4247009C18C2 /* Client */,
+				3BCF2C032ACD3E72009C18C2 /* Shared */,
 				639DB6282AC10DED002692E5 /* Designer */,
 				63CD89B22ABD85C300E70A56 /* ContentView.swift */,
 				63CD89B42ABD85C500E70A56 /* Assets.xcassets */,
@@ -544,8 +741,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */,
+				3BCF2C352ACD40C2009C18C2 /* GoogleService-Info.plist in Resources */,
 				63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */,
-				96F637D82AC2A96D00EF74FF /* GoogleService-Info.plist in Resources */,
+				2FB87FD12ACCF18F00FC9B5D /* (null) in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -556,49 +754,82 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D85500DE2AC276AD00D1D2E2 /* CMSettingsView.swift in Sources */,
-				3B8BCA942AC1408B0006C79F /* ChattingViewModel.swift in Sources */,
-				639DB6722AC11A3A002692E5 /* CMFilterView.swift in Sources */,
-				1D4A9FC92AC26F28006C4937 /* SharedView.swift in Sources */,
-				639DB6692AC10F7E002692E5 /* ClientMainTabView.swift in Sources */,
-				3B8BCA9E2AC145480006C79F /* MessageType.swift in Sources */,
-				3B8BCA9A2AC142040006C79F /* ImageBubble.swift in Sources */,
-				2FFE87352AC17D0D00A7A728 /* CMFollowingListView.swift in Sources */,
-				1D4A9FC72AC26F28006C4937 /* SharedViewModel.swift in Sources */,
+				3BCF2C8E2ACD4248009C18C2 /* CMNotificationView.swift in Sources */,
+				3BCF2C222ACD3E73009C18C2 /* TextBubble.swift in Sources */,
+				3BCF2C2C2ACD3E73009C18C2 /* BubbleCell.swift in Sources */,
+				3BCF2C812ACD4248009C18C2 /* CMFollowingPostView.swift in Sources */,
+				3BCF2C2D2ACD3E73009C18C2 /* TempPhotoPickerView.swift in Sources */,
+				3BCF2C2E2ACD3E73009C18C2 /* ChatUtilityMenuView.swift in Sources */,
 				639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */,
+				3BCF2C702ACD4248009C18C2 /* CMReviewCreateDesignerScoreView.swift in Sources */,
+				3BCF2C302ACD3E73009C18C2 /* SharedView.swift in Sources */,
+				3BCF2C7A2ACD4248009C18C2 /* CMSearchHistoryView.swift in Sources */,
+				3BCF2C1F2ACD3E73009C18C2 /* ChattingListRoomViewModel.swift in Sources */,
+				3BCF2C6C2ACD4248009C18C2 /* Keyword.swift in Sources */,
+				3BCF2C7C2ACD4248009C18C2 /* CMFeedDetailView.swift in Sources */,
 				639DB6872AC11B56002692E5 /* DMPostView.swift in Sources */,
-				3B8BCA982AC141F90006C79F /* TextBubble.swift in Sources */,
-				639DB6742AC11A46002692E5 /* CMReservationView.swift in Sources */,
-				3B8BCA962AC1419C0006C79F /* ChatRoom.swift in Sources */,
-				2FFE87312AC171FF00A7A728 /* CMNotificationView.swift in Sources */,
-				96CBD4042AC3C4250055CC7F /* ReservationSDetail.swift in Sources */,
+				3BCF2C252ACD3E73009C18C2 /* ChatRoom.swift in Sources */,
+				3BCF2C2B2ACD3E73009C18C2 /* ChattingListRoomView.swift in Sources */,
+				639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */,
+				3BCF2C8B2ACD4248009C18C2 /* CMSegmentedControl.swift in Sources */,
+				3BCF2C212ACD3E73009C18C2 /* SharedModel.swift in Sources */,
+				3BCF2C1E2ACD3E73009C18C2 /* SharedViewModel.swift in Sources */,
+				3BCF2C6F2ACD4248009C18C2 /* CMReviewCreateContentView.swift in Sources */,
+				639DB6872AC11B56002692E5 /* DMPostView.swift in Sources */,
+				3BCF2C282ACD3E73009C18C2 /* ChatBubbleModifier.swift in Sources */,
+				3BCF2C802ACD4248009C18C2 /* CMHomeView.swift in Sources */,
+				3BCF2C272ACD3E73009C18C2 /* CommonBubble.swift in Sources */,
+				3BCF2C842ACD4248009C18C2 /* CMMainChattingView.swift in Sources */,
 				639DB6842AC11B3B002692E5 /* DMReservationView.swift in Sources */,
-				2FFE87332AC174C700A7A728 /* CMSegmentedControl.swift in Sources */,
-				96CBD4002AC3AFCC0055CC7F /* TimeSettingDetail.swift in Sources */,
-				639DB6782AC11A5D002692E5 /* CMProfileView.swift in Sources */,
-				2FFE872B2AC1462B00A7A728 /* CMSearchHistoryView.swift in Sources */,
-				639DB6702AC119FE002692E5 /* CMHomeView.swift in Sources */,
+				3BCF2C292ACD3E73009C18C2 /* BoardBubbleCell.swift in Sources */,
+				3BCF2C852ACD4248009C18C2 /* ClientMainTabView.swift in Sources */,
+				3BCF2C762ACD4248009C18C2 /* CMReservationDateTimeView.swift in Sources */,
+				3BCF2C6A2ACD4248009C18C2 /* CMPostViewModel.swift in Sources */,
+				639DB67A2AC11AC2002692E5 /* DMReviewView.swift in Sources */,
+				3BCF2C242ACD3E73009C18C2 /* ImageBubble.swift in Sources */,
+				3BCF2C752ACD4248009C18C2 /* CMReservationHistoryView.swift in Sources */,
+				639DB6842AC11B3B002692E5 /* DMReservationView.swift in Sources */,
+				3BCF2C6D2ACD4248009C18C2 /* CMReviewCreatePhotosView.swift in Sources */,
+				3BCF2C742ACD4248009C18C2 /* CMLastReservationView.swift in Sources */,
+				3BCF2C2F2ACD3E73009C18C2 /* ImageBubbleCell.swift in Sources */,
 				1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */,
+				3BCF2C8C2ACD4248009C18C2 /* CMFollowingListView.swift in Sources */,
+				3BCF2C862ACD4248009C18C2 /* CMLikePostListView.swift in Sources */,
+				3BCF2C8D2ACD4248009C18C2 /* CMReviewListView.swift in Sources */,
+				3BCF2C782ACD4248009C18C2 /* CMReservationCancelView.swift in Sources */,
+				3BCF2C6E2ACD4248009C18C2 /* CMReviewDetailView.swift in Sources */,
+				3BCF2C792ACD4248009C18C2 /* CMReservationView.swift in Sources */,
 				639DB67A2AC11AC2002692E5 /* DMReviewView.swift in Sources */,
 				96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */,
-				D8D70F252AC181970025291F /* CMFeedDetailView.swift in Sources */,
-				639DB6762AC11A52002692E5 /* CMMainChattingView.swift in Sources */,
-				3B8BCA9C2AC142170006C79F /* BoardBubble.swift in Sources */,
 				962A8DF62ACD21800021F2F6 /* DMAccount.swift in Sources */,
 				96F637DF2AC2BCFD00EF74FF /* ReservationCellView.swift in Sources */,
 				1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */,
 				1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */,
-				2FFE87292AC12C4D00A7A728 /* CMSearchView.swift in Sources */,
-				D8D70F272AC181A70025291F /* CMFeedDetailContentView.swift in Sources */,
+				3BCF2C332ACD3F6A009C18C2 /* ChattingViewModel.swift in Sources */,
+				3BCF2C902ACD4248009C18C2 /* CMProfileView.swift in Sources */,
+				3BCF2C8F2ACD4248009C18C2 /* CMSettingsView.swift in Sources */,
+				3BCF2C712ACD4248009C18C2 /* CMReviewCreateMainView.swift in Sources */,
+				3BCF2C2A2ACD3E73009C18C2 /* ChatRoomView.swift in Sources */,
+				3BCF2C262ACD3E73009C18C2 /* MessageType.swift in Sources */,
 				63CD89B32ABD85C300E70A56 /* ContentView.swift in Sources */,
+				3BCF2C882ACD4248009C18C2 /* CMProfileEditView.swift in Sources */,
 				63CD89B12ABD85C300E70A56 /* YeDiApp.swift in Sources */,
-				094759802AC1656C0066484F /* CMHomeCell.swift in Sources */,
-				2FFE87392AC17E2C00A7A728 /* CMLikeListView.swift in Sources */,
-				1D4A9FC82AC26F28006C4937 /* SharedModel.swift in Sources */,
+				3BCF2C7B2ACD4248009C18C2 /* CMSearchResultView.swift in Sources */,
+				639DB6612AC10F13002692E5 /* DesignerMainTabView.swift in Sources */,
+				3BCF2C772ACD4248009C18C2 /* CMReservationHistoryDetailView.swift in Sources */,
+				3BCF2C722ACD4248009C18C2 /* CMReviewCreateKeywordsView.swift in Sources */,
+				3BCF2C822ACD4248009C18C2 /* CMRecommendPostView.swift in Sources */,
+				3BCF2C232ACD3E73009C18C2 /* BoardBubble.swift in Sources */,
+				3BCF2C892ACD4248009C18C2 /* CMCustomTextField.swift in Sources */,
 				639DB6612AC10F13002692E5 /* DesignerMainTabView.swift in Sources */,
 				1D9067232AC1F62D0028A660 /* DMPostDetailView.swift in Sources */,
 				96CBD4082AC4140C0055CC7F /* CustomCalender.swift in Sources */,
-				1D9067232AC1F62D0028A660 /* DMPostDetailView.swift in Sources */,
+				3BCF2C7D2ACD4248009C18C2 /* CMHomeCell.swift in Sources */,
+				3BCF2C732ACD4248009C18C2 /* CMUpcomingReservationView.swift in Sources */,
+				3BCF2C8A2ACD4248009C18C2 /* CMClientInfoEditView.swift in Sources */,
+				3BCF2C692ACD4248009C18C2 /* PostDetailViewModel.swift in Sources */,
+				3BCF2C7F2ACD4248009C18C2 /* CMFeedDetailContentView.swift in Sources */,
+				1D9067232AC1F62D0028A660 /* PostDetailView.swift in Sources */,
 				1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */,
 				1D3AFE542ACB3D33008F8582 /* DMExpandableText.swift in Sources */,
 				639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */,
@@ -606,8 +837,11 @@
 				1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */,
 				96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */,
 				96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */,
-				2FFE87372AC17D2A00A7A728 /* CMReviewListView.swift in Sources */,
-				2FFE872D2AC1464100A7A728 /* CMSearchResultView.swift in Sources */,
+				3BCF2C7E2ACD4248009C18C2 /* CMSearchView.swift in Sources */,
+				3BCF2C872ACD4248009C18C2 /* CMAccountInfoEditView.swift in Sources */,
+				3BCF2C6B2ACD4248009C18C2 /* Client.swift in Sources */,
+				3BCF2C832ACD4248009C18C2 /* CMFilterView.swift in Sources */,
+				1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,8 +9,6 @@ import Foundation
 
 struct ChatRoom: Codable {
     var id: String = UUID().uuidString
-    var textBubbles: [TextBubble]?
-    var imageBubbles: [ImageBubble]?
-    var boardBubbles: [BoardBubble]?
+    var chattingBubles: [CommonBubble]?
 }
 

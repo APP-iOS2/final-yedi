@@ -19,9 +19,9 @@ struct ImageBubble: Codable {
     
     var messageType: MessageType = MessageType.imageBubble
     
-    init(id: String = UUID().uuidString, ImagePath: String, date: String, sender: String) {
+    init(id: String = UUID().uuidString, imagePath: String, date: String, sender: String) {
         self.id = id
-        self.imagePath = ImagePath
+        self.imagePath = imagePath
         self.date = date
         self.sender = sender
     }
