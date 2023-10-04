@@ -34,7 +34,7 @@ struct DMPostView: View {
                 .padding(.horizontal)
                 // 게시글 사진
                 ForEach(selectedPost.photos, id: \.id) { photo in
-                    AsyncImage(url: photo.imageURL)
+                    DMAsyncImage(url: photo.imageURL)
                         .scaledToFill()
                         .frame(height: 300)
                         .clipped()

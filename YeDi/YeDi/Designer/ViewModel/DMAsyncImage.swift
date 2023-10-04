@@ -34,7 +34,7 @@ class ImageLoader: ObservableObject {
 }
 
 // 비동기로 이미지를 로드하여 표시
-struct AsyncImage: View {
+struct DMAsyncImage: View {
     // ImageLoader 인스턴스를 생성하고 관찰합니다.
     @ObservedObject var imageLoader = ImageLoader()
     

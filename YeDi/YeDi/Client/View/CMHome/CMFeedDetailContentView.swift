@@ -77,7 +77,9 @@ struct CMFeedDetailContentView: View {
             
             TabView {
                 ForEach(post.photos, id: \.id) { photo in
-                    AsyncImage(url: photo.imageURL)
+                    AsyncImage(url: URL(string: "\(photo.imageURL)")){ image in
+                        image
+                            .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: size.width, height: size.height + (minY > 0 ? minY : 0))
                             .clipped()
@@ -97,6 +99,9 @@ struct CMFeedDetailContentView: View {
                                 .zIndex(1),
                                 alignment: .top
                             )
+                    } placeholder: {
+                        ProgressView()
+                    }
                 }
             }
             .background(.black)
@@ -136,7 +141,7 @@ struct CMFeedDetailContentView: View {
     
     private func designerProfileView() -> some View {
         HStack(alignment: .center) {
-            AsyncImage(url: images[0])
+            DMAsyncImage(url: images[0])
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: 50)
                     .clipShape(Circle())
@@ -212,7 +217,7 @@ struct CMFeedDetailContentView: View {
             
             TabView(selection: $postViewModel.selectedImageID) {
                 ForEach(postViewModel.selectedImages, id: \.self) { imageString in
-                    AsyncImage(url:imageString)
+                    DMAsyncImage(url:imageString)
                             .aspectRatio(contentMode: .fit)
                 }
             }

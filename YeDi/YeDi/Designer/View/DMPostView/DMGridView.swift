@@ -70,7 +70,7 @@ struct PostThumbnail: View {
         // 썸네일과 제목을 세로로 배치
         VStack(alignment: .center, spacing: 8) {
             // 비동기 이미지 로딩
-            AsyncImage(url: post.photos.first?.imageURL ?? "")
+            DMAsyncImage(url: post.photos.first?.imageURL ?? "")
                 .scaledToFill()
                 .frame(width: imageSize, height: imageSize)
                 .cornerRadius(12)
