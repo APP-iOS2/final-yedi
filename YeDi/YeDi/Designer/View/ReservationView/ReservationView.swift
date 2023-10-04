@@ -26,7 +26,8 @@ struct ReservationView: View {
                 }
                 Spacer().frame(width: 25)
                 NavigationLink {
-                    TimeSettingDetail()
+                   // MARK: Dev머지 후 해당파일 경로수정 필요
+//                    TimeSettingDetail()
                 } label: {
                     Text("브레이크 타임 설정")
                         .frame(width: 150, height: 40)

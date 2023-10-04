@@ -89,7 +89,7 @@ struct DMGridView: View {
             VStack(alignment: .center, spacing: 8) {
                 Group {
                     if let urlString = post.photos.first?.imageURL {
-                        AsyncImage(url: urlString)
+                        DMAsyncImage(url: urlString)
                             .scaledToFill()
                             .frame(width: imageSize, height: imageSize)
                             .cornerRadius(12)

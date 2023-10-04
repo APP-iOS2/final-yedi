@@ -83,7 +83,7 @@ struct DMPostView: View {
                 // MARK: - 게시글 사진
                 TabView(selection: $selectedTab) {
                     ForEach(Array(selectedPost.photos.enumerated()), id: \.element.id) { index, photo in
-                        AsyncImage(url: photo.imageURL)
+                        DMAsyncImage(url: photo.imageURL)
                             .aspectRatio(contentMode: .fill)
                             .frame(height: 350)
                             .clipped()
