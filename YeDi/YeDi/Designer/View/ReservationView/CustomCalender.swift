@@ -12,13 +12,14 @@ struct CustomCalender: View {
     @State var month: Date = Date()
     @State var offset: CGSize = CGSize()
     @State var clickedDates: Set<Date> = []
+    let collectNum: [String] = []
     
     var body: some View {
         VStack {
             headerView
             calendarGridView
-            Text("\(month)")
         }
+        .padding(.horizontal, 9)
         .gesture(
             DragGesture()
                 .onChanged { gesture in
@@ -95,19 +96,18 @@ private struct CellView: View {
     
     var body: some View {
         VStack {
-            RoundedRectangle(cornerRadius: 5)
-                .opacity(0)
-                .overlay(Text(String(day)))
-                .foregroundColor(.blue)
-            
             if clicked {
-//                Text("Click")
-//                    .font(.caption)
-//                    .foregroundColor(.red)
                 RoundedRectangle(cornerRadius: 5)
-                    .opacity(0)
+                    .frame(height: 30)
+                    .opacity(0.3)
                     .overlay(Text(String(day)))
                     .foregroundColor(.blue)
+            } else {
+                RoundedRectangle(cornerRadius: 5)
+                    .frame(height: 30)
+                    .opacity(0.7)
+                    .overlay(Text(String(day)))
+                    .foregroundColor(.gray)
             }
         }
     }
@@ -154,27 +154,11 @@ private extension CustomCalender {
 extension CustomCalender {
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy년 MM월 dd일"
+        formatter.dateFormat = "yyyy년 MM월"
         return formatter
     }()
     
-    static let weekdaySymbols = Calendar.current.weekdaySymbols
-    
-    private func weekdaySymbol(for date: Date) -> Image {
-          let calendar = Calendar.current
-          let dayOfWeek = calendar.component(.weekday, from: date)
-
-          switch dayOfWeek {
-          case 1: return Image(systemName: "sun.max.fill")
-          case 2: return Image(systemName: "moon.fill")
-          case 3: return Image(systemName: "mars.fill")
-          case 4: return Image(systemName: "mercury.fill")
-          case 5: return Image(systemName: "jupiter.fill")
-          case 6: return Image(systemName: "venus.fill")
-          case 7: return Image(systemName: "saturn.fill")
-          default: fatalError("Unexpected day of week: \(dayOfWeek)")
-          }
-      }
+    static let weekdaySymbols = Calendar.current.shortWeekdaySymbols
 }
 
 

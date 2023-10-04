@@ -23,7 +23,7 @@ struct DesignerMainTabView: View {
                 }
                 .tag(1)
             
-            DMReservationView()
+            ReservationView()
                 .tabItem {
                     Label("예약", systemImage: "calendar")
                 }.tag(2)
