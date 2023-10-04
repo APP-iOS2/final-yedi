@@ -18,7 +18,7 @@ struct CMReviewCreateContentView: View {
                     RoundedRectangle(cornerRadius: 2)
                         .stroke(Color(white: 0.9), lineWidth: 1)
                 )
-                .padding(EdgeInsets(top: 0, leading: 20, bottom: 50, trailing: 0))
+                .padding(EdgeInsets(top: 0, leading: 20, bottom: 50, trailing: 20))
         } header: {
             HStack {
                 Text("리뷰를 남겨주세요")
