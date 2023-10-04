@@ -48,7 +48,7 @@ struct CMFeedDetailContentView: View {
                 } label: {
                     Image(systemName: "chevron.left")
                         .font(.title)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                 }
                 
                 Spacer()

@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 class UserAuth: ObservableObject {
     @Published var isLogged = false
+    @Published var currentDesignerID: String? // 현재 로그인한 디자이너의 ID
 }
 
 struct ContentView: View {

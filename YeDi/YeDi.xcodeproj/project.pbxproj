@@ -7,10 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		094759802AC1656C0066484F /* CMHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0947597F2AC1656C0066484F /* CMHomeCell.swift */; };
+		1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */; };
+		1D3AFE542ACB3D33008F8582 /* DMExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3AFE532ACB3D33008F8582 /* DMExpandableText.swift */; };
+		1D4A9FC72AC26F28006C4937 /* SharedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A9FC22AC26F28006C4937 /* SharedViewModel.swift */; };
+		1D4A9FC82AC26F28006C4937 /* SharedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A9FC42AC26F28006C4937 /* SharedModel.swift */; };
+		1D4A9FC92AC26F28006C4937 /* SharedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A9FC62AC26F28006C4937 /* SharedView.swift */; };
 		1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067162AC150D60028A660 /* DmDesignerModels.swift */; };
 		1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067182AC151A80028A660 /* DMAsyncImage.swift */; };
 		1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90671C2AC176020028A660 /* DMPostViewModel.swift */; };
 		1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067202AC1F61D0028A660 /* DMGridView.swift */; };
+		1D9067232AC1F62D0028A660 /* DMPostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067222AC1F62D0028A660 /* DMPostDetailView.swift */; };
+		1DA52F562AC2CB69002E0D75 /* DMNewPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */; };
+		2FFE87292AC12C4D00A7A728 /* CMSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE87282AC12C4D00A7A728 /* CMSearchView.swift */; };
+		2FFE872B2AC1462B00A7A728 /* CMSearchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE872A2AC1462B00A7A728 /* CMSearchHistoryView.swift */; };
+		2FFE872D2AC1464100A7A728 /* CMSearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE872C2AC1464100A7A728 /* CMSearchResultView.swift */; };
+		2FFE87312AC171FF00A7A728 /* CMNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE87302AC171FF00A7A728 /* CMNotificationView.swift */; };
+		2FFE87332AC174C700A7A728 /* CMSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE87322AC174C700A7A728 /* CMSegmentedControl.swift */; };
+		2FFE87352AC17D0D00A7A728 /* CMFollowingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE87342AC17D0D00A7A728 /* CMFollowingListView.swift */; };
+		2FFE87372AC17D2A00A7A728 /* CMReviewListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE87362AC17D2A00A7A728 /* CMReviewListView.swift */; };
+		2FFE87392AC17E2C00A7A728 /* CMLikeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE87382AC17E2C00A7A728 /* CMLikeListView.swift */; };
+		3B8BCA942AC1408B0006C79F /* ChattingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCA932AC1408B0006C79F /* ChattingViewModel.swift */; };
+		3B8BCA962AC1419C0006C79F /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCA952AC1419C0006C79F /* ChatRoom.swift */; };
+		3B8BCA982AC141F90006C79F /* TextBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCA972AC141F90006C79F /* TextBubble.swift */; };
+		3B8BCA9A2AC142040006C79F /* ImageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCA992AC142040006C79F /* ImageBubble.swift */; };
+		3B8BCA9C2AC142170006C79F /* BoardBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCA9B2AC142170006C79F /* BoardBubble.swift */; };
+		3B8BCA9E2AC145480006C79F /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8BCA9D2AC145480006C79F /* MessageType.swift */; };
 		1D9067232AC1F62D0028A660 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067222AC1F62D0028A660 /* PostDetailView.swift */; };
 		2FB87FD12ACCF18F00FC9B5D /* (null) in Resources */ = {isa = PBXBuildFile; };
 		3BCF2C1E2ACD3E73009C18C2 /* SharedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C052ACD3E72009C18C2 /* SharedViewModel.swift */; };
@@ -106,13 +128,48 @@
 		63CD89B32ABD85C300E70A56 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CD89B22ABD85C300E70A56 /* ContentView.swift */; };
 		63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63CD89B42ABD85C500E70A56 /* Assets.xcassets */; };
 		63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63CD89B72ABD85C500E70A56 /* Preview Assets.xcassets */; };
+		962A8DF62ACD21800021F2F6 /* DMAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962A8DF52ACD21800021F2F6 /* DMAccount.swift */; };
+		96CBD4002AC3AFCC0055CC7F /* TimeSettingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD3FF2AC3AFCC0055CC7F /* TimeSettingDetail.swift */; };
+		96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */; };
+		96CBD4042AC3C4250055CC7F /* ReservationSDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4032AC3C4250055CC7F /* ReservationSDetail.swift */; };
+		96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */; };
+		96CBD4082AC4140C0055CC7F /* CustomCalender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4072AC4140C0055CC7F /* CustomCalender.swift */; };
+		96F637D82AC2A96D00EF74FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96F637D72AC2A96D00EF74FF /* GoogleService-Info.plist */; };
+		96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F637DA2AC2AA1200EF74FF /* ReservationView.swift */; };
+		96F637DF2AC2BCFD00EF74FF /* ReservationCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */; };
+		D85500DE2AC276AD00D1D2E2 /* CMSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE872E2AC171A300A7A728 /* CMSettingsView.swift */; };
+		D8D70F252AC181970025291F /* CMFeedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D70F242AC181970025291F /* CMFeedDetailView.swift */; };
+		D8D70F272AC181A70025291F /* CMFeedDetailContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D70F262AC181A70025291F /* CMFeedDetailContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0947597F2AC1656C0066484F /* CMHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHomeCell.swift; sourceTree = "<group>"; };
+		1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMEditPostView.swift; sourceTree = "<group>"; };
+		1D3AFE532ACB3D33008F8582 /* DMExpandableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMExpandableText.swift; sourceTree = "<group>"; };
+		1D4A9FC22AC26F28006C4937 /* SharedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedViewModel.swift; sourceTree = "<group>"; };
+		1D4A9FC42AC26F28006C4937 /* SharedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedModel.swift; sourceTree = "<group>"; };
+		1D4A9FC62AC26F28006C4937 /* SharedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedView.swift; sourceTree = "<group>"; };
 		1D9067162AC150D60028A660 /* DmDesignerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmDesignerModels.swift; sourceTree = "<group>"; };
 		1D9067182AC151A80028A660 /* DMAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMAsyncImage.swift; sourceTree = "<group>"; };
 		1D90671C2AC176020028A660 /* DMPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostViewModel.swift; sourceTree = "<group>"; };
 		1D9067202AC1F61D0028A660 /* DMGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMGridView.swift; sourceTree = "<group>"; };
+		1D9067222AC1F62D0028A660 /* DMPostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostDetailView.swift; sourceTree = "<group>"; };
+		1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMNewPostView.swift; sourceTree = "<group>"; };
+		2FFE87282AC12C4D00A7A728 /* CMSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSearchView.swift; sourceTree = "<group>"; };
+		2FFE872A2AC1462B00A7A728 /* CMSearchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSearchHistoryView.swift; sourceTree = "<group>"; };
+		2FFE872C2AC1464100A7A728 /* CMSearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSearchResultView.swift; sourceTree = "<group>"; };
+		2FFE872E2AC171A300A7A728 /* CMSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSettingsView.swift; sourceTree = "<group>"; };
+		2FFE87302AC171FF00A7A728 /* CMNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMNotificationView.swift; sourceTree = "<group>"; };
+		2FFE87322AC174C700A7A728 /* CMSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSegmentedControl.swift; sourceTree = "<group>"; };
+		2FFE87342AC17D0D00A7A728 /* CMFollowingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFollowingListView.swift; sourceTree = "<group>"; };
+		2FFE87362AC17D2A00A7A728 /* CMReviewListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReviewListView.swift; sourceTree = "<group>"; };
+		2FFE87382AC17E2C00A7A728 /* CMLikeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLikeListView.swift; sourceTree = "<group>"; };
+		3B8BCA932AC1408B0006C79F /* ChattingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewModel.swift; sourceTree = "<group>"; };
+		3B8BCA952AC1419C0006C79F /* ChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
+		3B8BCA972AC141F90006C79F /* TextBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBubble.swift; sourceTree = "<group>"; };
+		3B8BCA992AC142040006C79F /* ImageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBubble.swift; sourceTree = "<group>"; };
+		3B8BCA9B2AC142170006C79F /* BoardBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardBubble.swift; sourceTree = "<group>"; };
+		3B8BCA9D2AC145480006C79F /* MessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
 		1D9067222AC1F62D0028A660 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		3BCF2C052ACD3E72009C18C2 /* SharedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedViewModel.swift; sourceTree = "<group>"; };
 		3BCF2C072ACD3E72009C18C2 /* ChattingListRoomViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingListRoomViewModel.swift; sourceTree = "<group>"; };
@@ -185,6 +242,18 @@
 		63CD89B22ABD85C300E70A56 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		63CD89B42ABD85C500E70A56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63CD89B72ABD85C500E70A56 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		962A8DF52ACD21800021F2F6 /* DMAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMAccount.swift; sourceTree = "<group>"; };
+		96CBD3FF2AC3AFCC0055CC7F /* TimeSettingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSettingDetail.swift; sourceTree = "<group>"; };
+		96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetail.swift; sourceTree = "<group>"; };
+		96CBD4032AC3C4250055CC7F /* ReservationSDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationSDetail.swift; sourceTree = "<group>"; };
+		96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WkDaySettingDetail.swift; sourceTree = "<group>"; };
+		96CBD4072AC4140C0055CC7F /* CustomCalender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalender.swift; sourceTree = "<group>"; };
+		96F637D72AC2A96D00EF74FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		96F637DA2AC2AA1200EF74FF /* ReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationView.swift; sourceTree = "<group>"; };
+		96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCellView.swift; sourceTree = "<group>"; };
+		D8D70F242AC181970025291F /* CMFeedDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFeedDetailView.swift; sourceTree = "<group>"; };
+		D8D70F262AC181A70025291F /* CMFeedDetailContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFeedDetailContentView.swift; sourceTree = "<group>"; };
+		D8D70F282AC1B9B00025291F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,6 +367,12 @@
 		3BCF2C142ACD3E72009C18C2 /* Modifier */ = {
 			isa = PBXGroup;
 			children = (
+				96F637D92AC2A9C900EF74FF /* ReservationView */,
+				639DB67B2AC11AD5002692E5 /* DMReview */,
+				639DB6852AC11B4A002692E5 /* DMPostView */,
+				639DB6822AC11B29002692E5 /* DMReservationView */,
+				639DB67F2AC11B17002692E5 /* DMChattingView */,
+				639DB67C2AC11AE7002692E5 /* ProfileView */,
 				3BCF2C152ACD3E72009C18C2 /* ChatBubbleModifier.swift */,
 			);
 			path = Modifier;
@@ -316,6 +391,10 @@
 		3BCF2C372ACD4247009C18C2 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				1D9067182AC151A80028A660 /* DMAsyncImage.swift */,
+				1D90671C2AC176020028A660 /* DMPostViewModel.swift */,
+				1D3AFE532ACB3D33008F8582 /* DMExpandableText.swift */,
+				962A8DF52ACD21800021F2F6 /* DMAccount.swift */,
 				3BCF2C382ACD4247009C18C2 /* PostDetailViewModel.swift */,
 				3BCF2C392ACD4247009C18C2 /* CMPostViewModel.swift */,
 			);
@@ -507,8 +586,10 @@
 			isa = PBXGroup;
 			children = (
 				639DB6862AC11B56002692E5 /* DMPostView.swift */,
+				1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */,
 				1D9067202AC1F61D0028A660 /* DMGridView.swift */,
-				1D9067222AC1F62D0028A660 /* PostDetailView.swift */,
+				1D9067222AC1F62D0028A660 /* DMPostDetailView.swift */,
+				1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */,
 			);
 			path = DMPostView;
 			sourceTree = "<group>";
@@ -549,6 +630,28 @@
 				63CD89B72ABD85C500E70A56 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		96F637D92AC2A9C900EF74FF /* ReservationView */ = {
+			isa = PBXGroup;
+			children = (
+				96F637DA2AC2AA1200EF74FF /* ReservationView.swift */,
+				96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */,
+				96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */,
+				96CBD4032AC3C4250055CC7F /* ReservationSDetail.swift */,
+				96CBD3FF2AC3AFCC0055CC7F /* TimeSettingDetail.swift */,
+				96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */,
+				96CBD4072AC4140C0055CC7F /* CustomCalender.swift */,
+			);
+			path = ReservationView;
+			sourceTree = "<group>";
+		};
+		D85500DD2AC275CB00D1D2E2 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				D8D70F282AC1B9B00025291F /* GoogleService-Info.plist */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -697,13 +800,17 @@
 				3BCF2C6E2ACD4248009C18C2 /* CMReviewDetailView.swift in Sources */,
 				3BCF2C792ACD4248009C18C2 /* CMReservationView.swift in Sources */,
 				639DB67A2AC11AC2002692E5 /* DMReviewView.swift in Sources */,
+				96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */,
+				962A8DF62ACD21800021F2F6 /* DMAccount.swift in Sources */,
+				96F637DF2AC2BCFD00EF74FF /* ReservationCellView.swift in Sources */,
+				1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */,
+				1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */,
 				3BCF2C332ACD3F6A009C18C2 /* ChattingViewModel.swift in Sources */,
 				3BCF2C902ACD4248009C18C2 /* CMProfileView.swift in Sources */,
 				3BCF2C8F2ACD4248009C18C2 /* CMSettingsView.swift in Sources */,
 				3BCF2C712ACD4248009C18C2 /* CMReviewCreateMainView.swift in Sources */,
 				3BCF2C2A2ACD3E73009C18C2 /* ChatRoomView.swift in Sources */,
 				3BCF2C262ACD3E73009C18C2 /* MessageType.swift in Sources */,
-				1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */,
 				63CD89B32ABD85C300E70A56 /* ContentView.swift in Sources */,
 				3BCF2C882ACD4248009C18C2 /* CMProfileEditView.swift in Sources */,
 				63CD89B12ABD85C300E70A56 /* YeDiApp.swift in Sources */,
@@ -715,6 +822,8 @@
 				3BCF2C232ACD3E73009C18C2 /* BoardBubble.swift in Sources */,
 				3BCF2C892ACD4248009C18C2 /* CMCustomTextField.swift in Sources */,
 				639DB6612AC10F13002692E5 /* DesignerMainTabView.swift in Sources */,
+				1D9067232AC1F62D0028A660 /* DMPostDetailView.swift in Sources */,
+				96CBD4082AC4140C0055CC7F /* CustomCalender.swift in Sources */,
 				3BCF2C7D2ACD4248009C18C2 /* CMHomeCell.swift in Sources */,
 				3BCF2C732ACD4248009C18C2 /* CMUpcomingReservationView.swift in Sources */,
 				3BCF2C8A2ACD4248009C18C2 /* CMClientInfoEditView.swift in Sources */,
@@ -722,7 +831,12 @@
 				3BCF2C7F2ACD4248009C18C2 /* CMFeedDetailContentView.swift in Sources */,
 				1D9067232AC1F62D0028A660 /* PostDetailView.swift in Sources */,
 				1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */,
+				1D3AFE542ACB3D33008F8582 /* DMExpandableText.swift in Sources */,
 				639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */,
+				1DA52F562AC2CB69002E0D75 /* DMNewPostView.swift in Sources */,
+				1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */,
+				96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */,
+				96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */,
 				3BCF2C7E2ACD4248009C18C2 /* CMSearchView.swift in Sources */,
 				3BCF2C872ACD4248009C18C2 /* CMAccountInfoEditView.swift in Sources */,
 				3BCF2C6B2ACD4248009C18C2 /* Client.swift in Sources */,
