@@ -100,6 +100,7 @@ struct ChatRoomView: View {
                 .textFieldStyle(.roundedBorder)
             
             Button(action: {
+                temp.sendTextBubble(content: inputText, sender: "customerUser1")
                 if !isInputTextEmpty {
                     inputText = ""
                 }
