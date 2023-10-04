@@ -13,7 +13,7 @@ struct CMReviewCreateMainView: View {
     @State private var myDate = Date()
     
     @State private var selectedPhoto: PhotosPickerItem? = nil
-    @State private var selectedPhotoData: [Data]? = []
+    @State private var selectedPhotoData: [Data] = []
     
     @State private var selectedKeywords: [String] = []
     @State private var designerScore: Int = 0
