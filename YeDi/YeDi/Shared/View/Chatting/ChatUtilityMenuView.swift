@@ -10,6 +10,8 @@ import PhotosUI
 
 struct ChatUtilityMenuView: View {
     @State private var selectedItem: PhotosPickerItem?
+    var chattingVM : ChattingViewModel
+    var userID: String
     var body: some View {
         HStack {
             Spacer()
@@ -22,6 +24,14 @@ struct ChatUtilityMenuView: View {
                             .scaledToFit()
                             .frame(width: 50, height: 50)
                         Text("사진")
+                    }
+                }
+            }
+            .onChange(of: selectedItem) { newItem in ///사진앱에서 선택된 사진이 저장되고 Data로 형변환 되는 코드
+                Task {
+                    if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                        ///형변환이 완료 되면 바로 사진 보내기
+                        chattingVM.sendImageBubble(imageData: data, sender: userID)
                     }
                 }
             }
@@ -49,6 +59,6 @@ struct ChatUtilityMenuView: View {
 }
 
 #Preview {
-    ChatUtilityMenuView()
+    ChatUtilityMenuView(chattingVM: ChattingViewModel(), userID: "customerUser1")
         .scaledToFit()
 }
