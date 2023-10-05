@@ -113,7 +113,7 @@ struct CMHomeCell: View {
                 Spacer()
                 // 상담하기 Button
                 Button(action: {
-                    
+                    consultationViewModel.proccessConsulation(designerId: post.designerID, post: post)
                 }, label: {
                     Text("상담하기")
                         .padding(.horizontal, 15)
