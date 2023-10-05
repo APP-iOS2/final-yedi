@@ -161,7 +161,7 @@ struct CMHomeCell: View {
             }
         )
         .sheet(isPresented: $showChattingRoom) {
-            ChattingListRoomView()
+            ChatRoomView(chatRoomId: consultationViewModel.chatRoomId)
         }
     }
 }
