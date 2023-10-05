@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CMHomeCell: View {
     var post: Post
-    var consultationViewModel: ConsultationViewModel = ConsultationViewModel()
+    @EnvironmentObject var consultationViewModel: ConsultationViewModel
     /// 상담하기 버튼 채팅방 시트 표출 변수
     @State private var showChattingRoom = false
     /// 이미지의 수를 판단할 수 있는 변수
@@ -116,7 +116,6 @@ struct CMHomeCell: View {
                 // 상담하기 Button
                 Button(action: {
                     consultationViewModel.proccessConsulation(designerId: post.designerID, post: post)
-                    showChattingRoom = consultationViewModel.showChattingRoom
                 }, label: {
                     Text("상담하기")
                         .padding(.horizontal, 15)
@@ -160,12 +159,16 @@ struct CMHomeCell: View {
                 }
             }
         )
+        .onChange(of: consultationViewModel.showChattingRoom, perform: { value in
+            showChattingRoom = consultationViewModel.showChattingRoom
+        })
         .sheet(isPresented: $showChattingRoom) {
-            ChatRoomView(chatRoomId: consultationViewModel.chatRoomId)
+            ChatRoomSheetView(chatRoomId: consultationViewModel.chatRoomId)
         }
     }
 }
 
 #Preview {
     CMHomeCell(post: Post(id: "1", designerID: "디자이너 이름", location: "디자이너 근무 지점", title: "게시물 제목", description: "게시물 설명", photos: [Photo(id: "1", imageURL: "https://example.com/image1.jpg"), Photo(id: "2", imageURL: "https://example.com/image2.jpg")], comments: 0, timestamp: "타임스탬프"))
+        .environmentObject(ConsultationViewModel())
 }

@@ -10,7 +10,10 @@ import SwiftUI
 struct CMFeedDetailContentView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var postViewModel: PostDetailViewModel = PostDetailViewModel()
+    @EnvironmentObject var consultationViewModel: ConsultationViewModel
+    @State private var showChattingRoom: Bool = false
     @State private var isLiked: Bool = false
+    
     let post: Post
     let images: [String] = ["https://images.pexels.com/photos/18005100/pexels-photo-18005100/free-photo-of-fa1-vsco.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/17410647/pexels-photo-17410647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"]
     let safeArea: EdgeInsets
@@ -29,6 +32,12 @@ struct CMFeedDetailContentView: View {
             }
             
             footerView()
+        }
+        .onChange(of: consultationViewModel.showChattingRoom, perform: { value in
+            showChattingRoom = consultationViewModel.showChattingRoom
+        })
+        .sheet(isPresented: $showChattingRoom) {
+            ChatRoomSheetView(chatRoomId: consultationViewModel.chatRoomId)
         }
         .overlay(
             ZStack {
@@ -180,7 +189,7 @@ struct CMFeedDetailContentView: View {
             
             HStack(alignment: .center) {
                 Button {
-                    
+                    consultationViewModel.proccessConsulation(designerId: post.designerID, post: post)
                 } label: {
                     Text("상담하기")
                         .foregroundStyle(.white)
@@ -208,6 +217,7 @@ struct CMFeedDetailContentView: View {
             .padding(.vertical, 10)
         .frame(maxWidth: .infinity)
         }
+       
     }
     
     var imageDetailView: some View {
@@ -241,4 +251,5 @@ struct CMFeedDetailContentView: View {
 
 #Preview {
     CMFeedDetailView(post: Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg"),Photo(id: "p2", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전"))
+        .environmentObject(ConsultationViewModel())
 }
