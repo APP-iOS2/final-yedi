@@ -17,11 +17,12 @@ class ConsultationViewModel: ChattingViewModel {
     /// 상담처리 메소드
     ///  - 상담시 디자이너와 채팅할 수 있는 채팅방 생성 및 채팅 뷰로 이동할 수 있게 showChattingRoom 변수를 true로 할당해 트리거 발생시킴
     func proccessConsulation(designerId: String, post: Post?) {
-         guard let customerId = Auth.auth().currentUser?.uid else {
-             return
-         }
+//         guard let customerId = Auth.auth().currentUser?.uid else {
+//             return
+//         }
         
         // TODO: designerId 구현시 바꿔야함
+        let customerId = "yyJpwgHmfYf8PxdBNsqDfuXpDtY2"
         let designerId = "designer2"
         
         setChatRoomList(customerId: customerId, designerId: designerId, post: post)
@@ -40,20 +41,31 @@ class ConsultationViewModel: ChattingViewModel {
                 let customerDocument = try transaction.getDocument(colRef.document(customerId))
                 let designerDocument = try transaction.getDocument(colRef.document(designerId))
                 
-                if customerDocument.exists &&  designerDocument.exists {
+                // 채팅방 생성 전 기존 채팅내역이 있는지 확인
+                let customerChatRooms = customerDocument.get("chatRooms") as? [String] ?? []
+                let designerChatRooms = designerDocument.get("chatRooms") as? [String] ?? []
+                
+                let commonChatRooms = customerChatRooms.compactMap { $0.trimmingCharacters(in: .whitespaces) }.filter {
+                    $0.isEmpty && designerChatRooms.contains($0)
+                }
+                
+                // 채팅방 생성
+                if commonChatRooms.count < 1 && customerDocument.exists &&  designerDocument.exists {
                     debugPrint("transaction 실행")
                     super.chatRoomId = chatRoom.id
                     self.sendBoardBubble(content: "이 게시물 보고 상담하러 왔어요", imagePath: post?.photos[0].imageURL ?? "", sender: customerId)
                     transaction.updateData(["chatRooms": FieldValue.arrayUnion([chatRoom.id])], forDocument: customerDocument.reference)
                     transaction.updateData(["chatRooms": FieldValue.arrayUnion([chatRoom.id])], forDocument: designerDocument.reference)
+                } else if commonChatRooms.count > 0 {
+                    super.chatRoomId = commonChatRooms.first ?? ""
                 }
-                
             } catch let fetchError as NSError {
                 debugPrint(fetchError.description)
                 errorPointer?.pointee = fetchError
             }
             return
-        }) {[weak self] (object, error) in
+        })
+        { [weak self] (object, error) in
             if let error = error {
                 debugPrint("Transaction failed: \(error)")
                 self?.showChattingRoom = false
@@ -62,5 +74,6 @@ class ConsultationViewModel: ChattingViewModel {
                 self?.showChattingRoom = true
             }
         }
+        
     }
 }
