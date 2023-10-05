@@ -206,6 +206,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2FA7FC322ACE47480027BDEE /* CMSearch */ = {
+			isa = PBXGroup;
+			children = (
+				3BCF2C522ACD4247009C18C2 /* CMSearchView.swift */,
+				3BCF2C4E2ACD4247009C18C2 /* CMSearchHistoryView.swift */,
+				3BCF2C4F2ACD4247009C18C2 /* CMSearchResultView.swift */,
+			);
+			path = CMSearch;
+			sourceTree = "<group>";
+		};
 		3BCF2C032ACD3E72009C18C2 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,13 +329,13 @@
 		3BCF2C3D2ACD4247009C18C2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C3E2ACD4247009C18C2 /* CMReview */,
-				3BCF2C452ACD4247009C18C2 /* CMReservation */,
+				3BCF2C5B2ACD4248009C18C2 /* ClientMainTabView.swift */,
 				3BCF2C4D2ACD4247009C18C2 /* CMHome */,
 				3BCF2C572ACD4248009C18C2 /* CMFilter */,
+				3BCF2C452ACD4247009C18C2 /* CMReservation */,
 				3BCF2C592ACD4248009C18C2 /* CMChatting */,
-				3BCF2C5B2ACD4248009C18C2 /* ClientMainTabView.swift */,
 				3BCF2C5C2ACD4248009C18C2 /* CMProfile */,
+				3BCF2C3E2ACD4247009C18C2 /* CMReview */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -333,12 +343,12 @@
 		3BCF2C3E2ACD4247009C18C2 /* CMReview */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C3F2ACD4247009C18C2 /* CMReviewCreatePhotosView.swift */,
 				3BCF2C402ACD4247009C18C2 /* CMReviewDetailView.swift */,
-				3BCF2C412ACD4247009C18C2 /* CMReviewCreateContentView.swift */,
-				3BCF2C422ACD4247009C18C2 /* CMReviewCreateDesignerScoreView.swift */,
 				3BCF2C432ACD4247009C18C2 /* CMReviewCreateMainView.swift */,
+				3BCF2C3F2ACD4247009C18C2 /* CMReviewCreatePhotosView.swift */,
 				3BCF2C442ACD4247009C18C2 /* CMReviewCreateKeywordsView.swift */,
+				3BCF2C422ACD4247009C18C2 /* CMReviewCreateDesignerScoreView.swift */,
+				3BCF2C412ACD4247009C18C2 /* CMReviewCreateContentView.swift */,
 			);
 			path = CMReview;
 			sourceTree = "<group>";
@@ -360,15 +370,13 @@
 		3BCF2C4D2ACD4247009C18C2 /* CMHome */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C4E2ACD4247009C18C2 /* CMSearchHistoryView.swift */,
-				3BCF2C4F2ACD4247009C18C2 /* CMSearchResultView.swift */,
-				3BCF2C502ACD4247009C18C2 /* CMFeedDetailView.swift */,
-				3BCF2C512ACD4247009C18C2 /* CMHomeCell.swift */,
-				3BCF2C522ACD4247009C18C2 /* CMSearchView.swift */,
-				3BCF2C532ACD4247009C18C2 /* CMFeedDetailContentView.swift */,
+				2FA7FC322ACE47480027BDEE /* CMSearch */,
 				3BCF2C542ACD4247009C18C2 /* CMHomeView.swift */,
-				3BCF2C552ACD4248009C18C2 /* CMFollowingPostView.swift */,
+				3BCF2C512ACD4247009C18C2 /* CMHomeCell.swift */,
 				3BCF2C562ACD4248009C18C2 /* CMRecommendPostView.swift */,
+				3BCF2C552ACD4248009C18C2 /* CMFollowingPostView.swift */,
+				3BCF2C502ACD4247009C18C2 /* CMFeedDetailView.swift */,
+				3BCF2C532ACD4247009C18C2 /* CMFeedDetailContentView.swift */,
 			);
 			path = CMHome;
 			sourceTree = "<group>";
@@ -392,14 +400,14 @@
 		3BCF2C5C2ACD4248009C18C2 /* CMProfile */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C5D2ACD4248009C18C2 /* CMLikePostListView.swift */,
-				3BCF2C5E2ACD4248009C18C2 /* CMProfileEdit */,
+				3BCF2C682ACD4248009C18C2 /* CMProfileView.swift */,
 				3BCF2C632ACD4248009C18C2 /* CMSegmentedControl.swift */,
+				3BCF2C5D2ACD4248009C18C2 /* CMLikePostListView.swift */,
 				3BCF2C642ACD4248009C18C2 /* CMFollowingListView.swift */,
 				3BCF2C652ACD4248009C18C2 /* CMReviewListView.swift */,
 				3BCF2C662ACD4248009C18C2 /* CMNotificationView.swift */,
 				3BCF2C672ACD4248009C18C2 /* CMSettingsView.swift */,
-				3BCF2C682ACD4248009C18C2 /* CMProfileView.swift */,
+				3BCF2C5E2ACD4248009C18C2 /* CMProfileEdit */,
 			);
 			path = CMProfile;
 			sourceTree = "<group>";
@@ -407,10 +415,10 @@
 		3BCF2C5E2ACD4248009C18C2 /* CMProfileEdit */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C5F2ACD4248009C18C2 /* CMAccountInfoEditView.swift */,
 				3BCF2C602ACD4248009C18C2 /* CMProfileEditView.swift */,
-				3BCF2C612ACD4248009C18C2 /* CMCustomTextField.swift */,
 				3BCF2C622ACD4248009C18C2 /* CMClientInfoEditView.swift */,
+				3BCF2C5F2ACD4248009C18C2 /* CMAccountInfoEditView.swift */,
+				3BCF2C612ACD4248009C18C2 /* CMCustomTextField.swift */,
 			);
 			path = CMProfileEdit;
 			sourceTree = "<group>";
@@ -522,8 +530,8 @@
 			isa = PBXGroup;
 			children = (
 				1DB59C662ACD9C9C008EAD5E /* GoogleService-Info.plist */,
-				3BCF2C362ACD4247009C18C2 /* Client */,
 				3BCF2C032ACD3E72009C18C2 /* Shared */,
+				3BCF2C362ACD4247009C18C2 /* Client */,
 				639DB6282AC10DED002692E5 /* Designer */,
 				63CD89B22ABD85C300E70A56 /* ContentView.swift */,
 				63CD89B42ABD85C500E70A56 /* Assets.xcassets */,
