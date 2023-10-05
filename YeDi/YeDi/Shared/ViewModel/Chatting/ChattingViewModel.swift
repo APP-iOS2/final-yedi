@@ -12,28 +12,28 @@ import FirebaseFirestore
 import FirebaseStorage
 import FirebaseFirestoreSwift
 
+
 class ChattingViewModel: ObservableObject {
-    
+
     @Published var userEmail: String = "None"
+    @Published var chatRoomId: String = ""
     @Published var chattings: [CommonBubble] = []
     @Published var lastBubbleId: String = ""
-    
+
     var ref: DatabaseReference! = Database.database().reference()
-    var chatRoomID: String ///채팅방의 키값이 전달되어야 함
     var storageRef = Storage.storage().reference() ///스토리지 참조 생성
     
-    init(chatRoomID: String) {
-        self.chatRoomID = chatRoomID
+    init() {
         self.setUserEmail()
-        self.storageRef = storageRef.child("chatRooms/\(chatRoomID)")
+        self.storageRef = storageRef.child("chatRooms/\(chatRoomId)")
     }
     
     func setUserEmail() { //현재 사용자의 이메일을 세팅하는 함수
         self.userEmail = Auth.auth().currentUser?.email ?? "nil@gmail.com"
     }
     
-    func fetchChattingBubble(chatRomsId: String) {
-        self.ref.child("chatRooms").child(chatRomsId).child("chatBubbles")
+    func fetchChattingBubble(chatRoomId: String) {
+        self.ref.child("chatRooms").child(chatRoomId).child("chatBubbles")
             .queryOrdered(byChild: "date")
             .observe(.value) { snapshot  in
                 
@@ -51,7 +51,8 @@ class ChattingViewModel: ObservableObject {
                     
                     let jsonData = try JSONSerialization.data(withJSONObject: value)
                     
-                    let bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
+                    var bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
+                    bubble.isRead = true
                     bubbles.append(bubble)
                 } catch {
                     print("Error decoding bubble data")
@@ -73,26 +74,28 @@ class ChattingViewModel: ObservableObject {
         let bubble = CommonBubble(
             content: content,
             date: "\(Date())",
-            sender: sender
+            sender: sender, 
+            isRead: false
         )
         
-        self.ref.child("chatRooms").child(chatRoomID).child("chatBubbles").child("\(bubble.date + bubble.id)")
+        self.ref.child("chatRooms").child(chatRoomId).child("chatBubbles").child("\(bubble.date + bubble.id)")
             .setValue([
                 "id": bubble.id,
                 "content": bubble.content,
                 "date": bubble.date,
                 "messageType": bubble.messageType.rawValue,
-                "sender": bubble.sender
+                "sender": bubble.sender,
+                "isRead": bubble.isRead
             ])
         
-        fetchChattingBubble(chatRomsId: chatRoomID)
+        fetchChattingBubble(chatRoomId: chatRoomId)
     }
     
     ///이미지 버블을 보내는 메소드
     func sendImageBubble(imageData: Data, sender: String) {
         
         var imageURL: String = ""
-        var bubble: CommonBubble = CommonBubble(imagePath: "", date: "", sender: "")
+        var bubble: CommonBubble = CommonBubble(imagePath: "", date: "", sender: "", isRead: false)
         self.storageRef = storageRef.child("\(bubble.id).jpg")
         
         let uploadTask = storageRef.putData(imageData, metadata: nil) {
@@ -116,19 +119,21 @@ class ChattingViewModel: ObservableObject {
                 bubble = CommonBubble(
                     imagePath: "\(imageURL)",
                     date: "\(Date())",
-                    sender: sender
+                    sender: sender,
+                    isRead: false
                 )
                 
-                self.ref.child("chatRooms").child(self.chatRoomID).child("chatBubbles").child("\(bubble.date + bubble.id)")
+                self.ref.child("chatRooms").child(self.chatRoomId).child("chatBubbles").child("\(bubble.date + bubble.id)")
                     .setValue([
                         "id": bubble.id,
                         "imagePath": bubble.imagePath,
                         "date": bubble.date,
                         "messageType": bubble.messageType.rawValue,
-                        "sender": bubble.sender
+                        "sender": bubble.sender,
+                        "isRead": bubble.isRead
                     ])
                 
-                self.fetchChattingBubble(chatRomsId: self.chatRoomID)
+                self.fetchChattingBubble(chatRoomId: self.chatRoomId)
             }
         }
     }
@@ -139,19 +144,22 @@ class ChattingViewModel: ObservableObject {
             content: content,
             imagePath: imagePath,
             date: "\(Date())",
-            sender: sender)
+            sender: sender,
+            isRead: false
+        )
         
-        self.ref.child("chatRooms").child(chatRoomID).child("chatBubbles").child("\(bubble.date + bubble.id)")
+        self.ref.child("chatRooms").child(chatRoomId).child("chatBubbles").child("\(bubble.date + bubble.id)")
             .setValue([
                 "id": bubble.id,
                 "content": bubble.content,
                 "imagePath": bubble.imagePath,
                 "date": bubble.date,
                 "messageType": bubble.messageType.rawValue,
-                "sender": bubble.sender
+                "sender": bubble.sender,
+                "isRead": bubble.isRead
             ])
         
-        fetchChattingBubble(chatRomsId: chatRoomID)
+        fetchChattingBubble(chatRoomId: chatRoomId)
     }
     
     ///상담하기를 누르면 채팅방이 생성된 이후에 자동으로 고객에서 디자이너에게 "이 게시물을 보고 상담하러 왔습니다."
