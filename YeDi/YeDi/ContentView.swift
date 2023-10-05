@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
+import Firebase
 
 class UserAuth: ObservableObject {
     @Published var isLogged = false
@@ -144,6 +145,16 @@ struct TempSelectionView: View {
             guard let user = result?.user else {
                 completion(false)
                 return
+            }
+            
+            if Auth.auth().currentUser != nil {
+                let user = Auth.auth().currentUser
+                if let user = user {
+                    UserDefaults.standard.set(user.uid, forKey: "uid")
+                    print(UserDefaults.standard.string(forKey: "uid") ?? "")
+                }
+            } else {
+                
             }
             
             // Firebase Authentication에 로그인 성공
