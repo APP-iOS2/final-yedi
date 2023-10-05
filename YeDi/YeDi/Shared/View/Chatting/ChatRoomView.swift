@@ -10,7 +10,7 @@ import Combine
 
 struct ChatRoomView: View {
     // temp properties
-    @ObservedObject var temp = TempChatbubbleStore(chatRoomID: "C314A8A6-A495-4023-882B-07D2902917C0")
+    @ObservedObject var temp = ChattingViewModel(chatRoomID: "C314A8A6-A495-4023-882B-07D2902917C0")
     private var name: String = "customerUser1"
     
     @State private var inputText: String = ""
