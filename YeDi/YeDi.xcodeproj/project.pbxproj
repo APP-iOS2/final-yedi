@@ -10,6 +10,8 @@
 		097EAD332AD03FC70037B848 /* CMLikedPostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EAD322AD03FC70037B848 /* CMLikedPostListViewModel.swift */; };
 		097EAD352AD040CA0037B848 /* CMHomeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EAD342AD040CA0037B848 /* CMHomeCellViewModel.swift */; };
 		1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */; };
+		1D63595B2ACEECC200FBD37B /* DMProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D63595A2ACEECC200FBD37B /* DMProfileEditView.swift */; };
+		1D63595D2ACEED0A00FBD37B /* DMProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D63595C2ACEED0A00FBD37B /* DMProfileViewModel.swift */; };
 		1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067162AC150D60028A660 /* DmDesignerModels.swift */; };
 		1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067182AC151A80028A660 /* DMAsyncImage.swift */; };
 		1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90671C2AC176020028A660 /* DMPostViewModel.swift */; };
@@ -111,6 +113,8 @@
 		097EAD322AD03FC70037B848 /* CMLikedPostListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLikedPostListViewModel.swift; sourceTree = "<group>"; };
 		097EAD342AD040CA0037B848 /* CMHomeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHomeCellViewModel.swift; sourceTree = "<group>"; };
 		1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMEditPostView.swift; sourceTree = "<group>"; };
+		1D63595A2ACEECC200FBD37B /* DMProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMProfileEditView.swift; sourceTree = "<group>"; };
+		1D63595C2ACEED0A00FBD37B /* DMProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMProfileViewModel.swift; sourceTree = "<group>"; };
 		1D9067162AC150D60028A660 /* DmDesignerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmDesignerModels.swift; sourceTree = "<group>"; };
 		1D9067182AC151A80028A660 /* DMAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMAsyncImage.swift; sourceTree = "<group>"; };
 		1D90671C2AC176020028A660 /* DMPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostViewModel.swift; sourceTree = "<group>"; };
@@ -488,6 +492,7 @@
 				3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */,
 				1D9067182AC151A80028A660 /* DMAsyncImage.swift */,
 				1D90671C2AC176020028A660 /* DMPostViewModel.swift */,
+				1D63595C2ACEED0A00FBD37B /* DMProfileViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -504,6 +509,7 @@
 			isa = PBXGroup;
 			children = (
 				639DB67D2AC11AF5002692E5 /* DMProfileView.swift */,
+				1D63595A2ACEECC200FBD37B /* DMProfileEditView.swift */,
 			);
 			path = ProfileView;
 			sourceTree = "<group>";
@@ -716,6 +722,7 @@
 				3BCF2C6F2ACD4248009C18C2 /* CMReviewCreateContentView.swift in Sources */,
 				3BAB00F32ACD97EB009053A4 /* ReservationSDetail.swift in Sources */,
 				639DB6872AC11B56002692E5 /* DMPostView.swift in Sources */,
+				1D63595B2ACEECC200FBD37B /* DMProfileEditView.swift in Sources */,
 				3BCF2C282ACD3E73009C18C2 /* ChatBubbleModifier.swift in Sources */,
 				3BCF2C802ACD4248009C18C2 /* CMHomeView.swift in Sources */,
 				3BC8CF142ACF12D500264547 /* ChatRoomSheetView.swift in Sources */,
@@ -771,6 +778,7 @@
 				3BCF2C7D2ACD4248009C18C2 /* CMHomeCell.swift in Sources */,
 				3BCF2C732ACD4248009C18C2 /* CMUpcomingReservationView.swift in Sources */,
 				DC7695472AD0888800D2FB69 /* AuthModifier.swift in Sources */,
+				1D63595D2ACEED0A00FBD37B /* DMProfileViewModel.swift in Sources */,
 				3BCF2C8A2ACD4248009C18C2 /* CMClientInfoEditView.swift in Sources */,
 				3BCF2C692ACD4248009C18C2 /* PostDetailViewModel.swift in Sources */,
 				3BCF2C7F2ACD4248009C18C2 /* CMFeedDetailContentView.swift in Sources */,
