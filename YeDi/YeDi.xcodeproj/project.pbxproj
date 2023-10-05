@@ -86,7 +86,6 @@
 		639DB67A2AC11AC2002692E5 /* DMReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6792AC11AC2002692E5 /* DMReviewView.swift */; };
 		639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB67D2AC11AF5002692E5 /* DMProfileView.swift */; };
 		639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6802AC11B21002692E5 /* DMMainChattingView.swift */; };
-		639DB6842AC11B3B002692E5 /* DMReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6832AC11B3B002692E5 /* DMReservationView.swift */; };
 		639DB6872AC11B56002692E5 /* DMPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6862AC11B56002692E5 /* DMPostView.swift */; };
 		63CD89B12ABD85C300E70A56 /* YeDiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CD89B02ABD85C300E70A56 /* YeDiApp.swift */; };
 		63CD89B32ABD85C300E70A56 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CD89B22ABD85C300E70A56 /* ContentView.swift */; };
@@ -174,7 +173,6 @@
 		639DB6792AC11AC2002692E5 /* DMReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMReviewView.swift; sourceTree = "<group>"; };
 		639DB67D2AC11AF5002692E5 /* DMProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMProfileView.swift; sourceTree = "<group>"; };
 		639DB6802AC11B21002692E5 /* DMMainChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMMainChattingView.swift; sourceTree = "<group>"; };
-		639DB6832AC11B3B002692E5 /* DMReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMReservationView.swift; sourceTree = "<group>"; };
 		639DB6862AC11B56002692E5 /* DMPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostView.swift; sourceTree = "<group>"; };
 		63CD89AD2ABD85C300E70A56 /* YeDi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YeDi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63CD89B02ABD85C300E70A56 /* YeDiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YeDiApp.swift; sourceTree = "<group>"; };
@@ -430,7 +428,6 @@
 		639DB6622AC10F19002692E5 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				96F637D92AC2A9C900EF74FF /* ReservationView */,
 				639DB67B2AC11AD5002692E5 /* DMReview */,
 				639DB6852AC11B4A002692E5 /* DMPostView */,
 				639DB6822AC11B29002692E5 /* DMReservationView */,
@@ -486,7 +483,13 @@
 		639DB6822AC11B29002692E5 /* DMReservationView */ = {
 			isa = PBXGroup;
 			children = (
-				639DB6832AC11B3B002692E5 /* DMReservationView.swift */,
+				96F637DA2AC2AA1200EF74FF /* ReservationView.swift */,
+				96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */,
+				3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */,
+				96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */,
+				96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */,
+				9666A21A2ACDBB6D0081C711 /* TimeSettingDetail.swift */,
+				96CBD4072AC4140C0055CC7F /* CustomCalender.swift */,
 			);
 			path = DMReservationView;
 			sourceTree = "<group>";
@@ -538,20 +541,6 @@
 				63CD89B72ABD85C500E70A56 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		96F637D92AC2A9C900EF74FF /* ReservationView */ = {
-			isa = PBXGroup;
-			children = (
-				96F637DA2AC2AA1200EF74FF /* ReservationView.swift */,
-				96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */,
-				3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */,
-				96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */,
-				96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */,
-				9666A21A2ACDBB6D0081C711 /* TimeSettingDetail.swift */,
-				96CBD4072AC4140C0055CC7F /* CustomCalender.swift */,
-			);
-			path = ReservationView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -661,7 +650,6 @@
 				3BCF2C802ACD4248009C18C2 /* CMHomeView.swift in Sources */,
 				3BCF2C272ACD3E73009C18C2 /* CommonBubble.swift in Sources */,
 				3BCF2C842ACD4248009C18C2 /* CMMainChattingView.swift in Sources */,
-				639DB6842AC11B3B002692E5 /* DMReservationView.swift in Sources */,
 				3BCF2C292ACD3E73009C18C2 /* BoardBubbleCell.swift in Sources */,
 				3BCF2C852ACD4248009C18C2 /* ClientMainTabView.swift in Sources */,
 				3BCF2C762ACD4248009C18C2 /* CMReservationDateTimeView.swift in Sources */,
