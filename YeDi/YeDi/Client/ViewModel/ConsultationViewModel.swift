@@ -46,12 +46,12 @@ class ConsultationViewModel: ChattingViewModel {
                 let designerChatRooms = designerDocument.get("chatRooms") as? [String] ?? []
                 
                 let commonChatRooms = customerChatRooms.compactMap { $0.trimmingCharacters(in: .whitespaces) }.filter {
-                    $0.isEmpty && designerChatRooms.contains($0)
+                    !$0.isEmpty && designerChatRooms.contains($0)
                 }
                 
                 // 채팅방 생성
                 if commonChatRooms.count < 1 && customerDocument.exists &&  designerDocument.exists {
-                    debugPrint("transaction 실행")
+                    print("transaction 실행")
                     super.chatRoomId = chatRoom.id
                     self.sendBoardBubble(content: "이 게시물 보고 상담하러 왔어요", imagePath: post?.photos[0].imageURL ?? "", sender: customerId)
                     transaction.updateData(["chatRooms": FieldValue.arrayUnion([chatRoom.id])], forDocument: customerDocument.reference)
