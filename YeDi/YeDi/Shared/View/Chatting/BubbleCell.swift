@@ -47,7 +47,7 @@ struct BubbleCell: View {
         HStack(alignment: .bottom) {
             if isMyBubble {
                 HStack(alignment: .center) {
-                    if !isReadBubble {
+                    if !chat.isRead {
                         readMarkCircle
                     }
                     chatDateMark
@@ -67,7 +67,7 @@ struct BubbleCell: View {
             if !isMyBubble {
                 HStack(alignment: .center) {
                     chatDateMark
-                    if !isReadBubble {
+                    if !chat.isRead {
                         readMarkCircle
                     }
                 }
