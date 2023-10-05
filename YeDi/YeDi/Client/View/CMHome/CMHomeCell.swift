@@ -10,6 +10,8 @@ import SwiftUI
 struct CMHomeCell: View {
     var post: Post
     var consultationViewModel: ConsultationViewModel = ConsultationViewModel()
+    /// 상담하기 버튼 채팅방 시트 표출 변수
+    @State private var showChattingRoom = false
     /// 이미지의 수를 판단할 수 있는 변수
     @State private var selectedImageIndex: Int = 0
     /// 찜 버튼을 눌렀는지 판단할 수 있는 변수
@@ -114,6 +116,7 @@ struct CMHomeCell: View {
                 // 상담하기 Button
                 Button(action: {
                     consultationViewModel.proccessConsulation(designerId: post.designerID, post: post)
+                    showChattingRoom = consultationViewModel.showChattingRoom
                 }, label: {
                     Text("상담하기")
                         .padding(.horizontal, 15)
@@ -157,6 +160,9 @@ struct CMHomeCell: View {
                 }
             }
         )
+        .sheet(isPresented: $showChattingRoom) {
+            ChattingListRoomView()
+        }
     }
 }
 
