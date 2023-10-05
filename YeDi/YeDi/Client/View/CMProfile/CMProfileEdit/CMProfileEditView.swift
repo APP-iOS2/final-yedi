@@ -12,6 +12,7 @@ struct CMProfileEditView: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var selectedPhoto: PhotosPickerItem? = nil
+    @State private var selectedPhotoData: Data = Data()
     
     @State private var clientName: String = "김고객"
     @State private var clientGender: String = "여성"
@@ -23,21 +24,51 @@ struct CMProfileEditView: View {
     var body: some View {
         VStack {
             PhotosPicker(selection: $selectedPhoto, matching: .images, photoLibrary: .shared()) {
-                Image(systemName: "person.circle.fill")
-                    .font(.system(size: 80))
-                    .padding([.top, .bottom])
-                    .overlay {
-                        ZStack {
-                            Circle()
-                                .trim(from: 0.07, to: 0.43)
-                                .fill(Color(white: 0.2))
-                                .frame(width: 80)
-                            Text("편집")
-                                .font(.system(size: 13))
-                                .foregroundStyle(.white)
-                                .offset(y: 27)
+                if selectedPhoto == nil {
+                    Image(systemName: "person.circle.fill")
+                        .font(.system(size: 80))
+                        .padding([.top, .bottom])
+                        .overlay {
+                            ZStack {
+                                Circle()
+                                    .trim(from: 0.07, to: 0.43)
+                                    .fill(Color(white: 0.2))
+                                    .frame(width: 80)
+                                Text("편집")
+                                    .font(.system(size: 13))
+                                    .foregroundStyle(.white)
+                                    .offset(y: 27)
+                            }
                         }
+                } else {
+                    if let image = UIImage(data: selectedPhotoData) {
+                        Image(uiImage: image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 80, height: 80)
+                            .clipShape(Circle())
+                            .padding([.top, .bottom])
+                            .overlay {
+                                ZStack {
+                                    Circle()
+                                        .trim(from: 0.07, to: 0.43)
+                                        .fill(Color(white: 0.2))
+                                        .frame(width: 80)
+                                    Text("편집")
+                                        .font(.system(size: 13))
+                                        .foregroundStyle(.white)
+                                        .offset(y: 27)
+                                }
+                            }
                     }
+                }
+            }
+            .onChange(of: selectedPhoto) { newItem in
+                Task {
+                    if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                        selectedPhotoData = data
+                    }
+                }
             }
             
             Section {
@@ -85,6 +116,8 @@ struct CMProfileEditView: View {
             .buttonStyle(.borderedProminent)
             .tint(.black)
         }
+        .navigationTitle("")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .tabBar)
     }
 }
