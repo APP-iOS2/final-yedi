@@ -10,8 +10,11 @@ import Firebase
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseStorage
+import FirebaseFirestoreSwift
 
-class TempChatbubbleStore: ObservableObject {
+
+class ChattingViewModel: ObservableObject {
+
     @Published var userEmail: String = "None"
     @Published var chatRoomId: String = ""
     @Published var chattings: [CommonBubble] = []
@@ -161,22 +164,41 @@ class TempChatbubbleStore: ObservableObject {
     
     ///상담하기를 누르면 채팅방이 생성된 이후에 자동으로 고객에서 디자이너에게 "이 게시물을 보고 상담하러 왔습니다."
     ///매개변수 : 게시물 아이디 값
-    func startingBoardBubble(postID: String) {
+    func startingBoardBubble(postID: String, sender: String) {
         ///게시물들이 있는 파이어스토어 데이터베이스 이름
-        let databasePosts = Firestore.firestore().collection("posts/\(postID)")	
+        let databasePosts = Firestore.firestore().collection("posts/\(postID)")
         
         ///게시물을 지정된 구조체형에 맞게 변환
         databasePosts.getDocuments { (snapshot, error) in
+            let id = postID
             
+            if let docData = snapshot?.documents as? [String:Any],
+               let designerID = docData["designerID"] as? String,
+               let location = docData["location"] as? String,
+               let title = docData["title"] as? String,
+               let description = docData["description"] as? String,
+               let photosDataArray = docData["photos"] as? [[String:Any]] {
+                
+                // photos 필드 처리
+                var photos: [Photo] = []
+                
+                for photoData in photosDataArray {
+                    if let photoID = photoData["id"] as? String,
+                       let imageURLString = photoData["imageURL"] as? String {
+                        
+                        // Photo 객체 생성 및 배열에 추가
+                        let photo = Photo(id: photoID, imageURL: imageURLString)
+                        photos.append(photo)
+                    }
+                }
+                
+                let post = Post(id: id, designerID: designerID, location: location, title: title, description: description, photos: photos, comments: 0, timestamp: "")
+                ///새로 생성된 채팅방에 바로 게시물 버블 보내기
+                self.sendBoardBubble(content: "이 게시물 보고 상담하러 왔어요", imagePath: post.photos[0].imageURL, sender: sender)
+            }
         }
-        
-        ///새로 생성된 채팅방에 바로 게시물 버블 보내기
-        //sendBoardBubble(content: "위 게시물을 보고 상담신청했어요~")
     }
     
-    private func loadImage() {
-        
-    }
     
 }
 
