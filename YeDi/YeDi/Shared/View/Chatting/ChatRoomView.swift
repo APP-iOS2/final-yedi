@@ -6,16 +6,26 @@
 //
 
 import SwiftUI
-import Combine
 
 struct ChatRoomView: View {
+<<<<<<< Updated upstream
     // temp properties
     @ObservedObject var temp = ChattingViewModel(chatRoomID: "C314A8A6-A495-4023-882B-07D2902917C0")
     private var name: String = "customerUser1"
+=======
+    var chatRoomId: String
+    
+    @ObservedObject var temp = TempChatbubbleStore()
+    @EnvironmentObject var userAuth: UserAuth
+>>>>>>> Stashed changes
     
     @State private var inputText: String = ""
     @State private var isShowingUtilityMenu: Bool = false
     
+    private var userId: String {
+//        userAuth.currentDesignerID ?? "customerUser1" // issue
+        "customerUser1"
+    }
     private var isInputTextEmpty: Bool {
         inputText.isEmpty ? true : false
     }
@@ -31,7 +41,8 @@ struct ChatRoomView: View {
         .navigationTitle("디자이너 수")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            temp.fetchChattingBubble(chatRomsId: "C314A8A6-A495-4023-882B-07D2902917C0")
+            temp.chatRoomId = chatRoomId
+            temp.fetchChattingBubble(chatRoomId: chatRoomId)
         }
     }
     
@@ -40,7 +51,7 @@ struct ChatRoomView: View {
             ScrollView {
                 ForEach(temp.chattings) { chat in
                     var isMyBubble: Bool {
-                        chat.sender == name ? true : false
+                        chat.sender == userId ? true : false
                     }
                     BubbleCell(chat: chat, messageType: chat.messageType, isMyBubble: isMyBubble)
                 }
@@ -76,7 +87,7 @@ struct ChatRoomView: View {
                 
                 Button(action: {
                     if !isInputTextEmpty {
-                        temp.sendTextBubble(content: inputText, sender: name)
+                        temp.sendTextBubble(content: inputText, sender: userId)
                         inputText = ""
                     }
                 }, label: {
@@ -107,6 +118,6 @@ extension View {
 
 #Preview {
     NavigationStack {
-        ChatRoomView()
+        ChatRoomView(chatRoomId: "C314A8A6-A495-4023-882B-07D2902917C0")
     }
 }

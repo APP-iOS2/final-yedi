@@ -18,9 +18,13 @@
 		3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */; };
 		3BAB00F32ACD97EB009053A4 /* ReservationSDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */; };
 		3BCF2C1F2ACD3E73009C18C2 /* ChattingListRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C072ACD3E72009C18C2 /* ChattingListRoomViewModel.swift */; };
+<<<<<<< Updated upstream
 		3BCF2C222ACD3E73009C18C2 /* TextBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0C2ACD3E72009C18C2 /* TextBubble.swift */; };
 		3BCF2C232ACD3E73009C18C2 /* BoardBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0D2ACD3E72009C18C2 /* BoardBubble.swift */; };
 		3BCF2C242ACD3E73009C18C2 /* ImageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0E2ACD3E72009C18C2 /* ImageBubble.swift */; };
+=======
+		3BCF2C212ACD3E73009C18C2 /* SharedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0A2ACD3E72009C18C2 /* SharedModel.swift */; };
+>>>>>>> Stashed changes
 		3BCF2C252ACD3E73009C18C2 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0F2ACD3E72009C18C2 /* ChatRoom.swift */; };
 		3BCF2C262ACD3E73009C18C2 /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C102ACD3E72009C18C2 /* MessageType.swift */; };
 		3BCF2C272ACD3E73009C18C2 /* CommonBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C112ACD3E72009C18C2 /* CommonBubble.swift */; };
@@ -109,9 +113,13 @@
 		3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMExpandableText.swift; sourceTree = "<group>"; };
 		3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReservationSDetail.swift; sourceTree = "<group>"; };
 		3BCF2C072ACD3E72009C18C2 /* ChattingListRoomViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingListRoomViewModel.swift; sourceTree = "<group>"; };
+<<<<<<< Updated upstream
 		3BCF2C0C2ACD3E72009C18C2 /* TextBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextBubble.swift; sourceTree = "<group>"; };
 		3BCF2C0D2ACD3E72009C18C2 /* BoardBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardBubble.swift; sourceTree = "<group>"; };
 		3BCF2C0E2ACD3E72009C18C2 /* ImageBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageBubble.swift; sourceTree = "<group>"; };
+=======
+		3BCF2C0A2ACD3E72009C18C2 /* SharedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedModel.swift; sourceTree = "<group>"; };
+>>>>>>> Stashed changes
 		3BCF2C0F2ACD3E72009C18C2 /* ChatRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		3BCF2C102ACD3E72009C18C2 /* MessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
 		3BCF2C112ACD3E72009C18C2 /* CommonBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonBubble.swift; sourceTree = "<group>"; };
@@ -238,9 +246,6 @@
 		3BCF2C0B2ACD3E72009C18C2 /* Chatting */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C0C2ACD3E72009C18C2 /* TextBubble.swift */,
-				3BCF2C0D2ACD3E72009C18C2 /* BoardBubble.swift */,
-				3BCF2C0E2ACD3E72009C18C2 /* ImageBubble.swift */,
 				3BCF2C0F2ACD3E72009C18C2 /* ChatRoom.swift */,
 				3BCF2C102ACD3E72009C18C2 /* MessageType.swift */,
 				3BCF2C112ACD3E72009C18C2 /* CommonBubble.swift */,
@@ -628,7 +633,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BCF2C8E2ACD4248009C18C2 /* CMNotificationView.swift in Sources */,
-				3BCF2C222ACD3E73009C18C2 /* TextBubble.swift in Sources */,
 				3BCF2C2C2ACD3E73009C18C2 /* BubbleCell.swift in Sources */,
 				3BCF2C812ACD4248009C18C2 /* CMFollowingPostView.swift in Sources */,
 				3BCF2C2D2ACD3E73009C18C2 /* TempPhotoPickerView.swift in Sources */,
@@ -655,7 +659,6 @@
 				3BCF2C762ACD4248009C18C2 /* CMReservationDateTimeView.swift in Sources */,
 				3BCF2C6A2ACD4248009C18C2 /* CMPostViewModel.swift in Sources */,
 				639DB67A2AC11AC2002692E5 /* DMReviewView.swift in Sources */,
-				3BCF2C242ACD3E73009C18C2 /* ImageBubble.swift in Sources */,
 				3BCF2C752ACD4248009C18C2 /* CMReservationHistoryView.swift in Sources */,
 				3BCF2C6D2ACD4248009C18C2 /* CMReviewCreatePhotosView.swift in Sources */,
 				3BCF2C742ACD4248009C18C2 /* CMLastReservationView.swift in Sources */,
@@ -687,7 +690,6 @@
 				3BCF2C772ACD4248009C18C2 /* CMReservationHistoryDetailView.swift in Sources */,
 				3BCF2C722ACD4248009C18C2 /* CMReviewCreateKeywordsView.swift in Sources */,
 				3BCF2C822ACD4248009C18C2 /* CMRecommendPostView.swift in Sources */,
-				3BCF2C232ACD3E73009C18C2 /* BoardBubble.swift in Sources */,
 				3BCF2C892ACD4248009C18C2 /* CMCustomTextField.swift in Sources */,
 				96CBD4082AC4140C0055CC7F /* CustomCalender.swift in Sources */,
 				3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */,
