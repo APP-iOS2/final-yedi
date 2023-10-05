@@ -8,8 +8,9 @@
 import Foundation
 import FirebaseAuth
 import Firebase
+import FirebaseFirestore
 
-final class ChattingListRoomViewModel: ObservableObject {
+class ChattingListRoomViewModel: ObservableObject {
     @Published var chattingRooms: [ChatRoom] = []
     let realTimeService = Database.database().reference()
     let storeService = Firestore.firestore()
@@ -28,7 +29,7 @@ final class ChattingListRoomViewModel: ObservableObject {
     
     /// 로그인한 User토큰으로 UserUID를 가지고오는 메소드
     /// - returns: userUID
-    private final func fetchUserUID() -> String? {
+    final func fetchUserUID() -> String? {
         return  Auth.auth().currentUser?.uid
     }
     
