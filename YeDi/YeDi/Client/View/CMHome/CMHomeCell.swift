@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CMHomeCell: View {
     var post: Post
-    
+    var consultationViewModel: ConsultationViewModel = ConsultationViewModel()
     /// 이미지의 수를 판단할 수 있는 변수
     @State private var selectedImageIndex: Int = 0
     /// 찜 버튼을 눌렀는지 판단할 수 있는 변수
@@ -112,8 +112,9 @@ struct CMHomeCell: View {
                 })
                 Spacer()
                 // 상담하기 Button
-                // 계획) 버튼을 누르면 채팅방으로 이동
-                Button(action: {}, label: {
+                Button(action: {
+                    
+                }, label: {
                     Text("상담하기")
                         .padding(.horizontal, 15)
                         .padding(.vertical, 7)

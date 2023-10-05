@@ -14,7 +14,6 @@ struct ChatRoomView: View {
     var name: String = "customerUser1"
     var chatRoomId: String
     @EnvironmentObject var userAuth: UserAuth
-
     
     @State private var inputText: String = ""
     @State private var isShowingUtilityMenu: Bool = false

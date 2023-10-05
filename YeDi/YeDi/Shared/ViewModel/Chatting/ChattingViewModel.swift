@@ -20,9 +20,10 @@ class ChattingViewModel: ObservableObject {
     @Published var chattings: [CommonBubble] = []
     @Published var lastBubbleId: String = ""
 
+    
     var ref: DatabaseReference! = Database.database().reference()
     var storageRef = Storage.storage().reference() ///스토리지 참조 생성
-    
+    let storeService = Firestore.firestore()
     init() {
         self.setUserEmail()
         self.storageRef = storageRef.child("chatRooms/\(chatRoomId)")
