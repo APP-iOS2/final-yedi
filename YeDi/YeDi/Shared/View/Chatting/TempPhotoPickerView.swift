@@ -9,11 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct TempPhotoPickerView: View {
-<<<<<<< Updated upstream
-    @ObservedObject var temp = ChattingViewModel(chatRoomID: "C314A8A6-A495-4023-882B-07D2902917C0")
-=======
-    @ObservedObject var temp = TempChatbubbleStore()
->>>>>>> Stashed changes
+    @ObservedObject var temp = ChattingViewModel()
     @State var selectedPhoto: PhotosPickerItem? = nil
     @State var selectedPhotoData: [Data] = []
 

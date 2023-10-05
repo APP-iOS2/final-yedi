@@ -8,16 +8,13 @@
 import SwiftUI
 
 struct ChatRoomView: View {
-<<<<<<< Updated upstream
+
     // temp properties
-    @ObservedObject var temp = ChattingViewModel(chatRoomID: "C314A8A6-A495-4023-882B-07D2902917C0")
-    private var name: String = "customerUser1"
-=======
+    @ObservedObject var temp = ChattingViewModel()
+    var name: String = "customerUser1"
     var chatRoomId: String
-    
-    @ObservedObject var temp = TempChatbubbleStore()
     @EnvironmentObject var userAuth: UserAuth
->>>>>>> Stashed changes
+
     
     @State private var inputText: String = ""
     @State private var isShowingUtilityMenu: Bool = false
