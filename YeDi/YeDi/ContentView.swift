@@ -13,6 +13,7 @@ import Firebase
 class UserAuth: ObservableObject {
     @Published var isLogged = false
     @Published var currentDesignerID: String? // 현재 로그인한 디자이너의 ID
+    @Published var currentClientID: String? // 현재 로그인한 클라이언트의 ID
 }
 
 struct ContentView: View {
@@ -147,16 +148,6 @@ struct TempSelectionView: View {
                 return
             }
             
-            if Auth.auth().currentUser != nil {
-                let user = Auth.auth().currentUser
-                if let user = user {
-                    UserDefaults.standard.set(user.uid, forKey: "uid")
-                    print(UserDefaults.standard.string(forKey: "uid") ?? "")
-                }
-            } else {
-                
-            }
-            
             // Firebase Authentication에 로그인 성공
             
             // Firestore에서 사용자 정보 가져오기
@@ -180,7 +171,8 @@ struct TempSelectionView: View {
                 
                 // 이름과 이메일 출력
                 if let name = userData["name"] as? String,
-                   let email = userData["email"] as? String {
+                   let email = userData["email"] as? String,
+                   let uid = userData["id"] as? String {
                     print("Name:", name)
                     print("Email:", email)
                     
@@ -188,6 +180,7 @@ struct TempSelectionView: View {
                     // 필요한 다른 사용자 정보도 업데이트 가능
                     
                     self.userAuth.isLogged = true
+                    self.userAuth.currentClientID = uid // 디자이너 ID 설정
                     
                     completion(true)
                 } else {
