@@ -9,14 +9,14 @@ import SwiftUI
 
 struct CMProfileView: View {
     @EnvironmentObject var userAuth: UserAuth
-    @StateObject var profileVM: CMProfileViewModel = CMProfileViewModel()
+    @StateObject var profileViewModel: CMProfileViewModel = CMProfileViewModel()
     
     var body: some View {
         NavigationStack {
             VStack {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("\(profileVM.client.name)님")
+                        Text("\(profileViewModel.client.name)님")
                         Text("오늘도 빛나는 하루 보내세요")
                     }
                     .font(.system(size: 20, weight: .bold))
@@ -28,7 +28,7 @@ struct CMProfileView: View {
                 
                 NavigationLink {
                     CMProfileEditView()
-                        .environmentObject(profileVM)
+                        .environmentObject(profileViewModel)
                 } label: {
                     Text("정보 수정")
                         .frame(width: 350, height: 40)
@@ -64,7 +64,7 @@ struct CMProfileView: View {
         }
         .onAppear {
             Task {
-                await profileVM.fetchClientProfile(userAuth: userAuth)
+                await profileViewModel.fetchClientProfile(userAuth: userAuth)
             }
         }
     }
@@ -74,5 +74,6 @@ struct CMProfileView: View {
     NavigationStack {
         CMProfileView()
             .environmentObject(UserAuth())
+            .environmentObject(CMProfileViewModel())
     }
 }
