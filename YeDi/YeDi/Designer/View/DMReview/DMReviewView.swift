@@ -9,10 +9,20 @@ import SwiftUI
 
 struct DMReviewView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List(0...3, id: \.self) { index in
+            NavigationLink {
+                
+            } label: {
+                DMReviewCell()
+            }
+        }
+        .listStyle(.plain)
+        .menuIndicator(.hidden)
     }
 }
 
 #Preview {
-    DMReviewView()
+    NavigationStack {
+        DMReviewView()
+    }
 }

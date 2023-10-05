@@ -40,9 +40,8 @@ struct CustomCalender: View {
     private var headerView: some View {
         VStack {
             Text(month, formatter: Self.dateFormatter)
-                .font(.title)
+                .font(.title2)
                 .padding(.bottom)
-            
             HStack {
                 ForEach(Self.weekdaySymbols, id: \.self) { symbol in
                     Text(symbol)

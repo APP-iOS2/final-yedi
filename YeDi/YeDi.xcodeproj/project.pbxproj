@@ -91,6 +91,8 @@
 		63CD89B32ABD85C300E70A56 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CD89B22ABD85C300E70A56 /* ContentView.swift */; };
 		63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63CD89B42ABD85C500E70A56 /* Assets.xcassets */; };
 		63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63CD89B72ABD85C500E70A56 /* Preview Assets.xcassets */; };
+		96375A872ACE7CAC00B1C4BD /* HCustomCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96375A862ACE7CAC00B1C4BD /* HCustomCalendar.swift */; };
+		96375A892ACEF4C700B1C4BD /* DMReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96375A882ACEF4C700B1C4BD /* DMReviewCell.swift */; };
 		9666A21B2ACDBB6D0081C711 /* TimeSettingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9666A21A2ACDBB6D0081C711 /* TimeSettingDetail.swift */; };
 		96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */; };
 		96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */; };
@@ -179,6 +181,8 @@
 		63CD89B22ABD85C300E70A56 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		63CD89B42ABD85C500E70A56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63CD89B72ABD85C500E70A56 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		96375A862ACE7CAC00B1C4BD /* HCustomCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HCustomCalendar.swift; sourceTree = "<group>"; };
+		96375A882ACEF4C700B1C4BD /* DMReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMReviewCell.swift; sourceTree = "<group>"; };
 		9666A21A2ACDBB6D0081C711 /* TimeSettingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSettingDetail.swift; sourceTree = "<group>"; };
 		96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetail.swift; sourceTree = "<group>"; };
 		96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WkDaySettingDetail.swift; sourceTree = "<group>"; };
@@ -322,8 +326,8 @@
 				3BCF2C4D2ACD4247009C18C2 /* CMHome */,
 				3BCF2C572ACD4248009C18C2 /* CMFilter */,
 				3BCF2C592ACD4248009C18C2 /* CMChatting */,
-				3BCF2C5B2ACD4248009C18C2 /* ClientMainTabView.swift */,
 				3BCF2C5C2ACD4248009C18C2 /* CMProfile */,
+				3BCF2C5A2ACD4248009C18C2 /* CMMainChattingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -382,7 +386,7 @@
 		3BCF2C592ACD4248009C18C2 /* CMChatting */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C5A2ACD4248009C18C2 /* CMMainChattingView.swift */,
+				3BCF2C5B2ACD4248009C18C2 /* ClientMainTabView.swift */,
 			);
 			path = CMChatting;
 			sourceTree = "<group>";
@@ -460,6 +464,7 @@
 			isa = PBXGroup;
 			children = (
 				639DB6792AC11AC2002692E5 /* DMReviewView.swift */,
+				96375A882ACEF4C700B1C4BD /* DMReviewCell.swift */,
 			);
 			path = DMReview;
 			sourceTree = "<group>";
@@ -490,6 +495,7 @@
 				96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */,
 				9666A21A2ACDBB6D0081C711 /* TimeSettingDetail.swift */,
 				96CBD4072AC4140C0055CC7F /* CustomCalender.swift */,
+				96375A862ACE7CAC00B1C4BD /* HCustomCalendar.swift */,
 			);
 			path = DMReservationView;
 			sourceTree = "<group>";
@@ -625,6 +631,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96375A892ACEF4C700B1C4BD /* DMReviewCell.swift in Sources */,
 				3BCF2C8E2ACD4248009C18C2 /* CMNotificationView.swift in Sources */,
 				3BCF2C222ACD3E73009C18C2 /* TextBubble.swift in Sources */,
 				3BCF2C2C2ACD3E73009C18C2 /* BubbleCell.swift in Sources */,
@@ -688,6 +695,7 @@
 				3BCF2C722ACD4248009C18C2 /* CMReviewCreateKeywordsView.swift in Sources */,
 				3BCF2C822ACD4248009C18C2 /* CMRecommendPostView.swift in Sources */,
 				3BCF2C232ACD3E73009C18C2 /* BoardBubble.swift in Sources */,
+				96375A872ACE7CAC00B1C4BD /* HCustomCalendar.swift in Sources */,
 				3BCF2C892ACD4248009C18C2 /* CMCustomTextField.swift in Sources */,
 				96CBD4082AC4140C0055CC7F /* CustomCalender.swift in Sources */,
 				3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */,
