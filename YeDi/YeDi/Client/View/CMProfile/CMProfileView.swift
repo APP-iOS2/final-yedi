@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct CMProfileView: View {
+    @EnvironmentObject var userAuth: UserAuth
+    @StateObject var profileVM: CMProfileViewModel = CMProfileViewModel()
+    
     var body: some View {
         NavigationStack {
             VStack {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("김고객님")
+                        Text("\(profileVM.client.name)님")
                         Text("오늘도 빛나는 하루 보내세요")
                     }
                     .font(.system(size: 20, weight: .bold))
@@ -23,7 +26,10 @@ struct CMProfileView: View {
                 }
                 .padding()
                 
-                NavigationLink(destination: CMProfileEditView()) {
+                NavigationLink {
+                    CMProfileEditView()
+                        .environmentObject(profileVM)
+                } label: {
                     Text("정보 수정")
                         .frame(width: 350, height: 40)
                         .background(.black)
@@ -37,6 +43,7 @@ struct CMProfileView: View {
                 Spacer()
             }
         }
+        .padding([.leading, .trailing], 5)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
@@ -55,11 +62,17 @@ struct CMProfileView: View {
                 }
             }
         }
+        .onAppear {
+            Task {
+                await profileVM.fetchClientProfile(userAuth: userAuth)
+            }
+        }
     }
 }
 
 #Preview {
     NavigationStack {
         CMProfileView()
+            .environmentObject(UserAuth())
     }
 }

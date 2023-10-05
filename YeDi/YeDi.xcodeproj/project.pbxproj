@@ -14,6 +14,7 @@
 		1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067202AC1F61D0028A660 /* DMGridView.swift */; };
 		1DA52F562AC2CB69002E0D75 /* DMNewPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */; };
 		1DB59C672ACD9C9C008EAD5E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1DB59C662ACD9C9C008EAD5E /* GoogleService-Info.plist */; };
+		2F0A21912ACE753F0070CA42 /* CMProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */; };
 		3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */; };
 		3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */; };
 		3BAB00F32ACD97EB009053A4 /* ReservationSDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */; };
@@ -108,6 +109,7 @@
 		1D9067202AC1F61D0028A660 /* DMGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMGridView.swift; sourceTree = "<group>"; };
 		1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMNewPostView.swift; sourceTree = "<group>"; };
 		1DB59C662ACD9C9C008EAD5E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMProfileViewModel.swift; sourceTree = "<group>"; };
 		3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMAccount.swift; sourceTree = "<group>"; };
 		3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMExpandableText.swift; sourceTree = "<group>"; };
 		3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReservationSDetail.swift; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 			children = (
 				3BCF2C382ACD4247009C18C2 /* PostDetailViewModel.swift */,
 				3BCF2C392ACD4247009C18C2 /* CMPostViewModel.swift */,
+				2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -683,6 +686,7 @@
 				1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */,
 				3BCF2C8C2ACD4248009C18C2 /* CMFollowingListView.swift in Sources */,
 				3BCF2C862ACD4248009C18C2 /* CMLikePostListView.swift in Sources */,
+				2F0A21912ACE753F0070CA42 /* CMProfileViewModel.swift in Sources */,
 				3BCF2C8D2ACD4248009C18C2 /* CMReviewListView.swift in Sources */,
 				9666A21B2ACDBB6D0081C711 /* TimeSettingDetail.swift in Sources */,
 				3BCF2C782ACD4248009C18C2 /* CMReservationCancelView.swift in Sources */,

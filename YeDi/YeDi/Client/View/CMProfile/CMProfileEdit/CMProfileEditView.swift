@@ -11,6 +11,9 @@ import PhotosUI
 struct CMProfileEditView: View {
     @Environment(\.dismiss) var dismiss
     
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var profileVM: CMProfileViewModel
+    
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var selectedPhotoData: Data = Data()
     
@@ -107,7 +110,25 @@ struct CMProfileEditView: View {
             
             Spacer()
             Button(action: {
-                // TODO: 이메일, 휴대폰 형식 확인 > 변경 내용 저장
+                if let clientId = userAuth.currentClientID {
+                    let newClient = Client(
+                        id: clientId,
+                        name: clientName,
+                        email: accountEmail,
+                        profileImageURLString: "",
+                        phoneNumber: accountPhoneNumber,
+                        gender: clientGender,
+                        birthDate: clientBirthDate,
+                        favoriteStyle: "",
+                        chatRooms: []
+                    )
+                    Task {
+                        await profileVM.updateClientProfile(
+                            userAuth: userAuth,
+                            newClient: newClient
+                        )
+                    }
+                }
                 dismiss()
             }, label: {
                 Text("저장")
@@ -119,9 +140,19 @@ struct CMProfileEditView: View {
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .tabBar)
+        .onAppear {
+            clientName = profileVM.client.name
+            clientGender = profileVM.client.gender
+            clientBirthDate = profileVM.client.birthDate
+            
+            accountEmail = profileVM.client.email
+            accountPhoneNumber = profileVM.client.phoneNumber
+        }
     }
 }
 
 #Preview {
     CMProfileEditView()
+        .environmentObject(UserAuth())
+        .environmentObject(CMProfileViewModel())
 }

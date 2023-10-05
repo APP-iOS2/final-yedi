@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ClientMainTabView: View {
+    @EnvironmentObject var userAuth: UserAuth
+    
     @State private var selectedIndex = 0
     
     var body: some View {
@@ -59,4 +61,5 @@ struct ClientMainTabView: View {
 
 #Preview {
     ClientMainTabView()
+        .environmentObject(UserAuth())
 }
