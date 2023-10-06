@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		097EAD332AD03FC70037B848 /* CMLikedPostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EAD322AD03FC70037B848 /* CMLikedPostListViewModel.swift */; };
+		097EAD352AD040CA0037B848 /* CMHomeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EAD342AD040CA0037B848 /* CMHomeCellViewModel.swift */; };
 		1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */; };
 		1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067162AC150D60028A660 /* DmDesignerModels.swift */; };
 		1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067182AC151A80028A660 /* DMAsyncImage.swift */; };
@@ -104,6 +106,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		097EAD322AD03FC70037B848 /* CMLikedPostListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLikedPostListViewModel.swift; sourceTree = "<group>"; };
+		097EAD342AD040CA0037B848 /* CMHomeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHomeCellViewModel.swift; sourceTree = "<group>"; };
 		1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMEditPostView.swift; sourceTree = "<group>"; };
 		1D9067162AC150D60028A660 /* DmDesignerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmDesignerModels.swift; sourceTree = "<group>"; };
 		1D9067182AC151A80028A660 /* DMAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMAsyncImage.swift; sourceTree = "<group>"; };
@@ -321,6 +325,8 @@
 				3BCF2C392ACD4247009C18C2 /* CMPostViewModel.swift */,
 				2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */,
 				2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */,
+				097EAD342AD040CA0037B848 /* CMHomeCellViewModel.swift */,
+				097EAD322AD03FC70037B848 /* CMLikedPostListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -678,6 +684,7 @@
 				3BCF2C802ACD4248009C18C2 /* CMHomeView.swift in Sources */,
 				3BCF2C272ACD3E73009C18C2 /* CommonBubble.swift in Sources */,
 				3BCF2C842ACD4248009C18C2 /* CMMainChattingView.swift in Sources */,
+				097EAD352AD040CA0037B848 /* CMHomeCellViewModel.swift in Sources */,
 				639DB6842AC11B3B002692E5 /* DMReservationView.swift in Sources */,
 				3BCF2C292ACD3E73009C18C2 /* BoardBubbleCell.swift in Sources */,
 				3BCF2C852ACD4248009C18C2 /* ClientMainTabView.swift in Sources */,
@@ -702,6 +709,7 @@
 				96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */,
 				96F637DF2AC2BCFD00EF74FF /* ReservationCellView.swift in Sources */,
 				1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */,
+				097EAD332AD03FC70037B848 /* CMLikedPostListViewModel.swift in Sources */,
 				3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */,
 				1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */,
 				3BCF2C332ACD3F6A009C18C2 /* ChattingViewModel.swift in Sources */,
