@@ -89,7 +89,6 @@ class ChattingViewModel: ObservableObject {
                 "isRead": bubble.isRead
             ])
         
-        fetchChattingBubble(chatRoomId: chatRoomId)
     }
     
     ///이미지 버블을 보내는 메소드
@@ -134,7 +133,6 @@ class ChattingViewModel: ObservableObject {
                         "isRead": bubble.isRead
                     ])
                 
-                self.fetchChattingBubble(chatRoomId: self.chatRoomId)
             }
         }
     }
@@ -160,7 +158,6 @@ class ChattingViewModel: ObservableObject {
                 "isRead": bubble.isRead
             ])
         
-        fetchChattingBubble(chatRoomId: chatRoomId)
     }
     
     ///상담하기를 누르면 채팅방이 생성된 이후에 자동으로 고객에서 디자이너에게 "이 게시물을 보고 상담하러 왔습니다."
