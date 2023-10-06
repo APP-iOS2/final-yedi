@@ -439,7 +439,6 @@
 				639DB6642AC10F27002692E5 /* ViewModel */,
 				639DB6622AC10F19002692E5 /* View */,
 				639DB6602AC10F13002692E5 /* DesignerMainTabView.swift */,
-				63CD89B02ABD85C300E70A56 /* YeDiApp.swift */,
 			);
 			path = Designer;
 			sourceTree = "<group>";
@@ -542,6 +541,7 @@
 				3BCF2C032ACD3E72009C18C2 /* Shared */,
 				3BCF2C362ACD4247009C18C2 /* Client */,
 				639DB6282AC10DED002692E5 /* Designer */,
+				63CD89B02ABD85C300E70A56 /* YeDiApp.swift */,
 				63CD89B22ABD85C300E70A56 /* ContentView.swift */,
 				63CD89B42ABD85C500E70A56 /* Assets.xcassets */,
 				63CD89B62ABD85C500E70A56 /* Preview Content */,

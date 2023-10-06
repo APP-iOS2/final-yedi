@@ -8,14 +8,14 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Review {
+struct Review: Identifiable, Codable {
     /// 리뷰 ID
     @DocumentID var id: String?
     /// 작성자 ID
     let reviewer: String
     /// 리뷰 작성일
     let date: String
-    /// 디자이너 스타일 평가
+    /// 리뷰 키워드 평가
     let keywordReviews: [Keyword]
     /// 시술 별점 평가
     let designerScore: Int

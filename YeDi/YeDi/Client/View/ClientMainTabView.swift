@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ClientMainTabView: View {
     @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var profileViewModel: CMProfileViewModel
+    @EnvironmentObject var reviewViewModel: CMReviewViewModel
     
     @State private var selectedIndex = 0
     
@@ -31,7 +33,7 @@ struct ClientMainTabView: View {
                     Label("필터", systemImage: "line.3.horizontal.decrease.circle")
                 }.tag(1)
                 
-                CMReservationView()
+                CMReservationHistoryView()
                 .onTapGesture {
                     self.selectedIndex = 2
                 }
@@ -62,4 +64,6 @@ struct ClientMainTabView: View {
 #Preview {
     ClientMainTabView()
         .environmentObject(UserAuth())
+        .environmentObject(CMProfileViewModel())
+        .environmentObject(CMReviewViewModel())
 }

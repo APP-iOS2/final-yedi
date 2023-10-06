@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CMSegmentedControl: View {
+    @EnvironmentObject var reviewViewModel: CMReviewViewModel
+    
     @State private var selectedSegment: String = "찜한 게시물"
     
     let segments: [String] = ["찜한 게시물", "팔로잉", "리뷰"]
@@ -38,6 +40,7 @@ struct CMSegmentedControl: View {
                 CMFollowingListView()
             case "리뷰":
                 CMReviewListView()
+                    .environmentObject(reviewViewModel)
             default:
                 Text("")
             }
@@ -47,4 +50,5 @@ struct CMSegmentedControl: View {
 
 #Preview {
     CMSegmentedControl()
+        .environmentObject(CMReviewViewModel())
 }

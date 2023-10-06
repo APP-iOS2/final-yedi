@@ -10,6 +10,10 @@ import PhotosUI
 
 struct CMReviewCreateMainView: View {
     @Environment(\.dismiss) var dismiss
+    
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var reviewViewModel: CMReviewViewModel
+    
     @State private var myDate = Date()
     
     @State private var selectedPhoto: PhotosPickerItem? = nil
@@ -63,7 +67,19 @@ struct CMReviewCreateMainView: View {
             Spacer()
             
             Button(action: {
-                // TODO: 리뷰 작성 백엔드 추가하기
+                let newReview = Review(
+                    id: UUID().uuidString,
+                    reviewer: userAuth.currentClientID ?? "",
+                    date: "",
+                    keywordReviews: [],
+                    designerScore: designerScore,
+                    content: reviewContent,
+                    imageURLStrings: [],
+                    reservationId: UUID().uuidString,
+                    style: "펌, 염색",
+                    designer: UUID().uuidString
+                )
+                reviewViewModel.uploadReview(newReview: newReview)
                 dismiss()
             }, label: {
                 Text("리뷰 등록")
