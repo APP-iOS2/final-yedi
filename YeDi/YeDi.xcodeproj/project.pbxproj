@@ -88,6 +88,7 @@
 		63CD89B32ABD85C300E70A56 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CD89B22ABD85C300E70A56 /* ContentView.swift */; };
 		63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63CD89B42ABD85C500E70A56 /* Assets.xcassets */; };
 		63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63CD89B72ABD85C500E70A56 /* Preview Assets.xcassets */; };
+		63D448452ACE9F5700EDD3E8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63D448442ACE9F5700EDD3E8 /* GoogleService-Info.plist */; };
 		9666A21B2ACDBB6D0081C711 /* TimeSettingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9666A21A2ACDBB6D0081C711 /* TimeSettingDetail.swift */; };
 		96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */; };
 		96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */; };
@@ -173,6 +174,7 @@
 		63CD89B22ABD85C300E70A56 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		63CD89B42ABD85C500E70A56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63CD89B72ABD85C500E70A56 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		63D448442ACE9F5700EDD3E8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9666A21A2ACDBB6D0081C711 /* TimeSettingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSettingDetail.swift; sourceTree = "<group>"; };
 		96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetail.swift; sourceTree = "<group>"; };
 		96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WkDaySettingDetail.swift; sourceTree = "<group>"; };
@@ -493,7 +495,7 @@
 		63CD89A42ABD85C300E70A56 = {
 			isa = PBXGroup;
 			children = (
-				3BC8CF112ACE844100264547 /* GoogleService-Info.plist */,
+				63D448442ACE9F5700EDD3E8 /* GoogleService-Info.plist */,
 				63CD89AF2ABD85C300E70A56 /* YeDi */,
 				63CD89AE2ABD85C300E70A56 /* Products */,
 			);
@@ -613,7 +615,7 @@
 			files = (
 				63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */,
 				63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */,
-				3BC8CF122ACE844200264547 /* GoogleService-Info.plist in Resources */,
+				63D448452ACE9F5700EDD3E8 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

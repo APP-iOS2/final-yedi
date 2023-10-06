@@ -30,22 +30,22 @@ struct ChatRoomView: View {
         VStack(spacing: 0) {
             chatScroll
             if isShowingUtilityMenu {
-                ChatUtilityMenuView()
+                ChatUtilityMenuView(chattingVM: chattingVM, userID: userId)
             }
             inputchatTextField
         }
         .navigationTitle("디자이너 수")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            temp.chatRoomId = chatRoomId
-            temp.fetchChattingBubble(chatRoomId: chatRoomId)
+            chattingVM.chatRoomId = chatRoomId
+            chattingVM.fetchChattingBubble(chatRoomId: chatRoomId)
         }
     }
     
     private var chatScroll: some View {
         ScrollViewReader { proxy in
             ScrollView {
-                ForEach(temp.chattings) { chat in
+                ForEach(chattingVM.chattings) { chat in
                     var isMyBubble: Bool {
                         chat.sender == userId ? true : false
                     }
@@ -56,7 +56,7 @@ struct ChatRoomView: View {
             }
             .rotationEffect(Angle(degrees: 180))
             .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
-            .onReceive(temp.$lastBubbleId) { id in
+            .onReceive(chattingVM.$lastBubbleId) { id in
                 withAnimation {
                     proxy.scrollTo(id, anchor: .bottom)
                 }
@@ -83,7 +83,7 @@ struct ChatRoomView: View {
                 
                 Button(action: {
                     if !isInputTextEmpty {
-                        temp.sendTextBubble(content: inputText, sender: userId)
+                        chattingVM.sendTextBubble(content: inputText, sender: userId)
                         inputText = ""
                     }
                 }, label: {
