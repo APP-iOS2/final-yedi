@@ -10,7 +10,7 @@ import SwiftUI
 struct ChatRoomView: View {
     var chatRoomId: String
     
-    @ObservedObject var chattingVM = ChattingViewModel()
+    @StateObject var chattingVM = ChattingViewModel()
     @EnvironmentObject var userAuth: UserAuth
     
     @State private var inputText: String = ""
