@@ -98,6 +98,11 @@
 		96CBD4082AC4140C0055CC7F /* CustomCalender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4072AC4140C0055CC7F /* CustomCalender.swift */; };
 		96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F637DA2AC2AA1200EF74FF /* ReservationView.swift */; };
 		96F637DF2AC2BCFD00EF74FF /* ReservationCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */; };
+		DC7695462AD0888800D2FB69 /* AuthHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695422AD0888800D2FB69 /* AuthHomeView.swift */; };
+		DC7695472AD0888800D2FB69 /* AuthModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695442AD0888800D2FB69 /* AuthModifier.swift */; };
+		DC7695482AD0888800D2FB69 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695452AD0888800D2FB69 /* LoginView.swift */; };
+		DC76954F2AD088DB00D2FB69 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC76954E2AD088DB00D2FB69 /* AuthViewModel.swift */; };
+		DC7695532AD08A3600D2FB69 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695522AD08A3600D2FB69 /* RegisterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -187,6 +192,11 @@
 		96CBD4072AC4140C0055CC7F /* CustomCalender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalender.swift; sourceTree = "<group>"; };
 		96F637DA2AC2AA1200EF74FF /* ReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationView.swift; sourceTree = "<group>"; };
 		96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCellView.swift; sourceTree = "<group>"; };
+		DC7695422AD0888800D2FB69 /* AuthHomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthHomeView.swift; sourceTree = "<group>"; };
+		DC7695442AD0888800D2FB69 /* AuthModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthModifier.swift; sourceTree = "<group>"; };
+		DC7695452AD0888800D2FB69 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		DC76954E2AD088DB00D2FB69 /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		DC7695522AD08A3600D2FB69 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				3BCF2C052ACD3E72009C18C2 /* SharedViewModel.swift */,
+				DC76954D2AD088DB00D2FB69 /* Auth */,
 				3BCF2C062ACD3E72009C18C2 /* Chatting */,
 			);
 			path = ViewModel;
@@ -259,6 +270,7 @@
 		3BCF2C122ACD3E72009C18C2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DC7695412AD0888800D2FB69 /* Auth */,
 				3BCF2C132ACD3E72009C18C2 /* Chatting */,
 				3BCF2C1D2ACD3E72009C18C2 /* SharedView.swift */,
 			);
@@ -554,6 +566,33 @@
 			path = ReservationView;
 			sourceTree = "<group>";
 		};
+		DC7695412AD0888800D2FB69 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				DC7695432AD0888800D2FB69 /* Modifier */,
+				DC7695422AD0888800D2FB69 /* AuthHomeView.swift */,
+				DC7695452AD0888800D2FB69 /* LoginView.swift */,
+				DC7695522AD08A3600D2FB69 /* RegisterView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		DC7695432AD0888800D2FB69 /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				DC7695442AD0888800D2FB69 /* AuthModifier.swift */,
+			);
+			path = Modifier;
+			sourceTree = "<group>";
+		};
+		DC76954D2AD088DB00D2FB69 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				DC76954E2AD088DB00D2FB69 /* AuthViewModel.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -649,6 +688,7 @@
 				3BCF2C6C2ACD4248009C18C2 /* Keyword.swift in Sources */,
 				3BCF2C7C2ACD4248009C18C2 /* CMFeedDetailView.swift in Sources */,
 				3BCF2C252ACD3E73009C18C2 /* ChatRoom.swift in Sources */,
+				DC7695462AD0888800D2FB69 /* AuthHomeView.swift in Sources */,
 				3BCF2C2B2ACD3E73009C18C2 /* ChattingListRoomView.swift in Sources */,
 				639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */,
 				3BCF2C8B2ACD4248009C18C2 /* CMSegmentedControl.swift in Sources */,
@@ -687,6 +727,7 @@
 				1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */,
 				3BCF2C332ACD3F6A009C18C2 /* ChattingViewModel.swift in Sources */,
 				3BCF2C902ACD4248009C18C2 /* CMProfileView.swift in Sources */,
+				DC76954F2AD088DB00D2FB69 /* AuthViewModel.swift in Sources */,
 				3BCF2C8F2ACD4248009C18C2 /* CMSettingsView.swift in Sources */,
 				3BCF2C712ACD4248009C18C2 /* CMReviewCreateMainView.swift in Sources */,
 				3BCF2C2A2ACD3E73009C18C2 /* ChatRoomView.swift in Sources */,
@@ -705,13 +746,16 @@
 				3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */,
 				3BCF2C7D2ACD4248009C18C2 /* CMHomeCell.swift in Sources */,
 				3BCF2C732ACD4248009C18C2 /* CMUpcomingReservationView.swift in Sources */,
+				DC7695472AD0888800D2FB69 /* AuthModifier.swift in Sources */,
 				3BCF2C8A2ACD4248009C18C2 /* CMClientInfoEditView.swift in Sources */,
 				3BCF2C692ACD4248009C18C2 /* PostDetailViewModel.swift in Sources */,
 				3BCF2C7F2ACD4248009C18C2 /* CMFeedDetailContentView.swift in Sources */,
 				1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */,
+				DC7695532AD08A3600D2FB69 /* RegisterView.swift in Sources */,
 				639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */,
 				1DA52F562AC2CB69002E0D75 /* DMNewPostView.swift in Sources */,
 				96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */,
+				DC7695482AD0888800D2FB69 /* LoginView.swift in Sources */,
 				96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */,
 				3BCF2C7E2ACD4248009C18C2 /* CMSearchView.swift in Sources */,
 				3BCF2C872ACD4248009C18C2 /* CMAccountInfoEditView.swift in Sources */,
