@@ -9,26 +9,29 @@ import SwiftUI
 
 struct CMFeedDetailContentView: View {
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var userAuth: UserAuth
+    
     @StateObject var postViewModel: PostDetailViewModel = PostDetailViewModel()
     @State private var isLiked: Bool = false
+    @State private var isFollowed: Bool = false
     let post: Post
-    let images: [String] = ["https://images.pexels.com/photos/18005100/pexels-photo-18005100/free-photo-of-fa1-vsco.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/17410647/pexels-photo-17410647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"]
+    private let images: [String] = ["https://images.pexels.com/photos/18005100/pexels-photo-18005100/free-photo-of-fa1-vsco.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/17410647/pexels-photo-17410647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"]
     let safeArea: EdgeInsets
     let size: CGSize
     
     var body: some View {
         VStack(spacing: 0) {
             ScrollView(.vertical, showsIndicators: true) {
-                imageTabView()
-                feedInfoView()
-                designerProfileView()
+                imageTabView
+                feedInfoView
+                designerProfileView
             }
             .coordinateSpace(name: "SCROLL")
             .overlay(alignment: .top) {
-                headerView()
+                headerView
             }
             
-            footerView()
+            footerView
         }
         .overlay(
             ZStack {
@@ -37,9 +40,14 @@ struct CMFeedDetailContentView: View {
                 }
             }
         )
+        .onAppear {
+            Task {
+                await postViewModel.isFollowed(designerUid: post.designerID)
+            }
+        }
     }
     
-    private func headerView() -> some View {
+    private var headerView: some View {
         GeometryReader { proxy in
             let minY = proxy.frame(in: .named("SCORLL")).minY
             HStack {
@@ -69,7 +77,7 @@ struct CMFeedDetailContentView: View {
     }
     
     @ViewBuilder
-    private func imageTabView() -> some View {
+    private var imageTabView: some View {
         let height = size.height * 0.4
         GeometryReader { proxy in
             let size = proxy.size
@@ -112,7 +120,7 @@ struct CMFeedDetailContentView: View {
         .frame(height: height + safeArea.top)
     }
     
-    private func feedInfoView() -> some View {
+    private var feedInfoView: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
                 ForEach(0...1, id: \.self) { _ in
@@ -139,7 +147,7 @@ struct CMFeedDetailContentView: View {
         }
     }
     
-    private func designerProfileView() -> some View {
+    private var designerProfileView: some View {
         HStack(alignment: .center) {
             DMAsyncImage(url: images[0])
                     .aspectRatio(contentMode: .fit)
@@ -161,20 +169,27 @@ struct CMFeedDetailContentView: View {
             Spacer()
             
             Button {
-                 
+                Task {
+                    await postViewModel.toggleFollow(designerUid: post.designerID)
+                }
             } label: {
-                Text("팔로우")
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 12)
+                Text("\(postViewModel.isFollowing ? "팔로잉" : "팔로우")")
+                    .font(.system(size: 14))
+                    .foregroundStyle(postViewModel.isFollowing ? .black : .white)
+                    .padding(.horizontal, 20)
                     .padding(.vertical, 7)
-                    .background(.black)
+                    .background(postViewModel.isFollowing ? .white : .black)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(postViewModel.isFollowing ? .black : .clear, lineWidth: 1)
+                    )
             }
         }
         .padding(.horizontal)
     }
     
-    private func footerView() -> some View {
+    private var footerView: some View {
         VStack(spacing: 0) {
             Divider()
             
@@ -210,7 +225,7 @@ struct CMFeedDetailContentView: View {
         }
     }
     
-    var imageDetailView: some View {
+    private var imageDetailView: some View {
         ZStack {
             Color.black
                 .ignoresSafeArea()
