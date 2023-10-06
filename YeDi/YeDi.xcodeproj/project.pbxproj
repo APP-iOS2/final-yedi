@@ -17,6 +17,8 @@
 		3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */; };
 		3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */; };
 		3BAB00F32ACD97EB009053A4 /* ReservationSDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */; };
+		3BC8CF122ACE844200264547 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BC8CF112ACE844100264547 /* GoogleService-Info.plist */; };
+		3BC8CF142ACF12D500264547 /* ChatRoomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC8CF132ACF12D500264547 /* ChatRoomSheetView.swift */; };
 		3BCF2C1F2ACD3E73009C18C2 /* ChattingListRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C072ACD3E72009C18C2 /* ChattingListRoomViewModel.swift */; };
 		3BCF2C252ACD3E73009C18C2 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0F2ACD3E72009C18C2 /* ChatRoom.swift */; };
 		3BCF2C262ACD3E73009C18C2 /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C102ACD3E72009C18C2 /* MessageType.swift */; };
@@ -106,6 +108,8 @@
 		3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMAccount.swift; sourceTree = "<group>"; };
 		3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMExpandableText.swift; sourceTree = "<group>"; };
 		3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReservationSDetail.swift; sourceTree = "<group>"; };
+		3BC8CF112ACE844100264547 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3BC8CF132ACF12D500264547 /* ChatRoomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomSheetView.swift; sourceTree = "<group>"; };
 		3BCF2C072ACD3E72009C18C2 /* ChattingListRoomViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingListRoomViewModel.swift; sourceTree = "<group>"; };
 		3BCF2C0F2ACD3E72009C18C2 /* ChatRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		3BCF2C102ACD3E72009C18C2 /* MessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
@@ -254,6 +258,7 @@
 			children = (
 				3BCF2C142ACD3E72009C18C2 /* Modifier */,
 				3BCF2C162ACD3E72009C18C2 /* BoardBubbleCell.swift */,
+				3BC8CF132ACF12D500264547 /* ChatRoomSheetView.swift */,
 				3BCF2C172ACD3E72009C18C2 /* ChatRoomView.swift */,
 				3BCF2C182ACD3E72009C18C2 /* ChattingListRoomView.swift */,
 				3BCF2C192ACD3E72009C18C2 /* BubbleCell.swift */,
@@ -640,6 +645,7 @@
 				639DB6872AC11B56002692E5 /* DMPostView.swift in Sources */,
 				3BCF2C282ACD3E73009C18C2 /* ChatBubbleModifier.swift in Sources */,
 				3BCF2C802ACD4248009C18C2 /* CMHomeView.swift in Sources */,
+				3BC8CF142ACF12D500264547 /* ChatRoomSheetView.swift in Sources */,
 				3BCF2C272ACD3E73009C18C2 /* CommonBubble.swift in Sources */,
 				3BCF2C842ACD4248009C18C2 /* CMMainChattingView.swift in Sources */,
 				639DB6842AC11B3B002692E5 /* DMReservationView.swift in Sources */,

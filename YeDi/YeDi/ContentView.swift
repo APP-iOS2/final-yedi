@@ -9,9 +9,14 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 
+enum UserType: String {
+    case client, designer
+}
+
 class UserAuth: ObservableObject {
     @Published var isLogged = false
     @Published var currentDesignerID: String? // 현재 로그인한 디자이너의 ID
+    @Published var userType: UserType?
 }
 
 struct ContentView: View {
@@ -177,7 +182,7 @@ struct TempSelectionView: View {
                     // 필요한 다른 사용자 정보도 업데이트 가능
                     
                     self.userAuth.isLogged = true
-                    
+                    self.userAuth.userType = .client
                     completion(true)
                 } else {
                     print("Invalid user data")
@@ -228,7 +233,7 @@ struct TempSelectionView: View {
                         
                         self.userAuth.isLogged = true
                         self.userAuth.currentDesignerID = email // 디자이너 ID 설정
-                        
+                        self.userAuth.userType = .designer
                         completion(true)
                     } else {
                         print("Invalid user data")

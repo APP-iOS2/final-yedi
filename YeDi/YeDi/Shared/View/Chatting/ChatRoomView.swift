@@ -10,7 +10,7 @@ import SwiftUI
 struct ChatRoomView: View {
 
     // temp properties
-    @ObservedObject var chattingVM = ChattingViewModel()
+    @StateObject var temp = ChattingViewModel()
     var name: String = "customerUser1"
     var chatRoomId: String
     @EnvironmentObject var userAuth: UserAuth
