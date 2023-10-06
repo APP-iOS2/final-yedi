@@ -11,7 +11,7 @@ struct CMSegmentedControl: View {
     @EnvironmentObject var reviewViewModel: CMReviewViewModel
     
     @State private var selectedSegment: String = "찜한 게시물"
-    
+    let profileViewModel: CMProfileViewModel
     let segments: [String] = ["찜한 게시물", "팔로잉", "리뷰"]
     
     var body: some View {
@@ -37,7 +37,7 @@ struct CMSegmentedControl: View {
             case "찜한 게시물":
                 CMLikePostListView()
             case "팔로잉":
-                CMFollowingListView()
+                CMFollowingListView(profileViewModel: profileViewModel)
             case "리뷰":
                 CMReviewListView()
                     .environmentObject(reviewViewModel)
@@ -49,6 +49,6 @@ struct CMSegmentedControl: View {
 }
 
 #Preview {
-    CMSegmentedControl()
+    CMSegmentedControl(profileViewModel: CMProfileViewModel())
         .environmentObject(CMReviewViewModel())
 }

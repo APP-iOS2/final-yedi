@@ -14,7 +14,7 @@ struct CMProfileView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 0) {
                 HStack {
                     VStack(alignment: .leading) {
                         Text("\(profileViewModel.client.name)님")
@@ -45,7 +45,7 @@ struct CMProfileView: View {
                     Text("리뷰 작성하기")
                 }
                 
-                CMSegmentedControl()
+                CMSegmentedControl(profileViewModel: profileViewModel)
                 
                 Spacer()
             }
@@ -72,6 +72,7 @@ struct CMProfileView: View {
         .onAppear {
             Task {
                 await profileViewModel.fetchClientProfile(userAuth: userAuth)
+                await profileViewModel.fetchFollowedDesigner()
             }
         }
     }
