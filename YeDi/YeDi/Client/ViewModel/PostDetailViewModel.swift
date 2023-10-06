@@ -44,19 +44,26 @@ final class PostDetailViewModel: ObservableObject {
         }
     }
     
-    func following(designerUid: String) async {
+    private func following(designerUid: String) async {
         guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
         
         do {
-            try await db.collection("following").document(uid).updateData([
-                "uids": FieldValue.arrayUnion([designerUid])
-            ])
+            let documentSnapshot = try await db.collection("following").document(uid).getDocument()
+            if documentSnapshot.exists {
+                try await db.collection("following").document(uid).updateData([
+                    "uids": FieldValue.arrayUnion([designerUid])
+                ])
+            } else {
+                try await db.collection("following").document(uid).setData([
+                    "uids": [designerUid]
+                ])
+            }
         } catch {
             print("Error following: \(error)")
         }
     }
     
-    func unfollowing(designerUid: String) async {
+    private func unfollowing(designerUid: String) async {
         guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
         
         do {
