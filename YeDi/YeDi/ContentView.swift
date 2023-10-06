@@ -18,6 +18,8 @@ class UserAuth: ObservableObject {
 
 struct ContentView: View {
     @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var profileViewModel: CMProfileViewModel
+    @EnvironmentObject var reviewViewModel: CMReviewViewModel
     @State private var isClientLogin: Bool = false
     @State private var isDesignerLogin: Bool = false
     
@@ -26,6 +28,8 @@ struct ContentView: View {
             if isClientLogin {
                 ClientMainTabView()
                     .environmentObject(userAuth)
+                    .environmentObject(profileViewModel)
+                    .environmentObject(reviewViewModel)
             } else if isDesignerLogin {
                 DesignerMainTabView()
                     .environmentObject(userAuth)

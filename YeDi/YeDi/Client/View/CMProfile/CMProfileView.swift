@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CMProfileView: View {
     @EnvironmentObject var userAuth: UserAuth
-    @StateObject var profileViewModel: CMProfileViewModel = CMProfileViewModel()
+    @EnvironmentObject var profileViewModel: CMProfileViewModel
+    @EnvironmentObject var reviewViewModel: CMReviewViewModel
     
     var body: some View {
         NavigationStack {
@@ -28,7 +29,6 @@ struct CMProfileView: View {
                 
                 NavigationLink {
                     CMProfileEditView()
-                        .environmentObject(profileViewModel)
                 } label: {
                     Text("정보 수정")
                         .frame(width: 350, height: 40)
@@ -36,6 +36,13 @@ struct CMProfileView: View {
                         .foregroundStyle(.white)
                         .clipShape(.rect(cornerRadius: 5))
                         .padding(.bottom, 40)
+                }
+                
+                // TODO: 임시 리뷰 작성 버튼
+                NavigationLink {
+                    CMReviewCreateMainView()
+                } label: {
+                    Text("리뷰 작성하기")
                 }
                 
                 CMSegmentedControl()
