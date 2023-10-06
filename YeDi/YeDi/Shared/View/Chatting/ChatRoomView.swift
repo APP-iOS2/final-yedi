@@ -8,19 +8,16 @@
 import SwiftUI
 
 struct ChatRoomView: View {
-
-    // temp properties
-    @StateObject var temp = ChattingViewModel()
-    var name: String = "customerUser1"
     var chatRoomId: String
+    
+    @ObservedObject var chattingVM = ChattingViewModel()
     @EnvironmentObject var userAuth: UserAuth
     
     @State private var inputText: String = ""
     @State private var isShowingUtilityMenu: Bool = false
     
     private var userId: String {
-//        userAuth.currentDesignerID ?? "customerUser1" // issue
-        "customerUser1"
+        userAuth.userId ?? "not found user id"
     }
     private var isInputTextEmpty: Bool {
         inputText.isEmpty ? true : false

@@ -15,6 +15,7 @@ enum UserType: String {
 
 class UserAuth: ObservableObject {
     @Published var isLogged = false
+    @Published var userId: String?
     @Published var currentDesignerID: String? // 현재 로그인한 디자이너의 ID
     @Published var userType: UserType?
 }
@@ -150,6 +151,7 @@ struct TempSelectionView: View {
                 completion(false)
                 return
             }
+            userAuth.userId = user.uid
             
             // Firebase Authentication에 로그인 성공
             
@@ -203,10 +205,11 @@ struct TempSelectionView: View {
                 return
             }
             
-            guard result?.user != nil else {
+            guard let user = result?.user else {
                 completion(false)
                 return
             }
+            userAuth.userId = user.uid
             
             // Firestore에서 디자이너 정보 가져오기
             let db = Firestore.firestore()
