@@ -28,7 +28,7 @@ struct ClientMainTabView: View {
                     self.selectedIndex = 1
                 }
                 .tabItem {
-                    Label("필터", systemImage: "")
+                    Label("필터", systemImage: "line.3.horizontal.decrease.circle")
                 }.tag(1)
                 
                 CMReservationView()
@@ -36,7 +36,7 @@ struct ClientMainTabView: View {
                     self.selectedIndex = 2
                 }
                 .tabItem {
-                    Label("예약", systemImage: "")
+                    Label("예약", systemImage: "calendar")
                 }.tag(2)
                 
                 CMMainChattingView()
@@ -44,7 +44,7 @@ struct ClientMainTabView: View {
                     self.selectedIndex = 3
                 }
                 .tabItem {
-                    Label("채팅", systemImage: "")
+                    Label("채팅", systemImage: "bubble")
                 }.tag(3)
                 
                 CMProfileView()
@@ -52,7 +52,7 @@ struct ClientMainTabView: View {
                     self.selectedIndex = 4
                 }
                 .tabItem {
-                    Label("프로필", systemImage: "")
+                    Label("프로필", systemImage: "person.circle.fill")
                 }.tag(4)
             }
         }
