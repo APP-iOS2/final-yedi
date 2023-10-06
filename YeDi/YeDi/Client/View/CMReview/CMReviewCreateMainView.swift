@@ -32,7 +32,7 @@ struct CMReviewCreateMainView: View {
                     .fontWeight(.semibold)
                     
                     HStack {
-                        Text("2023년 7월 11일 12:30 예약 예약")
+                        Text("2023년 7월 11일 12:30 예약")
                         Spacer()
                     }
                 }

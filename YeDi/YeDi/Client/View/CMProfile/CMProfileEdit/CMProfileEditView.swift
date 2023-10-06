@@ -12,7 +12,7 @@ struct CMProfileEditView: View {
     @Environment(\.dismiss) var dismiss
     
     @EnvironmentObject var userAuth: UserAuth
-    @EnvironmentObject var profileVM: CMProfileViewModel
+    @EnvironmentObject var profileViewModel: CMProfileViewModel
     
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var selectedPhotoData: Data = Data()
@@ -123,7 +123,7 @@ struct CMProfileEditView: View {
                         chatRooms: []
                     )
                     Task {
-                        await profileVM.updateClientProfile(
+                        await profileViewModel.updateClientProfile(
                             userAuth: userAuth,
                             newClient: newClient
                         )
@@ -141,12 +141,12 @@ struct CMProfileEditView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .tabBar)
         .onAppear {
-            clientName = profileVM.client.name
-            clientGender = profileVM.client.gender
-            clientBirthDate = profileVM.client.birthDate
+            clientName = profileViewModel.client.name
+            clientGender = profileViewModel.client.gender
+            clientBirthDate = profileViewModel.client.birthDate
             
-            accountEmail = profileVM.client.email
-            accountPhoneNumber = profileVM.client.phoneNumber
+            accountEmail = profileViewModel.client.email
+            accountPhoneNumber = profileViewModel.client.phoneNumber
         }
     }
 }
