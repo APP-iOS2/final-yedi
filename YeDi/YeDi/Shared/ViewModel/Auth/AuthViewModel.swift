@@ -18,6 +18,7 @@ enum UserType: String {
 final class UserAuth: ObservableObject {
     @Published var isClientLogin: Bool = false
     @Published var isDesignerLogin: Bool = false
+    @Published var currentClientID: String?
     @Published var currentDesignerID: String? // 현재 로그인한 디자이너의 ID
     @Published var userType: UserType?
     @Published var userSession: FirebaseAuth.User?
@@ -64,11 +65,12 @@ final class UserAuth: ObservableObject {
                 switch self.userType {
                 case .client:
                     if let name = userData["name"] as? String,
-                       let email = userData["email"] as? String {
+                       let email = userData["email"] as? String{
                         print("Name:", name)
                         print("Email:", email)
                         
                         self.isClientLogin = true
+                        self.currentClientID = user.uid
                         completion(true)
                     } else {
                         print("Invalid user data")
@@ -78,12 +80,12 @@ final class UserAuth: ObservableObject {
                     if let userData = documents.first?.data() {
                         // 디자이너 정보 업데이트
                         if let name = userData["name"] as? String,
-                           let email = userData["email"] as? String {
+                           let email = userData["email"] as? String{
                             print("Name:", name)
                             print("Email:", email)
                             
                             self.isDesignerLogin = true
-                            self.currentDesignerID = email
+                            self.currentDesignerID = user.uid
                             completion(true)
                         } else {
                             print("Invalid user data")
@@ -114,6 +116,7 @@ final class UserAuth: ObservableObject {
             print("DEBUG: Registered User successfully")
 
             let data: [String: Any] = [
+                "id": user.uid,
                 "name": client.name,
                 "email": client.email,
                 "phoneNumber": client.phoneNumber,
@@ -140,6 +143,7 @@ final class UserAuth: ObservableObject {
             print("DEBUG: Registered User successfully")
 
             let data: [String: Any] = [
+                "id": user.uid,
                 "name": designer.name,
                 "email": designer.email,
                 "phoneNumber": designer.phoneNumber,

@@ -165,10 +165,11 @@ struct CMHomeCell: View {
         })
         .sheet(isPresented: $showChattingRoom) {
             ChatRoomSheetView(chatRoomId: consultationViewModel.chatRoomId)
-        .onAppear {
-            if let currentClientID = userAuth.currentClientID {
-                viewModel.checkIfLiked(forClientID: currentClientID, post: post)
-            }
+                .onAppear {
+                    if let currentClientID = userAuth.currentClientID {
+                        viewModel.checkIfLiked(forClientID: currentClientID, post: post)
+                    }
+                }
         }
     }
 }

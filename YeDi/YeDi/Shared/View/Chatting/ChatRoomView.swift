@@ -17,7 +17,14 @@ struct ChatRoomView: View {
     @State private var isShowingUtilityMenu: Bool = false
     
     private var userId: String {
-        userAuth.userId ?? "not found user id"
+        switch userAuth.userType {
+        case .designer:
+            return userAuth.currentDesignerID!
+        case .client:
+            return userAuth.currentClientID!
+        case .none:
+            return ""
+        }
     }
     private var isInputTextEmpty: Bool {
         inputText.isEmpty ? true : false
