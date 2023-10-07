@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		097EAD332AD03FC70037B848 /* CMLikedPostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EAD322AD03FC70037B848 /* CMLikedPostListViewModel.swift */; };
+		097EAD352AD040CA0037B848 /* CMHomeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EAD342AD040CA0037B848 /* CMHomeCellViewModel.swift */; };
 		1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */; };
 		1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067162AC150D60028A660 /* DmDesignerModels.swift */; };
 		1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067182AC151A80028A660 /* DMAsyncImage.swift */; };
@@ -14,6 +16,9 @@
 		1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067202AC1F61D0028A660 /* DMGridView.swift */; };
 		1DA52F562AC2CB69002E0D75 /* DMNewPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */; };
 		1DB59C672ACD9C9C008EAD5E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1DB59C662ACD9C9C008EAD5E /* GoogleService-Info.plist */; };
+		2F0A21912ACE753F0070CA42 /* CMProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */; };
+		2F0A21932ACFD4B00070CA42 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21922ACFD4B00070CA42 /* Review.swift */; };
+		2F0A21952ACFD8950070CA42 /* CMReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */; };
 		3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */; };
 		3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */; };
 		3BAB00F32ACD97EB009053A4 /* ReservationSDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */; };
@@ -106,6 +111,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		097EAD322AD03FC70037B848 /* CMLikedPostListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLikedPostListViewModel.swift; sourceTree = "<group>"; };
+		097EAD342AD040CA0037B848 /* CMHomeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHomeCellViewModel.swift; sourceTree = "<group>"; };
 		1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMEditPostView.swift; sourceTree = "<group>"; };
 		1D9067162AC150D60028A660 /* DmDesignerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmDesignerModels.swift; sourceTree = "<group>"; };
 		1D9067182AC151A80028A660 /* DMAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMAsyncImage.swift; sourceTree = "<group>"; };
@@ -113,6 +120,9 @@
 		1D9067202AC1F61D0028A660 /* DMGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMGridView.swift; sourceTree = "<group>"; };
 		1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMNewPostView.swift; sourceTree = "<group>"; };
 		1DB59C662ACD9C9C008EAD5E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMProfileViewModel.swift; sourceTree = "<group>"; };
+		2F0A21922ACFD4B00070CA42 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReviewViewModel.swift; sourceTree = "<group>"; };
 		3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMAccount.swift; sourceTree = "<group>"; };
 		3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMExpandableText.swift; sourceTree = "<group>"; };
 		3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReservationSDetail.swift; sourceTree = "<group>"; };
@@ -216,6 +226,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2FA7FC322ACE47480027BDEE /* CMSearch */ = {
+			isa = PBXGroup;
+			children = (
+				3BCF2C522ACD4247009C18C2 /* CMSearchView.swift */,
+				3BCF2C4E2ACD4247009C18C2 /* CMSearchHistoryView.swift */,
+				3BCF2C4F2ACD4247009C18C2 /* CMSearchResultView.swift */,
+			);
+			path = CMSearch;
+			sourceTree = "<group>";
+		};
 		3BCF2C032ACD3E72009C18C2 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -315,6 +335,10 @@
 			children = (
 				3BCF2C382ACD4247009C18C2 /* PostDetailViewModel.swift */,
 				3BCF2C392ACD4247009C18C2 /* CMPostViewModel.swift */,
+				2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */,
+				2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */,
+				097EAD342AD040CA0037B848 /* CMHomeCellViewModel.swift */,
+				097EAD322AD03FC70037B848 /* CMLikedPostListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -323,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				3BCF2C3B2ACD4247009C18C2 /* Client.swift */,
+				2F0A21922ACFD4B00070CA42 /* Review.swift */,
 				3BCF2C3C2ACD4247009C18C2 /* Keyword.swift */,
 			);
 			path = Model;
@@ -331,13 +356,13 @@
 		3BCF2C3D2ACD4247009C18C2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C3E2ACD4247009C18C2 /* CMReview */,
-				3BCF2C452ACD4247009C18C2 /* CMReservation */,
+				3BCF2C5B2ACD4248009C18C2 /* ClientMainTabView.swift */,
 				3BCF2C4D2ACD4247009C18C2 /* CMHome */,
 				3BCF2C572ACD4248009C18C2 /* CMFilter */,
+				3BCF2C452ACD4247009C18C2 /* CMReservation */,
 				3BCF2C592ACD4248009C18C2 /* CMChatting */,
-				3BCF2C5B2ACD4248009C18C2 /* ClientMainTabView.swift */,
 				3BCF2C5C2ACD4248009C18C2 /* CMProfile */,
+				3BCF2C3E2ACD4247009C18C2 /* CMReview */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -345,12 +370,12 @@
 		3BCF2C3E2ACD4247009C18C2 /* CMReview */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C3F2ACD4247009C18C2 /* CMReviewCreatePhotosView.swift */,
 				3BCF2C402ACD4247009C18C2 /* CMReviewDetailView.swift */,
-				3BCF2C412ACD4247009C18C2 /* CMReviewCreateContentView.swift */,
-				3BCF2C422ACD4247009C18C2 /* CMReviewCreateDesignerScoreView.swift */,
 				3BCF2C432ACD4247009C18C2 /* CMReviewCreateMainView.swift */,
+				3BCF2C3F2ACD4247009C18C2 /* CMReviewCreatePhotosView.swift */,
 				3BCF2C442ACD4247009C18C2 /* CMReviewCreateKeywordsView.swift */,
+				3BCF2C422ACD4247009C18C2 /* CMReviewCreateDesignerScoreView.swift */,
+				3BCF2C412ACD4247009C18C2 /* CMReviewCreateContentView.swift */,
 			);
 			path = CMReview;
 			sourceTree = "<group>";
@@ -372,15 +397,13 @@
 		3BCF2C4D2ACD4247009C18C2 /* CMHome */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C4E2ACD4247009C18C2 /* CMSearchHistoryView.swift */,
-				3BCF2C4F2ACD4247009C18C2 /* CMSearchResultView.swift */,
-				3BCF2C502ACD4247009C18C2 /* CMFeedDetailView.swift */,
-				3BCF2C512ACD4247009C18C2 /* CMHomeCell.swift */,
-				3BCF2C522ACD4247009C18C2 /* CMSearchView.swift */,
-				3BCF2C532ACD4247009C18C2 /* CMFeedDetailContentView.swift */,
+				2FA7FC322ACE47480027BDEE /* CMSearch */,
 				3BCF2C542ACD4247009C18C2 /* CMHomeView.swift */,
-				3BCF2C552ACD4248009C18C2 /* CMFollowingPostView.swift */,
+				3BCF2C512ACD4247009C18C2 /* CMHomeCell.swift */,
 				3BCF2C562ACD4248009C18C2 /* CMRecommendPostView.swift */,
+				3BCF2C552ACD4248009C18C2 /* CMFollowingPostView.swift */,
+				3BCF2C502ACD4247009C18C2 /* CMFeedDetailView.swift */,
+				3BCF2C532ACD4247009C18C2 /* CMFeedDetailContentView.swift */,
 			);
 			path = CMHome;
 			sourceTree = "<group>";
@@ -404,14 +427,14 @@
 		3BCF2C5C2ACD4248009C18C2 /* CMProfile */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C5D2ACD4248009C18C2 /* CMLikePostListView.swift */,
-				3BCF2C5E2ACD4248009C18C2 /* CMProfileEdit */,
+				3BCF2C682ACD4248009C18C2 /* CMProfileView.swift */,
 				3BCF2C632ACD4248009C18C2 /* CMSegmentedControl.swift */,
+				3BCF2C5D2ACD4248009C18C2 /* CMLikePostListView.swift */,
 				3BCF2C642ACD4248009C18C2 /* CMFollowingListView.swift */,
 				3BCF2C652ACD4248009C18C2 /* CMReviewListView.swift */,
 				3BCF2C662ACD4248009C18C2 /* CMNotificationView.swift */,
 				3BCF2C672ACD4248009C18C2 /* CMSettingsView.swift */,
-				3BCF2C682ACD4248009C18C2 /* CMProfileView.swift */,
+				3BCF2C5E2ACD4248009C18C2 /* CMProfileEdit */,
 			);
 			path = CMProfile;
 			sourceTree = "<group>";
@@ -419,10 +442,10 @@
 		3BCF2C5E2ACD4248009C18C2 /* CMProfileEdit */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C5F2ACD4248009C18C2 /* CMAccountInfoEditView.swift */,
 				3BCF2C602ACD4248009C18C2 /* CMProfileEditView.swift */,
-				3BCF2C612ACD4248009C18C2 /* CMCustomTextField.swift */,
 				3BCF2C622ACD4248009C18C2 /* CMClientInfoEditView.swift */,
+				3BCF2C5F2ACD4248009C18C2 /* CMAccountInfoEditView.swift */,
+				3BCF2C612ACD4248009C18C2 /* CMCustomTextField.swift */,
 			);
 			path = CMProfileEdit;
 			sourceTree = "<group>";
@@ -434,7 +457,6 @@
 				639DB6642AC10F27002692E5 /* ViewModel */,
 				639DB6622AC10F19002692E5 /* View */,
 				639DB6602AC10F13002692E5 /* DesignerMainTabView.swift */,
-				63CD89B02ABD85C300E70A56 /* YeDiApp.swift */,
 			);
 			path = Designer;
 			sourceTree = "<group>";
@@ -534,9 +556,10 @@
 			isa = PBXGroup;
 			children = (
 				1DB59C662ACD9C9C008EAD5E /* GoogleService-Info.plist */,
-				3BCF2C362ACD4247009C18C2 /* Client */,
 				3BCF2C032ACD3E72009C18C2 /* Shared */,
+				3BCF2C362ACD4247009C18C2 /* Client */,
 				639DB6282AC10DED002692E5 /* Designer */,
+				63CD89B02ABD85C300E70A56 /* YeDiApp.swift */,
 				63CD89B22ABD85C300E70A56 /* ContentView.swift */,
 				63CD89B42ABD85C500E70A56 /* Assets.xcassets */,
 				63CD89B62ABD85C500E70A56 /* Preview Content */,
@@ -701,6 +724,7 @@
 				3BCF2C802ACD4248009C18C2 /* CMHomeView.swift in Sources */,
 				3BCF2C272ACD3E73009C18C2 /* CommonBubble.swift in Sources */,
 				3BCF2C842ACD4248009C18C2 /* CMMainChattingView.swift in Sources */,
+				097EAD352AD040CA0037B848 /* CMHomeCellViewModel.swift in Sources */,
 				639DB6842AC11B3B002692E5 /* DMReservationView.swift in Sources */,
 				3BCF2C292ACD3E73009C18C2 /* BoardBubbleCell.swift in Sources */,
 				3BCF2C852ACD4248009C18C2 /* ClientMainTabView.swift in Sources */,
@@ -712,9 +736,11 @@
 				3BCF2C6D2ACD4248009C18C2 /* CMReviewCreatePhotosView.swift in Sources */,
 				3BCF2C742ACD4248009C18C2 /* CMLastReservationView.swift in Sources */,
 				3BCF2C2F2ACD3E73009C18C2 /* ImageBubbleCell.swift in Sources */,
+				2F0A21952ACFD8950070CA42 /* CMReviewViewModel.swift in Sources */,
 				1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */,
 				3BCF2C8C2ACD4248009C18C2 /* CMFollowingListView.swift in Sources */,
 				3BCF2C862ACD4248009C18C2 /* CMLikePostListView.swift in Sources */,
+				2F0A21912ACE753F0070CA42 /* CMProfileViewModel.swift in Sources */,
 				3BCF2C8D2ACD4248009C18C2 /* CMReviewListView.swift in Sources */,
 				9666A21B2ACDBB6D0081C711 /* TimeSettingDetail.swift in Sources */,
 				3BCF2C782ACD4248009C18C2 /* CMReservationCancelView.swift in Sources */,
@@ -723,6 +749,7 @@
 				96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */,
 				96F637DF2AC2BCFD00EF74FF /* ReservationCellView.swift in Sources */,
 				1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */,
+				097EAD332AD03FC70037B848 /* CMLikedPostListViewModel.swift in Sources */,
 				3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */,
 				1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */,
 				3BCF2C332ACD3F6A009C18C2 /* ChattingViewModel.swift in Sources */,
@@ -741,6 +768,7 @@
 				3BCF2C722ACD4248009C18C2 /* CMReviewCreateKeywordsView.swift in Sources */,
 				3BCF2C822ACD4248009C18C2 /* CMRecommendPostView.swift in Sources */,
 				3BCF2C232ACD3E73009C18C2 /* BoardBubble.swift in Sources */,
+				2F0A21932ACFD4B00070CA42 /* Review.swift in Sources */,
 				3BCF2C892ACD4248009C18C2 /* CMCustomTextField.swift in Sources */,
 				96CBD4082AC4140C0055CC7F /* CustomCalender.swift in Sources */,
 				3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */,

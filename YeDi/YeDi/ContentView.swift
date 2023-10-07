@@ -6,15 +6,26 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import FirebaseFirestore
+import Firebase
+
 struct ContentView: View {
     @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var profileViewModel: CMProfileViewModel
+    @EnvironmentObject var reviewViewModel: CMReviewViewModel
+    @State private var isClientLogin: Bool = false
+    @State private var isDesignerLogin: Bool = false
     
     var body: some View {
         VStack{
             if userAuth.isClientLogin {
                 ClientMainTabView()
                     .environmentObject(userAuth)
+                    .environmentObject(profileViewModel)
+                    .environmentObject(reviewViewModel)
             } else if userAuth.isDesignerLogin {
+
                 DesignerMainTabView()
                     .environmentObject(userAuth)
             } else {

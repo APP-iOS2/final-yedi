@@ -36,6 +36,7 @@ struct CMClientInfoEditView: View {
                     ForEach(genders, id: \.self) { gender in
                         Button(action: {
                             selectedGender = gender
+                            clientGender = selectedGender
                         }, label: {
                             Text(gender)
                                 .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
@@ -94,6 +95,13 @@ struct CMClientInfoEditView: View {
             }
             .presentationDetents([.fraction(0.4)])
         })
+        .onAppear {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy.MM.dd."
+            
+            selectedGender = clientGender
+            selectedBirthDate = dateFormatter.date(from: clientBirthDate) ?? Date()
+        }
     }
 }
 
