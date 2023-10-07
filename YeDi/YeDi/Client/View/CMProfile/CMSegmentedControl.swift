@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CMSegmentedControl: View {
+    @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var reviewViewModel: CMReviewViewModel
     
     @State private var selectedSegment: String = "찜한 게시물"

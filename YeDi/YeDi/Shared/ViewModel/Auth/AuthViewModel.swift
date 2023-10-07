@@ -119,9 +119,12 @@ final class UserAuth: ObservableObject {
                 "id": user.uid,
                 "name": client.name,
                 "email": client.email,
+                "profileImageURLString": client.profileImageURLString,
                 "phoneNumber": client.phoneNumber,
                 "gender": client.gender,
-                "birthDate": client.birthDate
+                "birthDate": client.birthDate,
+                "favoriteStyle": client.favoriteStyle,
+                "chatRooms": client.chatRooms
             ]
 
             self.storeService.collection("clients")
