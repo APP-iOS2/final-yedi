@@ -8,47 +8,59 @@
 import Foundation
 import FirebaseAuth
 import Firebase
+import FirebaseFirestore
 
 final class ChattingListRoomViewModel: ObservableObject {
     @Published var chattingRooms: [ChatRoom] = []
     let realTimeService = Database.database().reference()
     let storeService = Firestore.firestore()
+    
     /// 채팅리스트 및 채팅방 메세지를 가지고오는 메소드
-    func fetchChattingList() {
-        // MARK: 로그인 구현시 사용할 메소드
-        // guard let userId = fetchUserUID() else {
-        //     return
-        // }
+    func fetchChattingList(login type: UserType?) -> Bool{
+         guard let userId = fetchUserUID() else {
+             debugPrint("로그인 정보를 찾을 수 없음")
+             return false
+         }
         
-        // MARK: 유저ID 임시값
-        let userId = "CR3Ld8rMseTsgBkz2VgH3YTRmeI2"
-        fetchChattingRoomIdList(user: userId)
+        guard let type else {
+            debugPrint("로그인 정보를 찾을 수 없음")
+            return false
+        }
         
+        fetchChattingRoomIdList(user: userId, loginType: type)
+        return true
     }
     
     /// 로그인한 User토큰으로 UserUID를 가지고오는 메소드
     /// - returns: userUID
-    private final func fetchUserUID() -> String? {
+    final func fetchUserUID() -> String? {
         return  Auth.auth().currentUser?.uid
     }
     
     /// 전달된 user UUID 값으로 채팅방 UUID리스트를 추출
     /// - 유저 Document의 이벤트 리스너가 채팅방 리스트가 추가 될 때마다 채팅방 정보를 갱신
-    private final func fetchChattingRoomIdList(user uid: String) {
-        storeService.collection("chattingUserTest").whereField("userId", isEqualTo: uid)
-            .addSnapshotListener { querySnapshot, error in
-                guard let documents = querySnapshot?.documents else {
-                    debugPrint("Error fetching chatting List id: \(error!)")
-                    return
-                }
-                let chattingList = documents.flatMap({ document in
-                    document["chattingList"] as? [String] ?? []
-                })
+    private final func fetchChattingRoomIdList(user uid: String, loginType: UserType) {
+        
+        let docRef: DocumentReference
+        
+        if loginType == UserType.client{
+            docRef = storeService.collection("clients").document(uid)
+        } else {
+            docRef = storeService.collection("designers").document(uid)
+        }
+        
+        docRef.getDocument{ (document, error) in
+            if let error = error {
+                print("Error getting document: \(error)")
+            } else if let document = document, document.exists {
+                guard var chatRooms = document.data()?["chatRooms"] as? [String] else { return }
+                chatRooms = chatRooms.compactMap{ $0.trimmingCharacters(in: .whitespaces) }.filter({ !$0.isEmpty })
                 
-                for chatRoomId in chattingList {
+                for chatRoomId in chatRooms {
                     self.fetchChattingBubble(chatRooms: chatRoomId)
                 }
             }
+        }
     }
     
     /// 채팅방의 메세지 내역을 가지고오는 메소드

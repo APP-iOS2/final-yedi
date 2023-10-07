@@ -13,14 +13,16 @@ struct CommonBubble: Codable, Identifiable {
     var imagePath: String?
     var date: String
     var sender: String
+    var isRead: Bool
     var messageType: MessageType
     
-    enum CodingKeys: String, CodingKey {
+    enum CodingKeys: CodingKey {
         case id
         case content
         case imagePath
         case date
         case sender
+        case isRead
         case messageType
     }
     
@@ -29,6 +31,7 @@ struct CommonBubble: Codable, Identifiable {
         id = try values.decode(String.self, forKey:.id)
         date = try values.decode(String.self, forKey:.date)
         sender = try values.decode(String.self, forKey:.sender)
+        isRead = try values.decode(Bool.self, forKey: .isRead)
         
         let typeString = try values.decode(String.self, forKey:.messageType)
         messageType = MessageType(rawValue:typeString) ?? .textBubble
@@ -44,25 +47,28 @@ struct CommonBubble: Codable, Identifiable {
         }
     }
     
-    init(content: String, date: String, sender: String) { //text bubble
+    init(content: String, date: String, sender: String, isRead: Bool) { //text bubble
         self.content = content
         self.date = date
         self.sender = sender
+        self.isRead = isRead
         self.messageType = MessageType.textBubble
     }
     
-    init(imagePath: String, date: String, sender: String) { //image bubble
+    init(imagePath: String, date: String, sender: String, isRead: Bool) { //image bubble
         self.imagePath = imagePath
         self.date = date
         self.sender = sender
+        self.isRead = isRead
         self.messageType = MessageType.imageBubble
     }
 
-    init(content: String, imagePath: String, date: String, sender: String) { //board bubble
+    init(content: String, imagePath: String, date: String, sender: String, isRead: Bool) { //board bubble
         self.content = content
         self.imagePath = imagePath
         self.date = date
         self.sender = sender
+        self.isRead = isRead
         self.messageType = MessageType.boardBubble
     }
 

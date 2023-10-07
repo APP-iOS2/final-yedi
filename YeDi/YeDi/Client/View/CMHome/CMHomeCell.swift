@@ -11,9 +11,11 @@ import FirebaseFirestore
 
 struct CMHomeCell: View {
     var post: Post
+    @EnvironmentObject var consultationViewModel: ConsultationViewModel
+    /// 상담하기 버튼 채팅방 시트 표출 변수
+    @State private var showChattingRoom = false
     @EnvironmentObject var userAuth: UserAuth
     @StateObject private var viewModel = CMHomeCellViewModel()
-    
     /// 이미지의 수를 판단할 수 있는 변수
     @State private var selectedImageIndex: Int = 0
     /// 텍스트 수가 지정된 수를 넘었는지 확인할 수 있는 변수
@@ -113,8 +115,9 @@ struct CMHomeCell: View {
                 })
                 Spacer()
                 // 상담하기 Button
-                // 계획) 버튼을 누르면 채팅방으로 이동
-                Button(action: {}, label: {
+                Button(action: {
+                    consultationViewModel.proccessConsulation(designerId: post.designerID, post: post)
+                }, label: {
                     Text("상담하기")
                         .padding(.horizontal, 15)
                         .padding(.vertical, 7)
@@ -157,6 +160,11 @@ struct CMHomeCell: View {
                 }
             }
         )
+        .onChange(of: consultationViewModel.showChattingRoom, perform: { value in
+            showChattingRoom = consultationViewModel.showChattingRoom
+        })
+        .sheet(isPresented: $showChattingRoom) {
+            ChatRoomSheetView(chatRoomId: consultationViewModel.chatRoomId)
         .onAppear {
             if let currentClientID = userAuth.currentClientID {
                 viewModel.checkIfLiked(forClientID: currentClientID, post: post)
@@ -167,4 +175,5 @@ struct CMHomeCell: View {
 
 #Preview {
     CMHomeCell(post: Post(id: "1", designerID: "디자이너 이름", location: "디자이너 근무 지점", title: "게시물 제목", description: "게시물 설명", photos: [Photo(id: "1", imageURL: "https://example.com/image1.jpg"), Photo(id: "2", imageURL: "https://example.com/image2.jpg")], comments: 0, timestamp: "타임스탬프"))
+        .environmentObject(ConsultationViewModel())
 }
