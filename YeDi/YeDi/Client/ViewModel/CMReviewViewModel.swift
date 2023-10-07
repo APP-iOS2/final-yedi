@@ -13,8 +13,23 @@ class CMReviewViewModel: ObservableObject {
     
     let collectionRef = Firestore.firestore().collection("reviews")
     
-    func fetchReview() async {
+    @MainActor
+    func fetchReview(userAuth: UserAuth) async {
+        self.reviews = []
         
+        do {
+            if let clientId = userAuth.currentClientID {
+                let docSnapshot = try await collectionRef.whereField("reviewer", isEqualTo: clientId).getDocuments()
+                
+                for doc in docSnapshot.documents {
+                    if let review = try? doc.data(as: Review.self) {
+                        self.reviews.append(review)
+                    }
+                }
+            }
+        } catch {
+            print("Error fetching client reviews: \(error)")
+        }
     }
     
     func uploadReview(newReview: Review) {

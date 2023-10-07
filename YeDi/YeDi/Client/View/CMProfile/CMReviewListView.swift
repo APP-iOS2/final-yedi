@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CMReviewListView: View {
+    @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var reviewViewModel: CMReviewViewModel
     
     var body: some View {
@@ -16,16 +17,21 @@ struct CMReviewListView: View {
                 Text("작성된 리뷰가 없습니다.")
                     .padding()
             } else {
-                List {
+                ScrollView {
                     ForEach(reviewViewModel.reviews) { review in
-                        Text("\(review.content)")
+                        Text("\(review.designerScore)")
+                    }
+                }
+                .refreshable {
+                    Task {
+                        await reviewViewModel.fetchReview(userAuth: userAuth)
                     }
                 }
             }
         }
         .onAppear {
             Task {
-                await reviewViewModel.fetchReview()
+                await reviewViewModel.fetchReview(userAuth: userAuth)
             }
         }
     }
