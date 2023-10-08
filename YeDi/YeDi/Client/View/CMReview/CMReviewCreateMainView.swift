@@ -18,8 +18,9 @@ struct CMReviewCreateMainView: View {
     
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var selectedPhotoData: [Data] = []
+    @State private var selectedPhotoURLs: [String] = []
     
-    @State private var selectedKeywords: [String] = []
+    @State private var selectedKeywords: [Keyword] = []
     @State private var designerScore: Int = 0
     @State private var reviewContent: String = ""
     
@@ -75,10 +76,10 @@ struct CMReviewCreateMainView: View {
                     id: UUID().uuidString,
                     reviewer: userAuth.currentClientID ?? "",
                     date: writtenDate,
-                    keywordReviews: [],
+                    keywordReviews: selectedKeywords,
                     designerScore: designerScore,
                     content: reviewContent,
-                    imageURLStrings: [],
+                    imageURLStrings: selectedPhotoURLs,
                     reservationId: UUID().uuidString,
                     style: "펌, 염색",
                     designer: UUID().uuidString

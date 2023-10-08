@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct CMReviewCreateKeywordsView: View {
-    @Binding var selectedKeywords: [String]
+    @Binding var selectedKeywords: [Keyword]
+    
+    @State private var displayedKeywords: [Keyword] = keywords
+    @State private var isShowingAlert: Bool = false
     
     let keywordCategories: [String] = KeywordCategory.allCases.map { $0.rawValue }
     
@@ -23,15 +26,33 @@ struct CMReviewCreateKeywordsView: View {
                             ForEach(0..<keywords.count, id: \.self) { index in
                                 if keywords[index].category.rawValue == category {
                                     Button(action: {
-                                        selectedKeywords.append(keywords[index].keyword)
+                                        selectKeyword(index: index)
                                     }) {
-                                        Text("\(keywords[index].keyword)")
-                                            .foregroundStyle(keywords[index].isSelected ? .red : .black)
-                                            .padding(10)
-                                            .background(
-                                                RoundedRectangle(cornerRadius: 2)
-                                                    .stroke(Color(white: 0.9), lineWidth: 1)
-                                            )
+                                        if displayedKeywords[index].isSelected {
+                                            Text("\(keywords[index].keyword)")
+                                                .foregroundStyle(.white)
+                                                .padding(10)
+                                                .background(
+                                                    RoundedRectangle(cornerRadius: 5)
+                                                        .fill(Color.subColor)
+                                                )
+                                        } else {
+                                            Text("\(keywords[index].keyword)")
+                                                .foregroundStyle(.black)
+                                                .padding(10)
+                                                .background(
+                                                    RoundedRectangle(cornerRadius: 5)
+                                                        .stroke(Color(white: 0.9), lineWidth: 1)
+                                                )
+                                        }
+                                    }
+                                    .alert("최대 5개의 키워드 리뷰만 선택 가능합니다.", isPresented: $isShowingAlert) {
+                                        Button(role: .cancel) {
+                                            isShowingAlert.toggle()
+                                        } label: {
+                                            Text("확인")
+                                        }
+
                                     }
                                 }
                             }
@@ -43,15 +64,37 @@ struct CMReviewCreateKeywordsView: View {
             .padding(EdgeInsets(top: 0, leading: 10, bottom: 40, trailing: 0))
             .scrollIndicators(.never)
         } header: {
-            HStack {
-                Text("어떤 점이 좋았나요?")
-                    .padding(.leading)
-                    .fontWeight(.semibold)
-                Spacer()
+            VStack {
+                HStack {
+                    Text("어떤 점이 좋았나요?")
+                        .padding(.leading)
+                        .fontWeight(.semibold)
+                    Spacer()
+                }
+                HStack {
+                    Text("최대 5개까지 선택할 수 있어요.")
+                        .padding(.leading)
+                        .foregroundStyle(.gray)
+                    Spacer()
+                }
             }
             Divider()
                 .frame(width: 360)
                 .padding(.bottom, 10)
+        }
+    }
+    
+    func selectKeyword(index: Int) {
+        if displayedKeywords[index].isSelected {
+            selectedKeywords.removeAll(where: { $0 == keywords[index] })
+            displayedKeywords[index].isSelected.toggle()
+        } else {
+            if selectedKeywords.count >= 5 {
+                isShowingAlert.toggle()
+            } else {
+                selectedKeywords.append(keywords[index])
+                displayedKeywords[index].isSelected.toggle()
+            }
         }
     }
 }
