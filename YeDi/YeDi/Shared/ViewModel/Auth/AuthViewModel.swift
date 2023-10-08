@@ -153,7 +153,7 @@ final class UserAuth: ObservableObject {
                 "description": designer.description ?? ""
             ]
 
-            self.storeService.collection("clients")
+            self.storeService.collection("designers")
                 .document(user.uid)
                 .setData(data, merge: true)
         }
