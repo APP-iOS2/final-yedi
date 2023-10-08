@@ -67,10 +67,14 @@ struct CMReviewCreateMainView: View {
             Spacer()
             
             Button(action: {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "YYYY.MM.dd."
+                let writtenDate = formatter.string(from: Date())
+                
                 let newReview = Review(
                     id: UUID().uuidString,
                     reviewer: userAuth.currentClientID ?? "",
-                    date: "",
+                    date: writtenDate,
                     keywordReviews: [],
                     designerScore: designerScore,
                     content: reviewContent,
