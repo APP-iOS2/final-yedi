@@ -7,6 +7,7 @@
 
 import FirebaseFirestoreSwift  // Firestore를 사용
 
+// 샵에 대한 정보를 담는 구조체
 struct Shop: Codable {
     var shopName: String  // 샵 이름
     /// [시] 만 담고 있는 주소
@@ -29,6 +30,7 @@ struct Shop: Codable {
     var messangerLinkURL: [String: String]? // ["KakaoTalk" : "URL"]
 }
 
+// 디자이너에 대한 정보를 담는 구조체
 struct Designer: Codable {
     @DocumentID var id: String?  // Firestore 문서 ID
     /// 디자이너 이름
