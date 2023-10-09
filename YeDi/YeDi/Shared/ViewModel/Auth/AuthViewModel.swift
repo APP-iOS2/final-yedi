@@ -7,7 +7,6 @@
 
 import Foundation
 import Firebase
-import FirebaseFirestoreSwift
 import FirebaseAuth
 import FirebaseFirestore
 
@@ -159,26 +158,23 @@ final class UserAuth: ObservableObject {
         }
     }
     
-    /// firebase auth에서 제공하는 fetchSignInMethods를 가지고 auth 이메일 중복 체크하는 함수
-    /// 10/07 : 동작 안 되는데 원인을 모르겠음...........
-    func checkEmailAvailability(_ email: String, completion: @escaping (Bool, Error?) -> Void) {
-        auth.fetchSignInMethods(forEmail: email) { signInMethods, error in
+    func checkEmailAvailability(_ email: String, _ userType: UserType, completion: @escaping (Bool) -> Void) {
+        let collectionName = userType.rawValue + "s"
+        
+        self.storeService.collection(collectionName).whereField("email", isEqualTo: email).getDocuments { snapshot, error in
             if let error = error {
-                let err = error as NSError
-                
-                switch err {
-                case AuthErrorCode.emailAlreadyInUse:
-                    completion(false, err)
-                default:
-                    print("unknown error: \(err.localizedDescription)")
-                }
+                print("Firestore query error:", error.localizedDescription)
+                completion(false)
+                return
+            }
+            
+            if (snapshot?.documents.count) != 0 {
+                completion(true)
             } else {
-                guard let signInMethods = signInMethods else {
-                    return completion(false, nil)
-                }
-                completion(true, nil)
+                completion(false)
             }
         }
+        
     }
     
     func signOut() {

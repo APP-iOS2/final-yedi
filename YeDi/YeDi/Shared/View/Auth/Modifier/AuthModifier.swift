@@ -29,7 +29,7 @@ struct SignInTextFieldStyle: ViewModifier {
             .padding(12)
             .background {
                 RoundedRectangle(cornerRadius: 4)
-                    .fill(isTextFieldValid ? .gray.opacity(0.1) : .red.opacity(0.1))
+                    .fill(isTextFieldValid ? Color(white: 0.95) : .red.opacity(0.1))
             }
     }
 }
