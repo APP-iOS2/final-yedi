@@ -12,15 +12,28 @@ struct ChatRoomSheetView: View {
     @EnvironmentObject var consultationViewModel: ConsultationViewModel
     
     var body: some View {
-        VStack {
-            ChatRoomView(chatRoomId: chatRoomId)
+        NavigationStack{
+            VStack {
+                ChatRoomView(chatRoomId: chatRoomId)
+            }
+            .toolbar(content: {
+                ToolbarItemGroup(placement: .topBarLeading) {
+                    Button(action: {consultationViewModel.showChattingRoom = false}, label: {
+                        Image(systemName: "xmark")
+                            .foregroundStyle(.primary)
+                    })
+                }
+            })
+            
+            .onDisappear(perform: {
+                consultationViewModel.showChattingRoom = false
+            })
         }
-        .onDisappear(perform: {
-            consultationViewModel.showChattingRoom = false
-        })
     }
 }
 
 #Preview {
-    ChatRoomSheetView(chatRoomId: "6E4B79BB-E370-42C3-85FB-A3B93D09AFFE")
+    NavigationStack {
+        ChatRoomSheetView(chatRoomId: "6E4B79BB-E370-42C3-85FB-A3B93D09AFFE")
+    }
 }

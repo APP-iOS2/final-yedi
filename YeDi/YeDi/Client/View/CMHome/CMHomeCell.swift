@@ -114,7 +114,7 @@ struct CMHomeCell: View {
                         .foregroundStyle(viewModel.isLiked ? .red : .black)
                 })
                 Spacer()
-                // 상담하기 Button
+                
                 Button(action: {
                     consultationViewModel.proccessConsulation(designerId: post.designerID, post: post)
                 }, label: {
@@ -163,7 +163,7 @@ struct CMHomeCell: View {
         .onChange(of: consultationViewModel.showChattingRoom, perform: { value in
             showChattingRoom = consultationViewModel.showChattingRoom
         })
-        .sheet(isPresented: $showChattingRoom) {
+        .fullScreenCover(isPresented: $showChattingRoom) {
             ChatRoomSheetView(chatRoomId: consultationViewModel.chatRoomId)
                 .onAppear {
                     if let currentClientID = userAuth.currentClientID {

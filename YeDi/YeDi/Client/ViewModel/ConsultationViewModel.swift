@@ -24,9 +24,6 @@ class ConsultationViewModel: ChattingViewModel {
              return
          }
         
-        // TODO: post에 designerId 정상 구현시 바꿔야함
-//        let designerId = "XI2akegeOOOUvaHWgbbxqVD3N683"
-        
         setChatRoomList(customerId: customerId, designerId: designerId, post: post)
     }
     

@@ -34,7 +34,8 @@ final class ChattingListRoomViewModel: ObservableObject {
     /// 로그인한 User토큰으로 UserUID를 가지고오는 메소드
     /// - returns: userUID
     final func fetchUserUID() -> String? {
-        return  Auth.auth().currentUser?.uid
+        return "e1ixdh7ksdeY8Sr30cZfyy2mPBU2"
+//        return  Auth.auth().currentUser?.uid
     }
     
     /// 전달된 user UUID 값으로 채팅방 UUID리스트를 추출
