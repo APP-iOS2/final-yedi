@@ -26,6 +26,7 @@ struct ChatRoomView: View {
             return ""
         }
     }
+    
     private var isInputTextEmpty: Bool {
         inputText.isEmpty ? true : false
     }
@@ -103,7 +104,7 @@ struct ChatRoomView: View {
                 RoundedRectangle(cornerRadius: 4)
                     .fill(.white)
             }
-
+            
         }
         .padding()
         .background(Color(red: 0.85, green: 0.85, blue: 0.85))
@@ -119,5 +120,6 @@ extension View {
 #Preview {
     NavigationStack {
         ChatRoomView(chatRoomId: "C314A8A6-A495-4023-882B-07D2902917C0")
+            .environmentObject(UserAuth())
     }
 }
