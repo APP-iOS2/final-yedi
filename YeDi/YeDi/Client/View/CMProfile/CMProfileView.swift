@@ -9,14 +9,15 @@ import SwiftUI
 
 struct CMProfileView: View {
     @EnvironmentObject var userAuth: UserAuth
-    @StateObject var profileVM: CMProfileViewModel = CMProfileViewModel()
+    @EnvironmentObject var profileViewModel: CMProfileViewModel
+    @EnvironmentObject var reviewViewModel: CMReviewViewModel
     
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 0) {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("\(profileVM.client.name)님")
+                        Text("\(profileViewModel.client.name)님")
                         Text("오늘도 빛나는 하루 보내세요")
                     }
                     .font(.system(size: 20, weight: .bold))
@@ -28,7 +29,6 @@ struct CMProfileView: View {
                 
                 NavigationLink {
                     CMProfileEditView()
-                        .environmentObject(profileVM)
                 } label: {
                     Text("정보 수정")
                         .frame(width: 350, height: 40)
@@ -38,7 +38,14 @@ struct CMProfileView: View {
                         .padding(.bottom, 40)
                 }
                 
-                CMSegmentedControl()
+                // TODO: 임시 리뷰 작성 버튼
+                NavigationLink {
+                    CMReviewCreateMainView()
+                } label: {
+                    Text("리뷰 작성하기")
+                }
+                
+                CMSegmentedControl(profileViewModel: profileViewModel)
                 
                 Spacer()
             }
@@ -64,7 +71,8 @@ struct CMProfileView: View {
         }
         .onAppear {
             Task {
-                await profileVM.fetchClientProfile(userAuth: userAuth)
+                await profileViewModel.fetchClientProfile(userAuth: userAuth)
+                await profileViewModel.fetchFollowedDesigner()
             }
         }
     }
@@ -74,5 +82,6 @@ struct CMProfileView: View {
     NavigationStack {
         CMProfileView()
             .environmentObject(UserAuth())
+            .environmentObject(CMProfileViewModel())
     }
 }

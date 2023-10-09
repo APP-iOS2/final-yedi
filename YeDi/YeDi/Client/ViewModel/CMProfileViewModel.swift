@@ -20,6 +20,7 @@ final class CMProfileViewModel: ObservableObject {
         favoriteStyle: "",
         chatRooms: []
     )
+    @Published var followedDesigner: [Designer] = []
     
     let collectionRef = Firestore.firestore().collection("clients")
     
@@ -46,6 +47,24 @@ final class CMProfileViewModel: ObservableObject {
             }
         } catch {
             print("Error updating client profile: \(error)")
+        }
+    }
+    
+    func fetchFollowedDesigner() async {
+        guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
+        do {
+            let documentSnapshot = try await Firestore.firestore().collection("following").document(uid).getDocument()
+            guard let followingData = documentSnapshot.data(), let uids = followingData["uids"] as? [String] else { return }
+            let querySnapshot = try await Firestore.firestore()
+                .collection("designers")
+                .whereField("designerUID", in: uids)
+                .getDocuments()
+            
+            for document in querySnapshot.documents {
+                self.followedDesigner = try document.data(as: [Designer].self)
+            }
+        } catch {
+            print("Fetch Followed Designer Error: \(error)")
         }
     }
 }

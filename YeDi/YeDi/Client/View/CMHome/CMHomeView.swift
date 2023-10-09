@@ -41,6 +41,7 @@ struct CMHomeView: View {
                 Text("")
             }
         }
+        .padding(.bottom, 1)
     }
 }
 

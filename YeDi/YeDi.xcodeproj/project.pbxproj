@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		097EAD332AD03FC70037B848 /* CMLikedPostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EAD322AD03FC70037B848 /* CMLikedPostListViewModel.swift */; };
+		097EAD352AD040CA0037B848 /* CMHomeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EAD342AD040CA0037B848 /* CMHomeCellViewModel.swift */; };
 		1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */; };
 		1D63595B2ACEECC200FBD37B /* DMProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D63595A2ACEECC200FBD37B /* DMProfileEditView.swift */; };
 		1D63595D2ACEED0A00FBD37B /* DMProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D63595C2ACEED0A00FBD37B /* DMProfileViewModel.swift */; };
@@ -15,17 +17,15 @@
 		1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90671C2AC176020028A660 /* DMPostViewModel.swift */; };
 		1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067202AC1F61D0028A660 /* DMGridView.swift */; };
 		1DA52F562AC2CB69002E0D75 /* DMNewPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */; };
-		1DB59C672ACD9C9C008EAD5E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1DB59C662ACD9C9C008EAD5E /* GoogleService-Info.plist */; };
 		2F0A21912ACE753F0070CA42 /* CMProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */; };
+		2F0A21932ACFD4B00070CA42 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21922ACFD4B00070CA42 /* Review.swift */; };
+		2F0A21952ACFD8950070CA42 /* CMReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */; };
+		3B517D482ACE46420082E2F6 /* ConsultationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B517D472ACE46420082E2F6 /* ConsultationViewModel.swift */; };
 		3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */; };
 		3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */; };
 		3BAB00F32ACD97EB009053A4 /* ReservationSDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */; };
-		3BCF2C1E2ACD3E73009C18C2 /* SharedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C052ACD3E72009C18C2 /* SharedViewModel.swift */; };
+		3BC8CF142ACF12D500264547 /* ChatRoomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC8CF132ACF12D500264547 /* ChatRoomSheetView.swift */; };
 		3BCF2C1F2ACD3E73009C18C2 /* ChattingListRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C072ACD3E72009C18C2 /* ChattingListRoomViewModel.swift */; };
-		3BCF2C212ACD3E73009C18C2 /* SharedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0A2ACD3E72009C18C2 /* SharedModel.swift */; };
-		3BCF2C222ACD3E73009C18C2 /* TextBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0C2ACD3E72009C18C2 /* TextBubble.swift */; };
-		3BCF2C232ACD3E73009C18C2 /* BoardBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0D2ACD3E72009C18C2 /* BoardBubble.swift */; };
-		3BCF2C242ACD3E73009C18C2 /* ImageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0E2ACD3E72009C18C2 /* ImageBubble.swift */; };
 		3BCF2C252ACD3E73009C18C2 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C0F2ACD3E72009C18C2 /* ChatRoom.swift */; };
 		3BCF2C262ACD3E73009C18C2 /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C102ACD3E72009C18C2 /* MessageType.swift */; };
 		3BCF2C272ACD3E73009C18C2 /* CommonBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C112ACD3E72009C18C2 /* CommonBubble.swift */; };
@@ -37,7 +37,6 @@
 		3BCF2C2D2ACD3E73009C18C2 /* TempPhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C1A2ACD3E72009C18C2 /* TempPhotoPickerView.swift */; };
 		3BCF2C2E2ACD3E73009C18C2 /* ChatUtilityMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C1B2ACD3E72009C18C2 /* ChatUtilityMenuView.swift */; };
 		3BCF2C2F2ACD3E73009C18C2 /* ImageBubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C1C2ACD3E72009C18C2 /* ImageBubbleCell.swift */; };
-		3BCF2C302ACD3E73009C18C2 /* SharedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C1D2ACD3E72009C18C2 /* SharedView.swift */; };
 		3BCF2C332ACD3F6A009C18C2 /* ChattingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C322ACD3F69009C18C2 /* ChattingViewModel.swift */; };
 		3BCF2C692ACD4248009C18C2 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C382ACD4247009C18C2 /* PostDetailViewModel.swift */; };
 		3BCF2C6A2ACD4248009C18C2 /* CMPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C392ACD4247009C18C2 /* CMPostViewModel.swift */; };
@@ -101,9 +100,17 @@
 		96CBD4082AC4140C0055CC7F /* CustomCalender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4072AC4140C0055CC7F /* CustomCalender.swift */; };
 		96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F637DA2AC2AA1200EF74FF /* ReservationView.swift */; };
 		96F637DF2AC2BCFD00EF74FF /* ReservationCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */; };
+		DC7695462AD0888800D2FB69 /* AuthHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695422AD0888800D2FB69 /* AuthHomeView.swift */; };
+		DC7695472AD0888800D2FB69 /* AuthModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695442AD0888800D2FB69 /* AuthModifier.swift */; };
+		DC7695482AD0888800D2FB69 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695452AD0888800D2FB69 /* LoginView.swift */; };
+		DC76954F2AD088DB00D2FB69 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC76954E2AD088DB00D2FB69 /* AuthViewModel.swift */; };
+		DC7695532AD08A3600D2FB69 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695522AD08A3600D2FB69 /* RegisterView.swift */; };
+		DC7695572AD2714600D2FB69 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC7695562AD2714600D2FB69 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		097EAD322AD03FC70037B848 /* CMLikedPostListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLikedPostListViewModel.swift; sourceTree = "<group>"; };
+		097EAD342AD040CA0037B848 /* CMHomeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHomeCellViewModel.swift; sourceTree = "<group>"; };
 		1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMEditPostView.swift; sourceTree = "<group>"; };
 		1D63595A2ACEECC200FBD37B /* DMProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMProfileEditView.swift; sourceTree = "<group>"; };
 		1D63595C2ACEED0A00FBD37B /* DMProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMProfileViewModel.swift; sourceTree = "<group>"; };
@@ -112,17 +119,15 @@
 		1D90671C2AC176020028A660 /* DMPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostViewModel.swift; sourceTree = "<group>"; };
 		1D9067202AC1F61D0028A660 /* DMGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMGridView.swift; sourceTree = "<group>"; };
 		1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMNewPostView.swift; sourceTree = "<group>"; };
-		1DB59C662ACD9C9C008EAD5E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMProfileViewModel.swift; sourceTree = "<group>"; };
+		2F0A21922ACFD4B00070CA42 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReviewViewModel.swift; sourceTree = "<group>"; };
+		3B517D472ACE46420082E2F6 /* ConsultationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultationViewModel.swift; sourceTree = "<group>"; };
 		3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMAccount.swift; sourceTree = "<group>"; };
 		3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMExpandableText.swift; sourceTree = "<group>"; };
 		3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReservationSDetail.swift; sourceTree = "<group>"; };
-		3BCF2C052ACD3E72009C18C2 /* SharedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedViewModel.swift; sourceTree = "<group>"; };
+		3BC8CF132ACF12D500264547 /* ChatRoomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomSheetView.swift; sourceTree = "<group>"; };
 		3BCF2C072ACD3E72009C18C2 /* ChattingListRoomViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingListRoomViewModel.swift; sourceTree = "<group>"; };
-		3BCF2C0A2ACD3E72009C18C2 /* SharedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedModel.swift; sourceTree = "<group>"; };
-		3BCF2C0C2ACD3E72009C18C2 /* TextBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextBubble.swift; sourceTree = "<group>"; };
-		3BCF2C0D2ACD3E72009C18C2 /* BoardBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardBubble.swift; sourceTree = "<group>"; };
-		3BCF2C0E2ACD3E72009C18C2 /* ImageBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageBubble.swift; sourceTree = "<group>"; };
 		3BCF2C0F2ACD3E72009C18C2 /* ChatRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		3BCF2C102ACD3E72009C18C2 /* MessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
 		3BCF2C112ACD3E72009C18C2 /* CommonBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonBubble.swift; sourceTree = "<group>"; };
@@ -134,7 +139,6 @@
 		3BCF2C1A2ACD3E72009C18C2 /* TempPhotoPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempPhotoPickerView.swift; sourceTree = "<group>"; };
 		3BCF2C1B2ACD3E72009C18C2 /* ChatUtilityMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUtilityMenuView.swift; sourceTree = "<group>"; };
 		3BCF2C1C2ACD3E72009C18C2 /* ImageBubbleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageBubbleCell.swift; sourceTree = "<group>"; };
-		3BCF2C1D2ACD3E72009C18C2 /* SharedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedView.swift; sourceTree = "<group>"; };
 		3BCF2C322ACD3F69009C18C2 /* ChattingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingViewModel.swift; sourceTree = "<group>"; };
 		3BCF2C382ACD4247009C18C2 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
 		3BCF2C392ACD4247009C18C2 /* CMPostViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMPostViewModel.swift; sourceTree = "<group>"; };
@@ -193,6 +197,12 @@
 		96CBD4072AC4140C0055CC7F /* CustomCalender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalender.swift; sourceTree = "<group>"; };
 		96F637DA2AC2AA1200EF74FF /* ReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationView.swift; sourceTree = "<group>"; };
 		96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCellView.swift; sourceTree = "<group>"; };
+		DC7695422AD0888800D2FB69 /* AuthHomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthHomeView.swift; sourceTree = "<group>"; };
+		DC7695442AD0888800D2FB69 /* AuthModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthModifier.swift; sourceTree = "<group>"; };
+		DC7695452AD0888800D2FB69 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		DC76954E2AD088DB00D2FB69 /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		DC7695522AD08A3600D2FB69 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		DC7695562AD2714600D2FB69 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,7 +245,7 @@
 		3BCF2C042ACD3E72009C18C2 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C052ACD3E72009C18C2 /* SharedViewModel.swift */,
+				DC76954D2AD088DB00D2FB69 /* Auth */,
 				3BCF2C062ACD3E72009C18C2 /* Chatting */,
 			);
 			path = ViewModel;
@@ -253,7 +263,6 @@
 		3BCF2C092ACD3E72009C18C2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C0A2ACD3E72009C18C2 /* SharedModel.swift */,
 				3BCF2C0B2ACD3E72009C18C2 /* Chatting */,
 			);
 			path = Model;
@@ -262,9 +271,6 @@
 		3BCF2C0B2ACD3E72009C18C2 /* Chatting */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C0C2ACD3E72009C18C2 /* TextBubble.swift */,
-				3BCF2C0D2ACD3E72009C18C2 /* BoardBubble.swift */,
-				3BCF2C0E2ACD3E72009C18C2 /* ImageBubble.swift */,
 				3BCF2C0F2ACD3E72009C18C2 /* ChatRoom.swift */,
 				3BCF2C102ACD3E72009C18C2 /* MessageType.swift */,
 				3BCF2C112ACD3E72009C18C2 /* CommonBubble.swift */,
@@ -275,8 +281,8 @@
 		3BCF2C122ACD3E72009C18C2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DC7695412AD0888800D2FB69 /* Auth */,
 				3BCF2C132ACD3E72009C18C2 /* Chatting */,
-				3BCF2C1D2ACD3E72009C18C2 /* SharedView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -286,6 +292,7 @@
 			children = (
 				3BCF2C142ACD3E72009C18C2 /* Modifier */,
 				3BCF2C162ACD3E72009C18C2 /* BoardBubbleCell.swift */,
+				3BC8CF132ACF12D500264547 /* ChatRoomSheetView.swift */,
 				3BCF2C172ACD3E72009C18C2 /* ChatRoomView.swift */,
 				3BCF2C182ACD3E72009C18C2 /* ChattingListRoomView.swift */,
 				3BCF2C192ACD3E72009C18C2 /* BubbleCell.swift */,
@@ -319,7 +326,11 @@
 			children = (
 				3BCF2C382ACD4247009C18C2 /* PostDetailViewModel.swift */,
 				3BCF2C392ACD4247009C18C2 /* CMPostViewModel.swift */,
+				3B517D472ACE46420082E2F6 /* ConsultationViewModel.swift */,
+				2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */,
 				2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */,
+				097EAD342AD040CA0037B848 /* CMHomeCellViewModel.swift */,
+				097EAD322AD03FC70037B848 /* CMLikedPostListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -328,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				3BCF2C3B2ACD4247009C18C2 /* Client.swift */,
+				2F0A21922ACFD4B00070CA42 /* Review.swift */,
 				3BCF2C3C2ACD4247009C18C2 /* Keyword.swift */,
 			);
 			path = Model;
@@ -437,7 +449,6 @@
 				639DB6642AC10F27002692E5 /* ViewModel */,
 				639DB6622AC10F19002692E5 /* View */,
 				639DB6602AC10F13002692E5 /* DesignerMainTabView.swift */,
-				63CD89B02ABD85C300E70A56 /* YeDiApp.swift */,
 			);
 			path = Designer;
 			sourceTree = "<group>";
@@ -538,10 +549,11 @@
 		63CD89AF2ABD85C300E70A56 /* YeDi */ = {
 			isa = PBXGroup;
 			children = (
-				1DB59C662ACD9C9C008EAD5E /* GoogleService-Info.plist */,
+				DC7695562AD2714600D2FB69 /* GoogleService-Info.plist */,
 				3BCF2C032ACD3E72009C18C2 /* Shared */,
 				3BCF2C362ACD4247009C18C2 /* Client */,
 				639DB6282AC10DED002692E5 /* Designer */,
+				63CD89B02ABD85C300E70A56 /* YeDiApp.swift */,
 				63CD89B22ABD85C300E70A56 /* ContentView.swift */,
 				63CD89B42ABD85C500E70A56 /* Assets.xcassets */,
 				63CD89B62ABD85C500E70A56 /* Preview Content */,
@@ -569,6 +581,33 @@
 				96CBD4072AC4140C0055CC7F /* CustomCalender.swift */,
 			);
 			path = ReservationView;
+			sourceTree = "<group>";
+		};
+		DC7695412AD0888800D2FB69 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				DC7695432AD0888800D2FB69 /* Modifier */,
+				DC7695422AD0888800D2FB69 /* AuthHomeView.swift */,
+				DC7695452AD0888800D2FB69 /* LoginView.swift */,
+				DC7695522AD08A3600D2FB69 /* RegisterView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		DC7695432AD0888800D2FB69 /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				DC7695442AD0888800D2FB69 /* AuthModifier.swift */,
+			);
+			path = Modifier;
+			sourceTree = "<group>";
+		};
+		DC76954D2AD088DB00D2FB69 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				DC76954E2AD088DB00D2FB69 /* AuthViewModel.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -640,9 +679,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DB59C672ACD9C9C008EAD5E /* GoogleService-Info.plist in Resources */,
 				63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */,
 				63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */,
+				DC7695572AD2714600D2FB69 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -654,42 +693,42 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BCF2C8E2ACD4248009C18C2 /* CMNotificationView.swift in Sources */,
-				3BCF2C222ACD3E73009C18C2 /* TextBubble.swift in Sources */,
 				3BCF2C2C2ACD3E73009C18C2 /* BubbleCell.swift in Sources */,
 				3BCF2C812ACD4248009C18C2 /* CMFollowingPostView.swift in Sources */,
 				3BCF2C2D2ACD3E73009C18C2 /* TempPhotoPickerView.swift in Sources */,
 				3BCF2C2E2ACD3E73009C18C2 /* ChatUtilityMenuView.swift in Sources */,
 				3BCF2C702ACD4248009C18C2 /* CMReviewCreateDesignerScoreView.swift in Sources */,
-				3BCF2C302ACD3E73009C18C2 /* SharedView.swift in Sources */,
 				3BCF2C7A2ACD4248009C18C2 /* CMSearchHistoryView.swift in Sources */,
 				3BCF2C1F2ACD3E73009C18C2 /* ChattingListRoomViewModel.swift in Sources */,
 				3BCF2C6C2ACD4248009C18C2 /* Keyword.swift in Sources */,
 				3BCF2C7C2ACD4248009C18C2 /* CMFeedDetailView.swift in Sources */,
 				3BCF2C252ACD3E73009C18C2 /* ChatRoom.swift in Sources */,
+				DC7695462AD0888800D2FB69 /* AuthHomeView.swift in Sources */,
 				3BCF2C2B2ACD3E73009C18C2 /* ChattingListRoomView.swift in Sources */,
 				639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */,
 				3BCF2C8B2ACD4248009C18C2 /* CMSegmentedControl.swift in Sources */,
-				3BCF2C212ACD3E73009C18C2 /* SharedModel.swift in Sources */,
-				3BCF2C1E2ACD3E73009C18C2 /* SharedViewModel.swift in Sources */,
 				3BCF2C6F2ACD4248009C18C2 /* CMReviewCreateContentView.swift in Sources */,
 				3BAB00F32ACD97EB009053A4 /* ReservationSDetail.swift in Sources */,
 				639DB6872AC11B56002692E5 /* DMPostView.swift in Sources */,
 				1D63595B2ACEECC200FBD37B /* DMProfileEditView.swift in Sources */,
 				3BCF2C282ACD3E73009C18C2 /* ChatBubbleModifier.swift in Sources */,
 				3BCF2C802ACD4248009C18C2 /* CMHomeView.swift in Sources */,
+				3BC8CF142ACF12D500264547 /* ChatRoomSheetView.swift in Sources */,
 				3BCF2C272ACD3E73009C18C2 /* CommonBubble.swift in Sources */,
 				3BCF2C842ACD4248009C18C2 /* CMMainChattingView.swift in Sources */,
+				097EAD352AD040CA0037B848 /* CMHomeCellViewModel.swift in Sources */,
 				639DB6842AC11B3B002692E5 /* DMReservationView.swift in Sources */,
 				3BCF2C292ACD3E73009C18C2 /* BoardBubbleCell.swift in Sources */,
 				3BCF2C852ACD4248009C18C2 /* ClientMainTabView.swift in Sources */,
 				3BCF2C762ACD4248009C18C2 /* CMReservationDateTimeView.swift in Sources */,
 				3BCF2C6A2ACD4248009C18C2 /* CMPostViewModel.swift in Sources */,
+				3B517D482ACE46420082E2F6 /* ConsultationViewModel.swift in Sources */,
 				639DB67A2AC11AC2002692E5 /* DMReviewView.swift in Sources */,
-				3BCF2C242ACD3E73009C18C2 /* ImageBubble.swift in Sources */,
 				3BCF2C752ACD4248009C18C2 /* CMReservationHistoryView.swift in Sources */,
 				3BCF2C6D2ACD4248009C18C2 /* CMReviewCreatePhotosView.swift in Sources */,
 				3BCF2C742ACD4248009C18C2 /* CMLastReservationView.swift in Sources */,
 				3BCF2C2F2ACD3E73009C18C2 /* ImageBubbleCell.swift in Sources */,
+				2F0A21952ACFD8950070CA42 /* CMReviewViewModel.swift in Sources */,
 				1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */,
 				3BCF2C8C2ACD4248009C18C2 /* CMFollowingListView.swift in Sources */,
 				3BCF2C862ACD4248009C18C2 /* CMLikePostListView.swift in Sources */,
@@ -702,10 +741,12 @@
 				96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */,
 				96F637DF2AC2BCFD00EF74FF /* ReservationCellView.swift in Sources */,
 				1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */,
+				097EAD332AD03FC70037B848 /* CMLikedPostListViewModel.swift in Sources */,
 				3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */,
 				1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */,
 				3BCF2C332ACD3F6A009C18C2 /* ChattingViewModel.swift in Sources */,
 				3BCF2C902ACD4248009C18C2 /* CMProfileView.swift in Sources */,
+				DC76954F2AD088DB00D2FB69 /* AuthViewModel.swift in Sources */,
 				3BCF2C8F2ACD4248009C18C2 /* CMSettingsView.swift in Sources */,
 				3BCF2C712ACD4248009C18C2 /* CMReviewCreateMainView.swift in Sources */,
 				3BCF2C2A2ACD3E73009C18C2 /* ChatRoomView.swift in Sources */,
@@ -718,20 +759,23 @@
 				3BCF2C772ACD4248009C18C2 /* CMReservationHistoryDetailView.swift in Sources */,
 				3BCF2C722ACD4248009C18C2 /* CMReviewCreateKeywordsView.swift in Sources */,
 				3BCF2C822ACD4248009C18C2 /* CMRecommendPostView.swift in Sources */,
-				3BCF2C232ACD3E73009C18C2 /* BoardBubble.swift in Sources */,
+				2F0A21932ACFD4B00070CA42 /* Review.swift in Sources */,
 				3BCF2C892ACD4248009C18C2 /* CMCustomTextField.swift in Sources */,
 				96CBD4082AC4140C0055CC7F /* CustomCalender.swift in Sources */,
 				3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */,
 				3BCF2C7D2ACD4248009C18C2 /* CMHomeCell.swift in Sources */,
 				3BCF2C732ACD4248009C18C2 /* CMUpcomingReservationView.swift in Sources */,
 				1D63595D2ACEED0A00FBD37B /* DMProfileViewModel.swift in Sources */,
+				DC7695472AD0888800D2FB69 /* AuthModifier.swift in Sources */,
 				3BCF2C8A2ACD4248009C18C2 /* CMClientInfoEditView.swift in Sources */,
 				3BCF2C692ACD4248009C18C2 /* PostDetailViewModel.swift in Sources */,
 				3BCF2C7F2ACD4248009C18C2 /* CMFeedDetailContentView.swift in Sources */,
 				1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */,
+				DC7695532AD08A3600D2FB69 /* RegisterView.swift in Sources */,
 				639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */,
 				1DA52F562AC2CB69002E0D75 /* DMNewPostView.swift in Sources */,
 				96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */,
+				DC7695482AD0888800D2FB69 /* LoginView.swift in Sources */,
 				96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */,
 				3BCF2C7E2ACD4248009C18C2 /* CMSearchView.swift in Sources */,
 				3BCF2C872ACD4248009C18C2 /* CMAccountInfoEditView.swift in Sources */,

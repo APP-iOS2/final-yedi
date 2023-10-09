@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ClientMainTabView: View {
     @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var profileViewModel: CMProfileViewModel
+    @EnvironmentObject var reviewViewModel: CMReviewViewModel
     
     @State private var selectedIndex = 0
     
@@ -28,15 +30,15 @@ struct ClientMainTabView: View {
                     self.selectedIndex = 1
                 }
                 .tabItem {
-                    Label("필터", systemImage: "")
+                    Label("필터", systemImage: "slider.horizontal.3")
                 }.tag(1)
                 
-                CMReservationView()
+                CMReservationHistoryView()
                 .onTapGesture {
                     self.selectedIndex = 2
                 }
                 .tabItem {
-                    Label("예약", systemImage: "")
+                    Label("예약", systemImage: "chart.bar.doc.horizontal.fill")
                 }.tag(2)
                 
                 CMMainChattingView()
@@ -44,7 +46,7 @@ struct ClientMainTabView: View {
                     self.selectedIndex = 3
                 }
                 .tabItem {
-                    Label("채팅", systemImage: "")
+                    Label("채팅", systemImage: "bubble.left.fill")
                 }.tag(3)
                 
                 CMProfileView()
@@ -52,7 +54,7 @@ struct ClientMainTabView: View {
                     self.selectedIndex = 4
                 }
                 .tabItem {
-                    Label("프로필", systemImage: "")
+                    Label("프로필", systemImage: "person.fill")
                 }.tag(4)
             }
         }
@@ -62,4 +64,6 @@ struct ClientMainTabView: View {
 #Preview {
     ClientMainTabView()
         .environmentObject(UserAuth())
+        .environmentObject(CMProfileViewModel())
+        .environmentObject(CMReviewViewModel())
 }

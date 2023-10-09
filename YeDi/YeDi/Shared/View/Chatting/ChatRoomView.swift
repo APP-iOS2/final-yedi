@@ -6,16 +6,26 @@
 //
 
 import SwiftUI
-import Combine
 
 struct ChatRoomView: View {
-    // temp properties
-    @ObservedObject var temp = TempChatbubbleStore(chatRoomID: "C314A8A6-A495-4023-882B-07D2902917C0")
-    private var name: String = "customerUser1"
+    var chatRoomId: String
+    
+    @StateObject var chattingVM = ChattingViewModel()
+    @EnvironmentObject var userAuth: UserAuth
     
     @State private var inputText: String = ""
     @State private var isShowingUtilityMenu: Bool = false
     
+    private var userId: String {
+        switch userAuth.userType {
+        case .designer:
+            return userAuth.currentDesignerID!
+        case .client:
+            return userAuth.currentClientID!
+        case .none:
+            return ""
+        }
+    }
     private var isInputTextEmpty: Bool {
         inputText.isEmpty ? true : false
     }
@@ -24,23 +34,24 @@ struct ChatRoomView: View {
         VStack(spacing: 0) {
             chatScroll
             if isShowingUtilityMenu {
-                ChatUtilityMenuView()
+                ChatUtilityMenuView(chattingVM: chattingVM, userID: userId)
             }
             inputchatTextField
         }
         .navigationTitle("디자이너 수")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            temp.fetchChattingBubble(chatRomsId: "C314A8A6-A495-4023-882B-07D2902917C0")
+            chattingVM.chatRoomId = chatRoomId
+            chattingVM.fetchChattingBubble(chatRoomId: chatRoomId)
         }
     }
     
     private var chatScroll: some View {
         ScrollViewReader { proxy in
             ScrollView {
-                ForEach(temp.chattings) { chat in
+                ForEach(chattingVM.chattings) { chat in
                     var isMyBubble: Bool {
-                        chat.sender == name ? true : false
+                        chat.sender == userId ? true : false
                     }
                     BubbleCell(chat: chat, messageType: chat.messageType, isMyBubble: isMyBubble)
                 }
@@ -49,7 +60,7 @@ struct ChatRoomView: View {
             }
             .rotationEffect(Angle(degrees: 180))
             .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
-            .onReceive(temp.$lastBubbleId) { id in
+            .onReceive(chattingVM.$lastBubbleId) { id in
                 withAnimation {
                     proxy.scrollTo(id, anchor: .bottom)
                 }
@@ -76,7 +87,7 @@ struct ChatRoomView: View {
                 
                 Button(action: {
                     if !isInputTextEmpty {
-                        temp.sendTextBubble(content: inputText, sender: name)
+                        chattingVM.sendTextBubble(content: inputText, sender: userId)
                         inputText = ""
                     }
                 }, label: {
@@ -107,6 +118,6 @@ extension View {
 
 #Preview {
     NavigationStack {
-        ChatRoomView()
+        ChatRoomView(chatRoomId: "C314A8A6-A495-4023-882B-07D2902917C0")
     }
 }

@@ -20,11 +20,17 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct YeDiApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var userAuth = UserAuth()
+    @StateObject var consultationViewModel = ConsultationViewModel()
+    @StateObject var profileViewModel: CMProfileViewModel = CMProfileViewModel()
+    @StateObject var reviewViewModel: CMReviewViewModel = CMReviewViewModel()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(userAuth)
+                .environmentObject(consultationViewModel)
+                .environmentObject(profileViewModel)
+                .environmentObject(reviewViewModel)
         }
     }
 }
