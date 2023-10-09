@@ -10,6 +10,7 @@ import SwiftUI
 struct ChatRoomSheetView: View {
     @State var chatRoomId: String
     @EnvironmentObject var consultationViewModel: ConsultationViewModel
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationStack{
@@ -18,9 +19,9 @@ struct ChatRoomSheetView: View {
             }
             .toolbar(content: {
                 ToolbarItemGroup(placement: .topBarLeading) {
-                    Button(action: {consultationViewModel.showChattingRoom = false}, label: {
+                    Button(role: .destructive, action: {consultationViewModel.showChattingRoom = false}, label: {
                         Image(systemName: "xmark")
-                            .foregroundStyle(.primary)
+                            .foregroundStyle(colorScheme == .light ? .black : .white)
                     })
                 }
             })
