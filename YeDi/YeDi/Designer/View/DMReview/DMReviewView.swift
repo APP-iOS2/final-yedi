@@ -11,7 +11,7 @@ struct DMReviewView: View {
     var body: some View {
         List(0...3, id: \.self) { index in
             NavigationLink {
-                
+                DMReviewDetailView()
             } label: {
                 DMReviewCell()
             }
