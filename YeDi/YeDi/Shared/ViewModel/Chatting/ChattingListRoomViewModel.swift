@@ -19,16 +19,16 @@ final class ChattingListRoomViewModel: ObservableObject {
     func fetchChattingList(login type: UserType?) -> Bool{
          guard let userId = fetchUserUID() else {
              debugPrint("로그인 정보를 찾을 수 없음")
-             return false
+             return true
          }
         
         guard let type else {
             debugPrint("로그인 정보를 찾을 수 없음")
-            return false
+            return true
         }
         
         fetchChattingRoomIdList(user: userId, loginType: type)
-        return true
+        return false
     }
     
     /// 로그인한 User토큰으로 UserUID를 가지고오는 메소드
