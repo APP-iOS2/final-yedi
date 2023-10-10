@@ -25,7 +25,7 @@ final class UserAuth: ObservableObject {
     
     init() {
         fetchUserTypeinUserDefaults()
-        fetchUser()
+        //fetchUser()
     }
     
     func fetchUser() {

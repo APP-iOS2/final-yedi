@@ -11,7 +11,7 @@ struct DesignerMainTabView: View {
     @State private var selectedIndex = 0
     
     var body: some View {
-        NavigationStack{
+        //NavigationStack{
             TabView(selection: $selectedIndex) {
                 DMReviewView()
                     .tabItem {
@@ -40,7 +40,7 @@ struct DesignerMainTabView: View {
                     }.tag(4)
             }
         }
-    }
+    //}
 }
 
 #Preview {
