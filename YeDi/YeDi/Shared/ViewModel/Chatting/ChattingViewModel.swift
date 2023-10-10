@@ -22,12 +22,13 @@ class ChattingViewModel: ObservableObject {
 
     
     var ref: DatabaseReference! = Database.database().reference()
-    var storageRef = Storage.storage().reference() ///스토리지 참조 생성
-    let storeService = Firestore.firestore()
-    var limitLength = 5 ///queryLimit에 쓸 채팅버블 개수 제한 변수
+    var storageRef = Storage.storage().reference()
+    let storeService = Firestore.firestore() ///클라이언트와 디자이너 정보를 불러오기 위함
+    var limitLength = 10 ///queryLimit에 쓸 채팅버블 개수 제한 변수
+    var storePath: String = "chattingTest03"
     init() {
         self.setUserEmail()
-        self.storageRef = storageRef.child("chatRooms/\(chatRoomId)")
+        //self.storageRef = storageRef.child("chatRooms/\(chatRoomId)")
     }
     
     func setUserEmail() { //현재 사용자의 이메일을 세팅하는 함수
@@ -35,14 +36,13 @@ class ChattingViewModel: ObservableObject {
     }
     
     func fetchChattingBubble(chatRoomId: String) {
-        let db = Firestore.firestore()
         
-        db.collection("chattingTest02") //채팅방의 위치
-            .limit(toLast: 12)
+        storeService.collection(storePath) //채팅방의 위치
+            .limit(toLast: 4)
             .order(by: "date")
             .addSnapshotListener { querySnapshot, error in
                 guard let documents = querySnapshot?.documents else {
-                    print("Error fetching documents: \(error)")
+                    print("Error fetching documents: \(String(describing: error))")
                     return
                 }
                 
@@ -65,6 +65,11 @@ class ChattingViewModel: ObservableObject {
                 
                 self.chattings = self.mergeCommonBubbles(first: self.chattings, second: bubbles)
                 
+                ///패치
+                ///기존 + bubbles 비교
+                ///
+                
+                
                 if let id = bubbles.last?.id {
                     self.lastBubbleId = id
                 }
@@ -75,9 +80,8 @@ class ChattingViewModel: ObservableObject {
         ///0번째 인덱스의 채팅 버블이 가장 오래된 버블이므로
         ///해당 버블의 date보다 작은 값의 채팅을 10개 불러오고
         ///해당 배열을 앞에 붙여주면 된다.
-        let db = Firestore.firestore()
-
-        db.collection("chattingTest02")   //채팅방의 위치
+        
+        storeService.collection(storePath)   //채팅방의 위치
             .whereField("date", isLessThan: self.chattings[0].date) //최근 메시지보다 더 오래된 메시지를 불러온다.
             .limit(toLast: limitLength) //limitLength값에 맞게 길이 제한
             .order(by: "date")          //채팅의 순서 date 기준
@@ -110,7 +114,7 @@ class ChattingViewModel: ObservableObject {
     
     ///텍스트 버블을 보내는 메소드
     func sendTextBubble(content: String, sender: String) {
-        let db = Firestore.firestore()
+        
         
         let bubble = CommonBubble(
             content: content,
@@ -119,18 +123,16 @@ class ChattingViewModel: ObservableObject {
             isRead: false
         )
         
-        let collectionRef = db.collection("chattingTest02")
-        
         let data: [String: Any] = [
             "id": bubble.id,
-            "content": bubble.content,
+            "content": bubble.content!,
             "date": bubble.date,
             "messageType": bubble.messageType.rawValue,
             "sender": bubble.sender,
             "isRead": bubble.isRead
         ]
         
-        collectionRef.addDocument(data: data) { error in
+        storeService.collection(storePath).addDocument(data: data) { error in
             if let error = error {
                 print("Error adding document: \(error)")
             } else {
@@ -171,15 +173,22 @@ class ChattingViewModel: ObservableObject {
                     isRead: false
                 )
                 
-                self.ref.child("chatRooms").child(self.chatRoomId).child("chatBubbles").child("\(bubble.date + bubble.id)")
-                    .setValue([
-                        "id": bubble.id,
-                        "imagePath": bubble.imagePath,
-                        "date": bubble.date,
-                        "messageType": bubble.messageType.rawValue,
-                        "sender": bubble.sender,
-                        "isRead": bubble.isRead
-                    ])
+                let data: [String: Any] = [
+                    "id": bubble.id,
+                    "imagePath": bubble.imagePath!,
+                    "date": bubble.date,
+                    "messageType": bubble.messageType.rawValue,
+                    "sender": bubble.sender,
+                    "isRead": bubble.isRead
+                ]
+                
+                self.storeService.collection(self.storePath).addDocument(data: data) { error in
+                    if let error = error {
+                        print("Error adding document: \(error)")
+                    } else {
+                        print("Document added successfully.")
+                    }
+                }
                 
             }
         }
@@ -187,6 +196,7 @@ class ChattingViewModel: ObservableObject {
     
     ///게시물 버블을 보내는 메소드
     func sendBoardBubble(content: String, imagePath: String, sender: String) {
+        
         let bubble = CommonBubble(
             content: content,
             imagePath: imagePath,
@@ -195,16 +205,23 @@ class ChattingViewModel: ObservableObject {
             isRead: false
         )
         
-        self.ref.child("chatRooms").child(chatRoomId).child("chatBubbles").child("\(bubble.date + bubble.id)")
-            .setValue([
+        let data: [String: Any] = [
                 "id": bubble.id,
-                "content": bubble.content,
-                "imagePath": bubble.imagePath,
+                "content": bubble.content!,
+                "imagePath": bubble.imagePath!,
                 "date": bubble.date,
                 "messageType": bubble.messageType.rawValue,
                 "sender": bubble.sender,
                 "isRead": bubble.isRead
-            ])
+            ]
+        
+        storeService.collection(storePath).addDocument(data: data) { error in
+            if let error = error {
+                print("Error adding document: \(error)")
+            } else {
+                print("Document added successfully.")
+            }
+        }
         
     }
     
