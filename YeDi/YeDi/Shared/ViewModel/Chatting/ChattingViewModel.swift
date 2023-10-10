@@ -24,6 +24,7 @@ class ChattingViewModel: ObservableObject {
     var ref: DatabaseReference! = Database.database().reference()
     var storageRef = Storage.storage().reference() ///스토리지 참조 생성
     let storeService = Firestore.firestore()
+    var limitLength = 10 ///queryLimit에 쓸 채팅버블 개수 제한 변수
     init() {
         self.setUserEmail()
         self.storageRef = storageRef.child("chatRooms/\(chatRoomId)")
@@ -34,61 +35,74 @@ class ChattingViewModel: ObservableObject {
     }
     
     func fetchChattingBubble(chatRoomId: String) {
-        self.ref.child("chatRooms").child(chatRoomId).child("chatBubbles")
-            .queryOrdered(byChild: "date")
-            .observe(.value) { snapshot  in
+        let db = Firestore.firestore()
+        
+        db.collection("chattingTest")
+            .order(by: "date")
+            .limit(toLast: limitLength)
+            .addSnapshotListener { querySnapshot, error in
+                guard let documents = querySnapshot?.documents else {
+                    print("Error fetching documents: \(error)")
+                    return
+                }
                 
-            guard let chatData = snapshot.value as? [String : Any] else {
-                print("Error reading data")
-                return
-            }
-            
-            var bubbles: [CommonBubble] = []
-            
-            for (key, value) in chatData {
-                do {
-                    var value = value as! [String : Any]
-                    value["id"] = key
-                    
-                    let jsonData = try JSONSerialization.data(withJSONObject: value)
-                    
-                    var bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
-                    bubble.isRead = true
-                    bubbles.append(bubble)
-                } catch {
-                    print("Error decoding bubble data")
+                var bubbles: [CommonBubble] = []
+                
+                for document in documents {
+                    do {
+                        var bubbleData = document.data()
+                        bubbleData["id"] = document.documentID
+                        
+                        let jsonData = try JSONSerialization.data(withJSONObject: bubbleData)
+                        
+                        var bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
+                        bubble.isRead = true
+                        bubbles.append(bubble)
+                    } catch {
+                        print("Error decoding bubble data")
+                    }
+                }
+                
+                self.chattings = bubbles
+                
+                //self.chattings = self.mergeCommonBubbles(first: self.chattings, second: bubbles)
+                
+                if let id = bubbles.last?.id {
+                    self.lastBubbleId = id
                 }
             }
-            bubbles.sort(by: {$0.date < $1.date})
-                
-            self.chattings = bubbles
-            
-            if let id = bubbles.last?.id {
-                self.lastBubbleId = id
-            }
-            
-        }
     }
     
     ///텍스트 버블을 보내는 메소드
     func sendTextBubble(content: String, sender: String) {
+        let db = Firestore.firestore()
+        
         let bubble = CommonBubble(
             content: content,
             date: "\(Date())",
-            sender: sender, 
+            sender: sender,
             isRead: false
         )
         
-        self.ref.child("chatRooms").child(chatRoomId).child("chatBubbles").child("\(bubble.date + bubble.id)")
-            .setValue([
-                "id": bubble.id,
-                "content": bubble.content,
-                "date": bubble.date,
-                "messageType": bubble.messageType.rawValue,
-                "sender": bubble.sender,
-                "isRead": bubble.isRead
-            ])
+        let collectionRef = db.collection("chattingTest")
         
+        let data: [String: Any] = [
+            "id": bubble.id,
+            "content": bubble.content,
+            "date": bubble.date,
+            "messageType": bubble.messageType.rawValue,
+            "sender": bubble.sender,
+            "isRead": bubble.isRead
+        ]
+        
+        collectionRef.addDocument(data: data) { error in
+            if let error = error {
+                print("Error adding document: \(error)")
+            } else {
+                print("Document added successfully.")
+            }
+        }
+        self.limitLength += 3
     }
     
     ///이미지 버블을 보내는 메소드
@@ -197,6 +211,21 @@ class ChattingViewModel: ObservableObject {
         }
     }
     
+    /// 중복되지 않은 채팅버블을 뒤에 추가해주는 함수
+    /// 10개의 길이한계로 불러오는 경우 뒤에 새로운 내용이 올 때마다 병합해주어야 하기 때문
+    func mergeCommonBubbles(first: [CommonBubble], second: [CommonBubble]) -> [CommonBubble] {
+        // 중복되는 CommonBubble을 찾아내는 Set을 생성합니다.
+        let firstSet = Set(first)
+        
+        // 중복되지 않은 CommonBubble을 찾아내기 위해 second 배열을 필터링합니다.
+        let uniqueSecond = second.filter { !firstSet.contains($0) }
+        
+        // first 배열과 중복되지 않은 second 배열을 합쳐 새로운 배열을 생성합니다.
+        let mergedArray = first + uniqueSecond
+        let sortedArray = mergedArray.sorted{$0.date < $1.date}
+        
+        return sortedArray
+    }
     
 }
 
