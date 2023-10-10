@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseFirestore
+import FirebaseStorage
 
 final class CMProfileViewModel: ObservableObject {
     @Published var client: Client = Client(
@@ -20,9 +21,11 @@ final class CMProfileViewModel: ObservableObject {
         favoriteStyle: "",
         chatRooms: []
     )
+    
     @Published var followedDesigner: [Designer] = []
     
     let collectionRef = Firestore.firestore().collection("clients")
+    let storageRef = Storage.storage().reference()
     
     @MainActor
     func fetchClientProfile(userAuth: UserAuth) async {
@@ -38,11 +41,22 @@ final class CMProfileViewModel: ObservableObject {
     }
     
     @MainActor
-    func updateClientProfile(userAuth: UserAuth, newClient: Client) async {
+    func updateClientProfile(userAuth: UserAuth, client: Client) async {
         do {
             if let clientId = userAuth.currentClientID {
-                try collectionRef.document(clientId).setData(from: newClient)
+                var newClient = client
                 
+                if client.profileImageURLString != "" {
+                    let localFile = URL(string: client.profileImageURLString)!
+                    
+                    storageRef.child("clients/\(clientId)").putFile(from: localFile)
+                    
+                    let downloadURL = try await storageRef.child("clients/\(clientId)").downloadURL()
+                    
+                    newClient.profileImageURLString = downloadURL.absoluteString
+                }
+                
+                try collectionRef.document(clientId).setData(from: newClient)
                 self.client = newClient
             }
         } catch {
@@ -50,6 +64,7 @@ final class CMProfileViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     func fetchFollowedDesigner() async {
         guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
         do {
