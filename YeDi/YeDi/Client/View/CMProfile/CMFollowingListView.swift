@@ -24,6 +24,11 @@ struct CMFollowingListView: View {
                 }
             }
         }
+        .onAppear {
+            Task {
+                await profileViewModel.fetchFollowedDesigner()
+            }
+        }
     }
     
     private func followingList(designerUid: String) -> some View {
