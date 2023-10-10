@@ -10,17 +10,31 @@ import SwiftUI
 struct ChatRoomSheetView: View {
     @State var chatRoomId: String
     @EnvironmentObject var consultationViewModel: ConsultationViewModel
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
-        VStack {
-            ChatRoomView(chatRoomId: chatRoomId)
+        NavigationStack{
+            VStack {
+                ChatRoomView(chatRoomId: chatRoomId)
+            }
+            .toolbar(content: {
+                ToolbarItemGroup(placement: .topBarLeading) {
+                    Button(role: .destructive, action: {consultationViewModel.showChattingRoom = false}, label: {
+                        Image(systemName: "xmark")
+                            .foregroundStyle(colorScheme == .light ? .black : .white)
+                    })
+                }
+            })
+            
+            .onDisappear(perform: {
+                consultationViewModel.showChattingRoom = false
+            })
         }
-        .onDisappear(perform: {
-            consultationViewModel.showChattingRoom = false
-        })
     }
 }
 
 #Preview {
-    ChatRoomSheetView(chatRoomId: "6E4B79BB-E370-42C3-85FB-A3B93D09AFFE")
+    NavigationStack {
+        ChatRoomSheetView(chatRoomId: "6E4B79BB-E370-42C3-85FB-A3B93D09AFFE")
+    }
 }

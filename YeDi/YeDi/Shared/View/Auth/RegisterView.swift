@@ -9,70 +9,82 @@ import SwiftUI
 
 struct RegisterView: View {
     @EnvironmentObject var userAuth: UserAuth
+    @State var userType: UserType?
     
-    @State private var userType: UserType?
-    @State private var birthPicker = Date()
+    var body: some View {
+        VStack(spacing: 20) {
+            NavigationLink {
+                RegisterNavigationView(userType: .client)
+            } label: {
+                Text("고객 회원가입")
+            }
+            NavigationLink {
+                RegisterNavigationView(userType: .designer)
+            } label: {
+                Text("디자이너 회원가입")
+            }
+        }
+    }
+}
+    
+struct RegisterNavigationView: View {
+    @State var userType: UserType
+    
+    @EnvironmentObject var userAuth: UserAuth
+    @Environment(\.dismiss) private var dismiss
+    
+    @State var birthPicker = Date()
     
     /// 고객, 디자이너 공통 프로퍼티
-    @State private var name: String = ""
-    @State private var email: String = ""
-    @State private var phoneNumber: String = ""
-    @State private var profileImageURLString: String = ""
-    @State private var password: String = ""
-    @State private var doubleCheckPassword: String = ""
+    @State var name: String = ""
+    @State var email: String = ""
+    @State var phoneNumber: String = ""
+    @State var profileImageURLString: String = ""
+    @State var password: String = ""
+    @State var doubleCheckPassword: String = ""
     /// 고객 프로퍼티 (연산프로퍼티 birthDate 포함)
-    @State private var gender: String = "여성"
+    @State private var selectedGender: String = "여성"
     /// 디자이너 프로퍼티
-    @State private var description: String = ""
+    @State var description: String = ""
     /// caution 프로퍼티
-    @State private var cautionEmail: String = ""
-    @State private var cautionPassword: String = ""
-    @State private var cautionDoubleCheckPassword: String = ""
-    @State private var cautionName: String = ""
-    @State private var cautionPhoneNumber: String = ""
-    @State private var cautionBirth: String = ""
+    @State var cautionEmail: String = ""
+    @State var cautionPassword: String = ""
+    @State var cautionDoubleCheckPassword: String = ""
+    @State var cautionName: String = ""
+    @State var cautionPhoneNumber: String = ""
+    @State var cautionBirth: String = ""
     /// valid 프로퍼티
-    @State private var isEmailValid: Bool = true
-    @State private var isPasswordValid: Bool = true
-    @State private var isDoubleCheckPasswordValid: Bool = true
-    @State private var isPhoneNumberValid: Bool = true
-    @State private var isBirthValid: Bool = true
+    @State var isEmailValid: Bool = true
+    @State var isPasswordValid: Bool = true
+    @State var isDoubleCheckPasswordValid: Bool = true
+    @State var isPhoneNumberValid: Bool = true
+    @State var isBirthValid: Bool = true
     /// empty 프로퍼티
-    @State private var isNotEmptyName: Bool = true
-    @State private var isNotEmptyDescription: Bool = true
+    @State var isNotEmptyName: Bool = true
+    @State var isNotEmptyDescription: Bool = true
     /// birth 프로퍼티
-    @State private var changedBirthText: String = "생년월일"
+    @State var changedBirthText: String = "생년월일"
     
-    private let genderList: [String] = ["여성", "남성"]
+    let genders: [String] = ["여성", "남성"]
     
-    private var birthDate: String {
+    var birthDate: String {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "yyyy년 MM월 dd일"
         return formatter.string(from: birthPicker)
     }
     
     var body: some View {
-        VStack(spacing: 20) {
-            NavigationLink {
+        VStack {
+            switch userType {
+            case .client:
                 registerForClient
-            } label: {
-                Text("고객 회원가입")
-            }
-            NavigationLink {
+            case .designer:
                 registerForDesigner
-            } label: {
-                Text("디자이너 회원가입")
             }
-        }
-        .task {
-            initTextField()
-            initCautionText()
-            initValidation()
-            initBirth()
         }
     }
     
-    private var registerForClient: some View {
+    var registerForClient: some View {
         VStack(alignment: .leading) {
             ScrollView {
                 inputUserInfo(.client)
@@ -89,7 +101,7 @@ struct RegisterView: View {
         .navigationTitle("고객 회원가입")
     }
     
-    private var registerForDesigner: some View {
+    var registerForDesigner: some View {
         VStack(alignment: .leading) {
             ScrollView {
                 inputUserInfo(.designer)
@@ -111,23 +123,23 @@ struct RegisterView: View {
                 HStack {
                     Text("이메일 *")
                     Spacer()
-//                    Button{
-//                        userAuth.checkEmailAvailability(email) { (isInUse, error) in
-//                            if let error = error {
-//                                print("\(error.localizedDescription)")
-//                            } else {
-//                                if isInUse {
-//                                    print("이미 존재하는 이메일")
-//                                } else {
-//                                    print("사용 가능한 이메일")
-//                                }
-//                            }
-//                        }
-//                    } label: {
-//                        Text("중복확인")
-//                            .font(.callout)
-//                    }
+                    Button{
+                        userAuth.checkEmailAvailability(email, userType) { isInUse in
+                            if isInUse {
+                                cautionEmail = "이미 존재하는 이메일입니다."
+                                isEmailValid = false
+                            } else {
+                                cautionEmail = "사용 가능한 이메일입니다."
+                                isEmailValid = true
+                            }
+                        }
+                    } label: {
+                        Text("중복확인")
+                            .font(.callout)
+                    }
+                    .disabled(!checkEmailValid(email))
                 }
+                
                 TextField("이메일", text: $email)
                     .keyboardType(.emailAddress)
                     .signInTextFieldStyle(isTextFieldValid: $isEmailValid)
@@ -137,8 +149,14 @@ struct RegisterView: View {
                         }
                     }
                 
-                Text(cautionEmail)
-                    .cautionTextStyle()
+                if isEmailValid {
+                    Text(cautionEmail)
+                        .font(.caption)
+                        .foregroundStyle(.blue)
+                } else {
+                    Text(cautionEmail)
+                        .cautionTextStyle()
+                }
             }
             
             VStack(alignment: .leading, spacing: 5) {
@@ -203,14 +221,23 @@ struct RegisterView: View {
     private var inputClientGender: some View {
         HStack(alignment: .center) {
             Text("성별 *")
-            Picker(selection: $gender) {
-                ForEach(genderList, id: \.self) { gender in
-                    Text(gender)
+            HStack(spacing: 0) {
+                ForEach(genders, id: \.self) { gender in
+                    Button(action: {
+                        selectedGender = gender
+                    }, label: {
+                        Text(gender)
+                            .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+                            .foregroundStyle(.black)
+                            .background(
+                                RoundedRectangle(cornerRadius: 2)
+                                    .stroke(Color(white: 0.9), lineWidth: 1)
+                            )
+                    })
+                    .background(selectedGender == gender ? Color(white: 0.9) : .white)
                 }
-            } label: {
-                Text("성별")
             }
-            .pickerStyle(.segmented)
+            Spacer()
         }
         .padding(.vertical, 8)
     }
@@ -280,12 +307,13 @@ struct RegisterView: View {
                     email: email,
                     profileImageURLString: "",
                     phoneNumber: phoneNumber,
-                    gender: gender,
+                    gender: selectedGender,
                     birthDate: birthDate,
                     favoriteStyle: "",
                     chatRooms: []
                 )
                 userAuth.registerClient(client: client, password: password)
+                dismiss()
             }
         case .designer:
             if checkEmail() && checkPassword() && doubleCheckPasswordValid() && checkEmptyName() && checkPhoneNumber() {
@@ -301,6 +329,7 @@ struct RegisterView: View {
                     chatRooms: []
                 )
                 userAuth.registerDesigner(designer: designer, password: password)
+                dismiss()
             }
         }
     }
@@ -387,41 +416,5 @@ struct RegisterView: View {
             isBirthValid = true
         }
         return isBirthValid
-    }
-    
-    private func initTextField() {
-        name = ""
-        email = ""
-        phoneNumber = ""
-        profileImageURLString = ""
-        password = ""
-        doubleCheckPassword = ""
-        gender = "여성"
-        description = ""
-    }
-    
-    private func initCautionText() {
-        cautionEmail = ""
-        cautionPassword = ""
-        cautionDoubleCheckPassword = ""
-        cautionName = ""
-        cautionPhoneNumber = ""
-        cautionBirth = ""
-    }
-    
-    private func initValidation() {
-        isEmailValid = true
-        isPasswordValid = true
-        isDoubleCheckPasswordValid = true
-        isPhoneNumberValid = true
-        isBirthValid = true
-        isNotEmptyName = true
-        isNotEmptyDescription = true
-        birthPicker = Date()
-    }
-    
-    private func initBirth() {
-        changedBirthText = "생년월일"
-        birthPicker = Date()
     }
 }

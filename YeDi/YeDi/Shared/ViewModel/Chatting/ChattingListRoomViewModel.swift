@@ -49,7 +49,7 @@ final class ChattingListRoomViewModel: ObservableObject {
             docRef = storeService.collection("designers").document(uid)
         }
         
-        docRef.getDocument{ (document, error) in
+        docRef.addSnapshotListener{ (document, error) in
             if let error = error {
                 print("Error getting document: \(error)")
             } else if let document = document, document.exists {

@@ -45,6 +45,7 @@ struct ChatRoomView: View {
             chattingVM.chatRoomId = chatRoomId
             chattingVM.fetchChattingBubble(chatRoomId: chatRoomId)
         }
+        .toolbar(.hidden, for: .tabBar)
     }
     
     private var chatScroll: some View {
