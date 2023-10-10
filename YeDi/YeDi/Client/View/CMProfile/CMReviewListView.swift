@@ -22,11 +22,6 @@ struct CMReviewListView: View {
                         CMReviewCell(review: review)
                     }
                 }
-                .refreshable {
-                    Task {
-                        await reviewViewModel.fetchReview(userAuth: userAuth)
-                    }
-                }
             }
         }
         .onAppear {
