@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
@@ -15,16 +14,49 @@ enum UserType: String {
 }
 
 final class UserAuth: ObservableObject {
-    @Published var isClientLogin: Bool = false
-    @Published var isDesignerLogin: Bool = false
     @Published var currentClientID: String?
-    @Published var currentDesignerID: String? // 현재 로그인한 디자이너의 ID
+    @Published var currentDesignerID: String?
     @Published var userType: UserType?
     @Published var userSession: FirebaseAuth.User?
-    @Published var isEmailAvailable: Bool = true  // 이메일 중복 확인
     
-    private var auth = Auth.auth()
-    private var storeService = Firestore.firestore()
+    private let auth = Auth.auth()
+    private let storeService = Firestore.firestore()
+    private let userDefaults: UserDefaults = UserDefaults.standard
+    
+    init() {
+        fetchUserTypeinUserDefaults()
+        //fetchUser()
+    }
+    
+    func fetchUser() {
+        auth.addStateDidChangeListener { auth, user in
+            if let user = user {
+                self.userSession = user
+                self.userType = self.userType
+                switch self.userType {
+                case .client:
+                    self.currentClientID = user.uid
+                case .designer:
+                    self.currentDesignerID = user.uid
+                case nil:
+                    return
+                }
+            } else {
+                self.userSession = nil
+            }
+        }
+    }
+    
+    func fetchUserTypeinUserDefaults() {
+        if let type = userDefaults.value(forKey: "UserType") {
+            let typeToString = String(describing: type)
+            self.userType = UserType(rawValue: typeToString)
+        }
+    }
+    
+    func saveUserTypeinUserDefaults(_ type: String) {
+        userDefaults.set(type, forKey: "UserType")
+    }
     
     func signIn(_ email: String, _ password: String, _ type: UserType, _ completion: @escaping (Bool) -> Void) {
         auth.signIn(withEmail: email, password: password) { result, error in
@@ -40,12 +72,10 @@ final class UserAuth: ObservableObject {
             }
             self.userSession = user
             self.userType = type
+            self.saveUserTypeinUserDefaults(type.rawValue)
             
             /// user type에 따라서 각 고객, 디자이너 정보 가져오기
-            guard let userTypeRawValue = self.userType?.rawValue else {
-                return
-            }
-            let collectionName = userTypeRawValue + "s"
+            let collectionName = type.rawValue + "s"
             
             self.storeService.collection(collectionName).whereField("email", isEqualTo: email).getDocuments { snapshot, error in
                 if let error = error {
@@ -68,7 +98,6 @@ final class UserAuth: ObservableObject {
                         print("Name:", name)
                         print("Email:", email)
                         
-                        self.isClientLogin = true
                         self.currentClientID = user.uid
                         completion(true)
                     } else {
@@ -83,7 +112,6 @@ final class UserAuth: ObservableObject {
                             print("Name:", name)
                             print("Email:", email)
                             
-                            self.isDesignerLogin = true
                             self.currentDesignerID = user.uid
                             completion(true)
                         } else {
@@ -149,7 +177,13 @@ final class UserAuth: ObservableObject {
                 "name": designer.name,
                 "email": designer.email,
                 "phoneNumber": designer.phoneNumber,
-                "description": designer.description ?? ""
+                "description": designer.description ?? "",
+                "imageURLString": designer.imageURLString ?? "",
+                "designerScore": designer.designerScore,
+                "reviewCount": designer.reviewCount,
+                "followerCount": designer.followerCount,
+                "skill": designer.skill,
+                "chatRooms": designer.chatRooms
             ]
 
             self.storeService.collection("designers")

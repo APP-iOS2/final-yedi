@@ -22,6 +22,7 @@
 		2F0A21912ACE753F0070CA42 /* CMProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */; };
 		2F0A21932ACFD4B00070CA42 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21922ACFD4B00070CA42 /* Review.swift */; };
 		2F0A21952ACFD8950070CA42 /* CMReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */; };
+		3B2052252AD3D1FC0050001E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B2052242AD3D1FC0050001E /* GoogleService-Info.plist */; };
 		3B517D482ACE46420082E2F6 /* ConsultationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B517D472ACE46420082E2F6 /* ConsultationViewModel.swift */; };
 		3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */; };
 		3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */; };
@@ -125,6 +126,7 @@
 		2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMProfileViewModel.swift; sourceTree = "<group>"; };
 		2F0A21922ACFD4B00070CA42 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReviewViewModel.swift; sourceTree = "<group>"; };
+		3B2052242AD3D1FC0050001E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3B517D472ACE46420082E2F6 /* ConsultationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultationViewModel.swift; sourceTree = "<group>"; };
 		3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMAccount.swift; sourceTree = "<group>"; };
 		3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMExpandableText.swift; sourceTree = "<group>"; };
@@ -552,7 +554,7 @@
 		63CD89AF2ABD85C300E70A56 /* YeDi */ = {
 			isa = PBXGroup;
 			children = (
-				1DA4B91C2AD51676007984C3 /* GoogleService-Info.plist */,
+				3B2052242AD3D1FC0050001E /* GoogleService-Info.plist */,
 				3BCF2C032ACD3E72009C18C2 /* Shared */,
 				3BCF2C362ACD4247009C18C2 /* Client */,
 				639DB6282AC10DED002692E5 /* Designer */,
@@ -685,6 +687,7 @@
 				1DA4B91D2AD51676007984C3 /* GoogleService-Info.plist in Resources */,
 				63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */,
 				63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */,
+				3B2052252AD3D1FC0050001E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -919,7 +922,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"YeDi/Preview Content\"";
-				DEVELOPMENT_TEAM = 2QJX795Q3R;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -949,7 +952,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"YeDi/Preview Content\"";
-				DEVELOPMENT_TEAM = 2QJX795Q3R;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
