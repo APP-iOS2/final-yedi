@@ -65,8 +65,12 @@ struct DMProfileView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        // TODO: 설정 뷰로 이동
-                        Text("Settings")
+                        // TODO: 설정 뷰로 이동 & 임시 로그아웃 버튼
+                        Button {
+                            userAuth.signOut()
+                        } label: {
+                            Text("로그아웃")
+                        }
                     } label: {
                         Image(systemName: "gearshape")
                             .foregroundColor(.black)

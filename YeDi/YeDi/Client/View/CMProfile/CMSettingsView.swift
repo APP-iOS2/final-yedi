@@ -8,8 +8,17 @@
 import SwiftUI
 
 struct CMSettingsView: View {
+    // TODO: 임시 로그아웃 버튼
+    @EnvironmentObject var userAuth: UserAuth
+    
     var body: some View {
-        Text("SettingsView")
+        VStack {
+            Button {
+                userAuth.signOut()
+            } label: {
+                Text("로그아웃")
+            }
+        }
     }
 }
 
