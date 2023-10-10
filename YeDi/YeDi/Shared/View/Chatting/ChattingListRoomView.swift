@@ -19,7 +19,7 @@ struct ChattingListRoomView: View {
                     .foregroundStyle(.gray)
             } else {
                 List {
-                    ForEach(chattingListRoomViewModel.chattingRooms, id: \.id) { chattingRoom in
+                    ForEach(chattingListRoomViewModel.getOrderedChatRooms(), id: \.id) { chattingRoom in
                         HStack(alignment: .center) {
                             NavigationLink(destination: ChatRoomView(chatRoomId: chattingRoom.id), label: {
                                 EmptyView()
@@ -32,11 +32,12 @@ struct ChattingListRoomView: View {
                                 .resizable()
                                 .cornerRadius(10)
                                 .frame(width: 50, height: 50)
+                            
                             VStack(alignment: .leading) {
                                 Text("디자이너 수")
                                     .font(.title3.bold())
                                 
-                                if let recentMessage =  chattingListRoomViewModel.getLastMessage(chatRoom: chattingRoom){
+                                if let recentMessage =  chattingRoom.chattingBubles?.first {
                                     Text(recentMessage.content ?? "메세지가 비어있습니다.")
                                         .foregroundStyle(.gray)
                                         .lineLimit(1)
@@ -44,11 +45,14 @@ struct ChattingListRoomView: View {
                                     Text("날짜 : \(recentMessage.date)")
                                         .font(.caption2)
                                         .foregroundStyle(.gray)
+                                } else {
+                                    Text("메세지가 존재하지 않습니다")
+                                        .foregroundStyle(.gray)
+                                        .lineLimit(1)
                                 }
                             }
                         }
                     }
-                    
                 }
                 .listStyle(.plain)
                 .navigationTitle("채팅")

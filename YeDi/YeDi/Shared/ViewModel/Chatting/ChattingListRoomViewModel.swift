@@ -67,12 +67,18 @@ final class ChattingListRoomViewModel: ObservableObject {
     /// - 채팅방에서 가장 최근 메세지 한 개만 조회
     private final func fetchChattingBubble(chatRooms id: String) {
         let query = self.realTimeService.child("chatRooms").child(id).child("chatBubbles").queryOrdered(byChild: "date").queryLimited(toLast: 1)
-        query.observe(.value) { snapshot  in
+        query.observe(.value) { [weak self] snapshot, _    in
             var bubbles: [CommonBubble] = []
             guard let chatData = snapshot.value as? [String : Any] else {
                   debugPrint("Error bubble reading data")
                   return
             }
+            
+            guard let self = self else {
+                debugPrint("No References")
+                return
+            }
+            
             for (key, value) in chatData {
                 do {
                     var value = value as! [String : Any]
@@ -92,25 +98,20 @@ final class ChattingListRoomViewModel: ObservableObject {
                     debugPrint("Error decoding bubble data")
                 }
             }
-            
         }
     }
     
-    /// 채팅방의 가장 최근 메세지를 가지고오는 함수
-    /// - 채팅리스트 fetch시점에 이미 정렬된 메세지가 전달되므로 chattingBubble 배열의 가장 마지막 Element를 반환한다.
-    /// - Parameters:
-    ///   - chatRoom: 채팅리스트의 인스턴스
-    /// - returns: CommonBubble or nil
-    final func getLastMessage(chatRoom: ChatRoom) -> CommonBubble? {
-        guard var bubbles = chatRoom.chattingBubles else {
-            return nil
-        }
-
-        guard bubbles.count > 1 else {
-            return bubbles.last
+    /// 채팅방의 최근 메세지 기준 정렬하는 함수
+    /// - returns: Array<T: ChatRoom>
+    final func getOrderedChatRooms() -> [ChatRoom] {
+        guard chattingRooms.count > 0 else {
+            return []
         }
         
-        bubbles.sort(by: {$0.date < $1.date})
-        return bubbles.last
+        let sortedChatRooms = chattingRooms.sorted {
+            return $0.chattingBubles?.first?.date ?? ""  > $1.chattingBubles?.first?.date ?? ""
+        }
+        
+        return sortedChatRooms
     }
 }
