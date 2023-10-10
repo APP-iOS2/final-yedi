@@ -24,7 +24,7 @@ class ChattingViewModel: ObservableObject {
     var ref: DatabaseReference! = Database.database().reference()
     var storageRef = Storage.storage().reference() ///스토리지 참조 생성
     let storeService = Firestore.firestore()
-    var limitLength = 10 ///queryLimit에 쓸 채팅버블 개수 제한 변수
+    var limitLength = 5 ///queryLimit에 쓸 채팅버블 개수 제한 변수
     init() {
         self.setUserEmail()
         self.storageRef = storageRef.child("chatRooms/\(chatRoomId)")
@@ -37,9 +37,9 @@ class ChattingViewModel: ObservableObject {
     func fetchChattingBubble(chatRoomId: String) {
         let db = Firestore.firestore()
         
-        db.collection("chattingTest")
+        db.collection("chattingTest02") //채팅방의 위치
+            .limit(toLast: 12)
             .order(by: "date")
-            .limit(toLast: limitLength)
             .addSnapshotListener { querySnapshot, error in
                 guard let documents = querySnapshot?.documents else {
                     print("Error fetching documents: \(error)")
@@ -63,13 +63,48 @@ class ChattingViewModel: ObservableObject {
                     }
                 }
                 
-                self.chattings = bubbles
-                
-                //self.chattings = self.mergeCommonBubbles(first: self.chattings, second: bubbles)
+                self.chattings = self.mergeCommonBubbles(first: self.chattings, second: bubbles)
                 
                 if let id = bubbles.last?.id {
                     self.lastBubbleId = id
                 }
+            }
+    }
+    
+    func fetchMoreChattingBubble(){
+        ///0번째 인덱스의 채팅 버블이 가장 오래된 버블이므로
+        ///해당 버블의 date보다 작은 값의 채팅을 10개 불러오고
+        ///해당 배열을 앞에 붙여주면 된다.
+        let db = Firestore.firestore()
+
+        db.collection("chattingTest02")   //채팅방의 위치
+            .whereField("date", isLessThan: self.chattings[0].date) //최근 메시지보다 더 오래된 메시지를 불러온다.
+            .limit(toLast: limitLength) //limitLength값에 맞게 길이 제한
+            .order(by: "date")          //채팅의 순서 date 기준
+            .getDocuments { querySnapshot, error in
+                guard let documents = querySnapshot?.documents else {
+                    print("Error fetching documents: \(String(describing: error))")
+                    return
+                }
+                
+                var moreBubbles: [CommonBubble] = []
+                
+                for document in documents {
+                    do {
+                        var bubbleData = document.data()
+                        bubbleData["id"] = document.documentID
+                        
+                        let jsonData = try JSONSerialization.data(withJSONObject: bubbleData)
+                        
+                        var bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
+                        bubble.isRead = true
+                        moreBubbles.append(bubble)
+                    } catch {
+                        print("Error decoding bubble data")
+                    }
+                }
+                
+                self.chattings = moreBubbles + self.chattings
             }
     }
     
@@ -84,7 +119,7 @@ class ChattingViewModel: ObservableObject {
             isRead: false
         )
         
-        let collectionRef = db.collection("chattingTest")
+        let collectionRef = db.collection("chattingTest02")
         
         let data: [String: Any] = [
             "id": bubble.id,
@@ -102,7 +137,6 @@ class ChattingViewModel: ObservableObject {
                 print("Document added successfully.")
             }
         }
-        self.limitLength += 3
     }
     
     ///이미지 버블을 보내는 메소드

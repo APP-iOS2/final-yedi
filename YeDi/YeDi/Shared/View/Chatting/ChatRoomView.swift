@@ -49,25 +49,25 @@ struct ChatRoomView: View {
     }
     
     private var chatScroll: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
+        ScrollView {
+            VStack{
+                Button {
+                    chattingVM.fetchMoreChattingBubble()
+                } label: {
+                    Text("지난 대화보기")
+                }
                 ForEach(chattingVM.chattings) { chat in
                     var isMyBubble: Bool {
                         chat.sender == userId ? true : false
                     }
                     BubbleCell(chat: chat, messageType: chat.messageType, isMyBubble: isMyBubble)
                 }
-                .rotationEffect(Angle(degrees: 180))
-                .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
             }
             .rotationEffect(Angle(degrees: 180))
             .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
-            .onReceive(chattingVM.$lastBubbleId) { id in
-                withAnimation {
-                    proxy.scrollTo(id, anchor: .bottom)
-                }
-            }
         }
+        .rotationEffect(Angle(degrees: 180))
+        .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
         .onTapGesture {
             hideKeyboard()
         }
