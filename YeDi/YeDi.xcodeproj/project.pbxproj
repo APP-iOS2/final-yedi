@@ -16,7 +16,6 @@
 		1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067182AC151A80028A660 /* DMAsyncImage.swift */; };
 		1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90671C2AC176020028A660 /* DMPostViewModel.swift */; };
 		1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067202AC1F61D0028A660 /* DMGridView.swift */; };
-		1DA4B91D2AD51676007984C3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1DA4B91C2AD51676007984C3 /* GoogleService-Info.plist */; };
 		1DA52F562AC2CB69002E0D75 /* DMNewPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */; };
 		1DD969A12ACFFD9A000AD7D2 /* AddDesignerDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD969A02ACFFD9A000AD7D2 /* AddDesignerDataView.swift */; };
 		2F0A21912ACE753F0070CA42 /* CMProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */; };
@@ -120,7 +119,6 @@
 		1D9067182AC151A80028A660 /* DMAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMAsyncImage.swift; sourceTree = "<group>"; };
 		1D90671C2AC176020028A660 /* DMPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostViewModel.swift; sourceTree = "<group>"; };
 		1D9067202AC1F61D0028A660 /* DMGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMGridView.swift; sourceTree = "<group>"; };
-		1DA4B91C2AD51676007984C3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMNewPostView.swift; sourceTree = "<group>"; };
 		1DD969A02ACFFD9A000AD7D2 /* AddDesignerDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDesignerDataView.swift; sourceTree = "<group>"; };
 		2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMProfileViewModel.swift; sourceTree = "<group>"; };
@@ -226,6 +224,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1DA4B9222AD521F4007984C3 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		2FA7FC322ACE47480027BDEE /* CMSearch */ = {
 			isa = PBXGroup;
 			children = (
@@ -540,6 +545,7 @@
 			children = (
 				63CD89AF2ABD85C300E70A56 /* YeDi */,
 				63CD89AE2ABD85C300E70A56 /* Products */,
+				1DA4B9222AD521F4007984C3 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -684,7 +690,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DA4B91D2AD51676007984C3 /* GoogleService-Info.plist in Resources */,
 				63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */,
 				63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */,
 				3B2052252AD3D1FC0050001E /* GoogleService-Info.plist in Resources */,
