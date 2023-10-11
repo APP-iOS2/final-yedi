@@ -318,15 +318,20 @@ struct RegisterNavigationView: View {
         case .designer:
             if checkEmail() && checkPassword() && doubleCheckPasswordValid() && checkEmptyName() && checkPhoneNumber() {
                 let designer = Designer(
-                    name: name,
-                    email: email,
-                    phoneNumber: phoneNumber,
-                    description: description,
-                    designerScore: 0.0,
+                    id: nil,
+                    name: "",
+                    email: "",
+                    phoneNumber: "",
+                    description: nil,
+                    designerScore: 0,
                     reviewCount: 0,
                     followerCount: 0,
                     skill: [],
-                    chatRooms: []
+                    chatRooms: [],
+                    birthDate: "",
+                    gender: "",
+                    rank: .Designer,
+                    designerUID: ""
                 )
                 userAuth.registerDesigner(designer: designer, password: password)
                 dismiss()

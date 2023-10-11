@@ -38,7 +38,7 @@ struct CMFeedDetailContentView: View {
         .onChange(of: consultationViewModel.showChattingRoom, perform: { value in
             showChattingRoom = consultationViewModel.showChattingRoom
         })
-        .sheet(isPresented: $showChattingRoom) {
+        .fullScreenCover(isPresented: $showChattingRoom) {
             ChatRoomSheetView(chatRoomId: consultationViewModel.chatRoomId)
         }
         .overlay(

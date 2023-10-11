@@ -28,6 +28,8 @@ struct Shop: Codable {
     var closingHour: String
     /// 샵 메신저[카카오톡 채널] 링크 주소
     var messangerLinkURL: [String: String]? // ["KakaoTalk" : "URL"]
+    /// 휴무일 정보
+    var closedDays: [String]
 }
 
 // 디자이너에 대한 정보를 담는 구조체
@@ -53,6 +55,14 @@ struct Designer: Codable {
     var skill: [String] // 디자이너가 적은 스킬을 태그화 시키기 ?? 어렵긴하겠다.
     ///채팅방의 아이디
     var chatRooms: [String]
+    /// 디자이너 생년월일
+    var birthDate: String
+    /// 디자이너 성별
+    var gender: String
+    /// 디자이너 직급
+    var rank: Rank
+    /// 디자이너 고유 ID
+    var designerUID: String
 }
 
 /// 직급

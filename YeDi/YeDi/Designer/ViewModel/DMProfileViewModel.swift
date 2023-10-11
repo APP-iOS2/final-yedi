@@ -13,14 +13,35 @@ class DMProfileViewModel: ObservableObject {
     
     // 디자이너 정보를 저장하는 Published 변수
     @Published var designer = Designer(
-        id: nil, name: "", email: "", phoneNumber: "", description: nil,
-        designerScore: 0, reviewCount: 0, followerCount: 0, skill: [], chatRooms: []
+        id: nil,
+        name: "",
+        email: "",
+        phoneNumber: "",
+        description: nil,
+        designerScore: 0,
+        reviewCount: 0,
+        followerCount: 0,
+        skill: [],
+        chatRooms: [],
+        birthDate: "",
+        gender: "",
+        rank: .Designer,
+        designerUID: ""
     )
     
     // 샵 정보를 저장하는 Published 변수
     @Published var shop: Shop = Shop(
-        shopName: "", headAddress: "", subAddress: "", detailAddress: "",
-        telNumber: nil, longitude: 0, latitude: 0, openingHour: "", closingHour: "", messangerLinkURL: nil
+        shopName: "",
+        headAddress: "",
+        subAddress: "",
+        detailAddress: "",
+        telNumber: nil,
+        longitude: 0,
+        latitude: 0,
+        openingHour: "",
+        closingHour: "",
+        messangerLinkURL: nil,
+        closedDays: []
     )
     
     // 디자이너 프로필 정보를 Firestore에서 가져오는 비동기 함수

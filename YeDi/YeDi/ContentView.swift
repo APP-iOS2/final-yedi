@@ -16,23 +16,21 @@ struct ContentView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var profileViewModel: CMProfileViewModel
     @EnvironmentObject var reviewViewModel: CMReviewViewModel
-    @State private var isClientLogin: Bool = false
-    @State private var isDesignerLogin: Bool = false
     
     var body: some View {
-        VStack{
-            if userAuth.isClientLogin {
+        if userAuth.userSession != nil {
+            switch userAuth.userType {
+            case .client:
                 ClientMainTabView()
-                    .environmentObject(userAuth)
                     .environmentObject(profileViewModel)
                     .environmentObject(reviewViewModel)
-            } else if userAuth.isDesignerLogin {
-
+            case .designer:
                 DesignerMainTabView()
-                    .environmentObject(userAuth)
-            } else {
-                AuthHomeView()
+            case .none:
+                EmptyView()
             }
+        } else {
+            AuthHomeView()
         }
     }
 }
