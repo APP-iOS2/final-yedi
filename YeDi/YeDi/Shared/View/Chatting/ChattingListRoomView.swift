@@ -11,10 +11,12 @@ import Firebase
 struct ChattingListRoomView: View {
     @EnvironmentObject var userAuth: UserAuth
     @ObservedObject var chattingListRoomViewModel = ChattingListRoomViewModel()
+    @State private var isEmptyChatRooms: Bool = false
     
     var body: some View {
         VStack {
-            if chattingListRoomViewModel.chattingRooms.isEmpty {
+            if isEmptyChatRooms {
+                ProgressView()
                 Text("채팅 내역이 없습니다.")
                     .foregroundStyle(.gray)
             } else {
@@ -32,11 +34,15 @@ struct ChattingListRoomView: View {
                                 .resizable()
                                 .cornerRadius(10)
                                 .frame(width: 50, height: 50)
+                            
                             VStack(alignment: .leading) {
-                                Text("디자이너 수")
+                                Text(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name ?? "닉네임 오류")
                                     .font(.title3.bold())
+                                    .onAppear{
+                                        print(chattingListRoomViewModel.userProfile)
+                                    }
                                 
-                                if let recentMessage =  chattingListRoomViewModel.getLastMessage(chatRoom: chattingRoom){
+                                if let recentMessage =  chattingRoom.chattingBubles?.first {
                                     Text(recentMessage.content ?? "메세지가 비어있습니다.")
                                         .foregroundStyle(.gray)
                                         .lineLimit(1)
@@ -44,19 +50,21 @@ struct ChattingListRoomView: View {
                                     Text("날짜 : \(recentMessage.date)")
                                         .font(.caption2)
                                         .foregroundStyle(.gray)
+                                } else {
+                                    Text("메세지가 존재하지 않습니다")
+                                        .foregroundStyle(.gray)
+                                        .lineLimit(1)
                                 }
                             }
                         }
                     }
-                    
                 }
                 .listStyle(.plain)
                 .navigationTitle("채팅")
-               
             }
         }
         .onAppear {
-            chattingListRoomViewModel.fetchChattingList(login: userAuth.userType)
+            isEmptyChatRooms = chattingListRoomViewModel.fetchChattingList(login: userAuth.userType)
         }
     }
 }
