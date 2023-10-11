@@ -23,6 +23,7 @@
 		2F0A21952ACFD8950070CA42 /* CMReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */; };
 		3B2052252AD3D1FC0050001E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B2052242AD3D1FC0050001E /* GoogleService-Info.plist */; };
 		3B517D482ACE46420082E2F6 /* ConsultationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B517D472ACE46420082E2F6 /* ConsultationViewModel.swift */; };
+		3BA51B6B2AD53212009D7902 /* SingleTonDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA51B6A2AD53212009D7902 /* SingleTonDateFormatter.swift */; };
 		3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */; };
 		3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */; };
 		3BAB00F32ACD97EB009053A4 /* ReservationSDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */; };
@@ -126,6 +127,7 @@
 		2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReviewViewModel.swift; sourceTree = "<group>"; };
 		3B2052242AD3D1FC0050001E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3B517D472ACE46420082E2F6 /* ConsultationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultationViewModel.swift; sourceTree = "<group>"; };
+		3BA51B6A2AD53212009D7902 /* SingleTonDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTonDateFormatter.swift; sourceTree = "<group>"; };
 		3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMAccount.swift; sourceTree = "<group>"; };
 		3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMExpandableText.swift; sourceTree = "<group>"; };
 		3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReservationSDetail.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 			children = (
 				DC76954D2AD088DB00D2FB69 /* Auth */,
 				3BCF2C062ACD3E72009C18C2 /* Chatting */,
+				3BA51B6A2AD53212009D7902 /* SingleTonDateFormatter.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -714,6 +717,7 @@
 				3BCF2C6C2ACD4248009C18C2 /* Keyword.swift in Sources */,
 				3BCF2C7C2ACD4248009C18C2 /* CMFeedDetailView.swift in Sources */,
 				3BCF2C252ACD3E73009C18C2 /* ChatRoom.swift in Sources */,
+				3BA51B6B2AD53212009D7902 /* SingleTonDateFormatter.swift in Sources */,
 				DC7695462AD0888800D2FB69 /* AuthHomeView.swift in Sources */,
 				3BCF2C2B2ACD3E73009C18C2 /* ChattingListRoomView.swift in Sources */,
 				639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */,
