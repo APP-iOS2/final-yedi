@@ -9,38 +9,21 @@ import SwiftUI
 
 struct BubbleCell: View {
     var chat: CommonBubble
-    var messageType: MessageType
     var isMyBubble: Bool
     
     private var chatDate: String {
         return getCalendarComponents()
     }
     
-    // temp properties
-    var isReadBubble: Bool = false
-    
     var body: some View {
         VStack(alignment: isMyBubble ? .trailing : .leading, spacing: 0) {
             HStack(alignment: .top) {
-                if !isMyBubble { profileImage }
                 messageBubble
             }
         }
         .frame(maxWidth: .infinity, alignment: isMyBubble ? .trailing : .leading)
         .padding(.horizontal, 10)
         .padding(.bottom, 5)
-    }
-    
-    private var profileImage: some View {
-        AsyncImage(url: URL(string: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2487&q=80")) { image in
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .clipShape(Circle())
-                .frame(width: 30, height: 30)
-        } placeholder: {
-            ProgressView()
-        }
     }
     
     private var messageBubble: some View {

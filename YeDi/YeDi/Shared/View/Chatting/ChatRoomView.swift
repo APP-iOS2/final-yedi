@@ -12,6 +12,7 @@ struct ChatRoomView: View {
     
     @StateObject var chattingVM = ChattingViewModel()
     @EnvironmentObject var userAuth: UserAuth
+    @Environment(\.dismiss) var dismiss
     
     @State private var inputText: String = ""
     @State private var isShowingUtilityMenu: Bool = false
@@ -39,13 +40,33 @@ struct ChatRoomView: View {
             }
             inputchatTextField
         }
-        .navigationTitle("디자이너 수")
-        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             chattingVM.chatRoomId = chatRoomId
             chattingVM.firstChattingBubbles()
         }
+        .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .tabBar)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                toolbarProfileInfo
+            }
+        }
+    }
+    
+    private var toolbarProfileInfo: some View {
+        HStack {
+            Button {
+                dismiss()
+            } label: {
+                Image(systemName: "chevron.left")
+                    .foregroundStyle(.black)
+            }
+            HStack(alignment: .center) {
+                Image(systemName: "person.circle.fill")
+                Text("디자이너 수")
+                    .lineLimit(1)
+            }
+        }
     }
     
     private var chatScroll: some View {
@@ -60,7 +81,12 @@ struct ChatRoomView: View {
                     var isMyBubble: Bool {
                         chat.sender == userId ? true : false
                     }
-                    BubbleCell(chat: chat, messageType: chat.messageType, isMyBubble: isMyBubble)
+                    BubbleCell(chat: chat, isMyBubble: isMyBubble)
+                        .onAppear {
+                            if !isMyBubble {
+                                chattingVM.getReceivedBubbleId(chatRoomId: chatRoomId, sender: chat.sender)
+                            }
+                        }
                 }
             }
             .rotationEffect(Angle(degrees: 180))

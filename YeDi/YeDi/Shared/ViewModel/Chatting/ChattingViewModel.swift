@@ -14,20 +14,21 @@ import FirebaseFirestoreSwift
 
 
 class ChattingViewModel: ObservableObject {
-    
     @Published var userEmail: String = "None"
     @Published var chatRoomId: String = ""
     @Published var chattings: [CommonBubble] = []
-    @Published var lastBubbleId: String = ""
-
+    @Published var isReadBubble: Bool = false
+    @Published var receivedBubbleId: [String] = []
     
     var ref: DatabaseReference! = Database.database().reference()
     var storageRef = Storage.storage().reference()
     let storeService = Firestore.firestore() ///클라이언트와 디자이너 정보를 불러오기 위함
+    
     var limitLength = 5 ///더 불러오기에 쓸 채팅버블 개수 제한 변수
     var storePath: String {
-        return "chatRooms/11111111-EFDC-42CC-AC21-B135E7E40EC9/bubbles"
+        return "chatRooms/\(chatRoomId)/bubbles"
     }
+    
     init() {
         self.setUserEmail()
         //self.storageRef = storageRef.child("chatRooms/\(chatRoomId)")
@@ -39,36 +40,32 @@ class ChattingViewModel: ObservableObject {
     
     func firstChattingBubbles() {
         storeService.collection(storePath) //채팅방의 위치
-            .limit(toLast: 15)
-            .order(by: "date")
-            .addSnapshotListener { querySnapshot, error in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error fetching documents: \(String(describing: error))")
-                    return
-                }
-                
-                var bubbles: [CommonBubble] = []
-                
-                for document in documents {
-                    do {
-                        var bubbleData = document.data()
-                        bubbleData["id"] = document.documentID
-                        
-                        let jsonData = try JSONSerialization.data(withJSONObject: bubbleData)
-                        
-                        let bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
-                        bubbles.append(bubble)
-                    } catch {
-                        print("Error decoding bubble data")
-                    }
-                }
-                
-                self.chattings = bubbles
-                
-                if let id = self.chattings.last?.id {
-                    self.lastBubbleId = id
+        .limit(toLast: 15)
+        .order(by: "date")
+        .addSnapshotListener { querySnapshot, error in
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documents: \(String(describing: error))")
+                return
+            }
+            
+            var bubbles: [CommonBubble] = []
+            
+            for document in documents {
+                do {
+                    var bubbleData = document.data()
+                    bubbleData["id"] = document.documentID
+                    
+                    let jsonData = try JSONSerialization.data(withJSONObject: bubbleData)
+                    
+                    let bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
+                    bubbles.append(bubble)
+                } catch {
+                    print("Error decoding bubble data")
                 }
             }
+            
+            self.chattings = bubbles
+        }
     }
     
     func fetchMoreChattingBubble() {
@@ -107,10 +104,36 @@ class ChattingViewModel: ObservableObject {
         print("Called")
     }
     
+    /// 모든 상대방 버블을 조회하여 "isRead" 필드의 값을 변경하는 함수
+    func updateChattingBubbleReadState() {
+        for documentId in receivedBubbleId {
+            storeService.collection(storePath).document(documentId).updateData(["isRead" : true])
+        }
+    }
+    
+    /// 채팅방에서 상대방 버블 아이디 가져오와서 배열(receivedBubbleId)로 저장하는 함수
+    /// 마지막에 updateChattingBubbleReadState()를 실행한다.
+    func getReceivedBubbleId(chatRoomId: String, sender: String) {
+        storeService.collection(storePath).whereField("sender", isEqualTo: sender).getDocuments { querySnapshot, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            guard let documents = querySnapshot?.documents else {
+                return
+            }
+            
+            let data = documents.map { queryDocumentSnapshot in
+                queryDocumentSnapshot.documentID
+            }
+            
+            self.receivedBubbleId = data
+            self.updateChattingBubbleReadState()
+        }
+    }
+    
     ///텍스트 버블을 보내는 메소드
     func sendTextBubble(content: String, sender: String) {
-        
-        
         let bubble = CommonBubble(
             content: content,
             date: "\(Date())",
@@ -275,35 +298,30 @@ class ChattingViewModel: ObservableObject {
     
     func fetchChattingBubbles() {
         storeService.collection(storePath) //채팅방의 위치
-            .order(by: "date")
-            .addSnapshotListener { (querySnapshot, error) in
-                guard let querySnapshot = querySnapshot else {
-                    print("Error fetching querySnapshot: \(String(describing: error))")
-                    return
-                }
-                
-                querySnapshot.documentChanges.forEach{ newBubble in
-                    if newBubble.type == .added {
-                        do {
-                            let bubbleData = newBubble.document.data()
-                            
-                            let jsonData = try JSONSerialization.data(withJSONObject: bubbleData)
-                            
-                            let bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
-                            
-                            ///서버에도 읽음처리했다는 내용으로 업데이트 해주어야 하는 함수 필요
-                            self.chattings.append(bubble)
-                        } catch {
-                            print("Error decoding bubble data")
-                        }
+        .order(by: "date")
+        .addSnapshotListener { (querySnapshot, error) in
+            guard let querySnapshot = querySnapshot else {
+                print("Error fetching querySnapshot: \(String(describing: error))")
+                return
+            }
+            
+            querySnapshot.documentChanges.forEach{ newBubble in
+                if newBubble.type == .added {
+                    do {
+                        let bubbleData = newBubble.document.data()
+                        
+                        let jsonData = try JSONSerialization.data(withJSONObject: bubbleData)
+                        
+                        let bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
+                        
+                        ///서버에도 읽음처리했다는 내용으로 업데이트 해주어야 하는 함수 필요
+                        self.chattings.append(bubble)
+                    } catch {
+                        print("Error decoding bubble data")
                     }
                 }
-                
-                if let id = self.chattings.last?.id {
-                    self.lastBubbleId = id
-                }
             }
-        return
+        }
     }
     
 }
