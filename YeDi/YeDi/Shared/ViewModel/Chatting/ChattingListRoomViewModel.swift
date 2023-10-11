@@ -15,7 +15,6 @@ final class ChattingListRoomViewModel: ObservableObject {
     @Published var userProfile: [String: ChatListUserInfo] = [:]
     let storeService = Firestore.firestore()
     
-    
     /// 채팅리스트 및 채팅방 메세지를 가지고오는 메소드
     func fetchChattingList(login type: UserType?) -> Bool{
         
@@ -58,7 +57,6 @@ final class ChattingListRoomViewModel: ObservableObject {
                 guard var chatRooms = document.data()?["chatRooms"] as? [String] else { return }
                 
                 chatRooms = chatRooms.compactMap{ $0.trimmingCharacters(in: .whitespaces) }.filter({ !$0.isEmpty })
-                
                 self.fetchUserInfo(login: loginType, chatRooms: chatRooms)
                 
                 for chatRoomId in chatRooms {
@@ -88,10 +86,13 @@ final class ChattingListRoomViewModel: ObservableObject {
                 do {
                     for document in snapshot.documents {
                         let bubble = try document.data(as: CommonBubble.self)
+                        
                         bubbles.append(bubble)
+                        
                         if let index = self.chattingRooms.firstIndex(where: { $0.id == id}) {
                             self.chattingRooms.remove(at: index)
                         }
+                        
                         self.chattingRooms.append(.init(id: id, chattingBubles: bubbles))
                         self.chattingRooms.sort(by: {$0.chattingBubles?.first?.date ?? "" > $1.chattingBubles?.first?.date ?? ""})
                     }
@@ -116,6 +117,7 @@ final class ChattingListRoomViewModel: ObservableObject {
         
         for chatRoomId in id {
             colRef.whereField("chatRooms", arrayContains: chatRoomId).getDocuments { snapshot, error in
+                
                 if let error = error {
                     debugPrint("Error getting userProfile: \(error)")
                     return
@@ -123,8 +125,8 @@ final class ChattingListRoomViewModel: ObservableObject {
                 
                 if let snapshot = snapshot, !snapshot.isEmpty {
                     for document in snapshot.documents {
-                        let userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "정보 가지고오기 실패",
-                                                        profileImageURLString: document.data()["profileImageURLString"] as? String ?? "정보 가지고오기 실패")
+                        let userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "정보 없음",
+                                                        profileImageURLString: document.data()["profileImageURLString"] as? String ?? "정보 없음")
                         self.userProfile[chatRoomId] = userInfo
                     }
                 }
@@ -132,9 +134,9 @@ final class ChattingListRoomViewModel: ObservableObject {
         }
     }
     
+    struct ChatListUserInfo {
+        var name: String
+        var profileImageURLString: String
+    }
 }
 
-struct ChatListUserInfo {
-    var name: String
-    var profileImageURLString: String
-}
