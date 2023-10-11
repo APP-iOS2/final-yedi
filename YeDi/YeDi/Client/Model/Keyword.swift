@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct Keyword: Identifiable {
+struct Keyword: Identifiable, Codable {
     var id: String = UUID().uuidString
     var keyword: String
     var isSelected: Bool
     var category: KeywordCategory
 }
 
-enum KeywordCategory: String, CaseIterable {
+enum KeywordCategory: String, CaseIterable, Codable {
     case style = "스타일"
     case service = "시술/서비스"
     case etc = "가격/기타"

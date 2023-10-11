@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct CMProfileView: View {
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var profileViewModel: CMProfileViewModel
+    @EnvironmentObject var reviewViewModel: CMReviewViewModel
+    
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 0) {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("김고객님")
+                        Text("\(profileViewModel.client.name)님")
                         Text("오늘도 빛나는 하루 보내세요")
                     }
                     .font(.system(size: 20, weight: .bold))
@@ -23,7 +27,9 @@ struct CMProfileView: View {
                 }
                 .padding()
                 
-                NavigationLink(destination: CMProfileEditView()) {
+                NavigationLink {
+                    CMProfileEditView()
+                } label: {
                     Text("정보 수정")
                         .frame(width: 350, height: 40)
                         .background(.black)
@@ -32,11 +38,19 @@ struct CMProfileView: View {
                         .padding(.bottom, 40)
                 }
                 
-                CMSegmentedControl()
+                // TODO: 임시 리뷰 작성 버튼
+                NavigationLink {
+                    CMReviewCreateMainView()
+                } label: {
+                    Text("리뷰 작성하기")
+                }
+                
+                CMSegmentedControl(profileViewModel: profileViewModel)
                 
                 Spacer()
             }
         }
+        .padding([.leading, .trailing], 5)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
@@ -55,11 +69,19 @@ struct CMProfileView: View {
                 }
             }
         }
+        .onAppear {
+            Task {
+                await profileViewModel.fetchClientProfile(userAuth: userAuth)
+                await profileViewModel.fetchFollowedDesigner()
+            }
+        }
     }
 }
 
 #Preview {
     NavigationStack {
         CMProfileView()
+            .environmentObject(UserAuth())
+            .environmentObject(CMProfileViewModel())
     }
 }

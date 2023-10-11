@@ -10,6 +10,10 @@ import PhotosUI
 
 struct CMReviewCreateMainView: View {
     @Environment(\.dismiss) var dismiss
+    
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var reviewViewModel: CMReviewViewModel
+    
     @State private var myDate = Date()
     
     @State private var selectedPhoto: PhotosPickerItem? = nil
@@ -32,7 +36,7 @@ struct CMReviewCreateMainView: View {
                     .fontWeight(.semibold)
                     
                     HStack {
-                        Text("2023년 7월 11일 12:30 예약 예약")
+                        Text("2023년 7월 11일 12:30 예약")
                         Spacer()
                     }
                 }
@@ -63,7 +67,23 @@ struct CMReviewCreateMainView: View {
             Spacer()
             
             Button(action: {
-                // TODO: 리뷰 작성 백엔드 추가하기
+                let formatter = DateFormatter()
+                formatter.dateFormat = "YYYY.MM.dd."
+                let writtenDate = formatter.string(from: Date())
+                
+                let newReview = Review(
+                    id: UUID().uuidString,
+                    reviewer: userAuth.currentClientID ?? "",
+                    date: writtenDate,
+                    keywordReviews: [],
+                    designerScore: designerScore,
+                    content: reviewContent,
+                    imageURLStrings: [],
+                    reservationId: UUID().uuidString,
+                    style: "펌, 염색",
+                    designer: UUID().uuidString
+                )
+                reviewViewModel.uploadReview(newReview: newReview)
                 dismiss()
             }, label: {
                 Text("리뷰 등록")

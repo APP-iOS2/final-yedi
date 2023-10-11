@@ -8,49 +8,53 @@
 import SwiftUI
 
 struct ClientMainTabView: View {
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var profileViewModel: CMProfileViewModel
+    @EnvironmentObject var reviewViewModel: CMReviewViewModel
+    
     @State private var selectedIndex = 0
     
     var body: some View {
         NavigationStack {
             TabView(selection: $selectedIndex) {
                 CMHomeView()
-                .onTapGesture {
-                    self.selectedIndex = 0
-                }
+//                .onTapGesture {
+//                    self.selectedIndex = 0
+//                }
                 .tabItem {
                     Label("홈", systemImage: "house")
                 }.tag(0)
                 
                 CMFilterView()
-                .onTapGesture {
-                    self.selectedIndex = 1
-                }
+//                .onTapGesture {
+//                    self.selectedIndex = 1
+//                }
                 .tabItem {
-                    Label("필터", systemImage: "")
+                    Label("필터", systemImage: "slider.horizontal.3")
                 }.tag(1)
                 
-                CMReservationView()
-                .onTapGesture {
-                    self.selectedIndex = 2
-                }
+                CMReservationHistoryView()
+//                .onTapGesture {
+//                    self.selectedIndex = 2
+//                }
                 .tabItem {
-                    Label("예약", systemImage: "")
+                    Label("예약", systemImage: "chart.bar.doc.horizontal.fill")
                 }.tag(2)
                 
                 CMMainChattingView()
-                .onTapGesture {
-                    self.selectedIndex = 3
-                }
+//                .onTapGesture {
+//                    self.selectedIndex = 3
+//                }
                 .tabItem {
-                    Label("채팅", systemImage: "")
+                    Label("채팅", systemImage: "bubble.left.fill")
                 }.tag(3)
                 
                 CMProfileView()
-                .onTapGesture {
-                    self.selectedIndex = 4
-                }
+//                .onTapGesture {
+//                    self.selectedIndex = 4
+//                }
                 .tabItem {
-                    Label("프로필", systemImage: "")
+                    Label("프로필", systemImage: "person.fill")
                 }.tag(4)
             }
         }
@@ -59,4 +63,7 @@ struct ClientMainTabView: View {
 
 #Preview {
     ClientMainTabView()
+        .environmentObject(UserAuth())
+        .environmentObject(CMProfileViewModel())
+        .environmentObject(CMReviewViewModel())
 }
