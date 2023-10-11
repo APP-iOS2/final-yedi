@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 final class PostDetailViewModel: ObservableObject {
     @Published var selectedImages: [String] = []
@@ -14,14 +15,15 @@ final class PostDetailViewModel: ObservableObject {
     @Published var isFollowing: Bool = false
     
     private let db = Firestore.firestore()
+    private var currentUserUid: String? {
+        return Auth.auth().currentUser?.uid
+    }
     
-    /// Client의 팔로잉 목록에 특정한 Designer가 포함되어 있는지 여부를 나타내는 Bool 값 반환
+    /// Client의 팔로잉 목록에 특정한 Designer가 포함되어 있는지 여부를 Bool값으로 `isFollowing`에 반영
     /// - Parameter designerUid: Client 팔로잉 목록에서 찾을 DesignerUid
-    /// - Returns: 팔로잉 목록에 Designer가 포함되어 있을 경우 `true`,  아닐경우 `false`
     @MainActor
     func isFollowed(designerUid: String) async {
-        // TODO: UserDefautls 대신 다른 인증 방법 사용
-        guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
+        guard let uid = currentUserUid else { return }
         
         do {
             let document = try await db.collection("following").document(uid).getDocument()
@@ -35,26 +37,26 @@ final class PostDetailViewModel: ObservableObject {
     
     @MainActor
     func toggleFollow(designerUid: String) async {
+        guard let uid = currentUserUid else { return }
+        
         if isFollowing {
-            await unfollowing(designerUid: designerUid)
+            await unfollowing(designerUid: designerUid, currentUserUid: uid)
             isFollowing = false
         } else {
-            await following(designerUid: designerUid)
+            await following(designerUid: designerUid, currentUserUid: uid)
             isFollowing = true
         }
     }
     
-    private func following(designerUid: String) async {
-        guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
-        
+    private func following(designerUid: String, currentUserUid: String) async {
         do {
-            let documentSnapshot = try await db.collection("following").document(uid).getDocument()
+            let documentSnapshot = try await db.collection("following").document(currentUserUid).getDocument()
             if documentSnapshot.exists {
-                try await db.collection("following").document(uid).updateData([
+                try await db.collection("following").document(currentUserUid).updateData([
                     "uids": FieldValue.arrayUnion([designerUid])
                 ])
             } else {
-                try await db.collection("following").document(uid).setData([
+                try await db.collection("following").document(currentUserUid).setData([
                     "uids": [designerUid]
                 ])
             }
@@ -63,11 +65,9 @@ final class PostDetailViewModel: ObservableObject {
         }
     }
     
-    private func unfollowing(designerUid: String) async {
-        guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
-        
+    private func unfollowing(designerUid: String, currentUserUid: String) async {
         do {
-            try await db.collection("following").document(uid).updateData([
+            try await db.collection("following").document(currentUserUid).updateData([
                 "uids": FieldValue.arrayRemove([designerUid])
             ])
         } catch {

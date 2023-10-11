@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct CMFollowingListView: View {
-    @State private var isFollowingDesigner: Bool = true
     @StateObject var postDetailViewModel = PostDetailViewModel()
+    @State private var isFollowingDesigner: Bool = true
+    @State private var isFollowing: Bool = true
     let profileViewModel: CMProfileViewModel
+    
     var body: some View {
         ScrollView {
             if profileViewModel.followedDesigner.isEmpty {
@@ -18,7 +20,7 @@ struct CMFollowingListView: View {
                     .padding()
             } else {
                 ForEach(profileViewModel.followedDesigner, id: \.id) { designer in
-                    followingList(designerUid: "\(designer.name)")
+                    followingList(designer: designer)
                         .padding(.horizontal)
                         .padding(.vertical, 10)
                 }
@@ -31,20 +33,28 @@ struct CMFollowingListView: View {
         }
     }
     
-    private func followingList(designerUid: String) -> some View {
+    private func followingList(designer: Designer) -> some View {
         HStack(alignment: .top) {
-            AsyncImage(url: URL(string: "https://cdn.pixabay.com/photo/2020/04/27/09/21/cat-5098930_1280.jpg")) { image in
-                image
+            if let imageURLString = designer.imageURLString {
+                AsyncImage(url: URL(string: "\(imageURLString)")) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(maxWidth: 50, maxHeight: 50)
+                        .clipShape(Circle())
+                } placeholder: {
+                    ProgressView()
+                }
+            } else {
+                Image(systemName: "person.circle.fill")
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
+                    .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: 50, maxHeight: 50)
                     .clipShape(Circle())
-            } placeholder: {
-                ProgressView()
             }
 
             VStack(alignment: .leading) {
-                Text("Designer1")
+                Text("\(designer.name)")
                 Text("서울")
             }
             
@@ -52,20 +62,27 @@ struct CMFollowingListView: View {
             
             Button {
                 Task {
-                    await postDetailViewModel.toggleFollow(designerUid: designerUid)
+                    await postDetailViewModel.toggleFollow(designerUid: designer.designerUID)
                 }
+                isFollowing.toggle()
             } label: {
                 Text("팔로우")
                     .font(.system(size: 14))
-                    .foregroundStyle(.black)
+                    .foregroundStyle(isFollowing ? .black : .white)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 7)
-                    .background(.white)
+                    .background(isFollowing ? .white : .black)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
-                            .stroke(.black, lineWidth: 1)
+                            .stroke(isFollowing ? .black : .white, lineWidth: 1)
                     )
+            }
+        }
+        .onAppear {
+            Task {
+                await postDetailViewModel.isFollowed(designerUid: designer.designerUID)
+                isFollowing = postDetailViewModel.isFollowing
             }
         }
     }

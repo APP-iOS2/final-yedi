@@ -58,13 +58,31 @@ struct Designer: Codable {
 /// 직급
 enum Rank: String, Codable {
     /// 원장
-    case Owner
+    case Owner = "원장"
     /// 실장
-    case Principal
+    case Principal = "실장"
     /// 디자이너
-    case Designer
+    case Designer = "디자이너"
     /// 인턴
-    case Intern
+    case Intern = "인턴"
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        
+        switch rawValue {
+        case "원장":
+            self = .Owner
+        case "디자이너":
+            self = .Designer
+        case "실장":
+            self = .Principal
+        case "인턴":
+            self = .Intern
+        default:
+            self = .Owner // 기본값 설정
+        }
+    }
 }
 
 struct Photo: Identifiable, Codable {
