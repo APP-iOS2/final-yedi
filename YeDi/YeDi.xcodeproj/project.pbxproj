@@ -468,7 +468,6 @@
 				639DB6632AC10F1E002692E5 /* Model */,
 				639DB6642AC10F27002692E5 /* ViewModel */,
 				639DB6622AC10F19002692E5 /* View */,
-				639DB6602AC10F13002692E5 /* DesignerMainTabView.swift */,
 			);
 			path = Designer;
 			sourceTree = "<group>";
@@ -476,11 +475,12 @@
 		639DB6622AC10F19002692E5 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				639DB67B2AC11AD5002692E5 /* DMReview */,
-				639DB6852AC11B4A002692E5 /* DMPostView */,
-				639DB6822AC11B29002692E5 /* DMReservationView */,
+				639DB67C2AC11AE7002692E5 /* DMProfileView */,
 				639DB67F2AC11B17002692E5 /* DMChattingView */,
-				639DB67C2AC11AE7002692E5 /* ProfileView */,
+				639DB6822AC11B29002692E5 /* DMReservationView */,
+				639DB6852AC11B4A002692E5 /* DMPostView */,
+				639DB67B2AC11AD5002692E5 /* DMReview */,
+				639DB6602AC10F13002692E5 /* DesignerMainTabView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -516,13 +516,13 @@
 			path = DMReview;
 			sourceTree = "<group>";
 		};
-		639DB67C2AC11AE7002692E5 /* ProfileView */ = {
+		639DB67C2AC11AE7002692E5 /* DMProfileView */ = {
 			isa = PBXGroup;
 			children = (
 				639DB67D2AC11AF5002692E5 /* DMProfileView.swift */,
 				1D63595A2ACEECC200FBD37B /* DMProfileEditView.swift */,
 			);
-			path = ProfileView;
+			path = DMProfileView;
 			sourceTree = "<group>";
 		};
 		639DB67F2AC11B17002692E5 /* DMChattingView */ = {

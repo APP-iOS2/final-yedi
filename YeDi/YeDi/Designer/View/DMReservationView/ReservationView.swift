@@ -38,30 +38,7 @@ struct ReservationView: View {
             .padding(.top)
             .padding(.bottom)
             
-            ScrollView(.horizontal) {
-                HStack {
-                    ForEach(0..<30) { index in
-                        Button(action: {
-                            isClicked.toggle()
-                        }, label: {
-                            if isClicked {
-                                //오늘 날짜부터 한달 간격으로 보이게 만들 예정
-                                Text("6월20일")
-                                    .frame(width: 50, height: 50)
-                                    .foregroundStyle(Color.gray)
-                                    .background(Color.black)
-                                    .cornerRadius(6)
-                            } else {
-                                Text("6월20일")
-                                    .frame(width: 50, height: 50)
-                                    .foregroundStyle(Color.black)
-                                    .background(Color.gray)
-                                    .cornerRadius(6)
-                            }
-                        })
-                    }
-                }
-            }
+            HCustomCalendar()
             .padding()
             .scrollIndicators(.hidden)
             
