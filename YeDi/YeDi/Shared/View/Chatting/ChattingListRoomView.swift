@@ -12,6 +12,7 @@ struct ChattingListRoomView: View {
     @EnvironmentObject var userAuth: UserAuth
     @ObservedObject var chattingListRoomViewModel = ChattingListRoomViewModel()
     @State private var isEmptyChatRooms: Bool = false
+    
     var body: some View {
         VStack {
             if isEmptyChatRooms {
@@ -20,7 +21,7 @@ struct ChattingListRoomView: View {
                     .foregroundStyle(.gray)
             } else {
                 List {
-                    ForEach(chattingListRoomViewModel.getOrderedChatRooms(), id: \.id) { chattingRoom in
+                    ForEach(chattingListRoomViewModel.chattingRooms, id: \.id) { chattingRoom in
                         HStack(alignment: .center) {
                             NavigationLink(destination: ChatRoomView(chatRoomId: chattingRoom.id), label: {
                                 EmptyView()
@@ -57,7 +58,6 @@ struct ChattingListRoomView: View {
                 }
                 .listStyle(.plain)
                 .navigationTitle("채팅")
-               
             }
         }
         .onAppear {
