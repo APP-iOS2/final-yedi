@@ -56,6 +56,7 @@ struct ChatRoomView: View {
     private var toolbarProfileInfo: some View {
         HStack {
             Button {
+                self.chattingVM.removeListener()
                 dismiss()
             } label: {
                 Image(systemName: "chevron.left")
