@@ -43,9 +43,7 @@ struct ChatRoomView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             chattingVM.chatRoomId = chatRoomId
-            Task{
-                chattingVM.fetchChattingBubbles()
-            }
+            chattingVM.fetchChattingBubbles()
         }
         .toolbar(.hidden, for: .tabBar)
     }
