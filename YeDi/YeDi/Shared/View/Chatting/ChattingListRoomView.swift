@@ -54,9 +54,11 @@ struct ChattingListRoomView: View {
                                     Text("메세지가 존재하지 않습니다")
                                         .foregroundStyle(.gray)
                                         .lineLimit(1)
+
                                 }
                             }
                         }
+                        
                     }
                 }
                 .listStyle(.plain)
@@ -71,4 +73,5 @@ struct ChattingListRoomView: View {
 
 #Preview {
     ChattingListRoomView()
+        .environmentObject(ChattingListRoomViewModel())
 }
