@@ -8,21 +8,43 @@
 import SwiftUI
 
 struct DMReviewView: View {
+    
+    @ObservedObject var reviewsModel = ReviewModel()
+    
     var body: some View {
-        List(0...3, id: \.self) { index in
-            NavigationLink {
-                DMReviewDetailView()
-            } label: {
-                DMReviewCell()
+        NavigationStack {
+            List(reviewsModel.reviews) { review in
+                NavigationLink {
+                    DMReviewDetailView(review: review)
+                } label: {
+                    HStack {
+                        AsyncImage(url: URL(string: "\(review.imageURLStrings)")) { item in
+                            item
+                                .resizable()
+                                .frame(width: 100, height: 100, alignment: .center)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            Text("평점: \(review.designerScore)점")
+                            Text("\(review.content)")
+                                .lineLimit(1)
+                        }
+                    }
+                }
             }
+            .listStyle(.plain)
+            .navigationTitle("내 리뷰")
         }
-        .listStyle(.plain)
-        .menuIndicator(.hidden)
+    }
+    
+    init() {
+        reviewsModel.getData()
     }
 }
 
 #Preview {
-    NavigationStack {
-        DMReviewView()
-    }
+    DMReviewView()
+       
 }
