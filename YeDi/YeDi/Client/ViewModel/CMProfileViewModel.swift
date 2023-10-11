@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseStorage
+import FirebaseAuth
 
 final class CMProfileViewModel: ObservableObject {
     @Published var client: Client = Client(
@@ -66,17 +67,24 @@ final class CMProfileViewModel: ObservableObject {
     
     @MainActor
     func fetchFollowedDesigner() async {
-        guard let uid = UserDefaults.standard.string(forKey: "uid") else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        guard let followingDocument = try? await Firestore.firestore().collection("following").document(uid).getDocument(),
+              let followingData = followingDocument.data(),
+              let uids = followingData["uids"] as? [String], !uids.isEmpty else {
+            
+            self.followedDesigner = []
+            return
+        }
+         
         do {
-            let documentSnapshot = try await Firestore.firestore().collection("following").document(uid).getDocument()
-            guard let followingData = documentSnapshot.data(), let uids = followingData["uids"] as? [String] else { return }
-            let querySnapshot = try await Firestore.firestore()
+            let designerQuerySnapshot = try await Firestore.firestore()
                 .collection("designers")
                 .whereField("designerUID", in: uids)
                 .getDocuments()
             
-            for document in querySnapshot.documents {
-                self.followedDesigner = try document.data(as: [Designer].self)
+            self.followedDesigner = designerQuerySnapshot.documents.compactMap { document in
+                try? document.data(as: Designer.self)
             }
         } catch {
             print("Fetch Followed Designer Error: \(error)")
