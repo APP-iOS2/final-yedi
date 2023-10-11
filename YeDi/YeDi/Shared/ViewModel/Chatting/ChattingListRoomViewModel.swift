@@ -12,10 +12,13 @@ import FirebaseFirestore
 
 final class ChattingListRoomViewModel: ObservableObject {
     @Published var chattingRooms: [ChatRoom] = []
+    @Published var userProfile: [String: ChatListUserInfo] = [:]
     let storeService = Firestore.firestore()
+    
     
     /// 채팅리스트 및 채팅방 메세지를 가지고오는 메소드
     func fetchChattingList(login type: UserType?) -> Bool{
+        
          guard let userId = fetchUserUID() else {
              debugPrint("로그인 정보를 찾을 수 없음")
              return true
@@ -48,12 +51,15 @@ final class ChattingListRoomViewModel: ObservableObject {
             docRef = storeService.collection("designers").document(uid)
         }
         
-        docRef.addSnapshotListener{ (document, error) in
+        docRef.addSnapshotListener{ (snapshot, error) in
             if let error = error {
                 debugPrint("Error getting cahtRooms: \(error)")
-            } else if let document = document, document.exists {
+            } else if let document = snapshot, document.exists {
                 guard var chatRooms = document.data()?["chatRooms"] as? [String] else { return }
+                
                 chatRooms = chatRooms.compactMap{ $0.trimmingCharacters(in: .whitespaces) }.filter({ !$0.isEmpty })
+                
+                self.fetchUserInfo(login: loginType, chatRooms: chatRooms)
                 
                 for chatRoomId in chatRooms {
                     self.fetchChattingBubble(chatRooms: chatRoomId)
@@ -69,7 +75,7 @@ final class ChattingListRoomViewModel: ObservableObject {
         let bubblePath = "chatRooms/\(id)/bubbles"
         let ref = storeService.collection(bubblePath).order(by: "date", descending: true).limit(to: 1)
         
-        ref.addSnapshotListener{ snapShot, error in
+        ref.addSnapshotListener{ snapshot, error in
             
             var bubbles: [CommonBubble] = []
             
@@ -78,9 +84,9 @@ final class ChattingListRoomViewModel: ObservableObject {
                 return
             }
             
-            if let snapShot = snapShot, !snapShot.isEmpty {
+            if let snapshot = snapshot, !snapshot.isEmpty {
                 do {
-                    for document in snapShot.documents {
+                    for document in snapshot.documents {
                         let bubble = try document.data(as: CommonBubble.self)
                         bubbles.append(bubble)
                         if let index = self.chattingRooms.firstIndex(where: { $0.id == id}) {
@@ -96,4 +102,39 @@ final class ChattingListRoomViewModel: ObservableObject {
         }
     }
     
+    /// 채팅방마다 유저 닉네임, url사진을 userProfile variable에 저장하는 메소드
+    final func fetchUserInfo(login type: UserType, chatRooms id: [String]) {
+        
+        let colRef: CollectionReference
+        
+        // MARK: 상대방 유저정보가 필요 하므로 로그인한 계정과 반대인 Collection 탐색
+        if type == UserType.client{
+            colRef = storeService.collection("designers")
+        } else {
+            colRef = storeService.collection("clients")
+        }
+        
+        for chatRoomId in id {
+            colRef.whereField("chatRooms", arrayContains: chatRoomId).getDocuments { snapshot, error in
+                if let error = error {
+                    debugPrint("Error getting userProfile: \(error)")
+                    return
+                }
+                
+                if let snapshot = snapshot, !snapshot.isEmpty {
+                    for document in snapshot.documents {
+                        let userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "정보 가지고오기 실패",
+                                                        profileImageURLString: document.data()["profileImageURLString"] as? String ?? "정보 가지고오기 실패")
+                        self.userProfile[chatRoomId] = userInfo
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+struct ChatListUserInfo {
+    var name: String
+    var profileImageURLString: String
 }

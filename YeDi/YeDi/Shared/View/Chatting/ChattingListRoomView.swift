@@ -36,8 +36,11 @@ struct ChattingListRoomView: View {
                                 .frame(width: 50, height: 50)
                             
                             VStack(alignment: .leading) {
-                                Text("디자이너 수")
+                                Text(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name ?? "닉네임 오류")
                                     .font(.title3.bold())
+                                    .onAppear{
+                                        print(chattingListRoomViewModel.userProfile)
+                                    }
                                 
                                 if let recentMessage =  chattingRoom.chattingBubles?.first {
                                     Text(recentMessage.content ?? "메세지가 비어있습니다.")
