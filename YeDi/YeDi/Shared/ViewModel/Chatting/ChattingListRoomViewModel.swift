@@ -133,10 +133,9 @@ final class ChattingListRoomViewModel: ObservableObject {
             }
         }
     }
-    
-    struct ChatListUserInfo {
-        var name: String
-        var profileImageURLString: String
-    }
 }
 
+struct ChatListUserInfo {
+    var name: String
+    var profileImageURLString: String
+}
