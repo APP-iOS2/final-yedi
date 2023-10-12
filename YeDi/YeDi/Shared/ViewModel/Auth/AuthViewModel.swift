@@ -215,4 +215,14 @@ final class UserAuth: ObservableObject {
         userSession = nil
         try? auth.signOut()
     }
+    
+    func deleteClientAccount() {
+        if let currentClientID {
+            storeService
+                .collection("clients")
+                .document(currentClientID).delete()
+            
+            userSession = nil
+        }
+    }
 }

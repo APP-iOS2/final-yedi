@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct CMSearchResultView: View {
+    var designers: [Designer]
+    
     var body: some View {
         VStack {
             HStack {
-                Text("디자이너(6건)")
+                Text("디자이너(\(designers.count)건)")
                 Spacer()
             }
             .padding([.top, .leading])
             
             ScrollView {
-                ForEach(0..<6) { index in
-                    CMSearchResultCell()
+                ForEach(designers, id: \.id) { designer in
+                    CMSearchResultCell(designer: designer)
                 }
             }
             
@@ -29,6 +31,7 @@ struct CMSearchResultView: View {
 
 struct CMSearchResultCell: View {
     @State private var isHeartSelected: Bool = false
+    var designer: Designer
     
     var body: some View {
         VStack {
@@ -37,7 +40,7 @@ struct CMSearchResultCell: View {
                     .font(.largeTitle)
                     .foregroundStyle(.yellow)
                 VStack(alignment: .leading) {
-                    Text("코알라 디자이너")
+                    Text(designer.name)
                     Text("유칼립투스 헤어 | 단원구 선부동")
                         .font(.subheadline)
                         .foregroundStyle(.gray)
@@ -66,6 +69,6 @@ struct CMSearchResultCell: View {
     }
 }
 
-#Preview {
-    CMSearchResultView()
-}
+//#Preview {
+//    CMSearchResultView()
+//}

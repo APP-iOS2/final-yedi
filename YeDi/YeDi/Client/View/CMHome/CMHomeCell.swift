@@ -23,6 +23,8 @@ struct CMHomeCell: View {
     /// 이미지를 두 번 연속 눌렀을 때 나오는 하트 이미지 변수
     @State private var showHeartImage: Bool = false
     
+    
+    
     var body: some View {
         VStack {
             // MARK: - Post Header
@@ -33,7 +35,7 @@ struct CMHomeCell: View {
                     .frame(width: 50, height: 50)
                 // 디자이너 아이디 & 디자이너 근무 지점
                 VStack(alignment: .leading) {
-                    Text(post.designerID)
+                    Text(viewModel.designerName ?? "디자이너 이름")
                     Text(post.location)
                         .font(.callout)
                         .foregroundStyle(.gray)
@@ -114,19 +116,23 @@ struct CMHomeCell: View {
                         .foregroundStyle(viewModel.isLiked ? .red : .black)
                 })
                 Spacer()
-                
+                // 상담하기 Button
                 Button(action: {
                     consultationViewModel.proccessConsulation(designerId: post.designerID, post: post)
                 }, label: {
-                    Text("상담하기")
-                        .padding(.horizontal, 15)
-                        .padding(.vertical, 7)
-                        .background {
-                            Capsule(style: .continuous)
-                                .stroke(.black, lineWidth: 1)
-                        }
+                    HStack {
+                        Spacer()
+                        Text("상담하기")
+                        Spacer()
+                    }
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 7)
+                    .background {
+                        Capsule(style: .continuous)
+                            .foregroundStyle(.black)
+                    }
                 })
-                .foregroundColor(.black)
+                .foregroundColor(.white)
             }
             .padding(.horizontal)
             
@@ -134,9 +140,9 @@ struct CMHomeCell: View {
             // 게시글의 텍스트 제한이 없기 때문에 게시글이 방대해질 경우를 대비하여 더보기 설정
             HStack {
                 if shouldShowMoreText || post.description?.count ?? 0 <= 60 {
-                    Text("\(post.designerID) ").fontWeight(.semibold) + Text(post.description ?? "")
+                    Text("\(viewModel.designerName ?? "디자이너 이름") ").fontWeight(.semibold) + Text(post.description ?? "")
                 } else {
-                    Text("\(post.designerID) ").fontWeight(.semibold) + Text(post.description?.prefix(60) ?? "") + Text("...더보기")
+                    Text("\(viewModel.designerName ?? "디자이너 이름") ").fontWeight(.semibold) + Text(post.description?.prefix(60) ?? "") + Text("...더보기")
                     
                 }
                 Spacer()
@@ -170,6 +176,11 @@ struct CMHomeCell: View {
                         viewModel.checkIfLiked(forClientID: currentClientID, post: post)
                     }
                 }
+        }
+        .onAppear {
+            Task {
+                await viewModel.fetchDesignerInfo(post: post)
+            }
         }
     }
 }
