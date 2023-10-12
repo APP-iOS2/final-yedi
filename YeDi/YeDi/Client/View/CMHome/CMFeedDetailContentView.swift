@@ -51,6 +51,7 @@ struct CMFeedDetailContentView: View {
         .onAppear {
             Task {
                 await postViewModel.isFollowed(designerUid: post.designerID)
+                isFollowed = postViewModel.isFollowing
             }
         }
     }
@@ -180,17 +181,18 @@ struct CMFeedDetailContentView: View {
                 Task {
                     await postViewModel.toggleFollow(designerUid: post.designerID)
                 }
+                isFollowed.toggle()
             } label: {
-                Text("\(postViewModel.isFollowing ? "팔로잉" : "팔로우")")
+                Text("\(isFollowed ? "팔로잉" : "팔로우")")
                     .font(.system(size: 14))
-                    .foregroundStyle(postViewModel.isFollowing ? .black : .white)
+                    .foregroundStyle(isFollowed ? .black : .white)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 7)
-                    .background(postViewModel.isFollowing ? .white : .black)
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .background(isFollowed ? .white : .black)
+                    .clipShape(Capsule())
                     .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(postViewModel.isFollowing ? .black : .clear, lineWidth: 1)
+                        Capsule()
+                            .stroke(isFollowed ? .black : .clear, lineWidth: 1)
                     )
             }
         }

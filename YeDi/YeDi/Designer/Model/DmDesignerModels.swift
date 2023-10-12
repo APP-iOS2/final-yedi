@@ -28,6 +28,8 @@ struct Shop: Codable {
     var closingHour: String
     /// 샵 메신저[카카오톡 채널] 링크 주소
     var messangerLinkURL: [String: String]? // ["KakaoTalk" : "URL"]
+    /// 휴무일 정보
+    var closedDays: [String]
 }
 
 // 디자이너에 대한 정보를 담는 구조체
@@ -53,18 +55,44 @@ struct Designer: Codable {
     var skill: [String] // 디자이너가 적은 스킬을 태그화 시키기 ?? 어렵긴하겠다.
     ///채팅방의 아이디
     var chatRooms: [String]
+    /// 디자이너 생년월일
+    var birthDate: String
+    /// 디자이너 성별
+    var gender: String
+    /// 디자이너 직급
+    var rank: Rank
+    /// 디자이너 고유 ID
+    var designerUID: String
 }
 
 /// 직급
 enum Rank: String, Codable {
     /// 원장
-    case Owner
+    case Owner = "원장"
     /// 실장
-    case Principal
+    case Principal = "실장"
     /// 디자이너
-    case Designer
+    case Designer = "디자이너"
     /// 인턴
-    case Intern
+    case Intern = "인턴"
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        
+        switch rawValue {
+        case "원장":
+            self = .Owner
+        case "디자이너":
+            self = .Designer
+        case "실장":
+            self = .Principal
+        case "인턴":
+            self = .Intern
+        default:
+            self = .Owner // 기본값 설정
+        }
+    }
 }
 
 struct Photo: Identifiable, Codable {

@@ -14,12 +14,13 @@ struct CMReviewCreateMainView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var reviewViewModel: CMReviewViewModel
     
+    @State private var isShowingAlert: Bool = false
+    
     @State private var myDate = Date()
     
-    @State private var selectedPhoto: PhotosPickerItem? = nil
-    @State private var selectedPhotoData: [Data] = []
+    @State private var selectedPhotoURLs: [String] = []
     
-    @State private var selectedKeywords: [String] = []
+    @State private var selectedKeywords: [Keyword] = []
     @State private var designerScore: Int = 0
     @State private var reviewContent: String = ""
     
@@ -56,7 +57,7 @@ struct CMReviewCreateMainView: View {
             
             Spacer(minLength: 55)
             
-            CMReviewCreatePhotosView(selectedPhoto: $selectedPhoto, selectedPhotoData: $selectedPhotoData)
+            CMReviewCreatePhotosView(selectedPhotoURLs: $selectedPhotoURLs)
             
             CMReviewCreateKeywordsView(selectedKeywords: $selectedKeywords)
             
@@ -67,24 +68,29 @@ struct CMReviewCreateMainView: View {
             Spacer()
             
             Button(action: {
-                let formatter = DateFormatter()
-                formatter.dateFormat = "YYYY.MM.dd."
-                let writtenDate = formatter.string(from: Date())
-                
-                let newReview = Review(
-                    id: UUID().uuidString,
-                    reviewer: userAuth.currentClientID ?? "",
-                    date: writtenDate,
-                    keywordReviews: [],
-                    designerScore: designerScore,
-                    content: reviewContent,
-                    imageURLStrings: [],
-                    reservationId: UUID().uuidString,
-                    style: "펌, 염색",
-                    designer: UUID().uuidString
-                )
-                reviewViewModel.uploadReview(newReview: newReview)
-                dismiss()
+                if isOkayToSave() {
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "YYYY.MM.dd."
+                    let writtenDate = formatter.string(from: Date())
+                    
+                    let newReview = Review(
+                        id: UUID().uuidString,
+                        reviewer: userAuth.currentClientID ?? "",
+                        date: writtenDate,
+                        keywordReviews: selectedKeywords,
+                        designerScore: designerScore,
+                        content: reviewContent,
+                        imageURLStrings: selectedPhotoURLs,
+                        reservationId: UUID().uuidString,
+                        style: "펌, 염색",
+                        designer: UUID().uuidString
+                    )
+                    
+                    reviewViewModel.uploadReview(newReview: newReview)
+                    dismiss()
+                } else {
+                    isShowingAlert.toggle()
+                }
             }, label: {
                 Text("리뷰 등록")
                     .frame(width: 330, height: 30)
@@ -93,6 +99,17 @@ struct CMReviewCreateMainView: View {
             .tint(.black)
         }
         .toolbar(.hidden, for: .tabBar)
+        .alert("모든 항목을 채워주세요", isPresented: $isShowingAlert) {
+            Button(role: .cancel) {
+                isShowingAlert.toggle()
+            } label: {
+                Text("확인")
+            }
+        }
+    }
+    
+    func isOkayToSave() -> Bool {
+        return !selectedPhotoURLs.isEmpty && !selectedKeywords.isEmpty && !reviewContent.isEmpty ? true : false
     }
 }
 
