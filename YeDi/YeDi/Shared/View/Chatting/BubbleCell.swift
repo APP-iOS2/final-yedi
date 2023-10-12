@@ -12,7 +12,9 @@ struct BubbleCell: View {
     var isMyBubble: Bool
     
     private var chatDate: String {
-        return getCalendarComponents()
+        let instance = SingleTonDateFormatter.sharedDateFommatter
+        let date = instance.changeDateString(transition: "MM월 dd일 HH:mm", from: chat.date)
+        return date
     }
     
     var body: some View {
@@ -68,24 +70,5 @@ struct BubbleCell: View {
         Circle()
             .frame(width: 8, height: 8)
             .foregroundStyle(Color(red: 1, green: 0.19, blue: 0.53))
-    }
-    
-    private func getCalendarComponents() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZ"
-        let date = dateFormatter.date(from: chat.date)!
-        
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
-        
-        guard let month = components.month,
-           let day = components.day,
-           let hour = components.hour,
-           let minute = components.minute else {
-            return ""
-        }
-        
-        return "\(month)월 \(day)일 \(hour):\(minute)"
     }
 }

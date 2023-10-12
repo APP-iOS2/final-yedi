@@ -30,17 +30,17 @@ struct ChattingListRoomView: View {
                             .frame(width: 0, height: 0)
                             .background()
                             
-                            Image(systemName: "person.circle")
-                                .resizable()
-                                .cornerRadius(10)
-                                .frame(width: 50, height: 50)
+                            DMAsyncImage(url: chattingListRoomViewModel.userProfile[chattingRoom.id]?.profileImageURLString ?? "", placeholder: Image(systemName: "person.circle.fill"))
+                                .aspectRatio(contentMode: .fill)
+                                .frame(height: 50)
+                                .font(.system(size: 50))
                             
                             VStack(alignment: .leading) {
                                 Text(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name ?? "닉네임 오류")
                                     .font(.title3.bold())
-                                    .onAppear{
-                                        print(chattingListRoomViewModel.userProfile)
-                                    }
+//                                    .onAppear{
+//                                        print(chattingListRoomViewModel.userProfile)
+//                                    }
                                 
                                 if let recentMessage =  chattingRoom.chattingBubles?.first {
                                     Text(recentMessage.content ?? "메세지가 비어있습니다.")
