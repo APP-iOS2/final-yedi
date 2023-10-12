@@ -176,14 +176,18 @@ final class UserAuth: ObservableObject {
                 "id": user.uid,
                 "name": designer.name,
                 "email": designer.email,
+                "imageURLString": designer.imageURLString ?? "",
                 "phoneNumber": designer.phoneNumber,
                 "description": designer.description ?? "",
-                "imageURLString": designer.imageURLString ?? "",
                 "designerScore": designer.designerScore,
                 "reviewCount": designer.reviewCount,
                 "followerCount": designer.followerCount,
                 "skill": designer.skill,
-                "chatRooms": designer.chatRooms
+                "chatRooms": designer.chatRooms,
+                "birthDate": designer.birthDate,
+                "gender": designer.gender,
+                "rank": designer.rank.rawValue,
+                "designerUID": user.uid
             ]
 
             self.storeService.collection("designers")

@@ -46,6 +46,7 @@ struct RegisterNavigationView: View {
     @State private var selectedGender: String = "여성"
     /// 디자이너 프로퍼티
     @State var description: String = ""
+    @State var rank: Rank = .Owner
     /// caution 프로퍼티
     @State var cautionEmail: String = ""
     @State var cautionPassword: String = ""
@@ -64,8 +65,11 @@ struct RegisterNavigationView: View {
     @State var isNotEmptyDescription: Bool = true
     /// birth 프로퍼티
     @State var changedBirthText: String = "생년월일"
+    ///  이메일 중복체크 확인 여부
+    @State var isCheckEmailAvailability: Bool = false
     
     let genders: [String] = ["여성", "남성"]
+    let ranks: [Rank] = [.Owner, .Principal, .Designer, .Intern]
     
     var birthDate: String {
         let formatter: DateFormatter = DateFormatter()
@@ -88,8 +92,6 @@ struct RegisterNavigationView: View {
         VStack(alignment: .leading) {
             ScrollView {
                 inputUserInfo(.client)
-                inputClientBirth
-                inputClientGender
             }
             .onTapGesture {
                 hideKeyboard()
@@ -97,7 +99,6 @@ struct RegisterNavigationView: View {
             
             RegisterButton(.client)
         }
-        .padding(.horizontal)
         .navigationTitle("고객 회원가입")
     }
     
@@ -105,6 +106,7 @@ struct RegisterNavigationView: View {
         VStack(alignment: .leading) {
             ScrollView {
                 inputUserInfo(.designer)
+                inputDesignerRank
                 inputDesignerDescription
             }
             .onTapGesture {
@@ -113,7 +115,6 @@ struct RegisterNavigationView: View {
             
             RegisterButton(.designer)
         }
-        .padding(.horizontal)
         .navigationTitle("디자이너 회원가입")
     }
     
@@ -131,6 +132,7 @@ struct RegisterNavigationView: View {
                             } else {
                                 cautionEmail = "사용 가능한 이메일입니다."
                                 isEmailValid = true
+                                isCheckEmailAvailability = true
                             }
                         }
                     } label: {
@@ -215,60 +217,69 @@ struct RegisterNavigationView: View {
                 Text(cautionPhoneNumber)
                     .cautionTextStyle()
             }
-        }
-    }
-    
-    private var inputClientGender: some View {
-        HStack(alignment: .center) {
-            Text("성별 *")
-            HStack(spacing: 0) {
-                ForEach(genders, id: \.self) { gender in
-                    Button(action: {
-                        selectedGender = gender
-                    }, label: {
-                        Text(gender)
-                            .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-                            .foregroundStyle(.black)
-                            .background(
-                                RoundedRectangle(cornerRadius: 2)
-                                    .stroke(Color(white: 0.9), lineWidth: 1)
-                            )
-                    })
-                    .background(selectedGender == gender ? Color(white: 0.9) : .white)
+            
+            VStack(alignment: .leading) {
+                Text("생년월일 *")
+                HStack {
+                    Text(changedBirthText)
+                        .foregroundColor(changedBirthText=="생년월일" ? .gray : .primary)
+                    
+                    Spacer()
+                    Image(systemName: "calendar")
+                        .overlay {
+                            DatePicker("birth", selection: $birthPicker, in: ...Date(), displayedComponents: .date)
+                                .blendMode(.destinationOver)
+                                .onChange(of: birthPicker, perform: { newValue in
+                                    if checkBirth() {
+                                        birthPicker = newValue
+                                    }
+                                })
+                        }
                 }
-            }
-            Spacer()
-        }
-        .padding(.vertical, 8)
-    }
-    
-    private var inputClientBirth: some View {
-        VStack(alignment: .leading) {
-            Text("생년월일 *")
-            HStack {
-                Text(changedBirthText)
-                    .foregroundColor(changedBirthText=="생년월일" ? .gray : .primary)
+                .signInTextFieldStyle(isTextFieldValid: $isBirthValid)
+                .onChange(of: birthPicker) { _ in
+                    changedBirthText = birthDate
+                }
                 
-                Spacer()
-                Image(systemName: "calendar")
-                    .overlay {
-                        DatePicker("birth", selection: $birthPicker, in: ...Date(), displayedComponents: .date)
-                            .blendMode(.destinationOver)
-                            .onChange(of: birthPicker, perform: { newValue in
-                                if checkBirth() {
-                                    birthPicker = newValue
-                                }
-                            })
-                    }
-            }
-            .signInTextFieldStyle(isTextFieldValid: $isBirthValid)
-            .onChange(of: birthPicker) { _ in
-                changedBirthText = birthDate
+                Text(cautionBirth)
+                    .cautionTextStyle()
             }
             
-            Text(cautionBirth)
-                .cautionTextStyle()
+            HStack(alignment: .center) {
+                Text("성별 *")
+                HStack(spacing: 0) {
+                    ForEach(genders, id: \.self) { gender in
+                        Button(action: {
+                            selectedGender = gender
+                        }, label: {
+                            Text(gender)
+                                .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+                                .foregroundStyle(.black)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 2)
+                                        .stroke(Color(white: 0.9), lineWidth: 1)
+                                )
+                        })
+                        .background(selectedGender == gender ? Color(white: 0.9) : .white)
+                    }
+                }
+                Spacer()
+            }
+            .padding(.vertical, 8)
         }
+        .padding(.horizontal)
+    }
+    
+    private var inputDesignerRank: some View {
+        VStack(alignment: .leading) {
+            Picker("select your rank", selection: $rank) {
+                ForEach(ranks, id: \.self) { rank in
+                    Text(rank.rawValue)
+                }
+            }
+            .pickerStyle(.menu)
+        }
+        .padding(.horizontal)
     }
     
     private var inputDesignerDescription: some View {
@@ -277,6 +288,7 @@ struct RegisterNavigationView: View {
             TextField("디자이너 소개글", text: $description, axis: .vertical)
                 .signInTextFieldStyle(isTextFieldValid: $isNotEmptyDescription)
         }
+        .padding(.horizontal)
     }
     
     private func RegisterButton(_ userType: UserType) -> some View {
@@ -294,13 +306,13 @@ struct RegisterNavigationView: View {
                     }
             }
         }
-        .padding(.bottom)
+        .padding([.horizontal, .bottom])
     }
     
     private func pressedButtonRegister(_ userType: UserType) {
         switch userType {
         case .client:
-            if checkEmail() && checkPassword() && doubleCheckPasswordValid() && checkEmptyName() && checkPhoneNumber() && checkBirth()  {
+            if isCheckEmailAvailability && checkEmail() && checkPassword() && doubleCheckPasswordValid() && checkEmptyName() && checkPhoneNumber() && checkBirth()  {
                 let client = Client(
                     id: UUID().uuidString,
                     name: name,
@@ -316,21 +328,21 @@ struct RegisterNavigationView: View {
                 dismiss()
             }
         case .designer:
-            if checkEmail() && checkPassword() && doubleCheckPasswordValid() && checkEmptyName() && checkPhoneNumber() {
+            if isCheckEmailAvailability && checkEmail() && checkPassword() && doubleCheckPasswordValid() && checkEmptyName() && checkPhoneNumber() {
                 let designer = Designer(
                     id: nil,
-                    name: "",
-                    email: "",
-                    phoneNumber: "",
-                    description: nil,
+                    name: name,
+                    email: email,
+                    phoneNumber: phoneNumber,
+                    description: description,
                     designerScore: 0,
                     reviewCount: 0,
                     followerCount: 0,
                     skill: [],
                     chatRooms: [],
-                    birthDate: "",
-                    gender: "",
-                    rank: .Designer,
+                    birthDate: birthDate,
+                    gender: selectedGender,
+                    rank: rank,
                     designerUID: ""
                 )
                 userAuth.registerDesigner(designer: designer, password: password)
