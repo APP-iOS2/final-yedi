@@ -49,10 +49,16 @@ struct CMReviewCell: View {
             
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(0...3, id: \.self) { _ in
-                        RoundedRectangle(cornerRadius: 5)
-                            .fill(Color(white: 0.9))
-                            .frame(width: 100, height: 100)
+                    ForEach(0..<review.imageURLStrings.count, id: \.self) { index in
+                        AsyncImage(url: URL(string: review.imageURLStrings[index])) { image in
+                            image
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                                .aspectRatio(contentMode: .fill)
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
+                        } placeholder: {
+                            ProgressView()
+                        }
                     }
                 }
             }
