@@ -22,8 +22,22 @@ struct CMProfileView: View {
                     }
                     .font(.system(size: 20, weight: .bold))
                     Spacer()
-                    Image(systemName: "person.circle.fill")
-                        .font(.system(size: 50))
+                    
+                    if profileViewModel.client.profileImageURLString == "" {
+                        Image(systemName: "person.circle.fill")
+                            .font(.system(size: 60))
+                    } else {
+                        AsyncImage(url: URL(string: profileViewModel.client.profileImageURLString)) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 60, height: 60)
+                                .clipShape(Circle())
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .id(profileViewModel.client.profileImageURLString)
+                    }
                 }
                 .padding()
                 
@@ -72,7 +86,6 @@ struct CMProfileView: View {
         .onAppear {
             Task {
                 await profileViewModel.fetchClientProfile(userAuth: userAuth)
-                await profileViewModel.fetchFollowedDesigner()
             }
         }
     }

@@ -12,51 +12,61 @@ import FirebaseFirestoreSwift
 @MainActor
 class CMPostViewModel: ObservableObject {
     @Published var posts: [Post] = []
+    var lastDocument: DocumentSnapshot?
+    let pageSize: Int = 3
     
     let dbRef = Firestore.firestore().collection("posts")
     
-    func fetchPosts() async {
-        do {
-            let snapshot = try await dbRef.getDocuments()
-            self.posts.removeAll()
-            
-            var tempPosts: [Post] = []
-            
-            for document in snapshot.documents {
-                let id = document.documentID
-                
-                if let docData = document.data() as? [String:Any],
-                   let designerID = docData["designerID"] as? String,
-                   let location = docData["location"] as? String,
-                   let title = docData["title"] as? String,
-                   let description = docData["description"] as? String,
-                   let photosDataArray = docData["photos"] as? [[String:Any]] {
+    // 초기 게시물 페이지를 가져오는 함수
+    func fetchInitialPosts() async {
+            let query = dbRef
+                .order(by: "timestamp", descending: true)
+                .limit(to: pageSize)  // 한 페이지에 표시할 게시물 수
 
-                    // photos 필드 처리
-                    var photos: [Photo] = []
-                    
-                    for photoData in photosDataArray {
-                        if let photoID = photoData["id"] as? String,
-                           let imageURLString = photoData["imageURL"] as? String {
-
-                            // Photo 객체 생성 및 배열에 추가
-                            let photo = Photo(id: photoID, imageURL: imageURLString)
-                            photos.append(photo)
-                        }
-                    }
-                    
-                    let post = Post(id: id, designerID: designerID, location: location, title: title, description: description, photos: photos, comments: 0, timestamp: "")
-                    
-                    tempPosts.append(post)
+            do {
+                let snapshot = try await query.getDocuments()
+                self.posts = snapshot.documents.compactMap { document in
+                    try? document.data(as: Post.self)
                 }
+                
+                self.lastDocument = snapshot.documents.last
+                
+                print("Fetched initial posts. Count:", self.posts.count)
+                
+            } catch {
+                print("Error fetching initial posts: \(error)")
             }
-            
-            self.posts = tempPosts
-            
-        } catch {
-            print("Error fetching documents: \(error)")
         }
-    }
+    
+    // 다음 페이지의 게시물을 가져오는 함수
+    func fetchNextPageOfPosts() async {
+            guard let lastDocument = self.lastDocument else { return }
+
+            let query = dbRef
+                .order(by: "timestamp", descending: true)
+                .start(afterDocument: lastDocument)
+                .limit(to: pageSize)  // 한 페이지에 표시할 게시물 수
+
+            do {
+                let snapshot = try await query.getDocuments()
+                
+                if !snapshot.isEmpty {
+                    self.posts.append(contentsOf:
+                        snapshot.documents.compactMap { document in
+                            try? document.data(as: Post.self)
+                        }
+                    )
+                    
+                    self.lastDocument = snapshot.documents.last
+                    
+                    print("Fetched next page of posts. Count:", snapshot.documents.count, "Total count:", self.posts.count)
+                                    
+                }
+                
+            } catch {
+               print("Error fetching next page of posts: \(error)")
+           }
+       }
 }
 
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Keyword: Identifiable, Codable {
+struct Keyword: Identifiable, Equatable, Codable {
     var id: String = UUID().uuidString
     var keyword: String
     var isSelected: Bool

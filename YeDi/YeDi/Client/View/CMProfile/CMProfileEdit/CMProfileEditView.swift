@@ -12,24 +12,47 @@ struct CMProfileEditView: View {
     @Environment(\.dismiss) var dismiss
     
     @EnvironmentObject var userAuth: UserAuth
+    
     @EnvironmentObject var profileViewModel: CMProfileViewModel
     
-    @State private var selectedPhoto: PhotosPickerItem? = nil
-    @State private var selectedPhotoData: Data = Data()
+    @State private var selectedPhotoURL: String = ""
+    @State private var isShowingPhotoPicker: Bool = false
     
-    @State private var clientName: String = "김고객"
-    @State private var clientGender: String = "여성"
-    @State private var clientBirthDate: String = "2000.07.11."
+    @State private var clientName: String = ""
+    @State private var clientGender: String = ""
+    @State private var clientBirthDate: String = ""
     
-    @State private var accountEmail: String = "yedi1234@gmail.com"
-    @State private var accountPhoneNumber: String = "010-1234-5678"
+    @State private var accountEmail: String = ""
+    @State private var accountPhoneNumber: String = ""
     
     var body: some View {
         VStack {
-            PhotosPicker(selection: $selectedPhoto, matching: .images, photoLibrary: .shared()) {
-                if selectedPhoto == nil {
-                    Image(systemName: "person.circle.fill")
-                        .font(.system(size: 80))
+            if selectedPhotoURL == "" {
+                Image(systemName: "person.circle.fill")
+                    .font(.system(size: 80))
+                    .padding([.top, .bottom])
+                    .overlay {
+                        ZStack {
+                            Circle()
+                                .trim(from: 0.07, to: 0.43)
+                                .fill(Color(white: 0.2))
+                                .frame(width: 80)
+                            Text("편집")
+                                .font(.system(size: 13))
+                                .foregroundStyle(.white)
+                                .offset(y: 27)
+                        }
+                    }
+                    .onTapGesture(perform: {
+                        isShowingPhotoPicker.toggle()
+                    })
+            } else {
+                AsyncImage(url: URL(string: selectedPhotoURL)) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 80, height: 80)
+                        .clipShape(Circle())
                         .padding([.top, .bottom])
                         .overlay {
                             ZStack {
@@ -43,34 +66,11 @@ struct CMProfileEditView: View {
                                     .offset(y: 27)
                             }
                         }
-                } else {
-                    if let image = UIImage(data: selectedPhotoData) {
-                        Image(uiImage: image)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 80, height: 80)
-                            .clipShape(Circle())
-                            .padding([.top, .bottom])
-                            .overlay {
-                                ZStack {
-                                    Circle()
-                                        .trim(from: 0.07, to: 0.43)
-                                        .fill(Color(white: 0.2))
-                                        .frame(width: 80)
-                                    Text("편집")
-                                        .font(.system(size: 13))
-                                        .foregroundStyle(.white)
-                                        .offset(y: 27)
-                                }
-                            }
-                    }
-                }
-            }
-            .onChange(of: selectedPhoto) { newItem in
-                Task {
-                    if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                        selectedPhotoData = data
-                    }
+                        .onTapGesture(perform: {
+                            isShowingPhotoPicker.toggle()
+                        })
+                } placeholder: {
+                    ProgressView()
                 }
             }
             
@@ -115,7 +115,7 @@ struct CMProfileEditView: View {
                         id: clientId,
                         name: clientName,
                         email: accountEmail,
-                        profileImageURLString: "",
+                        profileImageURLString: selectedPhotoURL,
                         phoneNumber: accountPhoneNumber,
                         gender: clientGender,
                         birthDate: clientBirthDate,
@@ -123,10 +123,7 @@ struct CMProfileEditView: View {
                         chatRooms: []
                     )
                     Task {
-                        await profileViewModel.updateClientProfile(
-                            userAuth: userAuth,
-                            newClient: newClient
-                        )
+                        await profileViewModel.updateClientProfile(userAuth: userAuth, client: newClient)
                     }
                 }
                 dismiss()
@@ -141,6 +138,12 @@ struct CMProfileEditView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .tabBar)
         .onAppear {
+            Task {
+                await profileViewModel.fetchClientProfile(userAuth: userAuth)
+            }
+            
+            selectedPhotoURL = profileViewModel.client.profileImageURLString
+            
             clientName = profileViewModel.client.name
             clientGender = profileViewModel.client.gender
             clientBirthDate = profileViewModel.client.birthDate
@@ -148,6 +151,11 @@ struct CMProfileEditView: View {
             accountEmail = profileViewModel.client.email
             accountPhoneNumber = profileViewModel.client.phoneNumber
         }
+        .sheet(isPresented: $isShowingPhotoPicker, content: {
+            PhotoPicker { imageURL in
+                selectedPhotoURL = imageURL.absoluteString
+            }
+        })
     }
 }
 

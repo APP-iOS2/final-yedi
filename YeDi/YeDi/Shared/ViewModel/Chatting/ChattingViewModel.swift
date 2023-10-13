@@ -14,59 +14,125 @@ import FirebaseFirestoreSwift
 
 
 class ChattingViewModel: ObservableObject {
-
     @Published var userEmail: String = "None"
     @Published var chatRoomId: String = ""
     @Published var chattings: [CommonBubble] = []
-    @Published var lastBubbleId: String = ""
-
+    @Published var isReadBubble: Bool = false
+    @Published var receivedBubbleId: [String] = []
     
     var ref: DatabaseReference! = Database.database().reference()
-    var storageRef = Storage.storage().reference() ///스토리지 참조 생성
-    let storeService = Firestore.firestore()
+    var storageRef = Storage.storage().reference()
+    let storeService = Firestore.firestore() ///클라이언트와 디자이너 정보를 불러오기 위함
+    var sotreListener: ListenerRegistration? ///채팅을 읽는 전용 리스너 => 제거하기 위함
+    
+    var limitLength = 5 ///더 불러오기에 쓸 채팅버블 개수 제한 변수
+    var storePath: String {
+        return "chatRooms/\(chatRoomId)/bubbles"
+    }
+    
     init() {
         self.setUserEmail()
-        self.storageRef = storageRef.child("chatRooms/\(chatRoomId)")
+        //self.storageRef = storageRef.child("chatRooms/\(chatRoomId)")
     }
     
     func setUserEmail() { //현재 사용자의 이메일을 세팅하는 함수
         self.userEmail = Auth.auth().currentUser?.email ?? "nil@gmail.com"
     }
     
-    func fetchChattingBubble(chatRoomId: String) {
-        self.ref.child("chatRooms").child(chatRoomId).child("chatBubbles")
-            .queryOrdered(byChild: "date")
-            .observe(.value) { snapshot  in
-                
-            guard let chatData = snapshot.value as? [String : Any] else {
-                print("Error reading data")
+    func firstChattingBubbles() {
+        self.sotreListener = storeService.collection(storePath) //채팅방의 위치
+        .limit(toLast: 5)
+        .order(by: "date")
+        .addSnapshotListener { [weak self] querySnapshot, error in
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documents: \(String(describing: error))")
                 return
             }
             
             var bubbles: [CommonBubble] = []
             
-            for (key, value) in chatData {
+            for document in documents {
                 do {
-                    var value = value as! [String : Any]
-                    value["id"] = key
+                    let bubbleData = document.data()
                     
-                    let jsonData = try JSONSerialization.data(withJSONObject: value)
+                    let jsonData = try JSONSerialization.data(withJSONObject: bubbleData)
                     
-                    var bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
-                    bubble.isRead = true
+                    let bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
                     bubbles.append(bubble)
                 } catch {
                     print("Error decoding bubble data")
                 }
             }
-            bubbles.sort(by: {$0.date < $1.date})
-                
-            self.chattings = bubbles
             
-            if let id = bubbles.last?.id {
-                self.lastBubbleId = id
+            self?.chattings = self!.mergeCommonBubbles(first: self!.chattings, second: bubbles)
+        }
+    }
+    
+    ///리스너를 분리하는 함수
+    func removeListener() {
+        self.sotreListener?.remove()
+    }
+    
+    func fetchMoreChattingBubble() {
+        ///0번째 인덱스의 채팅 버블이 가장 오래된 버블이므로
+        ///해당 버블의 date보다 작은 값의 채팅을 N개 불러오고
+        ///해당 배열을 앞에 붙여주면 된다.
+        storeService.collection(storePath)   //채팅방의 위치
+            .whereField("date", isLessThan: self.chattings[0].date) //최근 메시지보다 더 오래된 메시지를 불러온다.
+            .limit(toLast: limitLength) //limitLength값에 맞게 길이 제한
+            .order(by: "date")          //채팅의 순서 date 기준
+            .getDocuments { [weak self] querySnapshot, error in
+                guard let documents = querySnapshot?.documents else {
+                    print("Error fetching documents: \(String(describing: error))")
+                    return
+                }
+                
+                var moreBubbles: [CommonBubble] = []
+                
+                for document in documents {
+                    do {
+                        let bubbleData = document.data()
+                        ///bubbleData["id"] = document.documentID
+                        
+                        let jsonData = try JSONSerialization.data(withJSONObject: bubbleData)
+                        
+                        let bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
+
+                        moreBubbles.append(bubble)
+                    } catch {
+                        print("Error decoding bubble data")
+                    }
+                }
+                
+                self!.chattings = moreBubbles + self!.chattings
+            }
+    }
+    
+    /// 모든 상대방 버블을 조회하여 "isRead" 필드의 값을 변경하는 함수
+    func updateChattingBubbleReadState() {
+        for documentId in receivedBubbleId {
+            storeService.collection(storePath).document(documentId).updateData(["isRead" : true])
+        }
+    }
+    
+    /// 채팅방에서 상대방 버블 아이디 가져오와서 배열(receivedBubbleId)로 저장하는 함수
+    /// 마지막에 updateChattingBubbleReadState()를 실행한다.
+    func getReceivedBubbleId(chatRoomId: String, sender: String) {
+        storeService.collection(storePath).whereField("sender", isEqualTo: sender).getDocuments { querySnapshot, error in
+            if let error = error {
+                print(error.localizedDescription)
             }
             
+            guard let documents = querySnapshot?.documents else {
+                return
+            }
+            
+            let data = documents.map { queryDocumentSnapshot in
+                queryDocumentSnapshot.documentID
+            }
+            
+            self.receivedBubbleId = data
+            self.updateChattingBubbleReadState()
         }
     }
     
@@ -75,20 +141,26 @@ class ChattingViewModel: ObservableObject {
         let bubble = CommonBubble(
             content: content,
             date: "\(Date())",
-            sender: sender, 
+            sender: sender,
             isRead: false
         )
         
-        self.ref.child("chatRooms").child(chatRoomId).child("chatBubbles").child("\(bubble.date + bubble.id)")
-            .setValue([
-                "id": bubble.id,
-                "content": bubble.content,
-                "date": bubble.date,
-                "messageType": bubble.messageType.rawValue,
-                "sender": bubble.sender,
-                "isRead": bubble.isRead
-            ])
+        let data: [String: Any] = [
+            "id": bubble.id,
+            "content": bubble.content!,
+            "date": bubble.date,
+            "messageType": bubble.messageType.rawValue,
+            "sender": bubble.sender,
+            "isRead": bubble.isRead
+        ]
         
+        storeService.collection(storePath).addDocument(data: data) { error in
+            if let error = error {
+                print("Error adding document: \(error)")
+            } else {
+                print("Document added successfully.")
+            }
+        }
     }
     
     ///이미지 버블을 보내는 메소드
@@ -123,15 +195,22 @@ class ChattingViewModel: ObservableObject {
                     isRead: false
                 )
                 
-                self.ref.child("chatRooms").child(self.chatRoomId).child("chatBubbles").child("\(bubble.date + bubble.id)")
-                    .setValue([
-                        "id": bubble.id,
-                        "imagePath": bubble.imagePath,
-                        "date": bubble.date,
-                        "messageType": bubble.messageType.rawValue,
-                        "sender": bubble.sender,
-                        "isRead": bubble.isRead
-                    ])
+                let data: [String: Any] = [
+                    "id": bubble.id,
+                    "imagePath": bubble.imagePath!,
+                    "date": bubble.date,
+                    "messageType": bubble.messageType.rawValue,
+                    "sender": bubble.sender,
+                    "isRead": bubble.isRead
+                ]
+                
+                self.storeService.collection(self.storePath).addDocument(data: data) { error in
+                    if let error = error {
+                        print("Error adding document: \(error)")
+                    } else {
+                        print("Document added successfully.")
+                    }
+                }
                 
             }
         }
@@ -139,6 +218,7 @@ class ChattingViewModel: ObservableObject {
     
     ///게시물 버블을 보내는 메소드
     func sendBoardBubble(content: String, imagePath: String, sender: String) {
+        
         let bubble = CommonBubble(
             content: content,
             imagePath: imagePath,
@@ -147,16 +227,23 @@ class ChattingViewModel: ObservableObject {
             isRead: false
         )
         
-        self.ref.child("chatRooms").child(chatRoomId).child("chatBubbles").child("\(bubble.date + bubble.id)")
-            .setValue([
-                "id": bubble.id,
-                "content": bubble.content,
-                "imagePath": bubble.imagePath,
-                "date": bubble.date,
-                "messageType": bubble.messageType.rawValue,
-                "sender": bubble.sender,
-                "isRead": bubble.isRead
-            ])
+        let data: [String: Any] = [
+            "id": bubble.id,
+            "content": bubble.content!,
+            "imagePath": bubble.imagePath!,
+            "date": bubble.date,
+            "messageType": bubble.messageType.rawValue,
+            "sender": bubble.sender,
+            "isRead": bubble.isRead
+        ]
+        
+        storeService.collection(storePath).addDocument(data: data) { error in
+            if let error = error {
+                print("Error adding document: \(error)")
+            } else {
+                print("Document added successfully.")
+            }
+        }
         
     }
     
@@ -197,6 +284,21 @@ class ChattingViewModel: ObservableObject {
         }
     }
     
+    /// 중복되지 않은 채팅버블을 뒤에 추가해주는 함수
+    /// 10개의 길이한계로 불러오는 경우 뒤에 새로운 내용이 올 때마다 병합해주어야 하기 때문
+    func mergeCommonBubbles(first: [CommonBubble]?, second: [CommonBubble]) -> [CommonBubble] {
+        // 중복되는 CommonBubble을 찾아내는 Set을 생성합니다.
+        let firstSet = Set(first!)
+        
+        // 중복되지 않은 CommonBubble을 찾아내기 위해 second 배열을 필터링합니다.
+        let uniqueSecond = second.filter { !firstSet.contains($0) }
+        
+        // first 배열과 중복되지 않은 second 배열을 합쳐 새로운 배열을 생성합니다.
+        let mergedArray = first! + uniqueSecond
+        let sortedArray = mergedArray.sorted{$0.date < $1.date}
+        
+        return sortedArray
+    }
     
 }
 

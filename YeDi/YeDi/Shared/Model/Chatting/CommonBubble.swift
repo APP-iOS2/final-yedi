@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CommonBubble: Codable, Identifiable {
+struct CommonBubble: Codable, Identifiable, Hashable {
     var id: String = UUID().uuidString
     var content: String?
     var imagePath: String?
