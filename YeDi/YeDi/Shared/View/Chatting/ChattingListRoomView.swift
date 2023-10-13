@@ -38,16 +38,13 @@ struct ChattingListRoomView: View {
                             VStack(alignment: .leading) {
                                 Text(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name ?? "닉네임 오류")
                                     .font(.title3.bold())
-//                                    .onAppear{
-//                                        print(chattingListRoomViewModel.userProfile)
-//                                    }
                                 
                                 if let recentMessage =  chattingRoom.chattingBubles?.first {
                                     Text(recentMessage.content ?? "메세지가 비어있습니다.")
                                         .foregroundStyle(.gray)
                                         .lineLimit(1)
                                     
-                                    Text("날짜 : \(recentMessage.date)")
+                                    Text(changetoDateFormat(recentMessage.date))
                                         .font(.caption2)
                                         .foregroundStyle(.gray)
                                 } else {
@@ -68,6 +65,12 @@ struct ChattingListRoomView: View {
         .onAppear {
             isEmptyChatRooms = chattingListRoomViewModel.fetchChattingList(login: userAuth.userType)
         }
+    }
+    
+    private func changetoDateFormat(_ messageDate: String) -> String {
+        let instance = SingleTonDateFormatter.sharedDateFommatter
+        let date = instance.changeDateString(transition: "yyyy년 MM월 dd일 HH:mm", from: messageDate)
+        return date
     }
 }
 
