@@ -18,6 +18,8 @@
 		1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067202AC1F61D0028A660 /* DMGridView.swift */; };
 		1DA52F562AC2CB69002E0D75 /* DMNewPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */; };
 		1DD969A12ACFFD9A000AD7D2 /* AddDesignerDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD969A02ACFFD9A000AD7D2 /* AddDesignerDataView.swift */; };
+		1DE425482AD912B70088CA25 /* DMDesignerInfoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE425472AD912B70088CA25 /* DMDesignerInfoEditView.swift */; };
+		1DE4254A2AD912CA0088CA25 /* DMAccountInfoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE425492AD912CA0088CA25 /* DMAccountInfoEditView.swift */; };
 		2F0A21912ACE753F0070CA42 /* CMProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */; };
 		2F0A21932ACFD4B00070CA42 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21922ACFD4B00070CA42 /* Review.swift */; };
 		2F0A21952ACFD8950070CA42 /* CMReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */; };
@@ -121,6 +123,8 @@
 		1D9067202AC1F61D0028A660 /* DMGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMGridView.swift; sourceTree = "<group>"; };
 		1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMNewPostView.swift; sourceTree = "<group>"; };
 		1DD969A02ACFFD9A000AD7D2 /* AddDesignerDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDesignerDataView.swift; sourceTree = "<group>"; };
+		1DE425472AD912B70088CA25 /* DMDesignerInfoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDesignerInfoEditView.swift; sourceTree = "<group>"; };
+		1DE425492AD912CA0088CA25 /* DMAccountInfoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMAccountInfoEditView.swift; sourceTree = "<group>"; };
 		2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMProfileViewModel.swift; sourceTree = "<group>"; };
 		2F0A21922ACFD4B00070CA42 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReviewViewModel.swift; sourceTree = "<group>"; };
@@ -224,7 +228,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1DA4B9222AD521F4007984C3 /* Recovered References */ = {
+		1DE425462AD912860088CA25 /* ProfileEditView */ = {
+			isa = PBXGroup;
+			children = (
+				1D63595A2ACEECC200FBD37B /* DMProfileEditView.swift */,
+				1DE425472AD912B70088CA25 /* DMDesignerInfoEditView.swift */,
+				1DE425492AD912CA0088CA25 /* DMAccountInfoEditView.swift */,
+			);
+			path = ProfileEditView;
+			sourceTree = "<group>";
+		};
+		2F45A1262AD27388005018A5 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -507,8 +521,8 @@
 		639DB67C2AC11AE7002692E5 /* ProfileView */ = {
 			isa = PBXGroup;
 			children = (
+				1DE425462AD912860088CA25 /* ProfileEditView */,
 				639DB67D2AC11AF5002692E5 /* DMProfileView.swift */,
-				1D63595A2ACEECC200FBD37B /* DMProfileEditView.swift */,
 			);
 			path = ProfileView;
 			sourceTree = "<group>";
@@ -746,6 +760,7 @@
 				2F0A21912ACE753F0070CA42 /* CMProfileViewModel.swift in Sources */,
 				3BCF2C8D2ACD4248009C18C2 /* CMReviewListView.swift in Sources */,
 				9666A21B2ACDBB6D0081C711 /* TimeSettingDetail.swift in Sources */,
+				1DE4254A2AD912CA0088CA25 /* DMAccountInfoEditView.swift in Sources */,
 				3BCF2C782ACD4248009C18C2 /* CMReservationCancelView.swift in Sources */,
 				3BCF2C6E2ACD4248009C18C2 /* CMReviewDetailView.swift in Sources */,
 				3BCF2C792ACD4248009C18C2 /* CMReservationView.swift in Sources */,
@@ -756,6 +771,7 @@
 				3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */,
 				1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */,
 				3BCF2C332ACD3F6A009C18C2 /* ChattingViewModel.swift in Sources */,
+				1DE425482AD912B70088CA25 /* DMDesignerInfoEditView.swift in Sources */,
 				3BCF2C902ACD4248009C18C2 /* CMProfileView.swift in Sources */,
 				DC76954F2AD088DB00D2FB69 /* AuthViewModel.swift in Sources */,
 				3BCF2C8F2ACD4248009C18C2 /* CMSettingsView.swift in Sources */,
