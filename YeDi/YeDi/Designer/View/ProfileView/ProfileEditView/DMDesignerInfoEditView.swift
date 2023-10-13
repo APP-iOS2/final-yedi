@@ -18,6 +18,9 @@ struct DMDesignerInfoEditView: View {
     @State private var designerShopName: String = ""
     @State private var designerShopAddress: String = ""
     
+    
+    @State private var selectedBirthDate: Date = Date()
+    
     let genders = ["남성", "여성"]
     let ranks = Rank.allCases // 모든 Rank enum 값
     
@@ -96,6 +99,35 @@ struct DMDesignerInfoEditView: View {
                         .stroke(Color(white: 0.9), lineWidth: 1)
                 )
             }
+            .sheet(isPresented: $isShowingDatePicker, content: {
+                VStack {
+                    DatePicker("designerBirthDate", selection: $selectedBirthDate, displayedComponents: .date)
+                        .datePickerStyle(.wheel)
+                        .labelsHidden()
+                    
+                    Button(action: {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "YYYY.MM.dd."
+                        designerBirthDate = formatter.string(from: selectedBirthDate)
+                        
+                        isShowingDatePicker.toggle()
+                    }, label: {
+                        Text("선택 완료")
+                            .frame(width: 330, height: 30)
+                    })
+                    .buttonStyle(.borderedProminent)
+                    .tint(.black)
+                }
+                .presentationDetents([.fraction(0.4)])
+            })
+            .onAppear {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy.MM.dd."
+                
+                selectedGender = designerGender
+                selectedBirthDate = dateFormatter.date(from: designerBirthDate) ?? Date()
+            }
+
             
             VStack(alignment: .leading) {
                 Text("샵 정보")
