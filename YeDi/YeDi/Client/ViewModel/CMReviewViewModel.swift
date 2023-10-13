@@ -7,11 +7,15 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseStorage
 
 class CMReviewViewModel: ObservableObject {
     @Published var reviews: [Review] = []
     
     let collectionRef = Firestore.firestore().collection("reviews")
+    let storageRef = Storage.storage().reference()
+    
+    var downloadURLs: [String] = []
     
     @MainActor
     func fetchReview(userAuth: UserAuth) async {
@@ -32,11 +36,30 @@ class CMReviewViewModel: ObservableObject {
         }
     }
     
-    func uploadReview(newReview: Review) {
+    @MainActor
+    func uploadReview(review: Review) async {
+        self.downloadURLs = []
+        
         do {
-            try collectionRef.document(newReview.id ?? "").setData(from: newReview)
+            var newReview = review
             
-            self.reviews.append(newReview)
+            for imageURLString in newReview.imageURLStrings {
+                let localFile = URL(string: imageURLString)!
+                let temp = UUID().uuidString
+                
+                storageRef.child("reviews/\(temp)").putFile(from: localFile)
+                
+                try await Task.sleep(for: .seconds(3))
+                
+                let downloadURL = try await storageRef.child("reviews/\(temp)").downloadURL()
+                self.downloadURLs.append(downloadURL.absoluteString)
+                
+                print(downloadURLs)
+            }
+            
+            newReview.imageURLStrings = downloadURLs
+            
+            try collectionRef.document(newReview.id ?? "").setData(from: newReview)
         } catch {
             print("Error updating client reviews: \(error)")
         }

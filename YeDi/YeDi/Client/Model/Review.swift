@@ -22,7 +22,7 @@ struct Review: Identifiable, Codable {
     /// 리뷰 내용
     let content: String
     /// 시술 이미지
-    let imageURLStrings: [String]
+    var imageURLStrings: [String]
 
     /// 예약 ID
     let reservationId: String

@@ -65,8 +65,6 @@ struct RegisterNavigationView: View {
     @State var isNotEmptyDescription: Bool = true
     /// birth 프로퍼티
     @State var changedBirthText: String = "생년월일"
-    ///  이메일 중복체크 확인 여부
-    @State var isCheckEmailAvailability: Bool = false
     
     let genders: [String] = ["여성", "남성"]
     let ranks: [Rank] = [.Owner, .Principal, .Designer, .Intern]
@@ -121,27 +119,7 @@ struct RegisterNavigationView: View {
     private func inputUserInfo(_ userType: UserType) -> some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading, spacing: 5) {
-                HStack {
-                    Text("이메일 *")
-                    Spacer()
-                    Button{
-                        userAuth.checkEmailAvailability(email, userType) { isInUse in
-                            if isInUse {
-                                cautionEmail = "이미 존재하는 이메일입니다."
-                                isEmailValid = false
-                            } else {
-                                cautionEmail = "사용 가능한 이메일입니다."
-                                isEmailValid = true
-                                isCheckEmailAvailability = true
-                            }
-                        }
-                    } label: {
-                        Text("중복확인")
-                            .font(.callout)
-                    }
-                    .disabled(!checkEmailValid(email))
-                }
-                
+                Text("이메일 *")
                 TextField("이메일", text: $email)
                     .keyboardType(.emailAddress)
                     .signInTextFieldStyle(isTextFieldValid: $isEmailValid)
@@ -312,7 +290,7 @@ struct RegisterNavigationView: View {
     private func pressedButtonRegister(_ userType: UserType) {
         switch userType {
         case .client:
-            if isCheckEmailAvailability && checkEmail() && checkPassword() && doubleCheckPasswordValid() && checkEmptyName() && checkPhoneNumber() && checkBirth()  {
+            if checkEmail() && checkPassword() && doubleCheckPasswordValid() && checkEmptyName() && checkPhoneNumber() && checkBirth()  {
                 let client = Client(
                     id: UUID().uuidString,
                     name: name,
@@ -324,11 +302,18 @@ struct RegisterNavigationView: View {
                     favoriteStyle: "",
                     chatRooms: []
                 )
-                userAuth.registerClient(client: client, password: password)
-                dismiss()
+                userAuth.registerClient(client: client, password: password) { success in
+                    if success {
+                        cautionEmail = "사용 가능한 이메일입니다."
+                        dismiss()
+                    } else {
+                        cautionEmail = "이미 존재하는 이메일입니다."
+                        isEmailValid = false
+                    }
+                }
             }
         case .designer:
-            if isCheckEmailAvailability && checkEmail() && checkPassword() && doubleCheckPasswordValid() && checkEmptyName() && checkPhoneNumber() {
+            if checkEmail() && checkPassword() && doubleCheckPasswordValid() && checkEmptyName() && checkPhoneNumber() {
                 let designer = Designer(
                     id: nil,
                     name: name,
@@ -345,8 +330,16 @@ struct RegisterNavigationView: View {
                     rank: rank,
                     designerUID: ""
                 )
-                userAuth.registerDesigner(designer: designer, password: password)
-                dismiss()
+                
+                userAuth.registerDesigner(designer: designer, password: password) { success in
+                    if success {
+                        cautionEmail = "사용 가능한 이메일입니다."
+                        dismiss()
+                    } else {
+                        cautionEmail = "이미 존재하는 이메일입니다."
+                        isEmailValid = false
+                    }
+                }
             }
         }
     }
@@ -355,7 +348,7 @@ struct RegisterNavigationView: View {
         if checkEmailValid(email) {
             cautionEmail = ""
             isEmailValid = true
-        } else if !checkEmailValid(email) && email.count > 0 {
+        } else if !checkEmailValid(email) {
             cautionEmail = "올바르지 않은 이메일 주소입니다"
             isEmailValid = false
         }
