@@ -19,6 +19,7 @@ class ChattingViewModel: ObservableObject {
     @Published var chattings: [CommonBubble] = []
     @Published var isReadBubble: Bool = false
     @Published var receivedBubbleId: [String] = []
+    @Published var userProfile: [String: ChatListUserInfo] = [:]
     
     var ref: DatabaseReference! = Database.database().reference()
     var storageRef = Storage.storage().reference()
@@ -315,6 +316,35 @@ class ChattingViewModel: ObservableObject {
         }
         
         return tempchat
+    }
+
+    /// 채팅방마다 유저 닉네임, url사진을 userProfile variable에 저장하는 메소드
+    final func fetchUserInfo(login type: UserType, chatRooms id: String) {
+        let colRef: CollectionReference
+        
+        // MARK: 상대방 유저정보가 필요 하므로 로그인한 계정과 반대인 Collection 탐색
+        if type == UserType.client{
+            colRef = storeService.collection("designers")
+        } else {
+            colRef = storeService.collection("clients")
+        }
+        
+        colRef.whereField("chatRooms", arrayContains: chatRoomId).getDocuments { snapshot, error in
+            if let error = error {
+                debugPrint("Error getting userProfile: \(error)")
+                return
+            }
+            
+            if let snapshot = snapshot, !snapshot.isEmpty {
+                for document in snapshot.documents {
+                    let userInfo = ChatListUserInfo(
+                        name: document.data()["name"] as? String ?? "정보 없음",
+                        profileImageURLString: document.data()["profileImageURLString"] as? String ?? "정보 없음"
+                    )
+                    self.userProfile[id] = userInfo
+                }
+            }
+        }
     }
 }
 

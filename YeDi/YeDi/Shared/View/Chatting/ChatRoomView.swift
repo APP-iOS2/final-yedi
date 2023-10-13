@@ -9,8 +9,10 @@ import SwiftUI
 
 struct ChatRoomView: View {
     var chatRoomId: String
+//    var userProfile: ChatListUserInfo
     
     @StateObject var chattingVM = ChattingViewModel()
+    @ObservedObject var chattingListRoomViewModel = ChattingListRoomViewModel()
     @EnvironmentObject var userAuth: UserAuth
     @Environment(\.dismiss) var dismiss
     
@@ -28,6 +30,13 @@ struct ChatRoomView: View {
         }
     }
     
+    private var userProfile: ChatListUserInfo {
+        if let profile = chattingVM.userProfile[chatRoomId] {
+            return profile
+        }
+        return ChatListUserInfo(name: "닉네임 오류", profileImageURLString: "")
+    }
+    
     private var isInputTextEmpty: Bool {
         inputText.isEmpty ? true : false
     }
@@ -43,6 +52,7 @@ struct ChatRoomView: View {
         .onAppear {
             chattingVM.chatRoomId = chatRoomId
             chattingVM.firstChattingBubbles()
+            chattingVM.fetchUserInfo(login: userAuth.userType!, chatRooms: chatRoomId)
         }
         .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .tabBar)
@@ -63,8 +73,10 @@ struct ChatRoomView: View {
                     .foregroundStyle(.black)
             }
             HStack(alignment: .center) {
-                Image(systemName: "person.circle.fill")
-                Text("디자이너 수")
+                DMAsyncImage(url: userProfile.profileImageURLString, placeholder: Image(systemName: "person.circle.fill"))
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: 20)
+                Text(userProfile.name)
                     .lineLimit(1)
             }
         }
@@ -129,7 +141,7 @@ struct ChatRoomView: View {
             .padding(.leading)
             .padding([.trailing, .vertical], 8)
             .background {
-                RoundedRectangle(cornerRadius: 4)
+                RoundedRectangle(cornerRadius: 15)
                     .fill(.white)
             }
             
@@ -142,12 +154,5 @@ struct ChatRoomView: View {
 extension View {
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
-
-#Preview {
-    NavigationStack {
-        ChatRoomView(chatRoomId: "11111111-EFDC-42CC-AC21-B135E7E40EC9")
-            .environmentObject(UserAuth())
     }
 }
