@@ -31,6 +31,10 @@ class ChattingViewModel: ObservableObject {
         return "chatRooms/\(chatRoomId)/bubbles"
     }
     
+    deinit {
+        print("deinit ChattingViewModel")
+    }
+    
     init() {
         self.setUserEmail()
         //self.storageRef = storageRef.child("chatRooms/\(chatRoomId)")
@@ -128,7 +132,7 @@ class ChattingViewModel: ObservableObject {
     /// 채팅방에서 상대방 버블 아이디 가져오와서 배열(receivedBubbleId)로 저장하는 함수
     /// 마지막에 updateChattingBubbleReadState()를 실행한다.
     func getReceivedBubbleId(chatRoomId: String, sender: String) {
-        storeService.collection(storePath).whereField("sender", isEqualTo: sender).getDocuments { querySnapshot, error in
+        storeService.collection(storePath).whereField("sender", isEqualTo: sender).getDocuments { [weak self] querySnapshot, error in
             if let error = error {
                 print(error.localizedDescription)
             }
@@ -141,8 +145,8 @@ class ChattingViewModel: ObservableObject {
                 queryDocumentSnapshot.documentID
             }
             
-            self.receivedBubbleId = data
-            self.updateChattingBubbleReadState()
+            self?.receivedBubbleId = data
+            self?.updateChattingBubbleReadState()
         }
     }
     
@@ -189,7 +193,7 @@ class ChattingViewModel: ObservableObject {
             }
             
             ///You can also access to download URL after upload.
-            self.storageRef.downloadURL { (url, error) in
+            self.storageRef.downloadURL { [weak self] url, error in
                 
                 guard let downloadURL = url else {
                     print("이미지 URL생성 중 에러 발생")
@@ -214,7 +218,7 @@ class ChattingViewModel: ObservableObject {
                     "isRead": bubble.isRead
                 ]
                 
-                self.storeService.collection(self.storePath).addDocument(data: data) { error in
+                self?.storeService.collection(self!.storePath).addDocument(data: data) { error in
                     if let error = error {
                         print("Error adding document: \(error)")
                     } else {
@@ -264,7 +268,7 @@ class ChattingViewModel: ObservableObject {
         let databasePosts = Firestore.firestore().collection("posts/\(postID)")
         
         ///게시물을 지정된 구조체형에 맞게 변환
-        databasePosts.getDocuments { (snapshot, error) in
+        databasePosts.getDocuments { [weak self] snapshot, error in
             let id = postID
             
             if let docData = snapshot?.documents as? [String:Any],
@@ -289,7 +293,7 @@ class ChattingViewModel: ObservableObject {
                 
                 let post = Post(id: id, designerID: designerID, location: location, title: title, description: description, photos: photos, comments: 0, timestamp: "")
                 ///새로 생성된 채팅방에 바로 게시물 버블 보내기
-                self.sendBoardBubble(content: "이 게시물 보고 상담하러 왔어요", imagePath: post.photos[0].imageURL, sender: sender)
+                self?.sendBoardBubble(content: "이 게시물 보고 상담하러 왔어요", imagePath: post.photos[0].imageURL, sender: sender)
             }
         }
     }
@@ -329,7 +333,7 @@ class ChattingViewModel: ObservableObject {
             colRef = storeService.collection("clients")
         }
         
-        colRef.whereField("chatRooms", arrayContains: chatRoomId).getDocuments { snapshot, error in
+        colRef.whereField("chatRooms", arrayContains: chatRoomId).getDocuments { [weak self] snapshot, error in
             if let error = error {
                 debugPrint("Error getting userProfile: \(error)")
                 return
@@ -341,7 +345,7 @@ class ChattingViewModel: ObservableObject {
                         name: document.data()["name"] as? String ?? "정보 없음",
                         profileImageURLString: document.data()["profileImageURLString"] as? String ?? "정보 없음"
                     )
-                    self.userProfile[id] = userInfo
+                    self?.userProfile[id] = userInfo
                 }
             }
         }

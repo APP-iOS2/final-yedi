@@ -99,6 +99,7 @@ struct ChatRoomView: View {
                             if !isMyBubble {
                                 chattingVM.getReceivedBubbleId(chatRoomId: chatRoomId, sender: chat.sender)
                             }
+                            
                         }
                 }
             }
