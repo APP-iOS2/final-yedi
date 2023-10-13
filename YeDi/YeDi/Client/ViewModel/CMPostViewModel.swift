@@ -67,6 +67,51 @@ class CMPostViewModel: ObservableObject {
                print("Error fetching next page of posts: \(error)")
            }
        }
+    
+    // 클라이언트가 팔로우한 디자이너의 ID 목록을 가져오는 함수
+    func getFollowedDesignerIDs(forClientID clientID: String, completion: @escaping ([String]?) -> Void) {
+        let followingCollection = Firestore.firestore().collection("following")
+        let clientDocument = followingCollection.document(clientID)
+        
+        clientDocument.getDocument { (document, error) in
+            if let error = error {
+                print("Error getting following document: \(error)")
+                completion(nil)
+            } else if let document = document, document.exists {
+                if let data = document.data(), let designerIDs = data["uids"] as? [String] {
+                    completion(designerIDs)
+                } else {
+                    completion(nil)
+                }
+            } else {
+                completion(nil)
+            }
+        }
+    }
+    
+    // 클라이언트가 팔로우한 디자이너의 게시물만 가져오는 함수
+    func fetchPostsForFollowedDesigners(clientID: String) {
+        getFollowedDesignerIDs(forClientID: clientID) { designerIDs in
+            if let designerIDs = designerIDs {
+                // designerIDs 목록을 사용하여 Firestore에서 해당 디자이너의 게시물만 필터링
+                let query = Firestore.firestore().collection("posts")
+                    .whereField("designerID", in: designerIDs)
+                
+                query.getDocuments { (snapshot, error) in
+                    if let error = error {
+                        print("Error fetching posts: \(error)")
+                    } else if let snapshot = snapshot {
+                        self.posts = snapshot.documents.compactMap { document in
+                            try? document.data(as: Post.self)
+                        }
+                        // 여기에서 필터링된 게시물을 사용하여 SwiftUI 뷰를 업데이트합니다.
+                    }
+                }
+            }
+        }
+    }
+
+
 }
 
 
