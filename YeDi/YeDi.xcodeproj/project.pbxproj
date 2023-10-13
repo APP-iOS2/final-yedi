@@ -555,7 +555,6 @@
 			children = (
 				63CD89AF2ABD85C300E70A56 /* YeDi */,
 				63CD89AE2ABD85C300E70A56 /* Products */,
-				1DA4B9222AD521F4007984C3 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};

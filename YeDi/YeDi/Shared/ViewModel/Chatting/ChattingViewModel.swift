@@ -7,37 +7,22 @@
 
 import Foundation
 import Firebase
-import FirebaseCore
 import FirebaseFirestore
 import FirebaseStorage
-import FirebaseFirestoreSwift
-
 
 class ChattingViewModel: ObservableObject {
-    @Published var userEmail: String = "None"
     @Published var chatRoomId: String = ""
     @Published var chattings: [CommonBubble] = []
-    @Published var isReadBubble: Bool = false
     @Published var receivedBubbleId: [String] = []
     @Published var userProfile: [String: ChatListUserInfo] = [:]
     
-    var ref: DatabaseReference! = Database.database().reference()
     var storageRef = Storage.storage().reference()
     let storeService = Firestore.firestore() ///클라이언트와 디자이너 정보를 불러오기 위함
     var sotreListener: ListenerRegistration? ///채팅을 읽는 전용 리스너 => 제거하기 위함
     
-    var limitLength = 5 ///더 불러오기에 쓸 채팅버블 개수 제한 변수
+    let limitLength = 5 ///더 불러오기에 쓸 채팅버블 개수 제한 변수
     var storePath: String {
         return "chatRooms/\(chatRoomId)/bubbles"
-    }
-    
-    init() {
-        self.setUserEmail()
-        //self.storageRef = storageRef.child("chatRooms/\(chatRoomId)")
-    }
-    
-    func setUserEmail() { //현재 사용자의 이메일을 세팅하는 함수
-        self.userEmail = Auth.auth().currentUser?.email ?? "nil@gmail.com"
     }
     
     func firstChattingBubbles() {
@@ -50,15 +35,9 @@ class ChattingViewModel: ObservableObject {
                 return
             }
             
-            var bubbles: [CommonBubble] = []
-            
             querySnapshot?.documentChanges.forEach { diff in
                 do {
-                    let diffData = diff.document.data()
-                    
-                    let jsonData = try JSONSerialization.data(withJSONObject: diffData)
-                    
-                    let bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
+                    let bubble = try diff.document.data(as: CommonBubble.self)
                     
                     if (diff.type == .added) {
                         ///채팅에 새로운 버블 추가
@@ -68,8 +47,6 @@ class ChattingViewModel: ObservableObject {
                     if (diff.type == .modified) {
                         ///채팅에 업데이트 된 내용으로 
                         self?.chattings = self!.updateChatting(chattings: self!.chattings, diff: bubble)
-                    } else {
-                        
                     }
                 } catch {
                     print("Error decoding bubble data")
@@ -101,12 +78,7 @@ class ChattingViewModel: ObservableObject {
                 
                 for document in documents {
                     do {
-                        let bubbleData = document.data()
-                        ///bubbleData["id"] = document.documentID
-                        
-                        let jsonData = try JSONSerialization.data(withJSONObject: bubbleData)
-                        
-                        let bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
+                        let bubble = try document.data(as: CommonBubble.self)
                         
                         moreBubbles.append(bubble)
                     } catch {
@@ -150,7 +122,7 @@ class ChattingViewModel: ObservableObject {
     func sendTextBubble(content: String, sender: String) {
         let bubble = CommonBubble(
             content: content,
-            date: "\(Date())",
+            date: changetoDateFormat(Date()),
             sender: sender,
             isRead: false
         )
@@ -175,7 +147,6 @@ class ChattingViewModel: ObservableObject {
     
     ///이미지 버블을 보내는 메소드
     func sendImageBubble(imageData: Data, sender: String) {
-        
         var imageURL: String = ""
         var bubble: CommonBubble = CommonBubble(imagePath: "", date: "", sender: "", isRead: false)
         self.storageRef = storageRef.child("\(bubble.id).jpg")
@@ -200,7 +171,7 @@ class ChattingViewModel: ObservableObject {
                 
                 bubble = CommonBubble(
                     imagePath: "\(imageURL)",
-                    date: "\(Date())",
+                    date: self.changetoDateFormat(Date()),
                     sender: sender,
                     isRead: false
                 )
@@ -228,11 +199,10 @@ class ChattingViewModel: ObservableObject {
     
     ///게시물 버블을 보내는 메소드
     func sendBoardBubble(content: String, imagePath: String, sender: String) {
-        
         let bubble = CommonBubble(
             content: content,
             imagePath: imagePath,
-            date: "\(Date())",
+            date: changetoDateFormat(Date()),
             sender: sender,
             isRead: false
         )
@@ -310,8 +280,7 @@ class ChattingViewModel: ObservableObject {
     func updateChatting(chattings: [CommonBubble], diff: CommonBubble) -> [CommonBubble] {
         var tempchat = chattings
         
-        if let index = tempchat.firstIndex(where: { $0.id == diff.id })
-        {
+        if let index = tempchat.firstIndex(where: { $0.id == diff.id }) {
             tempchat[index] = diff
         }
         
@@ -346,5 +315,12 @@ class ChattingViewModel: ObservableObject {
             }
         }
     }
+    
+    final func changetoDateFormat(_ bubbleDate: Date) -> String {
+        let instance = SingleTonDateFormatter.sharedDateFommatter
+        let date = instance.firebaseDate(from: bubbleDate)
+        return date
+    }
+
 }
 
