@@ -25,12 +25,12 @@ struct ClientMainTabView: View {
                     Label("홈", systemImage: "house")
                 }.tag(0)
                 
-                CMSearchView()
+                CMFilterView()
 //                .onTapGesture {
 //                    self.selectedIndex = 1
 //                }
                 .tabItem {
-                    Label("검색", systemImage: "magnifyingglass")
+                    Label("필터", systemImage: "slider.horizontal.3")
                 }.tag(1)
                 
                 CMReservationHistoryView()

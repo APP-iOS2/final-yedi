@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		097D4BCC2AD90C0300D532F6 /* CMDesignerProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097D4BCB2AD90C0200D532F6 /* CMDesignerProfileView.swift */; };
 		097EAD332AD03FC70037B848 /* CMLikedPostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EAD322AD03FC70037B848 /* CMLikedPostListViewModel.swift */; };
 		097EAD352AD040CA0037B848 /* CMHomeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EAD342AD040CA0037B848 /* CMHomeCellViewModel.swift */; };
 		09CA54B02AD661F300796113 /* CMSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CA54AF2AD661F300796113 /* CMSearchViewModel.swift */; };
@@ -64,6 +63,8 @@
 		3BCF2C772ACD4248009C18C2 /* CMReservationHistoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C4A2ACD4247009C18C2 /* CMReservationHistoryDetailView.swift */; };
 		3BCF2C782ACD4248009C18C2 /* CMReservationCancelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C4B2ACD4247009C18C2 /* CMReservationCancelView.swift */; };
 		3BCF2C792ACD4248009C18C2 /* CMReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C4C2ACD4247009C18C2 /* CMReservationView.swift */; };
+		3BCF2C7A2ACD4248009C18C2 /* CMSearchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C4E2ACD4247009C18C2 /* CMSearchHistoryView.swift */; };
+		3BCF2C7B2ACD4248009C18C2 /* CMSearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C4F2ACD4247009C18C2 /* CMSearchResultView.swift */; };
 		3BCF2C7C2ACD4248009C18C2 /* CMFeedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C502ACD4247009C18C2 /* CMFeedDetailView.swift */; };
 		3BCF2C7D2ACD4248009C18C2 /* CMHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C512ACD4247009C18C2 /* CMHomeCell.swift */; };
 		3BCF2C7E2ACD4248009C18C2 /* CMSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C522ACD4247009C18C2 /* CMSearchView.swift */; };
@@ -119,7 +120,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		097D4BCB2AD90C0200D532F6 /* CMDesignerProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMDesignerProfileView.swift; sourceTree = "<group>"; };
 		097EAD322AD03FC70037B848 /* CMLikedPostListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLikedPostListViewModel.swift; sourceTree = "<group>"; };
 		097EAD342AD040CA0037B848 /* CMHomeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHomeCellViewModel.swift; sourceTree = "<group>"; };
 		09CA54AF2AD661F300796113 /* CMSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSearchViewModel.swift; sourceTree = "<group>"; };
@@ -176,6 +176,8 @@
 		3BCF2C4A2ACD4247009C18C2 /* CMReservationHistoryDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMReservationHistoryDetailView.swift; sourceTree = "<group>"; };
 		3BCF2C4B2ACD4247009C18C2 /* CMReservationCancelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMReservationCancelView.swift; sourceTree = "<group>"; };
 		3BCF2C4C2ACD4247009C18C2 /* CMReservationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMReservationView.swift; sourceTree = "<group>"; };
+		3BCF2C4E2ACD4247009C18C2 /* CMSearchHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMSearchHistoryView.swift; sourceTree = "<group>"; };
+		3BCF2C4F2ACD4247009C18C2 /* CMSearchResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMSearchResultView.swift; sourceTree = "<group>"; };
 		3BCF2C502ACD4247009C18C2 /* CMFeedDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMFeedDetailView.swift; sourceTree = "<group>"; };
 		3BCF2C512ACD4247009C18C2 /* CMHomeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMHomeCell.swift; sourceTree = "<group>"; };
 		3BCF2C522ACD4247009C18C2 /* CMSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMSearchView.swift; sourceTree = "<group>"; };
@@ -264,6 +266,8 @@
 			isa = PBXGroup;
 			children = (
 				3BCF2C522ACD4247009C18C2 /* CMSearchView.swift */,
+				3BCF2C4E2ACD4247009C18C2 /* CMSearchHistoryView.swift */,
+				3BCF2C4F2ACD4247009C18C2 /* CMSearchResultView.swift */,
 			);
 			path = CMSearch;
 			sourceTree = "<group>";
@@ -444,7 +448,6 @@
 				3BCF2C552ACD4248009C18C2 /* CMFollowingPostView.swift */,
 				3BCF2C502ACD4247009C18C2 /* CMFeedDetailView.swift */,
 				3BCF2C532ACD4247009C18C2 /* CMFeedDetailContentView.swift */,
-				097D4BCB2AD90C0200D532F6 /* CMDesignerProfileView.swift */,
 			);
 			path = CMHome;
 			sourceTree = "<group>";
@@ -740,11 +743,11 @@
 				3BCF2C8E2ACD4248009C18C2 /* CMNotificationView.swift in Sources */,
 				3BCF2C2C2ACD3E73009C18C2 /* BubbleCell.swift in Sources */,
 				2F45A1282AD2739C005018A5 /* Color.swift in Sources */,
-				097D4BCC2AD90C0300D532F6 /* CMDesignerProfileView.swift in Sources */,
 				3BCF2C812ACD4248009C18C2 /* CMFollowingPostView.swift in Sources */,
 				3BCF2C2D2ACD3E73009C18C2 /* TempPhotoPickerView.swift in Sources */,
 				3BCF2C2E2ACD3E73009C18C2 /* ChatUtilityMenuView.swift in Sources */,
 				3BCF2C702ACD4248009C18C2 /* CMReviewCreateDesignerScoreView.swift in Sources */,
+				3BCF2C7A2ACD4248009C18C2 /* CMSearchHistoryView.swift in Sources */,
 				3BCF2C1F2ACD3E73009C18C2 /* ChattingListRoomViewModel.swift in Sources */,
 				3BCF2C6C2ACD4248009C18C2 /* Keyword.swift in Sources */,
 				3BCF2C7C2ACD4248009C18C2 /* CMFeedDetailView.swift in Sources */,
@@ -803,6 +806,7 @@
 				63CD89B32ABD85C300E70A56 /* ContentView.swift in Sources */,
 				3BCF2C882ACD4248009C18C2 /* CMProfileEditView.swift in Sources */,
 				63CD89B12ABD85C300E70A56 /* YeDiApp.swift in Sources */,
+				3BCF2C7B2ACD4248009C18C2 /* CMSearchResultView.swift in Sources */,
 				639DB6612AC10F13002692E5 /* DesignerMainTabView.swift in Sources */,
 				9615C7902AD6A31D00DD4F37 /* DMReviewViewModel.swift in Sources */,
 				3BCF2C772ACD4248009C18C2 /* CMReservationHistoryDetailView.swift in Sources */,
