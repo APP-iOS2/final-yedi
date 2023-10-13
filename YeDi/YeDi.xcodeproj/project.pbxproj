@@ -305,6 +305,7 @@
 		3BCF2C042ACD3E72009C18C2 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				2F6363E82AD542AA00E980F8 /* PhotoPicker.swift */,
 				DC76954D2AD088DB00D2FB69 /* Auth */,
 				3BCF2C062ACD3E72009C18C2 /* Chatting */,
 				3B6346D82AD8DCCB00D3D110 /* Singleton */,
@@ -786,7 +787,8 @@
 				3BCF2C2E2ACD3E73009C18C2 /* ChatUtilityMenuView.swift in Sources */,
 				3BCF2C702ACD4248009C18C2 /* CMReviewGiveScoreView.swift in Sources */,
 				DC7695C52ADD0E0B00D2FB69 /* CapsuleButton.swift in Sources */,
-				3BCF2C702ACD4248009C18C2 /* CMReviewGiveScoreView.swift in Sources */,
+				2FB041EF2AD915E1008AF8C8 /* PhotoSelectionView.swift in Sources */,
+				3BCF2C7A2ACD4248009C18C2 /* CMSearchHistoryView.swift in Sources */,
 				3BCF2C1F2ACD3E73009C18C2 /* ChattingListRoomViewModel.swift in Sources */,
 				3BCF2C6C2ACD4248009C18C2 /* Keyword.swift in Sources */,
 				3BCF2C7C2ACD4248009C18C2 /* CMPostDetailView.swift in Sources */,
