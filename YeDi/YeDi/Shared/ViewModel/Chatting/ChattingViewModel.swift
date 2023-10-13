@@ -7,41 +7,27 @@
 
 import Foundation
 import Firebase
-import FirebaseCore
 import FirebaseFirestore
 import FirebaseStorage
-import FirebaseFirestoreSwift
-
 
 class ChattingViewModel: ObservableObject {
-    @Published var userEmail: String = "None"
     @Published var chatRoomId: String = ""
     @Published var chattings: [CommonBubble] = []
-    @Published var isReadBubble: Bool = false
     @Published var receivedBubbleId: [String] = []
+    @Published var userProfile: [String: ChatListUserInfo] = [:]
     
-    var ref: DatabaseReference! = Database.database().reference()
     var storageRef = Storage.storage().reference()
     let storeService = Firestore.firestore() ///클라이언트와 디자이너 정보를 불러오기 위함
     var sotreListener: ListenerRegistration? ///채팅을 읽는 전용 리스너 => 제거하기 위함
     
-    var limitLength = 5 ///더 불러오기에 쓸 채팅버블 개수 제한 변수
+    let limitLength = 5 ///더 불러오기에 쓸 채팅버블 개수 제한 변수
     var storePath: String {
         return "chatRooms/\(chatRoomId)/bubbles"
     }
     
-    init() {
-        self.setUserEmail()
-        //self.storageRef = storageRef.child("chatRooms/\(chatRoomId)")
-    }
-    
-    func setUserEmail() { //현재 사용자의 이메일을 세팅하는 함수
-        self.userEmail = Auth.auth().currentUser?.email ?? "nil@gmail.com"
-    }
-    
     func firstChattingBubbles() {
         self.sotreListener = storeService.collection(storePath) //채팅방의 위치
-        .limit(toLast: 5)
+        .limit(toLast: limitLength)
         .order(by: "date")
         .addSnapshotListener { [weak self] querySnapshot, error in
             guard let documents = querySnapshot?.documents else {
@@ -49,22 +35,23 @@ class ChattingViewModel: ObservableObject {
                 return
             }
             
-            var bubbles: [CommonBubble] = []
-            
-            for document in documents {
+            querySnapshot?.documentChanges.forEach { diff in
                 do {
-                    let bubbleData = document.data()
+                    let bubble = try diff.document.data(as: CommonBubble.self)
                     
-                    let jsonData = try JSONSerialization.data(withJSONObject: bubbleData)
-                    
-                    let bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
-                    bubbles.append(bubble)
+                    if (diff.type == .added) {
+                        ///채팅에 새로운 버블 추가
+                        self?.chattings.append(bubble)
+                    }
+
+                    if (diff.type == .modified) {
+                        ///채팅에 업데이트 된 내용으로 
+                        self?.chattings = self!.updateChatting(chattings: self!.chattings, diff: bubble)
+                    }
                 } catch {
                     print("Error decoding bubble data")
                 }
             }
-            
-            self?.chattings = self!.mergeCommonBubbles(first: self!.chattings, second: bubbles)
         }
     }
     
@@ -91,19 +78,14 @@ class ChattingViewModel: ObservableObject {
                 
                 for document in documents {
                     do {
-                        let bubbleData = document.data()
-                        ///bubbleData["id"] = document.documentID
+                        let bubble = try document.data(as: CommonBubble.self)
                         
-                        let jsonData = try JSONSerialization.data(withJSONObject: bubbleData)
-                        
-                        let bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
-
                         moreBubbles.append(bubble)
                     } catch {
                         print("Error decoding bubble data")
                     }
                 }
-                
+                print("Add : \(moreBubbles.count)")
                 self!.chattings = moreBubbles + self!.chattings
             }
     }
@@ -140,7 +122,7 @@ class ChattingViewModel: ObservableObject {
     func sendTextBubble(content: String, sender: String) {
         let bubble = CommonBubble(
             content: content,
-            date: "\(Date())",
+            date: changetoDateFormat(Date()),
             sender: sender,
             isRead: false
         )
@@ -165,7 +147,6 @@ class ChattingViewModel: ObservableObject {
     
     ///이미지 버블을 보내는 메소드
     func sendImageBubble(imageData: Data, sender: String) {
-        
         var imageURL: String = ""
         var bubble: CommonBubble = CommonBubble(imagePath: "", date: "", sender: "", isRead: false)
         self.storageRef = storageRef.child("\(bubble.id).jpg")
@@ -190,7 +171,7 @@ class ChattingViewModel: ObservableObject {
                 
                 bubble = CommonBubble(
                     imagePath: "\(imageURL)",
-                    date: "\(Date())",
+                    date: self.changetoDateFormat(Date()),
                     sender: sender,
                     isRead: false
                 )
@@ -218,11 +199,10 @@ class ChattingViewModel: ObservableObject {
     
     ///게시물 버블을 보내는 메소드
     func sendBoardBubble(content: String, imagePath: String, sender: String) {
-        
         let bubble = CommonBubble(
             content: content,
             imagePath: imagePath,
-            date: "\(Date())",
+            date: changetoDateFormat(Date()),
             sender: sender,
             isRead: false
         )
@@ -286,19 +266,61 @@ class ChattingViewModel: ObservableObject {
     
     /// 중복되지 않은 채팅버블을 뒤에 추가해주는 함수
     /// 10개의 길이한계로 불러오는 경우 뒤에 새로운 내용이 올 때마다 병합해주어야 하기 때문
-    func mergeCommonBubbles(first: [CommonBubble]?, second: [CommonBubble]) -> [CommonBubble] {
-        // 중복되는 CommonBubble을 찾아내는 Set을 생성합니다.
+    func mergeChatting(first: [CommonBubble]?, second: [CommonBubble]) -> [CommonBubble] {
         let firstSet = Set(first!)
-        
-        // 중복되지 않은 CommonBubble을 찾아내기 위해 second 배열을 필터링합니다.
         let uniqueSecond = second.filter { !firstSet.contains($0) }
-        
-        // first 배열과 중복되지 않은 second 배열을 합쳐 새로운 배열을 생성합니다.
         let mergedArray = first! + uniqueSecond
         let sortedArray = mergedArray.sorted{$0.date < $1.date}
         
         return sortedArray
     }
     
+    ///self.chattings의 채팅 내용을 업데이트 해주는 코드
+    ///id로 찾아서 바꿔주기
+    func updateChatting(chattings: [CommonBubble], diff: CommonBubble) -> [CommonBubble] {
+        var tempchat = chattings
+        
+        if let index = tempchat.firstIndex(where: { $0.id == diff.id }) {
+            tempchat[index] = diff
+        }
+        
+        return tempchat
+    }
+
+    /// 채팅방마다 유저 닉네임, url사진을 userProfile variable에 저장하는 메소드
+    final func fetchUserInfo(login type: UserType, chatRooms id: String) {
+        let colRef: CollectionReference
+        
+        // MARK: 상대방 유저정보가 필요 하므로 로그인한 계정과 반대인 Collection 탐색
+        if type == UserType.client{
+            colRef = storeService.collection("designers")
+        } else {
+            colRef = storeService.collection("clients")
+        }
+        
+        colRef.whereField("chatRooms", arrayContains: chatRoomId).getDocuments { snapshot, error in
+            if let error = error {
+                debugPrint("Error getting userProfile: \(error)")
+                return
+            }
+            
+            if let snapshot = snapshot, !snapshot.isEmpty {
+                for document in snapshot.documents {
+                    let userInfo = ChatListUserInfo(
+                        name: document.data()["name"] as? String ?? "정보 없음",
+                        profileImageURLString: document.data()["profileImageURLString"] as? String ?? "정보 없음"
+                    )
+                    self.userProfile[id] = userInfo
+                }
+            }
+        }
+    }
+    
+    final func changetoDateFormat(_ bubbleDate: Date) -> String {
+        let instance = SingleTonDateFormatter.sharedDateFommatter
+        let date = instance.firebaseDate(from: bubbleDate)
+        return date
+    }
+
 }
 
