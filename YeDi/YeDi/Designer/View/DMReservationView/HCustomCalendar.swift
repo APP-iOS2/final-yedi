@@ -10,17 +10,18 @@ import SwiftUI
 struct HCustomCalendar: View {
   @State private var selectedDate = Date()
   private let calendar = Calendar.current
+  let singleDateF: SingleTonDateFormatter
   
   var body: some View {
     VStack(alignment: .center, spacing: 20) {
       monthView
-      
       ZStack {
         dayView
         blurView
       }
       .frame(height: 30)
-      .padding(.horizontal, 20)
+        /// - Test  date
+//        Text("\(singleDateF.firebaseDate(from: selectedDate))")
     }
   }
   
@@ -52,7 +53,7 @@ struct HCustomCalendar: View {
     }
   }
   
-  // MARK: - 일자 표시 뷰
+  // MARK: - 날짜 표시 뷰
   @ViewBuilder
   private var dayView: some View {
     let startDate = calendar.date(from: Calendar.current.dateComponents([.year, .month], from: selectedDate))!
@@ -60,8 +61,7 @@ struct HCustomCalendar: View {
     ScrollView(.horizontal, showsIndicators: false) {
       HStack(spacing: 10) {
         let components = (
-          0..<calendar.range(of: .day, in: .month, for: startDate)!.count)
-          .map {
+          0 ..< calendar.range(of: .day, in: .month, for: startDate)!.count).map {
             calendar.date(byAdding: .day, value: $0, to: startDate)!
           }
         
@@ -84,7 +84,7 @@ struct HCustomCalendar: View {
     }
   }
   
-  // MARK: - 블러 뷰
+  // MARK: - 날짜 블러 뷰
   private var blurView: some View {
     HStack {
       LinearGradient(
@@ -123,7 +123,7 @@ private extension HCustomCalendar {
   /// 월 표시
   func monthTitle(from date: Date) -> String {
     let dateFormatter = DateFormatter()
-    dateFormatter.setLocalizedDateFormatFromTemplate("MMMM yyyy")
+    dateFormatter.setLocalizedDateFormatFromTemplate("MMM yyyy")
     return dateFormatter.string(from: date)
   }
   
@@ -136,7 +136,6 @@ private extension HCustomCalendar {
     ) else {
       return
     }
-    
     selectedDate = date
   }
   
@@ -149,5 +148,5 @@ private extension HCustomCalendar {
 }
 
 #Preview {
-    HCustomCalendar()
+    HCustomCalendar(singleDateF: .sharedDateFommatter)
 }
