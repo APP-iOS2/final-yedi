@@ -123,7 +123,7 @@ struct CMProfileEditView: View {
                         chatRooms: []
                     )
                     Task {
-                        await profileViewModel.updateClientProfile(userAuth: userAuth, client: newClient)
+                        await profileViewModel.updateClientProfile(userAuth: userAuth, newClient: newClient)
                     }
                 }
                 dismiss()
