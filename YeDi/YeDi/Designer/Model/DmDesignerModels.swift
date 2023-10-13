@@ -66,10 +66,14 @@ struct Designer: Codable {
 }
 
 /// 직급
-enum Rank: String, CaseIterable, Codable {
+enum Rank: String, Codable {
+    /// 원장
     case Owner = "원장"
+    /// 실장
     case Principal = "실장"
+    /// 디자이너
     case Designer = "디자이너"
+    /// 인턴
     case Intern = "인턴"
     
     init(from decoder: Decoder) throws {
