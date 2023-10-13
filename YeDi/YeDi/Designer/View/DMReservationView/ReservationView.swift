@@ -9,9 +9,10 @@ import SwiftUI
 
 struct ReservationView: View {
     
-    @State var isClicked: Bool = false
-    @State var isShowing: Bool = false
-    let times: [String] = ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00"]
+    @State private var isClicked: Bool = false
+    @State private var isShowing: Bool = false
+    @State private var tasks: [Tasks] = sampleTasks
+    @State private var currentDay: Date = .init()
     
     var body: some View {
         NavigationStack {
@@ -38,15 +39,16 @@ struct ReservationView: View {
             .padding(.top)
             .padding(.bottom)
             
-            HCustomCalendar()
-            .padding()
+            HCustomCalendar(singleDateF: .sharedDateFommatter)
+                .padding(.bottom)
+                .padding(.horizontal)
             .scrollIndicators(.hidden)
             
             HStack {
                 VStack {
                     Divider().padding(.leading)
                 }
-                Text("영업시작")
+                Text("예약현황")
                     .font(.caption)
                     .foregroundStyle(.gray)
                 VStack {
@@ -54,54 +56,139 @@ struct ReservationView: View {
                 }
             }
             .padding(.horizontal)
-            .padding(.bottom, 20)
             
-            HStack {
-                ScrollView {
-                    HStack {
-                        VStack {
-                            ForEach(times, id: \.self) { time  in
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .frame(width: .infinity, height: 100)
-
-                                        .foregroundColor(.clear)
-                                    
-                                    HStack {
-                                        VStack {
-                                            HStack(alignment: .top ) {
-                                                Text("\(time)")
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
-                        VStack {
-                            ForEach(0..<15, id: \.self) { index  in
-                                Button {
-                                    isShowing.toggle()
-                                } label: {
-                                    ReservationCellView()
-                                }
-                            }
-                            .sheet(isPresented: $isShowing, content: {
-                                ReservationDetail(isShowing: $isShowing)
-                                    .presentationDetents([.height(630)])
-                            })
-                            
-                        }
-                    }
-                    .padding(.horizontal)
+            ScrollView {
+                TimeLineView()
+            }
+            .padding(.horizontal, 10)
+        }
+    }
+    
+    @ViewBuilder
+    func TimeLineView() -> some View {
+        ScrollViewReader { proxy in
+            let hours = Calendar.current.hours
+            let midHour = hours[hours.count / 2]
+            VStack {
+                ForEach(hours, id: \.self) { hour in
+                    TimelineViewRow(hour)
+                        .id(hour)
                 }
-                .scrollIndicators(.hidden)
+            }
+            .onAppear {
+                proxy.scrollTo(midHour)
+            }
+        }
+    }
+    
+    /// - Timeline View Row
+    @ViewBuilder
+    func TimelineViewRow(_ date: Date) -> some View {
+        HStack(alignment: .top) {
+            Text(date.toString("h a"))
+                .font(.body)
+                .frame(width: 50, alignment: .leading)
+            
+            /// - Filtering Tasks
+            let calendar = Calendar.current
+            let filteredTasks = tasks.filter {
+                if let hour = calendar.dateComponents([.hour], from: date).hour,
+                   let taskHour = calendar.dateComponents([.hour], from: $0.dateAdded).hour,
+                   hour == taskHour && calendar.isDate($0.dateAdded, inSameDayAs: currentDay) {
+                    return true
+                }
+                return false
             }
             
+            if filteredTasks.isEmpty {
+                Rectangle()
+                    .stroke(.gray.opacity(0.3), style: StrokeStyle(lineWidth: 0.5, lineCap: .butt, lineJoin: .bevel, dash: [15], dashPhase: 10))
+                    .frame(height: 0.5)
+                    .offset(y: 10)
+            } else {
+                /// - Task View
+                VStack(spacing: 10) {
+                    ForEach(filteredTasks) { task in
+                        TaskRow(task)
+                    }
+                }
+            }
+        }
+        .hAlign(.leading)
+        .padding(.vertical, 15)
+    }
+    
+    /// - Task Row
+    @ViewBuilder
+    func TaskRow(_ task: Tasks) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(task.reservationName.uppercased())
+                .fontWeight(.bold)
+                .foregroundColor(.gray)
+            
+            if task.reservationDC != "" {
+                Text(task.reservationDC)
+                    
+                    .foregroundColor(.red.opacity(0.8))
+            }
+        }
+        .hAlign(.leading)
+        .padding(12)
+        .background {
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .fill(.gray)
+                    .frame(width: 4)
+            }
         }
     }
 }
 
 #Preview {
     ReservationView()
+}
+
+extension View {
+    func hAlign(_ alignment: Alignment) -> some View {
+        self
+            .frame(maxWidth: .infinity, alignment: alignment)
+    }
+    func vAlign(_ alignment: Alignment) -> some View {
+        self
+            .frame(maxHeight: .infinity, alignment: alignment)
+    }
+    
+    func isSameDate(_ date1: Date, _ date2: Date) -> Bool {
+        return Calendar.current.isDate(date1, inSameDayAs: date2)
+    }
+}
+
+extension Calendar {
+    /// - Return 24 Hours in  a day
+    var hours: [Date] {
+        let startOfDay = self.startOfDay(for: Date())
+        var hours: [Date] = []
+        for index in 0..<24 {
+            if let date =  self.date(byAdding: .hour, value: index, to: startOfDay) {
+                hours.append(date)
+            }
+        }
+        return hours
+    }
+    
+    /// - Used to Store Data of Each Week Day
+    struct WeekDay: Identifiable {
+        var id: UUID = .init()
+        var string: String
+        var date: Date
+        var isToday: Bool = false
+    }
+}
+
+extension Date {
+    func toString(_ format: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.string(from: self)
+    }
 }

@@ -12,12 +12,42 @@ struct CustomCalender: View {
     @State var month: Date = Date()
     @State var offset: CGSize = CGSize()
     @State var clickedDates: Set<Date> = []
-    let collectNum: [String] = []
     
     var body: some View {
         VStack {
             headerView
             calendarGridView
+           
+            HStack {
+                VStack {
+                    Divider().padding(.trailing, 3)
+                }
+                    Text("선택된 날짜")
+                    .foregroundStyle(.gray)
+                    .font(.system(size: 14))
+                VStack {
+                    Divider().padding(.leading, 3)
+                }
+            }
+            .padding(.top)
+            
+            ScrollView {
+                ForEach(clickedDates.map { $0 }, id: \.self) { date in
+                    Text(date, style: .date)
+                        .hAlign(.leading)
+                }
+            }
+            Button(action: {
+                //설정완료 toast message 생성
+            }, label: {
+                Text("설정하기")
+                    .foregroundColor(.black)
+                    .background {
+                        RoundedRectangle(cornerRadius: 5)
+                            .frame(width: 100, height: 45)
+                            .foregroundColor(.gray)
+                    }
+            })
         }
         .padding(.horizontal, 9)
         .gesture(
