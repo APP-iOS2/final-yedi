@@ -17,4 +17,5 @@ struct Client: Identifiable, Codable {
     let birthDate: String
     let favoriteStyle: String
     var chatRooms: [String]
+    
 }

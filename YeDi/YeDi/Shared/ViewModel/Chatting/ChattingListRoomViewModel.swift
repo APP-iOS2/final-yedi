@@ -12,23 +12,24 @@ import FirebaseFirestore
 
 final class ChattingListRoomViewModel: ObservableObject {
     @Published var chattingRooms: [ChatRoom] = []
-    let realTimeService = Database.database().reference()
+    @Published var userProfile: [String: ChatListUserInfo] = [:]
     let storeService = Firestore.firestore()
     
     /// 채팅리스트 및 채팅방 메세지를 가지고오는 메소드
     func fetchChattingList(login type: UserType?) -> Bool{
+        
          guard let userId = fetchUserUID() else {
              debugPrint("로그인 정보를 찾을 수 없음")
-             return false
+             return true
          }
         
         guard let type else {
             debugPrint("로그인 정보를 찾을 수 없음")
-            return false
+            return true
         }
         
         fetchChattingRoomIdList(user: userId, loginType: type)
-        return true
+        return false
     }
     
     /// 로그인한 User토큰으로 UserUID를 가지고오는 메소드
@@ -49,12 +50,14 @@ final class ChattingListRoomViewModel: ObservableObject {
             docRef = storeService.collection("designers").document(uid)
         }
         
-        docRef.addSnapshotListener{ (document, error) in
+        docRef.addSnapshotListener{ (snapshot, error) in
             if let error = error {
-                print("Error getting document: \(error)")
-            } else if let document = document, document.exists {
+                debugPrint("Error getting cahtRooms: \(error)")
+            } else if let document = snapshot, document.exists {
                 guard var chatRooms = document.data()?["chatRooms"] as? [String] else { return }
+                
                 chatRooms = chatRooms.compactMap{ $0.trimmingCharacters(in: .whitespaces) }.filter({ !$0.isEmpty })
+                self.fetchUserInfo(login: loginType, chatRooms: chatRooms)
                 
                 for chatRoomId in chatRooms {
                     self.fetchChattingBubble(chatRooms: chatRoomId)
@@ -65,52 +68,74 @@ final class ChattingListRoomViewModel: ObservableObject {
     
     /// 채팅방의 메세지 내역을 가지고오는 메소드
     /// - 채팅방에서 가장 최근 메세지 한 개만 조회
-    private final func fetchChattingBubble(chatRooms id: String) {
-        let query = self.realTimeService.child("chatRooms").child(id).child("chatBubbles").queryOrdered(byChild: "date").queryLimited(toLast: 1)
-        query.observe(.value) { snapshot  in
+    final func fetchChattingBubble(chatRooms id: String) {
+        
+        let bubblePath = "chatRooms/\(id)/bubbles"
+        let ref = storeService.collection(bubblePath).order(by: "date", descending: true).limit(to: 1)
+        
+        ref.addSnapshotListener{ snapshot, error in
+            
             var bubbles: [CommonBubble] = []
-            guard let chatData = snapshot.value as? [String : Any] else {
-                  debugPrint("Error bubble reading data")
-                  return
-            }
-            for (key, value) in chatData {
-                do {
-                    var value = value as! [String : Any]
-                    value["id"] = key
-                    
-                    let jsonData = try JSONSerialization.data(withJSONObject: value)
-                
-                    let bubble = try JSONDecoder().decode(CommonBubble.self, from: jsonData)
-                    bubbles.append(bubble)
-                    if let index = self.chattingRooms.firstIndex(where: { $0.id == id}) {
-                        self.chattingRooms.remove(at: index)
-                    }
-                    
-                    self.chattingRooms.append(.init(id: id, chattingBubles: bubbles))
-                    
-                } catch {
-                    debugPrint("Error decoding bubble data")
-                }
+            
+            if let error = error {
+                debugPrint("Error getting bubbles: \(error)")
+                return
             }
             
+            if let snapshot = snapshot, !snapshot.isEmpty {
+                do {
+                    for document in snapshot.documents {
+                        let bubble = try document.data(as: CommonBubble.self)
+                        
+                        bubbles.append(bubble)
+                        
+                        if let index = self.chattingRooms.firstIndex(where: { $0.id == id}) {
+                            self.chattingRooms.remove(at: index)
+                        }
+                        
+                        self.chattingRooms.append(.init(id: id, chattingBubles: bubbles))
+                        self.chattingRooms.sort(by: {$0.chattingBubles?.first?.date ?? "" > $1.chattingBubles?.first?.date ?? ""})
+                    }
+                } catch {
+                    debugPrint("bubble Document 변환 실패")
+                }
+            }
         }
     }
     
-    /// 채팅방의 가장 최근 메세지를 가지고오는 함수
-    /// - 채팅리스트 fetch시점에 이미 정렬된 메세지가 전달되므로 chattingBubble 배열의 가장 마지막 Element를 반환한다.
-    /// - Parameters:
-    ///   - chatRoom: 채팅리스트의 인스턴스
-    /// - returns: CommonBubble or nil
-    final func getLastMessage(chatRoom: ChatRoom) -> CommonBubble? {
-        guard var bubbles = chatRoom.chattingBubles else {
-            return nil
-        }
-
-        guard bubbles.count > 1 else {
-            return bubbles.last
+    /// 채팅방마다 유저 닉네임, url사진을 userProfile variable에 저장하는 메소드
+    final func fetchUserInfo(login type: UserType, chatRooms id: [String]) {
+        
+        let colRef: CollectionReference
+        
+        // MARK: 상대방 유저정보가 필요 하므로 로그인한 계정과 반대인 Collection 탐색
+        if type == UserType.client{
+            colRef = storeService.collection("designers")
+        } else {
+            colRef = storeService.collection("clients")
         }
         
-        bubbles.sort(by: {$0.date < $1.date})
-        return bubbles.last
+        for chatRoomId in id {
+            colRef.whereField("chatRooms", arrayContains: chatRoomId).getDocuments { snapshot, error in
+                
+                if let error = error {
+                    debugPrint("Error getting userProfile: \(error)")
+                    return
+                }
+                
+                if let snapshot = snapshot, !snapshot.isEmpty {
+                    for document in snapshot.documents {
+                        let userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "정보 없음",
+                                                        profileImageURLString: document.data()["profileImageURLString"] as? String ?? "정보 없음")
+                        self.userProfile[chatRoomId] = userInfo
+                    }
+                }
+            }
+        }
     }
+}
+
+struct ChatListUserInfo {
+    var name: String
+    var profileImageURLString: String
 }

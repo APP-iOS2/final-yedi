@@ -9,7 +9,9 @@ import SwiftUI
 
 struct DMMainChattingView: View {
     var body: some View {
-        ChattingListRoomView()
+        NavigationStack {
+            ChattingListRoomView()
+        }
     }
 }
 

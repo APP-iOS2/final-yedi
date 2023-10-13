@@ -18,6 +18,7 @@ final class UserAuth: ObservableObject {
     @Published var currentDesignerID: String?
     @Published var userType: UserType?
     @Published var userSession: FirebaseAuth.User?
+    @Published var isCheckEmailAvailability: Bool = false
     
     private let auth = Auth.auth()
     private let storeService = Firestore.firestore()
@@ -70,9 +71,6 @@ final class UserAuth: ObservableObject {
                 completion(false)
                 return
             }
-            self.userSession = user
-            self.userType = type
-            self.saveUserTypeinUserDefaults(type.rawValue)
             
             /// user type에 따라서 각 고객, 디자이너 정보 가져오기
             let collectionName = type.rawValue + "s"
@@ -91,125 +89,152 @@ final class UserAuth: ObservableObject {
                     return
                 }
                 
-                switch self.userType {
-                case .client:
-                    if let name = userData["name"] as? String,
-                       let email = userData["email"] as? String{
-                        print("Name:", name)
-                        print("Email:", email)
-                        
+                if let name = userData["name"] as? String,
+                   let email = userData["email"] as? String{
+                    print("Name:", name)
+                    print("Email:", email)
+                    
+                    switch self.userType {
+                    case .client:
                         self.currentClientID = user.uid
-                        completion(true)
-                    } else {
-                        print("Invalid user data")
-                        completion(false)
-                    }
-                case .designer:
-                    if let userData = documents.first?.data() {
-                        // 디자이너 정보 업데이트
-                        if let name = userData["name"] as? String,
-                           let email = userData["email"] as? String{
-                            print("Name:", name)
-                            print("Email:", email)
-                            
-                            self.currentDesignerID = user.uid
-                            completion(true)
-                        } else {
-                            print("Invalid user data")
-                            completion(false)
-                        }
-                    } else {
-                        print("User data not found")
-                        completion(false)
+                    case .designer:
+                        self.currentDesignerID = user.uid
+                    case .none:
+                        return
                     }
                     
-                case .none:
-                    return
+                    self.userSession = user
+                    self.userType = type
+                    self.saveUserTypeinUserDefaults(type.rawValue)
+                    
+                    completion(true)
+                } else {
+                    print("Invalid user data")
+                    completion(false)
                 }
             }
         }
     }
     
-    func registerClient(client: Client, password: String) {
+    func registerClient(client: Client, password: String, completion: @escaping (Bool) -> Void) {
         auth.createUser(withEmail: client.email, password: password) { result, error in
             if let error = error {
+                completion(false)
                 print("DEBUG: Error registering new user: \(error.localizedDescription)")
                 return
+            } else {
+                completion(true)
+                
+                guard let user = result?.user else { return }
+                print("DEBUG: Registered User successfully")
+                
+                let data: [String: Any] = [
+                    "id": user.uid,
+                    "name": client.name,
+                    "email": client.email,
+                    "profileImageURLString": client.profileImageURLString,
+                    "phoneNumber": client.phoneNumber,
+                    "gender": client.gender,
+                    "birthDate": client.birthDate,
+                    "favoriteStyle": client.favoriteStyle,
+                    "chatRooms": client.chatRooms
+                ]
+                
+                self.storeService.collection("clients")
+                    .document(user.uid)
+                    .setData(data, merge: true)
             }
-
-            guard let user = result?.user else { return }
-            self.userSession = user
-
-            print("DEBUG: Registered User successfully")
-
-            let data: [String: Any] = [
-                "id": user.uid,
-                "name": client.name,
-                "email": client.email,
-                "profileImageURLString": client.profileImageURLString,
-                "phoneNumber": client.phoneNumber,
-                "gender": client.gender,
-                "birthDate": client.birthDate,
-                "favoriteStyle": client.favoriteStyle,
-                "chatRooms": client.chatRooms
-            ]
-
-            self.storeService.collection("clients")
-                .document(user.uid)
-                .setData(data, merge: true)
         }
     }
     
-    func registerDesigner(designer: Designer, password: String) {
+    func registerDesigner(designer: Designer, password: String, completion: @escaping (Bool) -> Void) {
         auth.createUser(withEmail: designer.email, password: password) { result, error in
             if let error = error {
+                completion(false)
                 print("DEBUG: Error registering new user: \(error.localizedDescription)")
                 return
+            } else {
+                completion(true)
+                
+                guard let user = result?.user else { return }
+                print("DEBUG: Registered User successfully")
+                
+                let data: [String: Any] = [
+                    "id": user.uid,
+                    "name": designer.name,
+                    "email": designer.email,
+                    "imageURLString": designer.imageURLString ?? "",
+                    "phoneNumber": designer.phoneNumber,
+                    "description": designer.description ?? "",
+                    "designerScore": designer.designerScore,
+                    "reviewCount": designer.reviewCount,
+                    "followerCount": designer.followerCount,
+                    "skill": designer.skill,
+                    "chatRooms": designer.chatRooms,
+                    "birthDate": designer.birthDate,
+                    "gender": designer.gender,
+                    "rank": designer.rank.rawValue,
+                    "designerUID": user.uid
+                ]
+                
+                self.storeService.collection("designers")
+                    .document(user.uid)
+                    .setData(data, merge: true)
             }
-
-            guard let user = result?.user else { return }
-            self.userSession = user
-
-            print("DEBUG: Registered User successfully")
-
-            let data: [String: Any] = [
-                "id": user.uid,
-                "name": designer.name,
-                "email": designer.email,
-                "phoneNumber": designer.phoneNumber,
-                "description": designer.description ?? "",
-                "imageURLString": designer.imageURLString ?? "",
-                "designerScore": designer.designerScore,
-                "reviewCount": designer.reviewCount,
-                "followerCount": designer.followerCount,
-                "skill": designer.skill,
-                "chatRooms": designer.chatRooms
-            ]
-
-            self.storeService.collection("designers")
-                .document(user.uid)
-                .setData(data, merge: true)
         }
     }
     
-    func checkEmailAvailability(_ email: String, _ userType: UserType, completion: @escaping (Bool) -> Void) {
-        let collectionName = userType.rawValue + "s"
-        
-        self.storeService.collection(collectionName).whereField("email", isEqualTo: email).getDocuments { snapshot, error in
-            if let error = error {
-                print("Firestore query error:", error.localizedDescription)
-                completion(false)
-                return
-            }
-            
-            if (snapshot?.documents.count) != 0 {
-                completion(true)
-            } else {
-                completion(false)
-            }
-        }
-        
-    }
+//    func checkEmailAvailability(_ email: String, userType collectionName: String, completion: @escaping (Bool) -> Void) {
+//        self.storeService.collection(collectionName).whereField("email", isEqualTo: email).getDocuments { snapshot, error in
+//            if let error = error {
+//                print("Firestore query error:", error.localizedDescription)
+//                completion(false)
+//                return
+//            }
+//            
+//            if (snapshot?.documents.count) != 0 {
+//                completion(true)
+//            } else {
+//                completion(false)
+//            }
+//        }
+//    }
+    
+//    func checkEmailAvailability(_ email: String, _ userType: UserType, completion: @escaping (Bool) -> Void) {
+//        let collectionName = userType.rawValue + "s"
+//        
+//        self.storeService.collection(collectionName).whereField("email", isEqualTo: email).getDocuments { snapshot, error in
+//            if let error = error {
+//                print("Firestore query error:", error.localizedDescription)
+//                completion(false)
+//                return
+//            }
+//            
+//            if (snapshot?.documents.count) != 0 {
+//                completion(true)
+//            } else {
+//                completion(false)
+//            }
+//        }
+//        
+//    }
+    
+//    func isAlreadySignUp(_ email: String, completion: @escaping (Bool) -> Void) {
+//        auth.fetchSignInMethods(forEmail: email) { signInMethods, error in
+//            if let error = error {
+//                let err = error as NSError
+//                
+//                switch err {
+//                case AuthErrorCode.emailAlreadyInUse:
+//                    print("================== auth error")
+//                    completion(false)
+//                default:
+//                    print("unknown error: \(err.localizedDescription)")
+//                }
+//            }
+//            completion(true)
+//        }
+//    }
     
     func signOut() {
         userSession = nil
