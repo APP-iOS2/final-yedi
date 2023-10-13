@@ -17,6 +17,8 @@ struct DMNewPostView: View {
     @State private var imageUrls: [String] = []
     @State private var newImageUrl = ""
     @State private var showAlert = false
+    
+    @State private var isShowingPhotoPicker: Bool = false
 
     @EnvironmentObject var userAuth: UserAuth
     @Environment(\.presentationMode) var presentationMode
@@ -36,6 +38,11 @@ struct DMNewPostView: View {
                 .navigationTitle("새 게시물")
                 .navigationBarTitleDisplayMode(.inline)
                 postButton
+            }
+        }
+        .sheet(isPresented: $isShowingPhotoPicker) {
+            PhotoPicker { imageURL in
+                imageUrls.append(imageURL.absoluteString)
             }
         }
     }
@@ -69,13 +76,15 @@ struct DMNewPostView: View {
             ForEach(imageUrls, id: \.self) { imageUrl in
                 Text(imageUrl)
             }
-            HStack {
-                TextField("이미지 URL을 입력해주세요.", text: $newImageUrl)
-                Button("추가") {
-                    imageUrls.append(newImageUrl)
-                    newImageUrl = ""
-                }
-            }
+            
+            PhotoSelectionView(selectedPhotoURLs: $imageUrls, isShowingPhotoPicker: $isShowingPhotoPicker)
+//            HStack {
+//                TextField("이미지 URL을 입력해주세요.", text: $newImageUrl)
+//                Button("추가") {
+//                    imageUrls.append(newImageUrl)
+//                    newImageUrl = ""
+//                }
+//            }
         }
         .padding(.bottom, 20)
     }
