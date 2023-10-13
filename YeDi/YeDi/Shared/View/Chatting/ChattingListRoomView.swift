@@ -24,11 +24,12 @@ struct ChattingListRoomView: View {
                     ForEach(chattingListRoomViewModel.chattingRooms, id: \.id) { chattingRoom in
                         HStack(alignment: .center) {
                             NavigationLink(destination: ChatRoomView(chatRoomId: chattingRoom.id), label: {
-                                EmptyView()
+                                Text("")
                             })
                             .opacity(0)
                             .frame(width: 0, height: 0)
                             .background()
+                            
                             
                             DMAsyncImage(url: chattingListRoomViewModel.userProfile[chattingRoom.id]?.profileImageURLString ?? "", placeholder: Image(systemName: "person.circle.fill"))
                                 .aspectRatio(contentMode: .fill)
@@ -47,6 +48,7 @@ struct ChattingListRoomView: View {
                                     Text(changetoDateFormat(recentMessage.date))
                                         .font(.caption2)
                                         .foregroundStyle(.gray)
+                                        .badge(chattingListRoomViewModel.unReadCount[chattingRoom.id] ?? 0)
                                 } else {
                                     Text("메세지가 존재하지 않습니다")
                                         .foregroundStyle(.gray)

@@ -13,6 +13,7 @@ import FirebaseFirestore
 final class ChattingListRoomViewModel: ObservableObject {
     @Published var chattingRooms: [ChatRoom] = []
     @Published var userProfile: [String: ChatListUserInfo] = [:]
+    @Published var unReadCount: [String: Int] = [:]
     let storeService = Firestore.firestore()
     
     /// 채팅리스트 및 채팅방 메세지를 가지고오는 메소드
@@ -60,7 +61,8 @@ final class ChattingListRoomViewModel: ObservableObject {
                 self.fetchUserInfo(login: loginType, chatRooms: chatRooms)
                 
                 for chatRoomId in chatRooms {
-                    self.fetchChattingBubble(chatRooms: chatRoomId)
+                    self.fetchChattingBubble(chatRoom: chatRoomId)
+                    self.fetchUnReadMessageCount(chatRoom: chatRoomId, userId: uid)
                 }
             }
         }
@@ -68,7 +70,7 @@ final class ChattingListRoomViewModel: ObservableObject {
     
     /// 채팅방의 메세지 내역을 가지고오는 메소드
     /// - 채팅방에서 가장 최근 메세지 한 개만 조회
-    final func fetchChattingBubble(chatRooms id: String) {
+    final func fetchChattingBubble(chatRoom id: String) {
         
         let bubblePath = "chatRooms/\(id)/bubbles"
         let ref = storeService.collection(bubblePath).order(by: "date", descending: true).limit(to: 1)
@@ -103,6 +105,27 @@ final class ChattingListRoomViewModel: ObservableObject {
         }
     }
     
+    func fetchUnReadMessageCount(chatRoom id: String, userId receive: String)  {
+        
+        let path = "chatRooms/\(id)/bubbles"
+        //내가 안 읽은 메세지 버블 갯수를 새야하니까, sender는 상대방이 보낸거, isRead는 false인거
+        let ref = storeService.collection(path).whereField("sender", isNotEqualTo: receive).whereField("isRead", isEqualTo: false)
+        
+        ref.addSnapshotListener { snapshot, error in
+            
+            if let error = error {
+                debugPrint("Error getting isRead: \(error)")
+                return
+            }
+        
+            if let snapshot = snapshot, !snapshot.isEmpty {
+                self.unReadCount[id] = snapshot.documents.count
+            } else {
+                self.unReadCount[id] = 0
+            }
+        }
+    }
+    
     /// 채팅방마다 유저 닉네임, url사진을 userProfile variable에 저장하는 메소드
     final func fetchUserInfo(login type: UserType, chatRooms id: [String]) {
         
@@ -133,9 +156,4 @@ final class ChattingListRoomViewModel: ObservableObject {
             }
         }
     }
-}
-
-struct ChatListUserInfo {
-    var name: String
-    var profileImageURLString: String
 }

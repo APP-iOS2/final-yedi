@@ -30,6 +30,7 @@
 		2FB041ED2AD7D248008AF8C8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FB041EC2AD7D248008AF8C8 /* GoogleService-Info.plist */; };
 		3B517D482ACE46420082E2F6 /* ConsultationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B517D472ACE46420082E2F6 /* ConsultationViewModel.swift */; };
 		3B6346DC2AD8DDD300D3D110 /* SingletonNSCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6346DB2AD8DDD300D3D110 /* SingletonNSCache.swift */; };
+		3B6346DE2AD9004600D3D110 /* ChatListUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6346DD2AD9004600D3D110 /* ChatListUserInfo.swift */; };
 		3BA51B6B2AD53212009D7902 /* SingleTonDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA51B6A2AD53212009D7902 /* SingleTonDateFormatter.swift */; };
 		3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */; };
 		3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */; };
@@ -139,6 +140,7 @@
 		2FB041EC2AD7D248008AF8C8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3B517D472ACE46420082E2F6 /* ConsultationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultationViewModel.swift; sourceTree = "<group>"; };
 		3B6346DB2AD8DDD300D3D110 /* SingletonNSCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingletonNSCache.swift; sourceTree = "<group>"; };
+		3B6346DD2AD9004600D3D110 /* ChatListUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListUserInfo.swift; sourceTree = "<group>"; };
 		3BA51B6A2AD53212009D7902 /* SingleTonDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTonDateFormatter.swift; sourceTree = "<group>"; };
 		3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMAccount.swift; sourceTree = "<group>"; };
 		3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMExpandableText.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				3BCF2C0F2ACD3E72009C18C2 /* ChatRoom.swift */,
 				3BCF2C102ACD3E72009C18C2 /* MessageType.swift */,
 				3BCF2C112ACD3E72009C18C2 /* CommonBubble.swift */,
+				3B6346DD2AD9004600D3D110 /* ChatListUserInfo.swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -795,6 +798,7 @@
 				3BCF2C332ACD3F6A009C18C2 /* ChattingViewModel.swift in Sources */,
 				1DE425482AD912B70088CA25 /* DMDesignerInfoEditView.swift in Sources */,
 				3BCF2C902ACD4248009C18C2 /* CMProfileView.swift in Sources */,
+				3B6346DE2AD9004600D3D110 /* ChatListUserInfo.swift in Sources */,
 				DC76954F2AD088DB00D2FB69 /* AuthViewModel.swift in Sources */,
 				3BCF2C8F2ACD4248009C18C2 /* CMSettingsView.swift in Sources */,
 				3BCF2C712ACD4248009C18C2 /* CMReviewCreateMainView.swift in Sources */,
