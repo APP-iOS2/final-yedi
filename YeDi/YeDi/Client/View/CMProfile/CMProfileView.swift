@@ -54,7 +54,7 @@ struct CMProfileView: View {
                 
                 // TODO: 임시 리뷰 작성 버튼
                 NavigationLink {
-                    CMReviewCreateMainView()
+                    CMNewReviewView()
                 } label: {
                     Text("리뷰 작성하기")
                 }

@@ -1,5 +1,5 @@
 //
-//  CMReviewCreateContentView.swift
+//  CMReviewWriteContentView.swift
 //  YeDi
 //
 //  Created by 박채영 on 2023/09/27.
@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct CMReviewCreateContentView: View {
+struct CMReviewWriteContentView: View {
+    // MARK: - Properties
     @Binding var reviewContent: String
     
+    // MARK: - Body
     var body: some View {
         Section {
             TextField("리뷰를 작성해주세요.", text: $reviewContent, axis: .vertical)
@@ -22,8 +24,8 @@ struct CMReviewCreateContentView: View {
         } header: {
             HStack {
                 Text("리뷰를 남겨주세요")
-                    .padding(.leading)
                     .fontWeight(.semibold)
+                    .padding(.leading)
                 Spacer()
             }
             Divider()
@@ -34,5 +36,5 @@ struct CMReviewCreateContentView: View {
 }
 
 #Preview {
-    CMReviewCreateContentView(reviewContent: .constant(""))
+    CMReviewWriteContentView(reviewContent: .constant(""))
 }
