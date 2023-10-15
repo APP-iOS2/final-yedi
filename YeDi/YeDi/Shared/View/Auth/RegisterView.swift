@@ -185,6 +185,7 @@ struct RegisterNavigationView: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text("휴대폰 번호 *")
                 TextField("휴대폰 번호", text: $phoneNumber)
+                    .keyboardType(.numberPad)
                     .signInTextFieldStyle(isTextFieldValid: $isPhoneNumberValid)
                     .onChange(of: phoneNumber) { newValue in
                         if !checkPhoneNumber() {

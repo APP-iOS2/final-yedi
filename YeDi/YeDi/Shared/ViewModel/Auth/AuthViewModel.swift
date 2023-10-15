@@ -23,6 +23,8 @@ final class UserAuth: ObservableObject {
     private let storeService = Firestore.firestore()
     private let userDefaults: UserDefaults = UserDefaults.standard
     
+    var credential: AuthCredential?
+    
     init() {
         fetchUserTypeinUserDefaults()
         fetchUser()
@@ -68,7 +70,6 @@ final class UserAuth: ObservableObject {
             if let error = error {
                 print("DEBUG: signIn Error \(error.localizedDescription)")
                 completion(false)
-                return
             }
             
             guard let user = result?.user else {
@@ -181,6 +182,35 @@ final class UserAuth: ObservableObject {
                     .setData(data, merge: true)
             }
         }
+    }
+    
+    func resetPassword(forEmail email: String, completion: @escaping (Bool) -> Void) {
+        auth.sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+                print(error.localizedDescription)
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
+    }
+    
+    func updatePassword(_ password: String, _ completion: @escaping (Bool) -> Void) {
+//        auth.currentUser?.reauthenticate(with: credential!) { result, error in
+//            if let error = error {
+//                print(error.localizedDescription)
+//                completion(false)
+//            } else {
+//                self.auth.currentUser?.updatePassword(to: password) { error in
+//                    if let error = error {
+//                        print(error.localizedDescription)
+//                        completion(false)
+//                    } else {
+//                        completion(true)
+//                    }
+//                }
+//            }
+//        }
     }
     
     func signOut() {

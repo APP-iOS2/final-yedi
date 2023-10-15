@@ -115,6 +115,8 @@
 		DC76954F2AD088DB00D2FB69 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC76954E2AD088DB00D2FB69 /* AuthViewModel.swift */; };
 		DC7695532AD08A3600D2FB69 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695522AD08A3600D2FB69 /* RegisterView.swift */; };
 		DC76958A2ADA8E6500D2FB69 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC7695892ADA8E6500D2FB69 /* GoogleService-Info.plist */; };
+		DC7695B32ADC007900D2FB69 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695B22ADC007900D2FB69 /* ResetPasswordView.swift */; };
+		DC7695B52ADC148300D2FB69 /* UpdatePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695B42ADC148300D2FB69 /* UpdatePasswordView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -221,6 +223,8 @@
 		DC76954E2AD088DB00D2FB69 /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		DC7695522AD08A3600D2FB69 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		DC7695892ADA8E6500D2FB69 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DC7695B22ADC007900D2FB69 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
+		DC7695B42ADC148300D2FB69 /* UpdatePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -633,6 +637,8 @@
 				DC7695422AD0888800D2FB69 /* AuthHomeView.swift */,
 				DC7695452AD0888800D2FB69 /* LoginView.swift */,
 				DC7695522AD08A3600D2FB69 /* RegisterView.swift */,
+				DC7695B22ADC007900D2FB69 /* ResetPasswordView.swift */,
+				DC7695B42ADC148300D2FB69 /* UpdatePasswordView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -791,6 +797,7 @@
 				1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */,
 				3BCF2C332ACD3F6A009C18C2 /* ChattingViewModel.swift in Sources */,
 				3BCF2C902ACD4248009C18C2 /* CMProfileView.swift in Sources */,
+				DC7695B32ADC007900D2FB69 /* ResetPasswordView.swift in Sources */,
 				DC76954F2AD088DB00D2FB69 /* AuthViewModel.swift in Sources */,
 				965ECCF22AD93EEB00BC0D41 /* DMAccountInfoEditView.swift in Sources */,
 				3BCF2C8F2ACD4248009C18C2 /* CMSettingsView.swift in Sources */,
@@ -818,6 +825,7 @@
 				09CA54B02AD661F300796113 /* CMSearchViewModel.swift in Sources */,
 				3BCF2C8A2ACD4248009C18C2 /* CMClientInfoEditView.swift in Sources */,
 				965ECCF12AD93EEB00BC0D41 /* DMProfileEditView.swift in Sources */,
+				DC7695B52ADC148300D2FB69 /* UpdatePasswordView.swift in Sources */,
 				3BCF2C692ACD4248009C18C2 /* PostDetailViewModel.swift in Sources */,
 				9615C78A2AD6A1D600DD4F37 /* HCustomCalendar.swift in Sources */,
 				3BCF2C7F2ACD4248009C18C2 /* CMFeedDetailContentView.swift in Sources */,
