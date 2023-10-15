@@ -15,7 +15,7 @@ class ImageLoader: ObservableObject {
     @Published var image: UIImage?
     
     // MARK: - 싱글톤 NS캐시 변수
-    private let imageCache = SingletonNSCache.sharedNSCache.memoryCache
+    private let imageCache = NSCacheManager.sharedNSCache.memoryCache
     
     // MARK: - URLSession 관리 변수
     var cancellable: AnyCancellable?
