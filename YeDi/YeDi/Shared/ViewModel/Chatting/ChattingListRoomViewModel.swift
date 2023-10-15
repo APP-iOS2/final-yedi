@@ -16,19 +16,20 @@ final class ChattingListRoomViewModel: ObservableObject {
     @Published var unReadCount: [String: Int] = [:]
     @Published var unReadTotalCount: Int = 0
     
-    func getUnReadTotalCount() -> Int {
-        var totalCount = 0
-        for key in unReadCount.keys {
-            totalCount += unReadCount[key] ?? 0
+    var getUnReadTotalCount: Int {
+        get {
+            var totalCount = 0
+            for key in unReadCount.keys {
+                totalCount += unReadCount[key] ?? 0
+            }
+            return totalCount
         }
-        print("check total count")
-        print(totalCount)
-        return totalCount
     }
     
     let storeService = Firestore.firestore()
     
     /// 채팅리스트 및 채팅방 메세지를 가지고오는 메소드
+    @discardableResult
     func fetchChattingList(login type: UserType?) -> Bool {
         
          guard let userId = fetchUserUID() else {
@@ -63,18 +64,18 @@ final class ChattingListRoomViewModel: ObservableObject {
             docRef = storeService.collection("designers").document(uid)
         }
         
-        docRef.addSnapshotListener{ (snapshot, error) in
+        docRef.addSnapshotListener{[weak self] (snapshot, error) in
             if let error = error {
                 debugPrint("Error getting cahtRooms: \(error)")
             } else if let document = snapshot, document.exists {
                 guard var chatRooms = document.data()?["chatRooms"] as? [String] else { return }
                 
                 chatRooms = chatRooms.compactMap{ $0.trimmingCharacters(in: .whitespaces) }.filter({ !$0.isEmpty })
-                self.fetchUserInfo(login: loginType, chatRooms: chatRooms)
+                self?.fetchUserInfo(login: loginType, chatRooms: chatRooms)
                 
                 for chatRoomId in chatRooms {
-                    self.fetchChattingBubble(chatRoom: chatRoomId)
-                    self.fetchUnReadMessageCount(chatRoom: chatRoomId, userId: uid)
+                    self?.fetchChattingBubble(chatRoom: chatRoomId)
+                    self?.fetchUnReadMessageCount(chatRoom: chatRoomId, userId: uid)
                 }
             }
         }
@@ -87,7 +88,7 @@ final class ChattingListRoomViewModel: ObservableObject {
         let bubblePath = "chatRooms/\(id)/bubbles"
         let ref = storeService.collection(bubblePath).order(by: "date", descending: true).limit(to: 1)
         
-        ref.addSnapshotListener{ snapshot, error in
+        ref.addSnapshotListener{[weak self] snapshot, error in
             
             var bubbles: [CommonBubble] = []
             
@@ -103,12 +104,12 @@ final class ChattingListRoomViewModel: ObservableObject {
                         
                         bubbles.append(bubble)
                         
-                        if let index = self.chattingRooms.firstIndex(where: { $0.id == id}) {
-                            self.chattingRooms.remove(at: index)
+                        if let index = self?.chattingRooms.firstIndex(where: { $0.id == id}) {
+                            self?.chattingRooms.remove(at: index)
                         }
                         
-                        self.chattingRooms.append(.init(id: id, chattingBubles: bubbles))
-                        self.chattingRooms.sort(by: {$0.chattingBubles?.first?.date ?? "" > $1.chattingBubles?.first?.date ?? ""})
+                        self?.chattingRooms.append(.init(id: id, chattingBubles: bubbles))
+                        self?.chattingRooms.sort(by: {$0.chattingBubles?.first?.date ?? "" > $1.chattingBubles?.first?.date ?? ""})
                     }
                 } catch {
                     debugPrint("bubble Document 변환 실패")
@@ -124,7 +125,7 @@ final class ChattingListRoomViewModel: ObservableObject {
         //내가 안 읽은 메세지 버블 갯수를 새야하니까, sender는 상대방이 보낸거, isRead는 false인거
         let ref = storeService.collection(path).whereField("sender", isNotEqualTo: receive).whereField("isRead", isEqualTo: false)
         
-        ref.addSnapshotListener { snapshot, error in
+        ref.addSnapshotListener {[weak self] snapshot, error in
             
             if let error = error {
                 debugPrint("Error getting isRead: \(error)")
@@ -132,9 +133,9 @@ final class ChattingListRoomViewModel: ObservableObject {
             }
         
             if let snapshot = snapshot, !snapshot.isEmpty {
-                self.unReadCount[id] = snapshot.documents.count
+                self?.unReadCount[id] = snapshot.documents.count
             } else {
-                self.unReadCount[id] = 0
+                self?.unReadCount[id] = 0
             }
         }
     }
@@ -152,7 +153,7 @@ final class ChattingListRoomViewModel: ObservableObject {
         }
         
         for chatRoomId in id {
-            colRef.whereField("chatRooms", arrayContains: chatRoomId).getDocuments { snapshot, error in
+            colRef.whereField("chatRooms", arrayContains: chatRoomId).getDocuments {[weak self] snapshot, error in
                 
                 if let error = error {
                     debugPrint("Error getting userProfile: \(error)")
@@ -163,7 +164,7 @@ final class ChattingListRoomViewModel: ObservableObject {
                     for document in snapshot.documents {
                         let userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "",
                                                         profileImageURLString: document.data()["profileImageURLString"] as? String ?? "")
-                        self.userProfile[chatRoomId] = userInfo
+                        self?.userProfile[chatRoomId] = userInfo
                     }
                 }
             }

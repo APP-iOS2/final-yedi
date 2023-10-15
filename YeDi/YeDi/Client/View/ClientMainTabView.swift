@@ -37,7 +37,7 @@ struct ClientMainTabView: View {
                 .tabItem {
                     Label("채팅", systemImage: "bubble.left.fill")
                         
-                }.tag(3).badge(chattingListViewModel.getUnReadTotalCount())
+                }.tag(3).badge(chattingListViewModel.getUnReadTotalCount)
                 
                 CMProfileView()
                 .tabItem {
