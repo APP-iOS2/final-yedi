@@ -51,7 +51,7 @@ struct ChatRoomView: View {
         }
         .onAppear {
             chattingVM.chatRoomId = chatRoomId
-            chattingVM.firstChattingBubbles()
+            chattingVM.fetchFirstChattingBubbles()
             chattingVM.fetchUserInfo(login: userAuth.userType!, chatRooms: chatRoomId)
         }
         .navigationBarBackButtonHidden()
@@ -66,7 +66,7 @@ struct ChatRoomView: View {
     private var toolbarProfileInfo: some View {
         HStack {
             Button {
-                self.chattingVM.removeListener()
+                chattingVM.removeListener()
                 dismiss()
             } label: {
                 Image(systemName: "chevron.left")
@@ -85,11 +85,13 @@ struct ChatRoomView: View {
     private var chatScroll: some View {
         ScrollView {
             VStack{
+                if chattingVM.anyMoreChats {
                 Button {
                     chattingVM.fetchMoreChattingBubble()
                 } label: {
                     Text("지난 대화보기")
                 }
+            }
                 ForEach(chattingVM.chattings) { chat in
                     var isMyBubble: Bool {
                         chat.sender == userId ? true : false
