@@ -24,6 +24,7 @@ struct CMRecommendPostView: View {
                                         await postViewModel.fetchNextPageOfPosts()
                                     }
                                 }
+                                print("====On Appered!!==== \(post) ")
                             }
                     }
                 })
