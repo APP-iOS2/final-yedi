@@ -33,6 +33,16 @@ struct ContentView: View {
         } else {
             AuthHomeView()
         }
+        
+//        let _ = print(
+//            """
+//            ================================================================
+//            user type: \(String(describing: userAuth.userType))
+//            user session: \(String(describing: userAuth.userSession?.uid))
+//            client id: \(String(describing: userAuth.currentClientID))
+//            designer id: \(String(describing: userAuth.currentDesignerID))
+//            """
+//        )
     }
 }
 
