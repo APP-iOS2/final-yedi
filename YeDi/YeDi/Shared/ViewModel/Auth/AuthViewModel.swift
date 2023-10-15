@@ -18,7 +18,6 @@ final class UserAuth: ObservableObject {
     @Published var currentDesignerID: String?
     @Published var userType: UserType?
     @Published var userSession: FirebaseAuth.User?
-    @Published var isCheckEmailAvailability: Bool = false
     
     private let auth = Auth.auth()
     private let storeService = Firestore.firestore()
@@ -26,7 +25,7 @@ final class UserAuth: ObservableObject {
     
     init() {
         fetchUserTypeinUserDefaults()
-        //fetchUser()
+        fetchUser()
     }
     
     func fetchUser() {
@@ -34,6 +33,7 @@ final class UserAuth: ObservableObject {
             if let user = user {
                 self.userSession = user
                 self.userType = self.userType
+                
                 switch self.userType {
                 case .client:
                     self.currentClientID = user.uid
@@ -59,11 +59,15 @@ final class UserAuth: ObservableObject {
         userDefaults.set(type, forKey: "UserType")
     }
     
+    func removeUserTypeinUserDefaults() {
+        userDefaults.removeObject(forKey: "UserType")
+    }
+    
     func signIn(_ email: String, _ password: String, _ type: UserType, _ completion: @escaping (Bool) -> Void) {
         auth.signIn(withEmail: email, password: password) { result, error in
             if let error = error {
                 print("DEBUG: signIn Error \(error.localizedDescription)")
-                completion(false) // 로그인 실패 시 false 반환
+                completion(false)
                 return
             }
             
@@ -79,7 +83,6 @@ final class UserAuth: ObservableObject {
                 if let error = error {
                     print("Firestore query error:", error.localizedDescription)
                     completion(false)
-                    return
                 }
                 
                 guard let documents = snapshot?.documents,
@@ -94,13 +97,11 @@ final class UserAuth: ObservableObject {
                     print("Name:", name)
                     print("Email:", email)
                     
-                    switch self.userType {
+                    switch type {
                     case .client:
                         self.currentClientID = user.uid
                     case .designer:
                         self.currentDesignerID = user.uid
-                    case .none:
-                        return
                     }
                     
                     self.userSession = user
@@ -121,7 +122,6 @@ final class UserAuth: ObservableObject {
             if let error = error {
                 completion(false)
                 print("DEBUG: Error registering new user: \(error.localizedDescription)")
-                return
             } else {
                 completion(true)
                 
@@ -152,7 +152,6 @@ final class UserAuth: ObservableObject {
             if let error = error {
                 completion(false)
                 print("DEBUG: Error registering new user: \(error.localizedDescription)")
-                return
             } else {
                 completion(true)
                 
@@ -184,60 +183,14 @@ final class UserAuth: ObservableObject {
         }
     }
     
-//    func checkEmailAvailability(_ email: String, userType collectionName: String, completion: @escaping (Bool) -> Void) {
-//        self.storeService.collection(collectionName).whereField("email", isEqualTo: email).getDocuments { snapshot, error in
-//            if let error = error {
-//                print("Firestore query error:", error.localizedDescription)
-//                completion(false)
-//                return
-//            }
-//            
-//            if (snapshot?.documents.count) != 0 {
-//                completion(true)
-//            } else {
-//                completion(false)
-//            }
-//        }
-//    }
-    
-//    func checkEmailAvailability(_ email: String, _ userType: UserType, completion: @escaping (Bool) -> Void) {
-//        let collectionName = userType.rawValue + "s"
-//        
-//        self.storeService.collection(collectionName).whereField("email", isEqualTo: email).getDocuments { snapshot, error in
-//            if let error = error {
-//                print("Firestore query error:", error.localizedDescription)
-//                completion(false)
-//                return
-//            }
-//            
-//            if (snapshot?.documents.count) != 0 {
-//                completion(true)
-//            } else {
-//                completion(false)
-//            }
-//        }
-//        
-//    }
-    
-//    func isAlreadySignUp(_ email: String, completion: @escaping (Bool) -> Void) {
-//        auth.fetchSignInMethods(forEmail: email) { signInMethods, error in
-//            if let error = error {
-//                let err = error as NSError
-//                
-//                switch err {
-//                case AuthErrorCode.emailAlreadyInUse:
-//                    print("================== auth error")
-//                    completion(false)
-//                default:
-//                    print("unknown error: \(err.localizedDescription)")
-//                }
-//            }
-//            completion(true)
-//        }
-//    }
-    
     func signOut() {
         userSession = nil
+        userType = nil
+        currentClientID = nil
+        currentDesignerID = nil
+        
+        removeUserTypeinUserDefaults()
+        
         try? auth.signOut()
     }
     
