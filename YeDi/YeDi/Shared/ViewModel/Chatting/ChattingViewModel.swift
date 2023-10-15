@@ -82,11 +82,6 @@ class ChattingViewModel: ObservableObject {
         }
     }
     
-    ///리스너를 분리하는 함수
-    func removeListener() {
-        self.sotreListener?.remove()
-    }
-    
     func fetchMoreChattingBubble() {
         ///0번째 인덱스의 채팅 버블이 가장 오래된 버블이므로
         ///해당 버블의 date보다 작은 값의 채팅을 N개 불러오고
@@ -296,17 +291,6 @@ class ChattingViewModel: ObservableObject {
                 self?.sendBoardBubble(content: "이 게시물 보고 상담하러 왔어요", imagePath: post.photos[0].imageURL, sender: sender)
             }
         }
-    }
-    
-    /// 중복되지 않은 채팅버블을 뒤에 추가해주는 함수
-    /// 10개의 길이한계로 불러오는 경우 뒤에 새로운 내용이 올 때마다 병합해주어야 하기 때문
-    func mergeChatting(first: [CommonBubble]?, second: [CommonBubble]) -> [CommonBubble] {
-        let firstSet = Set(first!)
-        let uniqueSecond = second.filter { !firstSet.contains($0) }
-        let mergedArray = first! + uniqueSecond
-        let sortedArray = mergedArray.sorted{$0.date < $1.date}
-        
-        return sortedArray
     }
     
     ///self.chattings의 채팅 내용을 업데이트 해주는 코드
