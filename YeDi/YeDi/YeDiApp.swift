@@ -24,6 +24,7 @@ struct YeDiApp: App {
     @StateObject var consultationViewModel = ConsultationViewModel()
     @StateObject var profileViewModel: CMProfileViewModel = CMProfileViewModel()
     @StateObject var reviewViewModel: CMReviewViewModel = CMReviewViewModel()
+    @StateObject var chattingListViewModel = ChattingListRoomViewModel()
     
     var body: some Scene {
         WindowGroup {
@@ -32,6 +33,7 @@ struct YeDiApp: App {
                 .environmentObject(consultationViewModel)
                 .environmentObject(profileViewModel)
                 .environmentObject(reviewViewModel)
+                .environmentObject(chattingListViewModel)
         }
     }
 }

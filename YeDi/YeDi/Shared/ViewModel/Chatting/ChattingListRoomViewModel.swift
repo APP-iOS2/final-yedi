@@ -14,10 +14,22 @@ final class ChattingListRoomViewModel: ObservableObject {
     @Published var chattingRooms: [ChatRoom] = []
     @Published var userProfile: [String: ChatListUserInfo] = [:]
     @Published var unReadCount: [String: Int] = [:]
+    @Published var unReadTotalCount: Int = 0
+    
+    func getUnReadTotalCount() -> Int {
+        var totalCount = 0
+        for key in unReadCount.keys {
+            totalCount += unReadCount[key] ?? 0
+        }
+        print("check total count")
+        print(totalCount)
+        return totalCount
+    }
+    
     let storeService = Firestore.firestore()
     
     /// 채팅리스트 및 채팅방 메세지를 가지고오는 메소드
-    func fetchChattingList(login type: UserType?) -> Bool{
+    func fetchChattingList(login type: UserType?) -> Bool {
         
          guard let userId = fetchUserUID() else {
              debugPrint("로그인 정보를 찾을 수 없음")
@@ -105,7 +117,8 @@ final class ChattingListRoomViewModel: ObservableObject {
         }
     }
     
-    func fetchUnReadMessageCount(chatRoom id: String, userId receive: String)  {
+    /// 읽은 메세지 갯수를 가지고오는 메소드
+    private final func fetchUnReadMessageCount(chatRoom id: String, userId receive: String)  {
         
         let path = "chatRooms/\(id)/bubbles"
         //내가 안 읽은 메세지 버블 갯수를 새야하니까, sender는 상대방이 보낸거, isRead는 false인거
@@ -148,12 +161,13 @@ final class ChattingListRoomViewModel: ObservableObject {
                 
                 if let snapshot = snapshot, !snapshot.isEmpty {
                     for document in snapshot.documents {
-                        let userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "정보 없음",
-                                                        profileImageURLString: document.data()["profileImageURLString"] as? String ?? "정보 없음")
+                        let userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "",
+                                                        profileImageURLString: document.data()["profileImageURLString"] as? String ?? "")
                         self.userProfile[chatRoomId] = userInfo
                     }
                 }
             }
         }
     }
+    
 }

@@ -10,7 +10,7 @@ import Firebase
 
 struct ChattingListRoomView: View {
     @EnvironmentObject var userAuth: UserAuth
-    @ObservedObject var chattingListRoomViewModel = ChattingListRoomViewModel()
+    @EnvironmentObject var chattingListRoomViewModel : ChattingListRoomViewModel
     @State private var isEmptyChatRooms: Bool = false
     
     var body: some View {
@@ -29,7 +29,6 @@ struct ChattingListRoomView: View {
                             .opacity(0)
                             .frame(width: 0, height: 0)
                             .background()
-                            
                             
                             DMAsyncImage(url: chattingListRoomViewModel.userProfile[chattingRoom.id]?.profileImageURLString ?? "", placeholder: Image(systemName: "person.circle.fill"))
                                 .aspectRatio(contentMode: .fill)
@@ -53,7 +52,6 @@ struct ChattingListRoomView: View {
                                     Text("메세지가 존재하지 않습니다")
                                         .foregroundStyle(.gray)
                                         .lineLimit(1)
-
                                 }
                             }
                         }
@@ -74,6 +72,7 @@ struct ChattingListRoomView: View {
         let date = instance.changeDateString(transition: "yyyy년 MM월 dd일 HH:mm", from: messageDate)
         return date
     }
+    
 }
 
 #Preview {
