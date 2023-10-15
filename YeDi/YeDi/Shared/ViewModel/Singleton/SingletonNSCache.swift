@@ -24,7 +24,7 @@ final class SingletonNSCache {
     let memoryCache: NSCache<NSString, UIImage> = {
         
         let cache = NSCache<NSString, UIImage>()
-        let limitSize = 50 * 1048576 // 5MB
+        let limitSize = 50 * 1048576 // 50MB
         
         cache.totalCostLimit = limitSize
         
