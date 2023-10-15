@@ -7,15 +7,9 @@
 
 import SwiftUI
 
-final class SingletonNSCache {
+final class NSCacheManager {
     
-    static var sharedNSCache: SingletonNSCache = {
-        
-        let instance = SingletonNSCache()
-        
-        return instance
-        
-    }()
+    static var sharedNSCache: NSCacheManager = NSCacheManager()
     
     private init() {  memoryCache.delegate = delegate }
     
