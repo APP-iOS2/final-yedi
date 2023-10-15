@@ -42,23 +42,21 @@ final class CMProfileViewModel: ObservableObject {
     }
     
     @MainActor
-    func updateClientProfile(userAuth: UserAuth, client: Client) async {
+    func updateClientProfile(userAuth: UserAuth, newClient: Client) async {
         do {
             if let clientId = userAuth.currentClientID {
-                var newClient = client
+                var newClient = newClient
                 
-                if client.profileImageURLString != "" {
-                    let localFile = URL(string: client.profileImageURLString)!
+                if newClient.profileImageURLString != "" {
+                    let localFile = URL(string: newClient.profileImageURLString)!
                     
-                    storageRef.child("clients/\(clientId)").putFile(from: localFile)
+                    storageRef.child("clients/profiles/\(clientId)").putFile(from: localFile)
                     
-                    let downloadURL = try await storageRef.child("clients/\(clientId)").downloadURL()
-                    
+                    let downloadURL = try await storageRef.child("clients/profiles/\(clientId)").downloadURL()
                     newClient.profileImageURLString = downloadURL.absoluteString
                 }
                 
                 try collectionRef.document(clientId).setData(from: newClient)
-                self.client = newClient
             }
         } catch {
             print("Error updating client profile: \(error)")

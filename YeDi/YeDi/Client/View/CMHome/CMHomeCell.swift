@@ -120,19 +120,15 @@ struct CMHomeCell: View {
                 Button(action: {
                     consultationViewModel.proccessConsulation(designerId: post.designerID, post: post)
                 }, label: {
-                    HStack {
-                        Spacer()
-                        Text("상담하기")
-                        Spacer()
-                    }
-                    .padding(.horizontal, 15)
-                    .padding(.vertical, 7)
-                    .background {
-                        Capsule(style: .continuous)
-                            .foregroundStyle(.black)
-                    }
+                    Text("상담하기")
+                        .padding(.horizontal, 15)
+                        .padding(.vertical, 7)
+                        .background {
+                            Capsule(style: .continuous)
+                                .stroke(.black.opacity(0.5), lineWidth: 1)
+                        }
                 })
-                .foregroundColor(.white)
+                .foregroundColor(.black)
             }
             .padding(.horizontal)
             
@@ -181,6 +177,7 @@ struct CMHomeCell: View {
             Task {
                 await viewModel.fetchDesignerInfo(post: post)
             }
+            viewModel.checkIfLiked(forClientID: userAuth.currentClientID ?? "", post: post)
         }
     }
 }

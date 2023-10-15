@@ -44,6 +44,25 @@ class DMProfileViewModel: ObservableObject {
         closedDays: []
     )
     
+    // 디자이너 프로필을 업데이트하는 비동기 함수
+    func updateDesignerProfile(userAuth: UserAuth, designer: Designer) async {
+        let db = Firestore.firestore()  // Firestore 인스턴스 생성
+
+        // 현재 로그인한 디자이너의 ID가 있을 경우
+        if let designerId = userAuth.currentDesignerID {
+            let docRef = db.collection("designers").document(designerId)  // 해당 디자이너 문서의 레퍼런스
+
+            do {
+                try await docRef.setData(from: designer)
+                print("Designer profile successfully updated.")
+            } catch {
+                // 데이터를 업데이트하는 도중 에러가 발생한 경우
+                print("Error updating designer data: \(error)")
+            }
+        }
+    }
+
+    
     // 디자이너 프로필 정보를 Firestore에서 가져오는 비동기 함수
     func fetchDesignerProfile(userAuth: UserAuth) async {
         let db = Firestore.firestore()  // Firestore 인스턴스 생성

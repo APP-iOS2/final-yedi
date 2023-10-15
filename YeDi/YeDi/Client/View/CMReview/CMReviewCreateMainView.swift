@@ -86,7 +86,10 @@ struct CMReviewCreateMainView: View {
                         designer: UUID().uuidString
                     )
                     
-                    reviewViewModel.uploadReview(newReview: newReview)
+                    Task {
+                        await reviewViewModel.uploadReview(review: newReview)
+                    }
+                    
                     dismiss()
                 } else {
                     isShowingAlert.toggle()
