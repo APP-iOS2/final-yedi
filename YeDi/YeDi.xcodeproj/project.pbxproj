@@ -126,7 +126,6 @@
 		DC7695C12ADCFBED00D2FB69 /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695C02ADCFBED00D2FB69 /* DismissButton.swift */; };
 		DC7695C52ADD0E0B00D2FB69 /* CapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695C42ADD0E0B00D2FB69 /* CapsuleButton.swift */; };
 		DC7695C92ADD119D00D2FB69 /* ButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695C82ADD119D00D2FB69 /* ButtonModifier.swift */; };
-		DC7695CD2ADE18AC00D2FB69 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC7695CC2ADE18AC00D2FB69 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -244,7 +243,6 @@
 		DC7695C02ADCFBED00D2FB69 /* DismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissButton.swift; sourceTree = "<group>"; };
 		DC7695C42ADD0E0B00D2FB69 /* CapsuleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleButton.swift; sourceTree = "<group>"; };
 		DC7695C82ADD119D00D2FB69 /* ButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifier.swift; sourceTree = "<group>"; };
-		DC7695CC2ADE18AC00D2FB69 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -620,7 +618,6 @@
 		63CD89AF2ABD85C300E70A56 /* YeDi */ = {
 			isa = PBXGroup;
 			children = (
-				DC7695CC2ADE18AC00D2FB69 /* GoogleService-Info.plist */,
 				3BCF2C032ACD3E72009C18C2 /* Shared */,
 				3BCF2C362ACD4247009C18C2 /* Client */,
 				639DB6282AC10DED002692E5 /* Designer */,
