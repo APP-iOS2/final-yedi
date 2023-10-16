@@ -16,13 +16,13 @@ struct CMProfileEditView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var profileViewModel: CMProfileViewModel
     
-    @State private var isShowingPhotoPicker: Bool = false
-    
     @Binding var clientPhotoURL: String
     @Binding var clientName: String
     @Binding var clientGender: String
     @Binding var clientBirthDate: String
     @Binding var clientPhoneNumber: String
+    
+    @State private var isShowingPhotoPicker: Bool = false
     
     // MARK: - Body
     var body: some View {
@@ -111,9 +111,9 @@ struct CMProfileEditView: View {
                     
                     Task {
                         await profileViewModel.updateClientProfile(userAuth: userAuth, newClient: newClient)
+                        dismiss()
                     }
                 }
-                dismiss()
             }, label: {
                 Text("저장")
                     .frame(width: 330, height: 30)

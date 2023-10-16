@@ -21,7 +21,12 @@ struct CMNewReviewView: View {
     @State private var reviewContent: String = ""
     
     @State private var isShowingValidationAlert: Bool = false
-
+    @State private var isUploading: Bool = false
+    
+    var buttonText: String {
+        return isUploading ? "업로드 중..." : "리뷰 등록"
+    }
+    
     /// 리뷰 유효성 검사
     var isReadyToSave: Bool {
         return !selectedPhotoURLs.isEmpty && !selectedKeywords.isEmpty && !reviewContent.isEmpty
@@ -46,6 +51,9 @@ struct CMNewReviewView: View {
             
             saveButton
         }
+        .onDisappear {
+            isUploading.toggle()
+        }
         .toolbar(.hidden, for: .tabBar)
         .alert("모든 항목을 채워주세요", isPresented: $isShowingValidationAlert) {
             Button(role: .cancel) {
@@ -60,6 +68,8 @@ struct CMNewReviewView: View {
     private var saveButton: some View {
         Button(action: {
             if isReadyToSave {
+                isUploading.toggle()
+                
                 if let clientId = userAuth.currentClientID {
                     let newReview = Review(
                         id: UUID().uuidString,
@@ -83,7 +93,7 @@ struct CMNewReviewView: View {
                 isShowingValidationAlert.toggle()
             }
         }, label: {
-            Text("리뷰 등록")
+            Text(buttonText)
                 .frame(width: 330, height: 30)
         })
         .buttonStyle(.borderedProminent)

@@ -77,7 +77,7 @@ struct KeywordButton: View {
                     .padding(10)
                     .background(
                         RoundedRectangle(cornerRadius: 5)
-                            .fill(Color.subColor)
+                            .fill(Color.mainColor)
                     )
             } else {
                 Text("\(keywords[index].keyword)")
