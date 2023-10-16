@@ -72,6 +72,7 @@ struct DMAsyncImage: View {
                 .resizable()
         } else {
             placeholder
+                .resizable()
         }
     }
 }

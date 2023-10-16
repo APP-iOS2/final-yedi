@@ -14,21 +14,12 @@ struct ChatRoomSheetView: View {
     
     var body: some View {
         NavigationStack{
-            VStack {
+            VStack{
                 ChatRoomView(chatRoomId: chatRoomId)
+                    .onDisappear {
+                        consultationViewModel.showChattingRoom = false
+                    }
             }
-            .toolbar(content: {
-                ToolbarItemGroup(placement: .topBarLeading) {
-                    Button(role: .destructive, action: {consultationViewModel.showChattingRoom = false}, label: {
-                        Image(systemName: "xmark")
-                            .foregroundStyle(colorScheme == .light ? .black : .white)
-                    })
-                }
-            })
-            
-            .onDisappear(perform: {
-                consultationViewModel.showChattingRoom = false
-            })
         }
     }
 }
