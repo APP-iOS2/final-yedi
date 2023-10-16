@@ -150,9 +150,3 @@ struct ChatRoomView: View {
         .background(Color(red: 0.85, green: 0.85, blue: 0.85))
     }
 }
-
-extension View {
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
