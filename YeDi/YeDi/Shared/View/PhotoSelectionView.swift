@@ -32,30 +32,26 @@ struct PhotoSelectionView: View {
                 })
 
                 ForEach(selectedPhotoURLs, id: \.self) { photoURL in
-                    AsyncImage(url: URL(string: photoURL), content: { image in
-                        ZStack {
-                            image
-                                .resizable()
-                                .frame(width: 100, height: 100)
-                                .clipShape(RoundedRectangle(cornerRadius: 5))
-
-                            Button(action: {
-                                DispatchQueue.main.async {
-                                    selectedPhotoURLs.removeAll(where: { $0 == photoURL })
-                                }
-                            }, label: {
-                                Image(systemName: "x.circle.fill")
-                                    .font(.title3)
-                                    .foregroundStyle(.black)
-                            })
-                            .offset(x: 50, y: -50)
-                        }
-                        .padding(EdgeInsets(top: 10, leading: 5, bottom: 40, trailing: 0))
-                    }, placeholder: {
-                        ProgressView()
-                    })
+                    ZStack {
+                        DMAsyncImage(url: photoURL)
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 100, height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                        Button(action: {
+                            DispatchQueue.main.async {
+                                selectedPhotoURLs.removeAll(where: { $0 == photoURL })
+                            }
+                        }, label: {
+                            Image(systemName: "x.circle.fill")
+                                .font(.title3)
+                                .foregroundStyle(.black)
+                        })
+                        .offset(x: 52, y: -50)
+                    }
                 }
+                .padding(EdgeInsets(top: 10, leading: 5, bottom: 40, trailing: 0))
             }
+            .padding(.trailing)
         }
         .scrollIndicators(.never)
     }

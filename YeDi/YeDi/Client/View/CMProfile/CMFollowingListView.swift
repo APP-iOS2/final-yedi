@@ -8,21 +8,27 @@
 import SwiftUI
 
 struct CMFollowingListView: View {
+    // MARK: - Properties
     @StateObject var postDetailViewModel = PostDetailViewModel()
+    
+    @EnvironmentObject var profileViewModel: CMProfileViewModel
+    
     @State private var isFollowingDesigner: Bool = true
     @State private var isFollowing: Bool = true
-    let profileViewModel: CMProfileViewModel
     
+    // MARK: - Body
     var body: some View {
-        ScrollView {
+        VStack {
             if profileViewModel.followedDesigner.isEmpty {
                 Text("팔로잉한 디자이너가 없습니다.")
                     .padding()
             } else {
-                ForEach(profileViewModel.followedDesigner, id: \.id) { designer in
-                    followingList(designer: designer)
-                        .padding(.horizontal)
-                        .padding(.vertical, 10)
+                ScrollView {
+                    ForEach(profileViewModel.followedDesigner, id: \.id) { designer in
+                        followingList(designer: designer)
+                            .padding(.horizontal)
+                            .padding(.vertical, 10)
+                    }
                 }
             }
         }
@@ -89,5 +95,6 @@ struct CMFollowingListView: View {
 }
 
 #Preview {
-    CMFollowingListView(profileViewModel: CMProfileViewModel())
+    CMFollowingListView()
+        .environmentObject(CMProfileViewModel())
 }

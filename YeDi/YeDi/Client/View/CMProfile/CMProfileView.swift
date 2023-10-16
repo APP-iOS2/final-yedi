@@ -7,42 +7,53 @@
 
 import SwiftUI
 
+/// 고객 프로필 메인 뷰
 struct CMProfileView: View {
+    // MARK: - Properties
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var profileViewModel: CMProfileViewModel
-    @EnvironmentObject var reviewViewModel: CMReviewViewModel
     
+    @State private var clientPhotoURL: String = ""
+    @State private var clientName: String = ""
+    @State private var clientGender: String = ""
+    @State private var clientBirthDate: String = ""
+    @State private var clientPhoneNumber: String = ""
+    
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 HStack {
+                    // MARK: - 프로필 정보
                     VStack(alignment: .leading) {
-                        Text("\(profileViewModel.client.name)님")
+                        Text("\(clientName)님")
                         Text("오늘도 빛나는 하루 보내세요")
                     }
-                    .font(.system(size: 20, weight: .bold))
+                    .font(.system(size: 21, weight: .bold))
                     Spacer()
                     
-                    if profileViewModel.client.profileImageURLString == "" {
+                    // MARK: - 프로필 이미지
+                    if clientPhotoURL.isEmpty {
                         Image(systemName: "person.circle.fill")
                             .font(.system(size: 60))
                     } else {
-                        AsyncImage(url: URL(string: profileViewModel.client.profileImageURLString)) { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 60, height: 60)
-                                .clipShape(Circle())
-                        } placeholder: {
-                            ProgressView()
-                        }
-                        .id(profileViewModel.client.profileImageURLString)
+                        DMAsyncImage(url: clientPhotoURL)
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 60, height: 60)
+                            .clipShape(Circle())
                     }
                 }
                 .padding()
                 
+                // MARK: - 프로필 수정 버튼
                 NavigationLink {
-                    CMProfileEditView()
+                    CMProfileEditView(
+                        clientPhotoURL: $clientPhotoURL,
+                        clientName: $clientName,
+                        clientGender: $clientGender,
+                        clientBirthDate: $clientBirthDate,
+                        clientPhoneNumber: $clientPhoneNumber
+                    )
                 } label: {
                     Text("정보 수정")
                         .frame(width: 350, height: 40)
@@ -52,28 +63,29 @@ struct CMProfileView: View {
                         .padding(.bottom, 40)
                 }
                 
-                // TODO: 임시 리뷰 작성 버튼
-                NavigationLink {
-                    CMNewReviewView()
-                } label: {
+                // MARK: - 리뷰 작성 버튼 (삭제 예정)
+                NavigationLink(destination: CMNewReviewView()) {
                     Text("리뷰 작성하기")
                 }
                 
-                CMSegmentedControl(profileViewModel: profileViewModel)
-                
-                Spacer()
+                // MARK: - 고객 세그먼티드 컨트롤 뷰
+                CMSegmentedControl()
             }
         }
         .padding([.leading, .trailing], 5)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                NavigationLink {
-                    CMNotificationView()
-                } label: {
-                    Image(systemName: "bell")
-                        .foregroundStyle(.black)
-                }
+        .onAppear {
+            // MARK: - 프로필 정보 패치
+            Task {
+                await profileViewModel.fetchClientProfile(userAuth: userAuth)
             }
+            
+            clientPhotoURL = profileViewModel.client.profileImageURLString
+            clientName = profileViewModel.client.name
+            clientGender = profileViewModel.client.gender
+            clientBirthDate = profileViewModel.client.birthDate
+            clientPhoneNumber = profileViewModel.client.phoneNumber
+        }
+        .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
                     CMSettingsView()
@@ -81,11 +93,6 @@ struct CMProfileView: View {
                     Image(systemName: "gearshape")
                         .foregroundStyle(.black)
                 }
-            }
-        }
-        .onAppear {
-            Task {
-                await profileViewModel.fetchClientProfile(userAuth: userAuth)
             }
         }
     }

@@ -7,16 +7,19 @@
 
 import SwiftUI
 
+/// 고객 세그먼티드 컨트롤 뷰
 struct CMSegmentedControl: View {
+    // MARK: - Properties
     @EnvironmentObject var userAuth: UserAuth
-    @EnvironmentObject var reviewViewModel: CMReviewViewModel
     
     @State private var selectedSegment: String = "찜한 게시물"
-    let profileViewModel: CMProfileViewModel
+    
     let segments: [String] = ["찜한 게시물", "팔로잉", "리뷰"]
     
+    // MARK: - Body
     var body: some View {
         VStack {
+            // MARK: - 세그먼티드 컨트롤
             HStack(spacing: 0) {
                 ForEach(segments, id: \.self) { segment in
                     Button(action: {
@@ -34,22 +37,24 @@ struct CMSegmentedControl: View {
                 }
             }
             
+            // MARK: - 선택된 세그먼트에 해당하는 뷰
             switch selectedSegment {
             case "찜한 게시물":
                 CMLikePostListView()
             case "팔로잉":
-                CMFollowingListView(profileViewModel: profileViewModel)
+                CMFollowingListView()
             case "리뷰":
                 CMReviewListView()
-                    .environmentObject(reviewViewModel)
             default:
                 Text("")
             }
+            
+            Spacer()
         }
     }
 }
 
 #Preview {
-    CMSegmentedControl(profileViewModel: CMProfileViewModel())
-        .environmentObject(CMReviewViewModel())
+    CMSegmentedControl()
+        .environmentObject(UserAuth())
 }
