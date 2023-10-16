@@ -14,12 +14,20 @@ struct CMFollowingPostView: View {
     var body: some View {
         NavigationStack {
             // MARK: Post
-            ScrollView {
-                LazyVStack(content: {
-                    ForEach(postViewModel.posts, id: \.id) { post in
-                        CMHomeCell(post: post)
+            VStack {
+                if postViewModel.posts.isEmpty {
+                    Spacer()
+                    Text("팔로우한 디자이너가 없습니다")
+                    Spacer()
+                } else {
+                    ScrollView {
+                        LazyVStack(content: {
+                            ForEach(postViewModel.posts, id: \.id) { post in
+                                CMHomeCell(post: post)
+                            }
+                        })
                     }
-                })
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
