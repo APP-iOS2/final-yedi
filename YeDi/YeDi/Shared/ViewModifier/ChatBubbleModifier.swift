@@ -4,13 +4,8 @@
 //
 //  Created by yunjikim on 2023/09/25.
 //
-import SwiftUI
 
-extension View {
-    func chatBubbleModifier(_ isMyChat: Bool) -> some View {
-        return modifier(ChatBubbleModifier(isMyChat: isMyChat))
-    }
-}
+import SwiftUI
 
 struct ChatBubbleModifier: ViewModifier {
     var isMyChat: Bool

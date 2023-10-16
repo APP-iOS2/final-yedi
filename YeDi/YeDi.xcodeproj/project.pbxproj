@@ -115,10 +115,16 @@
 		DC7695482AD0888800D2FB69 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695452AD0888800D2FB69 /* LoginView.swift */; };
 		DC76954F2AD088DB00D2FB69 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC76954E2AD088DB00D2FB69 /* AuthViewModel.swift */; };
 		DC7695532AD08A3600D2FB69 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695522AD08A3600D2FB69 /* RegisterView.swift */; };
+    DC7695BD2ADCF1CA00D2FB69 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695BC2ADCF1CA00D2FB69 /* View.swift */; };
+		DC7695C12ADCFBED00D2FB69 /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695C02ADCFBED00D2FB69 /* DismissButton.swift */; };
+		DC7695C52ADD0E0B00D2FB69 /* CapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695C42ADD0E0B00D2FB69 /* CapsuleButton.swift */; };
+		DC7695C92ADD119D00D2FB69 /* ButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695C82ADD119D00D2FB69 /* ButtonModifier.swift */; };
+
 		DC76958A2ADA8E6500D2FB69 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC7695892ADA8E6500D2FB69 /* GoogleService-Info.plist */; };
 		DC7695B32ADC007900D2FB69 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695B22ADC007900D2FB69 /* ResetPasswordView.swift */; };
 		DC7695B52ADC148300D2FB69 /* UpdatePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695B42ADC148300D2FB69 /* UpdatePasswordView.swift */; };
 		DC7695B92ADCD56A00D2FB69 /* AuthRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695B82ADCD56A00D2FB69 /* AuthRegex.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -224,18 +230,23 @@
 		96CBD4072AC4140C0055CC7F /* CustomCalender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalender.swift; sourceTree = "<group>"; };
 		96F637DA2AC2AA1200EF74FF /* ReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationView.swift; sourceTree = "<group>"; };
 		96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCellView.swift; sourceTree = "<group>"; };
-		96FD98F12ADCB94D009BA029 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DC7695422AD0888800D2FB69 /* AuthHomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthHomeView.swift; sourceTree = "<group>"; };
 		DC7695442AD0888800D2FB69 /* AuthModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthModifier.swift; sourceTree = "<group>"; };
 		DC7695452AD0888800D2FB69 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DC76954E2AD088DB00D2FB69 /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		DC7695522AD08A3600D2FB69 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+DC7695BC2ADCF1CA00D2FB69 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		DC7695C02ADCFBED00D2FB69 /* DismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissButton.swift; sourceTree = "<group>"; };
+		DC7695C42ADD0E0B00D2FB69 /* CapsuleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleButton.swift; sourceTree = "<group>"; };
+		DC7695C82ADD119D00D2FB69 /* ButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifier.swift; sourceTree = "<group>"; };
+
 
 		DC7695892ADA8E6500D2FB69 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 
 		DC7695B22ADC007900D2FB69 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
 		DC7695B42ADC148300D2FB69 /* UpdatePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordView.swift; sourceTree = "<group>"; };
 		DC7695B82ADCD56A00D2FB69 /* AuthRegex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRegex.swift; sourceTree = "<group>"; };
+
 
 /* End PBXFileReference section */
 
@@ -260,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				2F45A1272AD2739C005018A5 /* Color.swift */,
+				DC7695BC2ADCF1CA00D2FB69 /* View.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -284,7 +296,12 @@
 		3BCF2C032ACD3E72009C18C2 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+
+				DC7695BF2ADCF91200D2FB69 /* Components */,
+				DC7695BE2ADCF26A00D2FB69 /* ViewModifier */,
+
 				DC7695B72ADCD52200D2FB69 /* Utils */,
+
 				2F45A1262AD27388005018A5 /* Extension */,
 				3BCF2C042ACD3E72009C18C2 /* ViewModel */,
 				3BCF2C092ACD3E72009C18C2 /* Model */,
@@ -344,7 +361,6 @@
 		3BCF2C132ACD3E72009C18C2 /* Chatting */ = {
 			isa = PBXGroup;
 			children = (
-				3BCF2C142ACD3E72009C18C2 /* Modifier */,
 				3BCF2C162ACD3E72009C18C2 /* BoardBubbleCell.swift */,
 				3BC8CF132ACF12D500264547 /* ChatRoomSheetView.swift */,
 				3BCF2C172ACD3E72009C18C2 /* ChatRoomView.swift */,
@@ -355,14 +371,6 @@
 				3BCF2C1C2ACD3E72009C18C2 /* ImageBubbleCell.swift */,
 			);
 			path = Chatting;
-			sourceTree = "<group>";
-		};
-		3BCF2C142ACD3E72009C18C2 /* Modifier */ = {
-			isa = PBXGroup;
-			children = (
-				3BCF2C152ACD3E72009C18C2 /* ChatBubbleModifier.swift */,
-			);
-			path = Modifier;
 			sourceTree = "<group>";
 		};
 		3BCF2C362ACD4247009C18C2 /* Client */ = {
@@ -614,7 +622,7 @@
 			isa = PBXGroup;
 			children = (
 
-				DC7695892ADA8E6500D2FB69 /* GoogleService-Info.plist */,
+				DC7695BA2ADCF09300D2FB69 /* GoogleService-Info.plist */,
 
 				3BCF2C032ACD3E72009C18C2 /* Shared */,
 				3BCF2C362ACD4247009C18C2 /* Client */,
@@ -649,7 +657,6 @@
 		DC7695412AD0888800D2FB69 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				DC7695432AD0888800D2FB69 /* Modifier */,
 				DC7695422AD0888800D2FB69 /* AuthHomeView.swift */,
 				DC7695452AD0888800D2FB69 /* LoginView.swift */,
 				DC7695522AD08A3600D2FB69 /* RegisterView.swift */,
@@ -659,20 +666,31 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
-		DC7695432AD0888800D2FB69 /* Modifier */ = {
-			isa = PBXGroup;
-			children = (
-				DC7695442AD0888800D2FB69 /* AuthModifier.swift */,
-			);
-			path = Modifier;
-			sourceTree = "<group>";
-		};
 		DC76954D2AD088DB00D2FB69 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
 				DC76954E2AD088DB00D2FB69 /* AuthViewModel.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		DC7695BE2ADCF26A00D2FB69 /* ViewModifier */ = {
+			isa = PBXGroup;
+			children = (
+				DC7695442AD0888800D2FB69 /* AuthModifier.swift */,
+				3BCF2C152ACD3E72009C18C2 /* ChatBubbleModifier.swift */,
+				DC7695C82ADD119D00D2FB69 /* ButtonModifier.swift */,
+			);
+			path = ViewModifier;
+			sourceTree = "<group>";
+		};
+		DC7695BF2ADCF91200D2FB69 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				DC7695C02ADCFBED00D2FB69 /* DismissButton.swift */,
+				DC7695C42ADD0E0B00D2FB69 /* CapsuleButton.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		DC7695B72ADCD52200D2FB69 /* Utils */ = {
@@ -755,7 +773,7 @@
 				63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */,
 				63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */,
 
-				DC76958A2ADA8E6500D2FB69 /* GoogleService-Info.plist in Resources */,
+				DC7695BB2ADCF09300D2FB69 /* GoogleService-Info.plist in Resources */,
 
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -774,6 +792,7 @@
 				3BCF2C812ACD4248009C18C2 /* CMFollowingPostView.swift in Sources */,
 				3BCF2C2D2ACD3E73009C18C2 /* TempPhotoPickerView.swift in Sources */,
 				3BCF2C2E2ACD3E73009C18C2 /* ChatUtilityMenuView.swift in Sources */,
+				DC7695C52ADD0E0B00D2FB69 /* CapsuleButton.swift in Sources */,
 				3BCF2C702ACD4248009C18C2 /* CMReviewCreateDesignerScoreView.swift in Sources */,
 				3BCF2C1F2ACD3E73009C18C2 /* ChattingListRoomViewModel.swift in Sources */,
 				3BCF2C6C2ACD4248009C18C2 /* Keyword.swift in Sources */,
@@ -860,15 +879,18 @@
 				3BCF2C692ACD4248009C18C2 /* PostDetailViewModel.swift in Sources */,
 				9615C78A2AD6A1D600DD4F37 /* HCustomCalendar.swift in Sources */,
 				3BCF2C7F2ACD4248009C18C2 /* CMFeedDetailContentView.swift in Sources */,
+				DC7695BD2ADCF1CA00D2FB69 /* View.swift in Sources */,
 				1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */,
 				DC7695532AD08A3600D2FB69 /* RegisterView.swift in Sources */,
 				639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */,
+				DC7695C12ADCFBED00D2FB69 /* DismissButton.swift in Sources */,
 				1DA52F562AC2CB69002E0D75 /* DMNewPostView.swift in Sources */,
 				96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */,
 				DC7695482AD0888800D2FB69 /* LoginView.swift in Sources */,
 				96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */,
 				3BCF2C7E2ACD4248009C18C2 /* CMSearchView.swift in Sources */,
 				3BCF2C872ACD4248009C18C2 /* CMAccountInfoEditView.swift in Sources */,
+				DC7695C92ADD119D00D2FB69 /* ButtonModifier.swift in Sources */,
 				3BCF2C6B2ACD4248009C18C2 /* Client.swift in Sources */,
 				3BCF2C832ACD4248009C18C2 /* CMFilterView.swift in Sources */,
 				1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */,
