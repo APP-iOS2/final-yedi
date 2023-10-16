@@ -51,7 +51,7 @@ struct ChatRoomView: View {
         }
         .onAppear {
             chattingVM.chatRoomId = chatRoomId
-            chattingVM.firstChattingBubbles()
+            chattingVM.fetchFirstChattingBubbles()
             chattingVM.fetchUserInfo(login: userAuth.userType!, chatRooms: chatRoomId)
         }
         .navigationBarBackButtonHidden()
@@ -66,7 +66,7 @@ struct ChatRoomView: View {
     private var toolbarProfileInfo: some View {
         HStack {
             Button {
-                self.chattingVM.removeListener()
+                chattingVM.removeListener()
                 dismiss()
             } label: {
                 Image(systemName: "chevron.left")
@@ -75,7 +75,9 @@ struct ChatRoomView: View {
             HStack(alignment: .center) {
                 DMAsyncImage(url: userProfile.profileImageURLString, placeholder: Image(systemName: "person.circle.fill"))
                     .aspectRatio(contentMode: .fill)
-                    .frame(height: 20)
+                    .clipShape(Circle())
+                    .frame(width: 30, height: 30)
+                    
                 Text(userProfile.name)
                     .lineLimit(1)
             }
@@ -85,11 +87,13 @@ struct ChatRoomView: View {
     private var chatScroll: some View {
         ScrollView {
             VStack{
+                if chattingVM.anyMoreChats {
                 Button {
                     chattingVM.fetchMoreChattingBubble()
                 } label: {
                     Text("지난 대화보기")
                 }
+            }
                 ForEach(chattingVM.chattings) { chat in
                     var isMyBubble: Bool {
                         chat.sender == userId ? true : false
@@ -99,6 +103,7 @@ struct ChatRoomView: View {
                             if !isMyBubble {
                                 chattingVM.getReceivedBubbleId(chatRoomId: chatRoomId, sender: chat.sender)
                             }
+                            
                         }
                 }
             }
@@ -148,11 +153,5 @@ struct ChatRoomView: View {
         }
         .padding()
         .background(Color(red: 0.85, green: 0.85, blue: 0.85))
-    }
-}
-
-extension View {
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

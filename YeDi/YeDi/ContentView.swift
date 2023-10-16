@@ -16,6 +16,7 @@ struct ContentView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var profileViewModel: CMProfileViewModel
     @EnvironmentObject var reviewViewModel: CMReviewViewModel
+    @EnvironmentObject var chattingListViewModel: ChattingListRoomViewModel
     
     var body: some View {
         if userAuth.userSession != nil {
@@ -32,6 +33,16 @@ struct ContentView: View {
         } else {
             AuthHomeView()
         }
+        
+//        let _ = print(
+//            """
+//            ================================================================
+//            user type: \(String(describing: userAuth.userType))
+//            user session: \(String(describing: userAuth.userSession?.uid))
+//            client id: \(String(describing: userAuth.currentClientID))
+//            designer id: \(String(describing: userAuth.currentDesignerID))
+//            """
+//        )
     }
 }
 
@@ -48,4 +59,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(UserAuth())
+        .environmentObject(ChattingListRoomViewModel())
 }

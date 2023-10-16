@@ -19,7 +19,7 @@ struct ReservationSDetail: View {
                         .font(.system(size: 25))
                         .fontWeight(.bold)
                     Spacer()
-                    Text("다가오는 예약")
+                    Text("시술 완료")
                         .frame(width: 120, height: 40)
                         .background(RoundedRectangle(cornerRadius: 15)
                             .stroke(Color.black, lineWidth: 1))

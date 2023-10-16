@@ -116,5 +116,20 @@ class CMPostViewModel: ObservableObject {
     }
 }
 
+//초기 : current index = 0
+//      page number = 0
 
+//first fetch : current index = 2
+//      page number = 1
+
+//onAppear => current index = 3
+//      page number = 1
+
+//onAppear => current index = 5
+//      page number = 2
+
+//fetch =>
+
+//불러온 페이지를 저장하고, 화면 이동 전에 보여졌던 인덱스를 저장해서
+//opAppear 할 때, 불러온 페이지만큼 게시물을 불러오고 화면에 보여졌던 인덱스로
 
