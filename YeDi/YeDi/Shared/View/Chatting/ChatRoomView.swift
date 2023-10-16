@@ -75,7 +75,9 @@ struct ChatRoomView: View {
             HStack(alignment: .center) {
                 DMAsyncImage(url: userProfile.profileImageURLString, placeholder: Image(systemName: "person.circle.fill"))
                     .aspectRatio(contentMode: .fill)
-                    .frame(height: 20)
+                    .clipShape(Circle())
+                    .frame(width: 30, height: 30)
+                    
                 Text(userProfile.name)
                     .lineLimit(1)
             }

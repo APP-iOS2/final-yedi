@@ -12,13 +12,6 @@ struct WkDaySettingDetail: View {
     var body: some View {
         VStack(alignment: .leading) {
             CustomCalender()
-            Divider().padding(.top)
-            VStack(alignment: .leading, content: {
-                Text("휴무일을 선택하세요")
-                Text("선택한 날짜 : ")
-            })
-            .padding(.horizontal, 9)
-            Spacer()
         }
         .navigationTitle("휴무일 설정")
     }
