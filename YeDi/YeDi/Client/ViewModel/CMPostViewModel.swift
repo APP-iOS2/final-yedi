@@ -92,7 +92,7 @@ class CMPostViewModel: ObservableObject {
     // 클라이언트가 팔로우한 디자이너의 게시물만 가져오는 함수
     func fetchPostsForFollowedDesigners(clientID: String) {
         getFollowedDesignerIDs(forClientID: clientID) { designerIDs in
-            if let designerIDs = designerIDs {
+            if let designerIDs = designerIDs, !designerIDs.isEmpty {
                 // designerIDs 목록을 사용하여 Firestore에서 해당 디자이너의 게시물만 필터링
                 let query = Firestore.firestore().collection("posts")
                     .whereField("designerID", in: designerIDs)
@@ -107,11 +107,13 @@ class CMPostViewModel: ObservableObject {
                         // 여기에서 필터링된 게시물을 사용하여 SwiftUI 뷰를 업데이트합니다.
                     }
                 }
+            } else {
+                // designerIDs 목록이 비어있을 때의 처리 (팔로우한 디자이너가 없을 때)
+                print("No followed designers found.")
+                // 여기에서 필요한 예외 처리를 수행하거나 사용자에게 알릴 수 있습니다.
             }
         }
     }
-
-
 }
 
 
