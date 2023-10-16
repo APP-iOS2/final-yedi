@@ -7,12 +7,14 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 import FirebaseAuth
 
 final class PostDetailViewModel: ObservableObject {
     @Published var selectedImages: [String] = []
     @Published var selectedImageID: String = ""
     @Published var isFollowing: Bool = false
+    @Published var isLiked: Bool = false
     
     private let db = Firestore.firestore()
     private var currentUserUid: String? {
@@ -40,11 +42,11 @@ final class PostDetailViewModel: ObservableObject {
         guard let uid = currentUserUid else { return }
         
         if isFollowing {
-            await unfollowing(designerUid: designerUid, currentUserUid: uid)
             isFollowing = false
+            await unfollowing(designerUid: designerUid, currentUserUid: uid)
         } else {
-            await following(designerUid: designerUid, currentUserUid: uid)
             isFollowing = true
+            await following(designerUid: designerUid, currentUserUid: uid)
         }
     }
     
@@ -74,4 +76,64 @@ final class PostDetailViewModel: ObservableObject {
             print("Error unfollowing: \(error)")
         }
     }
+    
+    @MainActor
+    func toggleLike(post: Post) async {
+        guard let uid = currentUserUid else { return }
+        
+        if isLiked {
+            isLiked = false
+            await unLikePost(post: post, clientID: uid)
+        } else {
+            isLiked = true
+            await likePost(post: post, clientID: uid)
+        }
+    }
+    
+    private func unLikePost(post: Post, clientID: String) async {
+        guard let postID = post.id else { return }
+        do {
+            let querySnapshot = try await db.collection("likedPosts").whereField("clientID", isEqualTo: clientID).whereField("postID", isEqualTo: postID).getDocuments()
+            for document in querySnapshot.documents {
+                try await db.collection("likedPosts").document(document.documentID).delete()
+            }
+        } catch {
+            
+        }
+    }
+    
+    private func likePost(post: Post, clientID: String) async {
+        guard let postId = post.id else { return }
+        do {
+            let like = Like(clientID: clientID, postID: postId, isLiked: true, timestamp: SingleTonDateFormatter.sharedDateFommatter.firebaseDate(from: Date()))
+            try db.collection("likedPosts").addDocument(from: like)
+        } catch {
+            print("likePost Error: \(error)")
+        }
+    }
+    
+    @MainActor
+    func isLikedPost(post: Post) async {
+        guard let uid = currentUserUid else { return }
+        guard let postId = post.id else { return }
+        do {
+            let document = try await db.collection("likedPosts").whereField("clientID", isEqualTo: uid).whereField("postID", isEqualTo: postId).getDocuments()
+            
+            if document.isEmpty {
+                self.isLiked = false
+            } else {
+                self.isLiked = true
+            }
+        } catch {
+            print("isLikedPost error: \(error)")
+        }
+    }
+}
+
+struct Like: Identifiable, Codable {
+    @DocumentID var id: String?
+    let clientID: String
+    let postID: String
+    let isLiked: Bool
+    let timestamp: String
 }
