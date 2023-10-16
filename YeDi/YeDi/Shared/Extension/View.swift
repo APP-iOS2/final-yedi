@@ -13,16 +13,14 @@ extension View {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     
-    /// Auth Modifier 정의 함수
-    /// Text Field 관련
+    /// Text Field 관련 Auth Modifier
     func signInTextFieldStyle(isTextFieldValid: Binding<Bool>) -> some View {
         return modifier(
             SignInTextFieldStyle(isTextFieldValid: isTextFieldValid)
         )
     }
     
-    /// Auth Modifier 정의 함수
-    /// 주의 메시지 관련
+    /// 주의 메시지 관련 Auth Modifier
     func cautionTextStyle() -> some View {
         return modifier(CautionTextStyle())
     }
@@ -32,7 +30,10 @@ extension View {
         return modifier(ChatBubbleModifier(isMyChat: isMyChat))
     }
     
-    /// button Modifier 정의 함수
+    /// 모든 버튼 형태 통일을 위한 button Modifier
+    /// - 커스텀 버튼이 아닌 ViewModifier을 사용한 이유는 NavigationLink도 Button과 동일한 형태를 취하고 있는 것들이 있기 때문입니다.
+    /// - Button(label:) / NavigationLink(label:)에 들어가는 Text에게 사용해주세요.
+    /// - .buttonModifier(.mainColor)
     func buttonModifier(_ color: Color) -> some View {
         return modifier(ButtonModifier(color: color))
     }
