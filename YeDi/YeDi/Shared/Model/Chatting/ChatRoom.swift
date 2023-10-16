@@ -10,5 +10,6 @@ import Foundation
 struct ChatRoom: Codable {
     var id: String = UUID().uuidString
     var chattingBubles: [CommonBubble]?
+    var totalUnReadCount: Int?
 }
 

@@ -16,6 +16,7 @@ struct ContentView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var profileViewModel: CMProfileViewModel
     @EnvironmentObject var reviewViewModel: CMReviewViewModel
+    @EnvironmentObject var chattingListViewModel: ChattingListRoomViewModel
     
     var body: some View {
         if userAuth.userSession != nil {
@@ -58,4 +59,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(UserAuth())
+        .environmentObject(ChattingListRoomViewModel())
 }
