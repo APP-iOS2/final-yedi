@@ -38,7 +38,7 @@ final class ChattingListRoomViewModel: ObservableObject {
          }
         
         guard let type else {
-            debugPrint("로그인 정보를 찾을 수 없음")
+            debugPrint("화면정보가 없음")
             return true
         }
         

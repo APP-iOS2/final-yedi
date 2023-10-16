@@ -12,6 +12,7 @@ struct ChattingListRoomView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var chattingListRoomViewModel : ChattingListRoomViewModel
     @State private var isEmptyChatRooms: Bool = false
+
     
     var body: some View {
         VStack {
@@ -32,8 +33,8 @@ struct ChattingListRoomView: View {
                             
                             DMAsyncImage(url: chattingListRoomViewModel.userProfile[chattingRoom.id]?.profileImageURLString ?? "", placeholder: Image(systemName: "person.circle.fill"))
                                 .aspectRatio(contentMode: .fill)
-                                .frame(height: 50)
-                                .font(.system(size: 50))
+                                .clipShape(Circle())
+                                .frame(width: 50, height: 50)
                             
                             VStack(alignment: .leading) {
                                 Text(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name ?? "닉네임 오류")
@@ -55,7 +56,6 @@ struct ChattingListRoomView: View {
                                 }
                             }
                         }
-                        
                     }
                 }
                 .listStyle(.plain)
