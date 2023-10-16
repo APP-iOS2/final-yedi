@@ -8,72 +8,56 @@
 import SwiftUI
 import PhotosUI
 
+/// 고객 프로필 편집 메인 뷰
 struct CMProfileEditView: View {
+    // MARK: - Properties
     @Environment(\.dismiss) var dismiss
     
     @EnvironmentObject var userAuth: UserAuth
-    
     @EnvironmentObject var profileViewModel: CMProfileViewModel
     
-    @State private var selectedPhotoURL: String = ""
+    @Binding var clientPhotoURL: String
+    @Binding var clientName: String
+    @Binding var clientGender: String
+    @Binding var clientBirthDate: String
+    @Binding var clientPhoneNumber: String
+    
     @State private var isShowingPhotoPicker: Bool = false
     
-    @State private var clientName: String = ""
-    @State private var clientGender: String = ""
-    @State private var clientBirthDate: String = ""
-    
-    @State private var accountEmail: String = ""
-    @State private var accountPhoneNumber: String = ""
-    
+    // MARK: - Body
     var body: some View {
         VStack {
-            if selectedPhotoURL == "" {
-                Image(systemName: "person.circle.fill")
-                    .font(.system(size: 80))
-                    .padding([.top, .bottom])
-                    .overlay {
-                        ZStack {
-                            Circle()
-                                .trim(from: 0.07, to: 0.43)
-                                .fill(Color(white: 0.2))
-                                .frame(width: 80)
-                            Text("편집")
-                                .font(.system(size: 13))
-                                .foregroundStyle(.white)
-                                .offset(y: 27)
-                        }
-                    }
-                    .onTapGesture(perform: {
-                        isShowingPhotoPicker.toggle()
-                    })
-            } else {
-                AsyncImage(url: URL(string: selectedPhotoURL)) { image in
-                    image
-                        .resizable()
+            // MARK: - 프로필 이미지 수정 섹션
+            Group {
+                if clientPhotoURL.isEmpty {
+                    Image(systemName: "person.circle.fill")
+                        .font(.system(size: 80))
+                        .padding([.top, .bottom])
+                } else {
+                    DMAsyncImage(url: clientPhotoURL)
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 80, height: 80)
                         .clipShape(Circle())
                         .padding([.top, .bottom])
-                        .overlay {
-                            ZStack {
-                                Circle()
-                                    .trim(from: 0.07, to: 0.43)
-                                    .fill(Color(white: 0.2))
-                                    .frame(width: 80)
-                                Text("편집")
-                                    .font(.system(size: 13))
-                                    .foregroundStyle(.white)
-                                    .offset(y: 27)
-                            }
-                        }
-                        .onTapGesture(perform: {
-                            isShowingPhotoPicker.toggle()
-                        })
-                } placeholder: {
-                    ProgressView()
                 }
             }
+            .overlay {
+                ZStack {
+                    Circle()
+                        .trim(from: 0.07, to: 0.43)
+                        .fill(Color(white: 0.2))
+                        .frame(width: 80)
+                    Text("편집")
+                        .font(.system(size: 13))
+                        .foregroundStyle(.white)
+                        .offset(y: 27)
+                }
+            }
+            .onTapGesture(perform: {
+                isShowingPhotoPicker.toggle()
+            })
             
+            // MARK: - 회원 정보 수정 섹션
             Section {
                 CMClientInfoEditView(
                     clientName: $clientName,
@@ -92,10 +76,10 @@ struct CMProfileEditView: View {
                     .frame(width: 360)
             }
             
+            // MARK: - 계정 정보 수정 섹션
             Section {
                 CMAccountInfoEditView(
-                    accountEmail: $accountEmail,
-                    accountPhoneNumber: $accountPhoneNumber
+                    accountPhoneNumber: $clientPhoneNumber
                 )
             } header: {
                 HStack {
@@ -109,24 +93,27 @@ struct CMProfileEditView: View {
             }
             
             Spacer()
+            
+            // MARK: - 고객 프로필 저장 버튼
             Button(action: {
                 if let clientId = userAuth.currentClientID {
                     let newClient = Client(
                         id: clientId,
                         name: clientName,
-                        email: accountEmail,
-                        profileImageURLString: selectedPhotoURL,
-                        phoneNumber: accountPhoneNumber,
+                        email: profileViewModel.client.email,
+                        profileImageURLString: clientPhotoURL,
+                        phoneNumber: clientPhoneNumber,
                         gender: clientGender,
                         birthDate: clientBirthDate,
-                        favoriteStyle: "",
-                        chatRooms: []
+                        favoriteStyle: profileViewModel.client.favoriteStyle,
+                        chatRooms: profileViewModel.client.chatRooms
                     )
+                    
                     Task {
                         await profileViewModel.updateClientProfile(userAuth: userAuth, newClient: newClient)
+                        dismiss()
                     }
                 }
-                dismiss()
             }, label: {
                 Text("저장")
                     .frame(width: 330, height: 30)
@@ -137,30 +124,22 @@ struct CMProfileEditView: View {
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .tabBar)
-        .onAppear {
-            Task {
-                await profileViewModel.fetchClientProfile(userAuth: userAuth)
-            }
-            
-            selectedPhotoURL = profileViewModel.client.profileImageURLString
-            
-            clientName = profileViewModel.client.name
-            clientGender = profileViewModel.client.gender
-            clientBirthDate = profileViewModel.client.birthDate
-            
-            accountEmail = profileViewModel.client.email
-            accountPhoneNumber = profileViewModel.client.phoneNumber
-        }
         .sheet(isPresented: $isShowingPhotoPicker, content: {
             PhotoPicker { imageURL in
-                selectedPhotoURL = imageURL.absoluteString
+                clientPhotoURL = imageURL.absoluteString
             }
         })
     }
 }
 
 #Preview {
-    CMProfileEditView()
-        .environmentObject(UserAuth())
-        .environmentObject(CMProfileViewModel())
+    CMProfileEditView(
+        clientPhotoURL: .constant(""),
+        clientName: .constant(""),
+        clientGender: .constant(""),
+        clientBirthDate: .constant(""),
+        clientPhoneNumber: .constant("")
+    )
+    .environmentObject(UserAuth())
+    .environmentObject(CMProfileViewModel())
 }

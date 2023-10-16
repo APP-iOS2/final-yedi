@@ -45,33 +45,42 @@ struct CMSearchView: View {
                             }
                         }
                     }
-                    HStack {
-                        ForEach(viewModel.recentSearches, id: \.self) { search in
-                            HStack {
-                                Button {
-                                    viewModel.searchText = search
-                                    viewModel.performSearch()
-                                } label: {
+                    
+                    .padding(.horizontal)
+                    .padding(.bottom)
+                    
+                    ForEach(viewModel.recentSearches, id: \.self) { search in
+                        HStack {
+                            Button {
+                                viewModel.searchText = search
+                                viewModel.performSearch()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "magnifyingglass")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                        .padding(15)
+                                        .overlay {
+                                            Circle().stroke(.gray, lineWidth: 1)
+                                        }
                                     Text(search)
-                                        .foregroundStyle(.black)
+                                        .padding(.leading,5)
+                                    Spacer()
                                 }
-                                Button(action: {viewModel.removeRecentSearch(search)}, label: {
-                                    Image(systemName: "xmark")
-                                })
-                                .foregroundStyle(.white)
+                                .foregroundStyle(.black)
                             }
-                            .padding(.horizontal, 15)
-                            .padding(.vertical, 7)
-                            .background {
-                                Capsule(style: .continuous)
-                                    .foregroundStyle(.gray.opacity(0.5))
-                            }
+                            Button(action: {viewModel.removeRecentSearch(search)}, label: {
+                                Image(systemName: "xmark")
+                            })
+                            .foregroundStyle(.gray)
                         }
-                        Spacer()
+                        .padding(.horizontal, 15)
+                        .padding(.vertical, 7)
                     }
+                    Spacer()
+                    
+                        .listStyle(.plain)
                 }
-                .padding(.horizontal)
-                .padding(.bottom)
             }
             
             if !viewModel.searchText.isEmpty {
@@ -86,15 +95,20 @@ struct CMSearchView: View {
                         NavigationLink(destination: CMDesignerProfileView(designer: designer)) {
                             VStack {
                                 HStack {
-                                    Image(systemName: "person.circle.fill")
-                                        .font(.largeTitle)
-                                        .foregroundStyle(.yellow)
+                                    Image(systemName: "person")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                        .padding(15)
+                                        .overlay {
+                                            Circle().stroke(.gray, lineWidth: 1)
+                                        }
                                     VStack(alignment: .leading) {
                                         Text(designer.name)
                                         Text("유칼립투스 헤어 | 단원구 선부동")
                                             .font(.subheadline)
                                             .foregroundStyle(.gray)
                                     }
+                                    .padding(.leading,5)
                                     Spacer()
                                 }
                             }

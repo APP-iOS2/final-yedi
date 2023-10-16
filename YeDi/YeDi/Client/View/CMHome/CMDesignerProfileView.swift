@@ -73,15 +73,17 @@ struct CMDesignerProfileView: View {
                 } else {
                     LazyVGrid(columns: gridItems, spacing: 1) {
                         ForEach(designerPosts, id: \.id) { post in
+                            
                             DMAsyncImage(url: post.photos[0].imageURL, placeholder: Image(systemName: "photo"))
                                 .scaledToFill()
                                 .frame(width: imageDimension, height: imageDimension)
                                 .clipped()
+                            
                         }
                     }
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                    NavigationLink(destination: CMStyleDetailView(designer: designer)) {
                         Text("스타일 전체보기")
-                    })
+                    }
                     .buttonStyle(.borderedProminent)
                     .tint(.black)
                 }

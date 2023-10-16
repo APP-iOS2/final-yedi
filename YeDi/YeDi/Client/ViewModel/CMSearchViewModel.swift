@@ -28,6 +28,7 @@ class CMSearchViewModel: ObservableObject {
         loadData()
     }
     
+    //최근 검색어 저장
     func saveRecentSearch() {
         if !searchText.isEmpty {
             if !recentSearches.contains(searchText) {
@@ -36,35 +37,36 @@ class CMSearchViewModel: ObservableObject {
                     recentSearches.removeLast()
                 }
                 
-                // UserDefaults를 사용하여 최근 검색어를 저장합니다.
                 UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
             }
             searchText = ""
         }
     }
     
+    // 최근 검색어 삭제
     func removeRecentSearch(_ search: String) {
         if let index = recentSearches.firstIndex(of: search) {
             recentSearches.remove(at: index)
             
-            // UserDefaults에서 해당 검색어를 삭제합니다.
             UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
         }
     }
     
+    // 최근 검색어 전체 삭제
     func removeAllRecentSearches() {
         recentSearches.removeAll()
+        
         UserDefaults.standard.removeObject(forKey: "RecentSearches")
     }
 
-    
+    // 최근 검색어 불러오기
     func loadRecentSearches() {
-        // UserDefaults에서 최근 검색어를 불러옵니다.
         if let loadedSearches = UserDefaults.standard.array(forKey: "RecentSearches") as? [String] {
             recentSearches = loadedSearches
         }
     }
     
+    // 디자이너 정보 불러오기
     func loadData() {
         let db = Firestore.firestore()
         

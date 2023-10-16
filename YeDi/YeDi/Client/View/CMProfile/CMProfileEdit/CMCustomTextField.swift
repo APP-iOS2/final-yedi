@@ -7,7 +7,9 @@
 
 import SwiftUI
 
+/// 커스텀 텍스트 필드 스타일
 struct CMCustomTextFieldStyle: TextFieldStyle {
+    // MARK: - Body
     func _body(configuration: TextField<_Label>) -> some View {
         configuration
             .padding(10)
