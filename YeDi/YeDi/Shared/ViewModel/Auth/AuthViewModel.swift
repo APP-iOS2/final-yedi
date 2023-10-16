@@ -23,15 +23,13 @@ final class UserAuth: ObservableObject {
     private let storeService = Firestore.firestore()
     private let userDefaults: UserDefaults = UserDefaults.standard
     
-    var credential: AuthCredential?
-    
     init() {
         fetchUserTypeinUserDefaults()
         fetchUser()
     }
     
     func fetchUser() {
-        auth.addStateDidChangeListener { auth, user in
+        auth.addStateDidChangeListener { _, user in
             if let user = user {
                 self.userSession = user
                 self.userType = self.userType
@@ -195,22 +193,24 @@ final class UserAuth: ObservableObject {
         }
     }
     
-    func updatePassword(_ password: String, _ completion: @escaping (Bool) -> Void) {
-//        auth.currentUser?.reauthenticate(with: credential!) { result, error in
-//            if let error = error {
-//                print(error.localizedDescription)
-//                completion(false)
-//            } else {
-//                self.auth.currentUser?.updatePassword(to: password) { error in
-//                    if let error = error {
-//                        print(error.localizedDescription)
-//                        completion(false)
-//                    } else {
-//                        completion(true)
-//                    }
-//                }
-//            }
-//        }
+    func updatePassword(_ email: String, _ currentPassword: String, _ newPassword: String, _ completion: @escaping (Bool) -> Void) {
+        let credential: AuthCredential = EmailAuthProvider.credential(withEmail: email, password: currentPassword)
+        
+        auth.currentUser?.reauthenticate(with: credential) { result, error in
+            if let error = error {
+                print("reauthenticate error: \(error.localizedDescription)")
+                completion(false)
+            } else {
+                self.auth.currentUser?.updatePassword(to: newPassword) { error in
+                    if let error = error {
+                        print("update error: \(error.localizedDescription)")
+                        completion(false)
+                    } else {
+                        completion(true)
+                    }
+                }
+            }
+        }
     }
     
     func signOut() {

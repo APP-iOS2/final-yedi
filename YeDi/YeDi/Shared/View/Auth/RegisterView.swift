@@ -28,48 +28,50 @@ struct RegisterView: View {
 }
     
 struct RegisterNavigationView: View {
-    @State var userType: UserType
+    var userType: UserType
     
-    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject private var userAuth: UserAuth
     @Environment(\.dismiss) private var dismiss
     
-    @State var birthPicker = Date()
+    private let authRegex = AuthRegex.shared
+    
+    @State private var birthPicker = Date()
     
     /// 고객, 디자이너 공통 프로퍼티
-    @State var name: String = ""
-    @State var email: String = ""
-    @State var phoneNumber: String = ""
-    @State var profileImageURLString: String = ""
-    @State var password: String = ""
-    @State var doubleCheckPassword: String = ""
+    @State private var name: String = ""
+    @State private var email: String = ""
+    @State private var phoneNumber: String = ""
+    @State private var profileImageURLString: String = ""
+    @State private var password: String = ""
+    @State private var doubleCheckPassword: String = ""
     /// 고객 프로퍼티 (연산프로퍼티 birthDate 포함)
     @State private var selectedGender: String = "여성"
     /// 디자이너 프로퍼티
-    @State var description: String = ""
-    @State var rank: Rank = .Owner
+    @State private var description: String = ""
+    @State private var rank: Rank = .Owner
     /// caution 프로퍼티
-    @State var cautionEmail: String = ""
-    @State var cautionPassword: String = ""
-    @State var cautionDoubleCheckPassword: String = ""
-    @State var cautionName: String = ""
-    @State var cautionPhoneNumber: String = ""
-    @State var cautionBirth: String = ""
+    @State private var cautionEmail: String = ""
+    @State private var cautionPassword: String = ""
+    @State private var cautionDoubleCheckPassword: String = ""
+    @State private var cautionName: String = ""
+    @State private var cautionPhoneNumber: String = ""
+    @State private var cautionBirth: String = ""
     /// valid 프로퍼티
-    @State var isEmailValid: Bool = true
-    @State var isPasswordValid: Bool = true
-    @State var isDoubleCheckPasswordValid: Bool = true
-    @State var isPhoneNumberValid: Bool = true
-    @State var isBirthValid: Bool = true
+    @State private var isEmailValid: Bool = true
+    @State private var isPasswordValid: Bool = true
+    @State private var isDoubleCheckPasswordValid: Bool = true
+    @State private var isPhoneNumberValid: Bool = true
+    @State private var isBirthValid: Bool = true
     /// empty 프로퍼티
-    @State var isNotEmptyName: Bool = true
-    @State var isNotEmptyDescription: Bool = true
+    @State private var isNotEmptyName: Bool = true
+    @State private var isNotEmptyDescription: Bool = true
     /// birth 프로퍼티
-    @State var changedBirthText: String = "생년월일"
+    @State private var changedBirthText: String = "생년월일"
     
-    let genders: [String] = ["여성", "남성"]
-    let ranks: [Rank] = [.Owner, .Principal, .Designer, .Intern]
+    private let genders: [String] = ["여성", "남성"]
+    private let ranks: [Rank] = [.Owner, .Principal, .Designer, .Intern]
     
-    var birthDate: String {
+    private var birthDate: String {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "yyyy년 MM월 dd일"
         return formatter.string(from: birthPicker)
@@ -346,24 +348,18 @@ struct RegisterNavigationView: View {
     }
     
     private func checkEmail() -> Bool {
-        if checkEmailValid(email) {
+        if authRegex.checkEmailValid(email) {
             cautionEmail = ""
             isEmailValid = true
-        } else if !checkEmailValid(email) {
+        } else if !authRegex.checkEmailValid(email) {
             cautionEmail = "올바르지 않은 이메일 주소입니다"
             isEmailValid = false
         }
         return isEmailValid
     }
     
-    private func checkEmailValid(_ email: String) -> Bool {
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z.-]+\\.[A-Za-z]{2,64}"
-        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-        return emailPredicate.evaluate(with: email)
-    }
-    
     private func checkPassword() -> Bool {
-        if checkPasswordValid(password) {
+        if authRegex.checkPasswordValid(password) {
             cautionPassword = ""
             isPasswordValid = true
         } else {
@@ -384,12 +380,6 @@ struct RegisterNavigationView: View {
         return isDoubleCheckPasswordValid
     }
     
-    private func checkPasswordValid(_ password: String) -> Bool {
-        let passwordRegex = "^(?=.*[A-Za-z])(?=.*[0-9]).{6,}$"
-        let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
-        return passwordPredicate.evaluate(with: password)
-    }
-    
     private func checkEmptyName() -> Bool {
         if !name.isEmpty {
             cautionName = ""
@@ -402,7 +392,7 @@ struct RegisterNavigationView: View {
     }
     
     private func checkPhoneNumber() -> Bool {
-        if checkPhoneNumberValid(phoneNumber) {
+        if authRegex.checkPhoneNumberValid(phoneNumber) {
             cautionPhoneNumber = ""
             isPhoneNumberValid = true
         } else {
@@ -410,12 +400,6 @@ struct RegisterNavigationView: View {
             isPhoneNumberValid = false
         }
         return isPhoneNumberValid
-    }
-    
-    private func checkPhoneNumberValid(_ phoneNumber: String) -> Bool {
-        let regex = "^01([0|1|6|7|8|9]?) ?([0-9]{4}) ?([0-9]{4})$"
-        let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
-        return predicate.evaluate(with: phoneNumber)
     }
     
     private func checkBirth() -> Bool {

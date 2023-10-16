@@ -11,28 +11,50 @@ struct UpdatePasswordView: View {
     @EnvironmentObject var userAuth: UserAuth
     @Environment(\.dismiss) private var dismiss
     
-    @State private var password: String = ""
+    private let authRegex = AuthRegex.shared
+    
+    @State private var currentPassword: String = ""
+    @State private var newPassword: String = ""
     @State private var doubleCheckPassword: String = ""
     
-    @State private var cautionPassword: String = ""
+    @State private var cautionCorrectPassword: String = ""
+    @State private var cautionNewPassword: String = ""
     @State private var cautionDoubleCheckPassword: String = ""
     
-    @State private var isPasswordValid: Bool = true
+    @State private var isCorrectPassword: Bool = true
+    @State private var isNewPasswordValid: Bool = true
     @State private var isDoubleCheckPasswordValid: Bool = true
+    
+    private var userEmail: String {
+        guard let email = userAuth.userSession?.email else { return "" }
+        return email
+    }
     
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: 5) {
+                Text("현재 패스워드")
+                TextField("현재 패스워드", text: $currentPassword)
+                    .signInTextFieldStyle(isTextFieldValid: $isCorrectPassword)
+                    .onChange(of: currentPassword) { newValue in
+                        currentPassword = newValue.trimmingCharacters(in: .whitespaces)
+                    }
+                
+                Text(cautionCorrectPassword)
+                    .cautionTextStyle()
+            }
+            
+            VStack(alignment: .leading, spacing: 5) {
                 Text("새로운 패스워드")
-                TextField("새로운 패스워드", text: $password)
-                    .signInTextFieldStyle(isTextFieldValid: $isPasswordValid)
-                    .onChange(of: password) { newValue in
+                TextField("새로운 패스워드", text: $newPassword)
+                    .signInTextFieldStyle(isTextFieldValid: $isNewPasswordValid)
+                    .onChange(of: newPassword) { newValue in
                         if !checkPassword() {
-                            password = newValue.trimmingCharacters(in: .whitespaces)
+                            newPassword = newValue.trimmingCharacters(in: .whitespaces)
                         }
                     }
                 
-                Text(cautionPassword)
+                Text(cautionNewPassword)
                     .cautionTextStyle()
             }
             
@@ -52,11 +74,12 @@ struct UpdatePasswordView: View {
             
             Button {
                 if checkPassword() && doubleCheckPasswordValid() {
-                    userAuth.updatePassword(password) { success in
+                    userAuth.updatePassword(userEmail, currentPassword, newPassword) { success in
                         if success {
                             dismiss()
                         } else {
-                            print("비밀번호 변경 실패")
+                            cautionCorrectPassword = "현재 비밀번호를 정확하게 입력해 주세요."
+                            isCorrectPassword = false
                         }
                     }
                 }
@@ -77,18 +100,18 @@ struct UpdatePasswordView: View {
     }
     
     private func checkPassword() -> Bool {
-        if checkPasswordValid(password) {
-            cautionPassword = ""
-            isPasswordValid = true
+        if authRegex.checkPasswordValid(newPassword) {
+            cautionNewPassword = ""
+            isNewPasswordValid = true
         } else {
-            cautionPassword = "알파벳, 숫자를 이용하여 6자 이상의 비밀번호를 입력해주세요."
-            isPasswordValid = false
+            cautionNewPassword = "알파벳, 숫자를 이용하여 6자 이상의 비밀번호를 입력해주세요."
+            isNewPasswordValid = false
         }
-        return isPasswordValid
+        return isNewPasswordValid
     }
     
     private func doubleCheckPasswordValid() -> Bool {
-        if password == doubleCheckPassword {
+        if newPassword == doubleCheckPassword {
             cautionDoubleCheckPassword = ""
             isDoubleCheckPasswordValid = true
         } else {
@@ -96,12 +119,6 @@ struct UpdatePasswordView: View {
             isDoubleCheckPasswordValid = false
         }
         return isDoubleCheckPasswordValid
-    }
-    
-    private func checkPasswordValid(_ password: String) -> Bool {
-        let passwordRegex = "^(?=.*[A-Za-z])(?=.*[0-9]).{6,}$"
-        let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
-        return passwordPredicate.evaluate(with: password)
     }
 }
 

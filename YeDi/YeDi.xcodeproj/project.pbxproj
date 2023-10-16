@@ -117,6 +117,7 @@
 		DC76958A2ADA8E6500D2FB69 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC7695892ADA8E6500D2FB69 /* GoogleService-Info.plist */; };
 		DC7695B32ADC007900D2FB69 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695B22ADC007900D2FB69 /* ResetPasswordView.swift */; };
 		DC7695B52ADC148300D2FB69 /* UpdatePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695B42ADC148300D2FB69 /* UpdatePasswordView.swift */; };
+		DC7695B92ADCD56A00D2FB69 /* AuthRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695B82ADCD56A00D2FB69 /* AuthRegex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -225,6 +226,7 @@
 		DC7695892ADA8E6500D2FB69 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DC7695B22ADC007900D2FB69 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
 		DC7695B42ADC148300D2FB69 /* UpdatePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordView.swift; sourceTree = "<group>"; };
+		DC7695B82ADCD56A00D2FB69 /* AuthRegex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRegex.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +274,7 @@
 		3BCF2C032ACD3E72009C18C2 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				DC7695B72ADCD52200D2FB69 /* Utils */,
 				2F45A1262AD27388005018A5 /* Extension */,
 				3BCF2C042ACD3E72009C18C2 /* ViewModel */,
 				3BCF2C092ACD3E72009C18C2 /* Model */,
@@ -659,6 +662,14 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		DC7695B72ADCD52200D2FB69 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				DC7695B82ADCD56A00D2FB69 /* AuthRegex.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -760,6 +771,7 @@
 				3BCF2C8B2ACD4248009C18C2 /* CMSegmentedControl.swift in Sources */,
 				3BCF2C6F2ACD4248009C18C2 /* CMReviewCreateContentView.swift in Sources */,
 				3BAB00F32ACD97EB009053A4 /* ReservationSDetail.swift in Sources */,
+				DC7695B92ADCD56A00D2FB69 /* AuthRegex.swift in Sources */,
 				639DB6872AC11B56002692E5 /* DMPostView.swift in Sources */,
 				3BCF2C282ACD3E73009C18C2 /* ChatBubbleModifier.swift in Sources */,
 				3BCF2C802ACD4248009C18C2 /* CMHomeView.swift in Sources */,
