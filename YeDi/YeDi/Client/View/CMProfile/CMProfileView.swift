@@ -63,11 +63,6 @@ struct CMProfileView: View {
                         .padding(.bottom, 40)
                 }
                 
-                // MARK: - 리뷰 작성 버튼 (삭제 예정)
-                NavigationLink(destination: CMNewReviewView()) {
-                    Text("리뷰 작성하기")
-                }
-                
                 // MARK: - 고객 세그먼티드 컨트롤 뷰
                 CMSegmentedControl()
             }
@@ -77,13 +72,13 @@ struct CMProfileView: View {
             // MARK: - 프로필 정보 패치
             Task {
                 await profileViewModel.fetchClientProfile(userAuth: userAuth)
+                
+                clientPhotoURL = profileViewModel.client.profileImageURLString
+                clientName = profileViewModel.client.name
+                clientGender = profileViewModel.client.gender
+                clientBirthDate = profileViewModel.client.birthDate
+                clientPhoneNumber = profileViewModel.client.phoneNumber
             }
-            
-            clientPhotoURL = profileViewModel.client.profileImageURLString
-            clientName = profileViewModel.client.name
-            clientGender = profileViewModel.client.gender
-            clientBirthDate = profileViewModel.client.birthDate
-            clientPhoneNumber = profileViewModel.client.phoneNumber
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
