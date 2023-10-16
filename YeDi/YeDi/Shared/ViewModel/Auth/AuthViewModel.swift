@@ -225,12 +225,29 @@ final class UserAuth: ObservableObject {
     }
     
     func deleteClientAccount() {
+        guard let user = Auth.auth().currentUser else { return }
+        
         if let currentClientID {
             storeService
                 .collection("clients")
                 .document(currentClientID).delete()
+        }
+        
+        if let currentDesignerID {
+            storeService
+                .collection("designers")
+                .document(currentDesignerID).delete()
+        }
+        
+        user.delete { error in
+            if let error = error {
+                print("DEBUG: Error deleting user account: \(error.localizedDescription)")
+                return
+            }
             
-            userSession = nil
+            print("DEBUG: User account deleted")
+            
+            self.signOut()
         }
     }
 }
