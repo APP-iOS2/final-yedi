@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseFirestore
 
 struct CMLikePostListView: View {
+    // MARK: - Properties
     @EnvironmentObject var userAuth: UserAuth // 환경 객체로 UserAuth를 사용할 수 있도록 추가
     @StateObject private var viewModel = CMLikePostListViewModel() // 클라이언트가 찜한 게시물을 저장할 배열
     
@@ -20,6 +21,7 @@ struct CMLikePostListView: View {
     
     private let imageDimension: CGFloat = (UIScreen.main.bounds.width / 3) - 1
     
+    // MARK: - Body
     var body: some View {
         VStack {
             if viewModel.likedPosts.isEmpty {

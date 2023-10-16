@@ -7,17 +7,18 @@
 
 import SwiftUI
 
+/// 고객 설정 뷰
 struct CMSettingsView: View {
-    // TODO: 임시 로그아웃 버튼
+    // MARK: - Properties
     @EnvironmentObject var userAuth: UserAuth
     
     @State private var isShowingSignOutAlert: Bool = false
     @State private var isShowingDeleteClientAccountAlert: Bool = false
     
+    // MARK: - Body
     var body: some View {
         VStack {
             List {
-                Text("오픈소스 라이브러리")
                 Button {
                     isShowingSignOutAlert.toggle()
                 } label: {

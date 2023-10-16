@@ -98,7 +98,8 @@ struct KeywordButton: View {
         }
     }
     
-    // MARK: - 키워드 선택 처리 함수
+    // MARK: - Methods
+    /// 키워드 선택 처리 함수
     func selectKeyword(index: Int) {
         if displayingKeywords[index].isSelected {
             selectedKeywords.removeAll(where: { $0 == keywords[index] })
