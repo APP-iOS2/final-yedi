@@ -124,3 +124,20 @@ struct Post: Codable {
     /// 게시 시간 (타임스탬프)
     var timestamp: String  // 실제로는 Timestamp 타입 사용해야할거같네요? - ChanHo
 }
+
+/// - 휴무일 설정 구조체
+struct ClosedDay: Identifiable, Codable {
+    /// Firestore 문서 ID
+    @DocumentID var id: String?
+    /// 휴무일 설정한 계정의 디자이너 ID
+    var designerID: String
+    /// 설정한 휴무일
+    var day: [String]
+}
+
+/// - 휴식시간 설정 구조체
+struct BreakTime: Codable {
+    @DocumentID var id: String?
+    var designerID: String
+    var breakTime: [String]
+}
