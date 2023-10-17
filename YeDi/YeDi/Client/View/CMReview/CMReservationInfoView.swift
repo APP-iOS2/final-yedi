@@ -42,7 +42,7 @@ struct CMReservationInfoView: View {
                 .shadow(color: .gray, radius: 5, x: 0, y: 5)
                 .opacity(0.3)
         )
-        .offset(y: -20)
+        .offset(y: -50)
     }
 }
 
