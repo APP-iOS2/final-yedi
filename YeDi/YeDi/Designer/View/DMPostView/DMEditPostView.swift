@@ -18,7 +18,14 @@ struct DMEditPostView: View {
     @State private var imageUrls: [String] = []
     @State private var newImageUrl = ""
     @State private var showAlert = false
+    @State private var hairCategory: HairCategory = .Else
+
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    let hairCategoryArray: [HairCategory] = [HairCategory.Cut,
+                            HairCategory.Dying,
+                            HairCategory.Perm,
+                            HairCategory.Else]
     
     private var isFormValid: Bool {
         return !title.isEmpty && !description.isEmpty && !imageUrls.isEmpty
@@ -82,11 +89,25 @@ struct DMEditPostView: View {
                 .padding()
                 .background(Color.gray.opacity(0.2))
                 .cornerRadius(8)
+            categoryPickerView
             imageUrlsSection
             
         }
         .padding([.leading, .trailing], 20)
     }
+    
+    private var categoryPickerView: some View {
+            VStack{
+                Text("스타일 종류를 선택하세요")
+                Picker("", selection: $hairCategory) {
+                    ForEach(hairCategoryArray, id: \.self) { style in
+                        Text("\(style.rawValue)")
+                    }
+
+                }
+
+            }
+        }
     
     private var imageUrlsSection: some View {
         VStack(alignment: .leading) {
@@ -130,7 +151,8 @@ struct DMEditPostView: View {
         db.collection("posts").document(postId).updateData([
             "title": title,
             "description": description,
-            "photos": updatedPhotosDicts  // Dictionary 배열로 업데이트
+            "photos": updatedPhotosDicts,  // Dictionary 배열로 업데이트
+            "hairCategory" : hairCategory.rawValue
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -145,7 +167,7 @@ struct DMEditPostView: View {
 
 struct DMEditPostView_Previews: PreviewProvider {
     static var previews: some View {
-        let samplePost = State(initialValue: Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전"))
+        let samplePost = State(initialValue: Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전", hairCategory: .Cut))
         let shouldRefresh = State(initialValue: false)
         DMEditPostView(post: samplePost.projectedValue, shouldRefresh: shouldRefresh.projectedValue)
     }
