@@ -129,6 +129,7 @@ struct Post: Codable {
     var timestamp: String  // 실제로는 Timestamp 타입 사용해야할거같네요? - ChanHo
 }
 
+
 enum HairCategory: String, Codable {
     case Cut = "커트"
     case Perm = "펌"

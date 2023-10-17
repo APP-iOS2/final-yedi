@@ -17,12 +17,18 @@ struct DMNewPostView: View {
     @State private var imageUrls: [String] = []
     @State private var newImageUrl = ""
     @State private var showAlert = false
+    @State private var hairCategory: HairCategory = .Else
     
     @State private var isShowingPhotoPicker: Bool = false
-
+    
     @EnvironmentObject var userAuth: UserAuth
     @Environment(\.presentationMode) var presentationMode
 
+    let hairCategoryArray: [HairCategory] = [HairCategory.Cut,
+                        HairCategory.Dying,
+                        HairCategory.Perm,
+                        HairCategory.Else]
+    
     // 폼 유효성 검사
     private var isFormValid: Bool {
         return !title.isEmpty && !description.isEmpty && !imageUrls.isEmpty
@@ -55,6 +61,7 @@ struct DMNewPostView: View {
                 .foregroundStyle(.black)
             navigationLinkToTextEditor(title: "내용", text: $description, placeholder: "내용을 입력해주세요.")
                 .foregroundStyle(.black)
+            categoryPickerView
             imageUrlsSection
             Spacer()
         }
@@ -65,6 +72,19 @@ struct DMNewPostView: View {
     private func navigationLinkToTextEditor(title: String, text: Binding<String>, placeholder: String) -> some View {
         NavigationLink(destination: TextEditorView(editingField: title, text: text, placeholder: placeholder)) {
             InputField(title: title, text: text, placeholder: placeholder)
+        }
+    }
+    
+    private var categoryPickerView: some View {
+        VStack{
+            Text("스타일 종류를 선택하세요")
+            Picker("", selection: $hairCategory) {
+                ForEach(hairCategoryArray, id: \.self) { style in
+                    Text("\(style.rawValue)")
+                }
+                
+            }
+
         }
     }
     
