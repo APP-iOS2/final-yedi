@@ -123,7 +123,13 @@ struct CMProfileEditView: View {
         }
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .tabBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                DismissButton(color: nil, action: {})
+            }
+        }
         .sheet(isPresented: $isShowingPhotoPicker, content: {
             PhotoPicker { imageURL in
                 clientPhotoURL = imageURL.absoluteString
