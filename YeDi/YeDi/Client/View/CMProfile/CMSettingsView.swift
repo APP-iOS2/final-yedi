@@ -20,6 +20,9 @@ struct CMSettingsView: View {
         VStack {
             // MARK: - 이용 안내 섹션
             VStack(spacing: 5) {
+                Divider()
+                    .frame(width: 360)
+                    .padding(.bottom, 10)
                 HStack {
                     Text("앱 버전")
                     Spacer()
@@ -27,16 +30,18 @@ struct CMSettingsView: View {
                 }
                 Divider()
                     .frame(width: 360)
-                    .padding(.bottom, 10)
+                    .padding([.top, .bottom], 10)
                 HStack {
                     Text("오픈소스 라이선스")
                     Spacer()
                 }
                 Divider()
                     .frame(width: 360)
-                    .padding(.bottom, 10)
+                    .padding([.top, .bottom], 10)
             }
             .padding([.leading, .trailing, .bottom])
+            
+            Spacer()
             
             Group {
                 Button {
@@ -54,8 +59,6 @@ struct CMSettingsView: View {
                 .buttonModifier(.red)
             }
             .padding([.leading, .trailing])
-            
-            Spacer()
         }
         .navigationTitle("설정")
         .navigationBarBackButtonHidden()
