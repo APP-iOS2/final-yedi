@@ -7,7 +7,7 @@
 
 import SwiftUI
 import FirebaseFirestore
-
+import FirebaseStorage
 
 // 메인 게시물 생성 뷰
 struct DMNewPostView: View {
@@ -17,6 +17,8 @@ struct DMNewPostView: View {
     @State private var imageUrls: [String] = []
     @State private var newImageUrl = ""
     @State private var showAlert = false
+    
+    @State private var isShowingPhotoPicker: Bool = false
 
     @EnvironmentObject var userAuth: UserAuth
     @Environment(\.presentationMode) var presentationMode
@@ -36,6 +38,11 @@ struct DMNewPostView: View {
                 .navigationTitle("새 게시물")
                 .navigationBarTitleDisplayMode(.inline)
                 postButton
+            }
+        }
+        .sheet(isPresented: $isShowingPhotoPicker) {
+            PhotoPicker { imageURL in
+                imageUrls.append(imageURL.absoluteString)
             }
         }
     }
@@ -69,13 +76,8 @@ struct DMNewPostView: View {
             ForEach(imageUrls, id: \.self) { imageUrl in
                 Text(imageUrl)
             }
-            HStack {
-                TextField("이미지 URL을 입력해주세요.", text: $newImageUrl)
-                Button("추가") {
-                    imageUrls.append(newImageUrl)
-                    newImageUrl = ""
-                }
-            }
+            
+            PhotoSelectionView(selectedPhotoURLs: $imageUrls, isShowingPhotoPicker: $isShowingPhotoPicker)
         }
         .padding(.bottom, 20)
     }
@@ -120,21 +122,40 @@ struct DMNewPostView: View {
             comments: 0,
             timestamp: "just now"
         )
-        savePostToFirestore(post: newPost)
+        Task {
+            await savePostToFirestore(post: newPost)
+        }
         showAlert = true
     }
 
     /// Firestore에 게시물 저장
-    private func savePostToFirestore(post: Post) {
+    private func savePostToFirestore(post: Post) async {
         let db = Firestore.firestore()
+        let storageRef = Storage.storage().reference()
+        
         do {
+            var index = 0
+            
+            for url in imageUrls {
+                let localFile = URL(string: url)!
+                let temp = UUID().uuidString
+                
+                storageRef.child("posts/\(temp)").putFile(from: localFile)
+                
+                try await Task.sleep(for: .seconds(3))
+                
+                let downloadURL = try await storageRef.child("posts/\(temp)").downloadURL()
+                self.imageUrls[index] = downloadURL.absoluteString
+                
+                index += 1
+            }
+            
             try db.collection("posts").addDocument(from: post)
         } catch let error {
             print("Error writing to Firestore: \(error)")
         }
     }
 }
-
 
 // MARK: - InputField
 /// 입력 필드를 표현하는 SwiftUI 뷰
