@@ -12,6 +12,11 @@ struct CMLastReservationView: View {
         ScrollView {
             LazyVStack {
                 ForEach(1...3, id: \.self) { index in
+                    // MARK: - 리뷰 작성 버튼 (삭제 예정)
+                    NavigationLink(destination: CMNewReviewView()) {
+                        Text("리뷰 작성하기")
+                    }
+                    
                     Button(action: {}, label: {
                         HStack {
                             HStack {

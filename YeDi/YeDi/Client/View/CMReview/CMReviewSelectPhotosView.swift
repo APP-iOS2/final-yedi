@@ -1,5 +1,5 @@
 //
-//  CMReviewCreatePhotosView.swift
+//  CMReviewSelectPhotosView.swift
 //  YeDi
 //
 //  Created by 박채영 on 2023/10/01.
@@ -8,19 +8,24 @@
 import SwiftUI
 import PhotosUI
 
-struct CMReviewCreatePhotosView: View {
+struct CMReviewSelectPhotosView: View {
+    // MARK: - Properties
     @Binding var selectedPhotoURLs: [String]
     
     @State private var isShowingPhotoPicker: Bool = false
     
+    // MARK: - Body
     var body: some View {
         Section {
-            PhotoSelectionView(selectedPhotoURLs: $selectedPhotoURLs, isShowingPhotoPicker: $isShowingPhotoPicker)
+            ScrollView(.horizontal) {
+                PhotoSelectionView(selectedPhotoURLs: $selectedPhotoURLs, isShowingPhotoPicker: $isShowingPhotoPicker)
+            }
+            .scrollIndicators(.never)
         } header: {
             HStack {
-                Text("시술 사진 추가을 추가해주세요")
-                    .padding(.leading)
+                Text("시술 사진을 추가해주세요")
                     .fontWeight(.semibold)
+                    .padding(.leading)
                 Spacer()
             }
             Divider()
@@ -36,7 +41,7 @@ struct CMReviewCreatePhotosView: View {
 }
 
 #Preview {
-    CMReviewCreatePhotosView(
+    CMReviewSelectPhotosView(
         selectedPhotoURLs: .constant([])
     )
 }

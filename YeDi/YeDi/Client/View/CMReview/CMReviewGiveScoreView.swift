@@ -1,5 +1,5 @@
 //
-//  CMReviewCreateDesignerScoreView.swift
+//  CMReviewGiveScoreView.swift
 //  YeDi
 //
 //  Created by 박채영 on 2023/09/27.
@@ -7,19 +7,21 @@
 
 import SwiftUI
 
-struct CMReviewCreateDesignerScoreView: View {
-    @Binding var designerScore: Int
+struct CMReviewGiveScoreView: View {
+    // MARK: - Properties
+    @Binding var reviewScore: Int
     
+    // MARK: - Body
     var body: some View {
         Section {
             HStack {
                 ForEach(1...5, id: \.self) { index in
-                    Image(systemName: index <= designerScore ? "star.fill" : "star")
+                    Image(systemName: index <= reviewScore ? "star.fill" : "star")
                         .onTapGesture {
-                            designerScore = index
+                            reviewScore = index
                         }
-                        .foregroundStyle(index <= designerScore ? .yellow : Color(white: 0.9))
                         .font(.title3)
+                        .foregroundStyle(index <= reviewScore ? .yellow : Color(white: 0.9))
                 }
                 Spacer()
             }
@@ -27,8 +29,8 @@ struct CMReviewCreateDesignerScoreView: View {
         } header: {
             HStack {
                 Text("별점을 남겨주세요")
-                    .padding(.leading)
                     .fontWeight(.semibold)
+                    .padding(.leading)
                 Spacer()
             }
             Divider()
@@ -39,5 +41,5 @@ struct CMReviewCreateDesignerScoreView: View {
 }
 
 #Preview {
-    CMReviewCreateDesignerScoreView(designerScore: .constant(0))
+    CMReviewGiveScoreView(reviewScore: .constant(0))
 }

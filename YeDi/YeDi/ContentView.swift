@@ -19,16 +19,18 @@ struct ContentView: View {
     @EnvironmentObject var chattingListViewModel: ChattingListRoomViewModel
     
     var body: some View {
-        if userAuth.userSession != nil {
-            switch userAuth.userType {
-            case .client:
-                ClientMainTabView()
-                    .environmentObject(profileViewModel)
-                    .environmentObject(reviewViewModel)
-            case .designer:
-                DesignerMainTabView()
-            case .none:
-                EmptyView()
+        if userAuth.isLogin {
+            if userAuth.userSession != nil {
+                switch userAuth.userType {
+                case .client:
+                    ClientMainTabView()
+                        .environmentObject(profileViewModel)
+                        .environmentObject(reviewViewModel)
+                case .designer:
+                    DesignerMainTabView()
+                case .none:
+                    EmptyView()
+                }
             }
         } else {
             AuthHomeView()

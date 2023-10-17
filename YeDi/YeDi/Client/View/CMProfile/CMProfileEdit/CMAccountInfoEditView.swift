@@ -7,24 +7,18 @@
 
 import SwiftUI
 
+/// 계정 정보 수정 뷰
 struct CMAccountInfoEditView: View {
-    @Binding var accountEmail: String
+    // MARK: - Properties
     @Binding var accountPhoneNumber: String
     
+    // MARK: - Body
     var body: some View {
         VStack {
             HStack {
-                Text("이메일")
-                    .padding(.trailing, 30)
-                TextField("accountEmail", text: $accountEmail)
-                    .textFieldStyle(CMCustomTextFieldStyle())
-            }
-            .padding(.bottom, 15)
-            
-            HStack {
                 Text("휴대폰")
                     .padding(.trailing, 30)
-                TextField("accountPhoneNumber", text: $accountPhoneNumber)
+                TextField("휴대폰 번호", text: $accountPhoneNumber)
                     .textFieldStyle(CMCustomTextFieldStyle())
             }
         }
@@ -34,7 +28,6 @@ struct CMAccountInfoEditView: View {
 
 #Preview {
     CMAccountInfoEditView(
-        accountEmail: .constant(""),
         accountPhoneNumber: .constant("")
     )
 }

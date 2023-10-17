@@ -18,32 +18,35 @@ final class UserAuth: ObservableObject {
     @Published var currentDesignerID: String?
     @Published var userType: UserType?
     @Published var userSession: FirebaseAuth.User?
+    @Published var isLogin: Bool = false
     
     private let auth = Auth.auth()
     private let storeService = Firestore.firestore()
     private let userDefaults: UserDefaults = UserDefaults.standard
     
     init() {
-        fetchUserTypeinUserDefaults()
-        fetchUser()
+        if isLogin {
+            fetchUserTypeinUserDefaults()
+            fetchUser()
+        }
     }
     
     func fetchUser() {
-        auth.addStateDidChangeListener { auth, user in
+        auth.addStateDidChangeListener { [weak self] _, user in
             if let user = user {
-                self.userSession = user
-                self.userType = self.userType
+                self?.userSession = user
+                self?.userType = self?.userType
                 
-                switch self.userType {
+                switch self?.userType {
                 case .client:
-                    self.currentClientID = user.uid
+                    self?.currentClientID = user.uid
                 case .designer:
-                    self.currentDesignerID = user.uid
+                    self?.currentDesignerID = user.uid
                 case nil:
                     return
                 }
             } else {
-                self.userSession = nil
+                self?.userSession = nil
             }
         }
     }
@@ -68,7 +71,6 @@ final class UserAuth: ObservableObject {
             if let error = error {
                 print("DEBUG: signIn Error \(error.localizedDescription)")
                 completion(false)
-                return
             }
             
             guard let user = result?.user else {
@@ -107,6 +109,7 @@ final class UserAuth: ObservableObject {
                     self.userSession = user
                     self.userType = type
                     self.saveUserTypeinUserDefaults(type.rawValue)
+                    self.isLogin = true
                     
                     completion(true)
                 } else {
@@ -143,6 +146,9 @@ final class UserAuth: ObservableObject {
                 self.storeService.collection("clients")
                     .document(user.uid)
                     .setData(data, merge: true)
+                
+                self.userSession = nil
+                self.isLogin = false
             }
         }
     }
@@ -179,28 +185,83 @@ final class UserAuth: ObservableObject {
                 self.storeService.collection("designers")
                     .document(user.uid)
                     .setData(data, merge: true)
+                
+                self.userSession = nil
+                self.isLogin = false
+            }
+        }
+    }
+    
+    func resetPassword(forEmail email: String, completion: @escaping (Bool) -> Void) {
+        auth.sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+                print(error.localizedDescription)
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
+    }
+    
+    func updatePassword(_ email: String, _ currentPassword: String, _ newPassword: String, _ completion: @escaping (Bool) -> Void) {
+        let credential: AuthCredential = EmailAuthProvider.credential(withEmail: email, password: currentPassword)
+        
+        auth.currentUser?.reauthenticate(with: credential) { result, error in
+            if let error = error {
+                print("reauthenticate error: \(error.localizedDescription)")
+                completion(false)
+            } else {
+                self.auth.currentUser?.updatePassword(to: newPassword) { error in
+                    if let error = error {
+                        print("update error: \(error.localizedDescription)")
+                        completion(false)
+                    } else {
+                        completion(true)
+                    }
+                }
             }
         }
     }
     
     func signOut() {
-        userSession = nil
-        userType = nil
-        currentClientID = nil
-        currentDesignerID = nil
-        
-        removeUserTypeinUserDefaults()
-        
+        resetUserInfo()
         try? auth.signOut()
     }
     
     func deleteClientAccount() {
+        guard let user = Auth.auth().currentUser else { return }
+        
         if let currentClientID {
             storeService
                 .collection("clients")
                 .document(currentClientID).delete()
-            
-            userSession = nil
         }
+        
+        if let currentDesignerID {
+            storeService
+                .collection("designers")
+                .document(currentDesignerID).delete()
+        }
+        
+        user.delete { error in
+            if let error = error {
+                print("DEBUG: Error deleting user account: \(error.localizedDescription)")
+                return
+            }
+            
+            print("DEBUG: User account deleted")
+            
+            self.signOut()
+        }
+    }
+    
+    func resetUserInfo() {
+        userSession = nil
+        userType = nil
+        currentClientID = nil
+        currentDesignerID = nil
+        isLogin = false
+        
+        removeUserTypeinUserDefaults()
     }
 }

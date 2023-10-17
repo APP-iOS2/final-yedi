@@ -49,6 +49,8 @@ struct LoginView: View {
                 .cautionTextStyle()
             
             LoginButton(.client)
+            
+            resetPassword
         }
         .padding(.horizontal)
         .navigationTitle("고객 로그인")
@@ -63,6 +65,8 @@ struct LoginView: View {
                 .cautionTextStyle()
             
             LoginButton(.designer)
+            
+            resetPassword
         }
         .padding(.horizontal)
         .navigationTitle("디자이너 로그인")
@@ -89,6 +93,23 @@ struct LoginView: View {
                 .onChange(of: email) { newValue in
                     email = newValue.trimmingCharacters(in: .whitespaces)
                 }
+        }
+    }
+    
+    private var resetPassword: some View {
+        VStack(alignment: .leading) {
+            Divider()
+                .padding(.bottom)
+            
+            HStack {
+                Text("비밀번호를 잊으셨나요?")
+                
+                NavigationLink {
+                    ResetPasswordView()
+                } label: {
+                    Text("재설정 이메일 보내기")
+                }
+            }
         }
     }
     
