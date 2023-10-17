@@ -25,10 +25,8 @@ final class UserAuth: ObservableObject {
     private let userDefaults: UserDefaults = UserDefaults.standard
     
     init() {
-        if isLogin {
-            fetchUserTypeinUserDefaults()
-            fetchUser()
-        }
+        fetchUserTypeinUserDefaults()
+        fetchUser()
     }
     
     func fetchUser() {
@@ -36,6 +34,7 @@ final class UserAuth: ObservableObject {
             if let user = user {
                 self?.userSession = user
                 self?.userType = self?.userType
+                self?.isLogin = true
                 
                 switch self?.userType {
                 case .client:
