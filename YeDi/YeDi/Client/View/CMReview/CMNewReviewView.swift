@@ -37,7 +37,7 @@ struct CMNewReviewView: View {
         ScrollView {
             CMReservationInfoView()
             
-            Spacer(minLength: 55)
+            Spacer(minLength: 40)
             
             CMReviewSelectPhotosView(selectedPhotoURLs: $selectedPhotoURLs)
             
@@ -54,7 +54,13 @@ struct CMNewReviewView: View {
         .onDisappear {
             isUploading.toggle()
         }
+        .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .tabBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                DismissButton(color: nil, action: {})
+            }
+        }
         .alert("모든 항목을 채워주세요", isPresented: $isShowingValidationAlert) {
             Button(role: .cancel) {
                 isShowingValidationAlert.toggle()
