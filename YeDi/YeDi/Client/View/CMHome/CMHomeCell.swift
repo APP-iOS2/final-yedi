@@ -16,6 +16,7 @@ struct CMHomeCell: View {
     @State private var showChattingRoom = false
     @EnvironmentObject var userAuth: UserAuth
     @StateObject private var viewModel = CMHomeCellViewModel()
+    
     /// 이미지의 수를 판단할 수 있는 변수
     @State private var selectedImageIndex: Int = 0
     /// 텍스트 수가 지정된 수를 넘었는지 확인할 수 있는 변수
@@ -23,16 +24,32 @@ struct CMHomeCell: View {
     /// 이미지를 두 번 연속 눌렀을 때 나오는 하트 이미지 변수
     @State private var showHeartImage: Bool = false
     
-    
+    private let imageDimension: CGFloat = (UIScreen.main.bounds.width) - 10
     
     var body: some View {
         VStack {
             // MARK: - Post Header
             HStack {
                 // 디자이너 프로필 이미지
-                Image(systemName: "person.circle.fill")
-                    .resizable()
-                    .frame(width: 50, height: 50)
+                if let imageURLString = viewModel.designerImage {
+                    AsyncImage(url: URL(string: "\(imageURLString)")) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(maxWidth: 50, maxHeight: 50)
+                            .clipShape(Circle())
+                    } placeholder: {
+                        ProgressView()
+                    }
+                } else {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(maxWidth: 50, maxHeight: 50)
+                        .clipShape(Circle())
+                        .foregroundStyle(.gray)
+
+                }
                 // 디자이너 아이디 & 디자이너 근무 지점
                 VStack(alignment: .leading) {
                     Text(viewModel.designerName ?? "디자이너 이름")
@@ -51,8 +68,9 @@ struct CMHomeCell: View {
             if post.photos.count == 1 {
                 NavigationLink(destination: CMFeedDetailView(post: post)) {
                     DMAsyncImage(url: post.photos[0].imageURL, placeholder: Image(systemName: "photo"))
-                        .frame(width: 360, height: 360)
-                        .aspectRatio(contentMode: .fit)
+                        .scaledToFill()
+                        .frame(width: imageDimension, height: imageDimension)
+                        .clipped()
                         .cornerRadius(8)
                         .onTapGesture(count: 2) { // 이미지를 2번 연속 눌렀을 때
                             viewModel.isLiked = true
@@ -68,8 +86,9 @@ struct CMHomeCell: View {
                     ForEach(0..<post.photos.count, id: \.self) { index in
                         NavigationLink(destination: CMFeedDetailView(post: post)) {
                             DMAsyncImage(url: post.photos[index].imageURL, placeholder: Image(systemName: "photo"))
-                                .frame(width: 360, height: 360)
-                                .aspectRatio(contentMode:.fit)
+                                .scaledToFill()
+                                .frame(width: imageDimension, height: imageDimension)
+                                .clipped()
                                 .cornerRadius(8)
                                 .tag(index)
                                 .overlay( // 현재 이미지가 총 이미지 중에서 몇 번째인지를 나타냄
@@ -82,7 +101,7 @@ struct CMHomeCell: View {
                                                 Capsule(style: .continuous)
                                                     .foregroundStyle(.black.opacity(0.5))
                                             }
-                                            .padding(10)
+                                            .padding()
                                     }
                                         .frame(maxWidth: .infinity, alignment: .topTrailing),alignment: .topTrailing
                                 )
@@ -98,8 +117,7 @@ struct CMHomeCell: View {
                     }
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-                .frame(height: 360)
-                .padding(.horizontal)
+                .frame(height: imageDimension)
             }
             
             // MARK: - Post Button

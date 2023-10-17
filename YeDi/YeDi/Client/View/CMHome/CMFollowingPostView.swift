@@ -17,7 +17,7 @@ struct CMFollowingPostView: View {
             VStack {
                 if postViewModel.posts.isEmpty {
                     Spacer()
-                    Text("팔로우한 디자이너가 없습니다")
+                    Text("팔로잉한 디자이너가 없습니다")
                     Spacer()
                 } else {
                     ScrollView {

@@ -17,36 +17,15 @@ class CMPostViewModel: ObservableObject {
     
     let dbRef = Firestore.firestore().collection("posts")
     
-    // 초기 게시물 페이지를 가져오는 함수
-    func fetchInitialPosts() async {
-            let query = dbRef
+    func fetchPosts() async {
+            var query = dbRef
                 .order(by: "timestamp", descending: true)
                 .limit(to: pageSize)  // 한 페이지에 표시할 게시물 수
-
-            do {
-                let snapshot = try await query.getDocuments()
-                self.posts = snapshot.documents.compactMap { document in
-                    try? document.data(as: Post.self)
-                }
-                
-                self.lastDocument = snapshot.documents.last
-                
-                print("Fetched initial posts. Count:", self.posts.count)
-                
-            } catch {
-                print("Error fetching initial posts: \(error)")
+            
+            if let lastDocument = self.lastDocument {
+                query = query.start(afterDocument: lastDocument)
             }
-        }
-    
-    // 다음 페이지의 게시물을 가져오는 함수
-    func fetchNextPageOfPosts() async {
-            guard let lastDocument = self.lastDocument else { return }
-
-            let query = dbRef
-                .order(by: "timestamp", descending: true)
-                .start(afterDocument: lastDocument)
-                .limit(to: pageSize)  // 한 페이지에 표시할 게시물 수
-
+            
             do {
                 let snapshot = try await query.getDocuments()
                 
@@ -59,14 +38,13 @@ class CMPostViewModel: ObservableObject {
                     
                     self.lastDocument = snapshot.documents.last
                     
-                    print("Fetched next page of posts. Count:", snapshot.documents.count, "Total count:", self.posts.count)
-                                    
+                    print("Fetched page. Total count:", self.posts.count)
                 }
                 
             } catch {
-               print("Error fetching next page of posts: \(error)")
+               print("Error fetching posts: \(error)")
            }
-       }
+        }
     
     // 클라이언트가 팔로우한 디자이너의 ID 목록을 가져오는 함수
     func getFollowedDesignerIDs(forClientID clientID: String, completion: @escaping ([String]?) -> Void) {
@@ -110,26 +88,7 @@ class CMPostViewModel: ObservableObject {
             } else {
                 // designerIDs 목록이 비어있을 때의 처리 (팔로우한 디자이너가 없을 때)
                 print("No followed designers found.")
-                // 여기에서 필요한 예외 처리를 수행하거나 사용자에게 알릴 수 있습니다.
             }
         }
     }
 }
-
-//초기 : current index = 0
-//      page number = 0
-
-//first fetch : current index = 2
-//      page number = 1
-
-//onAppear => current index = 3
-//      page number = 1
-
-//onAppear => current index = 5
-//      page number = 2
-
-//fetch =>
-
-//불러온 페이지를 저장하고, 화면 이동 전에 보여졌던 인덱스를 저장해서
-//opAppear 할 때, 불러온 페이지만큼 게시물을 불러오고 화면에 보여졌던 인덱스로
-
