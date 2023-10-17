@@ -23,16 +23,30 @@ struct CMHomeCell: View {
     /// 이미지를 두 번 연속 눌렀을 때 나오는 하트 이미지 변수
     @State private var showHeartImage: Bool = false
     
-    
-    
     var body: some View {
         VStack {
             // MARK: - Post Header
             HStack {
                 // 디자이너 프로필 이미지
-                Image(systemName: "person.circle.fill")
-                    .resizable()
-                    .frame(width: 50, height: 50)
+                if let imageURLString = viewModel.designerImage {
+                    AsyncImage(url: URL(string: "\(imageURLString)")) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(maxWidth: 50, maxHeight: 50)
+                            .clipShape(Circle())
+                    } placeholder: {
+                        ProgressView()
+                    }
+                } else {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(maxWidth: 50, maxHeight: 50)
+                        .clipShape(Circle())
+                        .foregroundStyle(.gray)
+
+                }
                 // 디자이너 아이디 & 디자이너 근무 지점
                 VStack(alignment: .leading) {
                     Text(viewModel.designerName ?? "디자이너 이름")
@@ -51,8 +65,9 @@ struct CMHomeCell: View {
             if post.photos.count == 1 {
                 NavigationLink(destination: CMFeedDetailView(post: post)) {
                     DMAsyncImage(url: post.photos[0].imageURL, placeholder: Image(systemName: "photo"))
+                        .scaledToFill()
                         .frame(width: 360, height: 360)
-                        .aspectRatio(contentMode: .fit)
+                        .clipped()
                         .cornerRadius(8)
                         .onTapGesture(count: 2) { // 이미지를 2번 연속 눌렀을 때
                             viewModel.isLiked = true
@@ -68,8 +83,9 @@ struct CMHomeCell: View {
                     ForEach(0..<post.photos.count, id: \.self) { index in
                         NavigationLink(destination: CMFeedDetailView(post: post)) {
                             DMAsyncImage(url: post.photos[index].imageURL, placeholder: Image(systemName: "photo"))
+                                .scaledToFill()
                                 .frame(width: 360, height: 360)
-                                .aspectRatio(contentMode:.fit)
+                                .clipped()
                                 .cornerRadius(8)
                                 .tag(index)
                                 .overlay( // 현재 이미지가 총 이미지 중에서 몇 번째인지를 나타냄

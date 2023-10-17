@@ -95,15 +95,28 @@ struct CMSearchView: View {
                         NavigationLink(destination: CMDesignerProfileView(designer: designer)) {
                             VStack {
                                 HStack {
-                                    Image(systemName: "person")
-                                        .resizable()
-                                        .frame(width: 20, height: 20)
-                                        .padding(15)
-                                        .overlay {
-                                            Circle().stroke(.gray, lineWidth: 1)
+                                    if let imageURLString = designer.imageURLString {
+                                        AsyncImage(url: URL(string: "\(imageURLString)")) { image in
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(maxWidth: 50, maxHeight: 50)
+                                                .clipShape(Circle())
+                                        } placeholder: {
+                                            ProgressView()
                                         }
+                                    } else {
+                                        Image(systemName: "person.circle")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(maxWidth: 50, maxHeight: 50)
+                                            .clipShape(Circle())
+                                            .foregroundStyle(.gray)
+
+                                    }
                                     VStack(alignment: .leading) {
                                         Text(designer.name)
+                                            .foregroundStyle(.black)
                                         Text("유칼립투스 헤어 | 단원구 선부동")
                                             .font(.subheadline)
                                             .foregroundStyle(.gray)

@@ -13,6 +13,7 @@ import FirebaseFirestore
 class CMHomeCellViewModel: ObservableObject {
     @Published var isLiked: Bool = false
     @Published var designerName: String?
+    @Published var designerImage: String?
     
     func fetchDesignerInfo(post: Post) async {
             let db = Firestore.firestore()
@@ -22,6 +23,7 @@ class CMHomeCellViewModel: ObservableObject {
                 let document = try await designerRef.getDocument()
                 if let designerData = document.data() {
                     designerName = designerData["name"] as? String
+                    designerImage = designerData["imageURLString"] as? String
                 }
             } catch {
                 print("Error fetching designer document: \(error)")

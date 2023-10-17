@@ -34,9 +34,25 @@ struct CMDesignerProfileView: View {
                         .foregroundStyle(.gray)
                 }
                 Spacer()
-                Image(systemName: "person.circle")
-                    .resizable()
-                    .frame(width: 50, height: 50)
+                if let imageURLString = designer.imageURLString {
+                    AsyncImage(url: URL(string: "\(imageURLString)")) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(maxWidth: 50, maxHeight: 50)
+                            .clipShape(Circle())
+                    } placeholder: {
+                        ProgressView()
+                    }
+                } else {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(maxWidth: 50, maxHeight: 50)
+                        .clipShape(Circle())
+                        .foregroundStyle(.gray)
+
+                }
             }
             .padding()
             
@@ -72,8 +88,7 @@ struct CMDesignerProfileView: View {
                         .padding()
                 } else {
                     LazyVGrid(columns: gridItems, spacing: 1) {
-                        ForEach(designerPosts, id: \.id) { post in
-                            
+                        ForEach(designerPosts.prefix(6), id: \.id) { post in
                             DMAsyncImage(url: post.photos[0].imageURL, placeholder: Image(systemName: "photo"))
                                 .scaledToFill()
                                 .frame(width: imageDimension, height: imageDimension)
@@ -84,6 +99,7 @@ struct CMDesignerProfileView: View {
                     NavigationLink(destination: CMStyleDetailView(designer: designer)) {
                         Text("스타일 전체보기")
                     }
+                    .padding()
                     .buttonStyle(.borderedProminent)
                     .tint(.black)
                 }
