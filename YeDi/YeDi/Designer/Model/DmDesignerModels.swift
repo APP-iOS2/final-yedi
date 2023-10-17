@@ -95,6 +95,13 @@ enum Rank: String, CaseIterable, Codable {
 struct Photo: Identifiable, Codable {
     var id: String  // 사진의 고유 ID
     var imageURL: String  // 사진의 URL
+    
+    var dictionary: [String: Any] {
+        return [
+            "id": id,
+            "imageURL": imageURL
+        ]
+    }
 }
 
 struct Post: Codable {
