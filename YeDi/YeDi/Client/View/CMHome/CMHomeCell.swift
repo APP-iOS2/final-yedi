@@ -16,12 +16,15 @@ struct CMHomeCell: View {
     @State private var showChattingRoom = false
     @EnvironmentObject var userAuth: UserAuth
     @StateObject private var viewModel = CMHomeCellViewModel()
+    
     /// 이미지의 수를 판단할 수 있는 변수
     @State private var selectedImageIndex: Int = 0
     /// 텍스트 수가 지정된 수를 넘었는지 확인할 수 있는 변수
     @State private var shouldShowMoreText: Bool = false
     /// 이미지를 두 번 연속 눌렀을 때 나오는 하트 이미지 변수
     @State private var showHeartImage: Bool = false
+    
+    private let imageDimension: CGFloat = (UIScreen.main.bounds.width) - 10
     
     var body: some View {
         VStack {
@@ -66,7 +69,7 @@ struct CMHomeCell: View {
                 NavigationLink(destination: CMFeedDetailView(post: post)) {
                     DMAsyncImage(url: post.photos[0].imageURL, placeholder: Image(systemName: "photo"))
                         .scaledToFill()
-                        .frame(width: 360, height: 360)
+                        .frame(width: imageDimension, height: imageDimension)
                         .clipped()
                         .cornerRadius(8)
                         .onTapGesture(count: 2) { // 이미지를 2번 연속 눌렀을 때
@@ -84,7 +87,7 @@ struct CMHomeCell: View {
                         NavigationLink(destination: CMFeedDetailView(post: post)) {
                             DMAsyncImage(url: post.photos[index].imageURL, placeholder: Image(systemName: "photo"))
                                 .scaledToFill()
-                                .frame(width: 360, height: 360)
+                                .frame(width: imageDimension, height: imageDimension)
                                 .clipped()
                                 .cornerRadius(8)
                                 .tag(index)
@@ -98,7 +101,7 @@ struct CMHomeCell: View {
                                                 Capsule(style: .continuous)
                                                     .foregroundStyle(.black.opacity(0.5))
                                             }
-                                            .padding(10)
+                                            .padding()
                                     }
                                         .frame(maxWidth: .infinity, alignment: .topTrailing),alignment: .topTrailing
                                 )
@@ -114,8 +117,7 @@ struct CMHomeCell: View {
                     }
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-                .frame(height: 360)
-                .padding(.horizontal)
+                .frame(height: imageDimension)
             }
             
             // MARK: - Post Button
