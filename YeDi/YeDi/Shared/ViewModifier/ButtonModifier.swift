@@ -13,7 +13,7 @@ struct ButtonModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .foregroundStyle(.white)
-            .padding(.vertical, 10)
+            .padding(.vertical, 12)
             .frame(maxWidth: .infinity)
             .background(color ?? .primary)
             .clipShape(RoundedRectangle(cornerRadius: 7))

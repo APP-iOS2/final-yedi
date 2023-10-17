@@ -47,13 +47,7 @@ struct ResetPasswordView: View {
                 }
             } label: {
                 Text("보내기")
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background {
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(.black)
-                    }
+                    .buttonModifier(.mainColor)
             }
             .padding(.top)
         }
