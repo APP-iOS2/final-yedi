@@ -19,6 +19,7 @@ struct DMNewPostView: View {
     @State private var showAlert = false
     @State private var hairCategory: HairCategory = .Else
     @State private var isShowingPhotoPicker: Bool = false
+    @State private var price: String = ""
 
     @EnvironmentObject var userAuth: UserAuth
     @Environment(\.presentationMode) var presentationMode
@@ -61,6 +62,7 @@ struct DMNewPostView: View {
             navigationLinkToTextEditor(title: "내용", text: $description, placeholder: "내용을 입력해주세요.")
                 .foregroundStyle(.black)
             categoryPickerView
+            TextField("가격을 입력해주세요", text: $price)
             imageUrlsSection
             Spacer()
         }
@@ -81,9 +83,7 @@ struct DMNewPostView: View {
                     ForEach(hairCategoryArray, id: \.self) { style in
                         Text("\(style.rawValue)")
                     }
-
                 }
-
             }
         }
     
@@ -140,7 +140,8 @@ struct DMNewPostView: View {
             photos: photos,
             comments: 0,
             timestamp: SingleTonDateFormatter.sharedDateFommatter.firebaseDate(from: Date()),
-            hairCategory: hairCategory
+            hairCategory: hairCategory,
+            price: Int(price) ?? 0
         )
         Task {
             await savePostToFirestore(post: newPost)

@@ -125,6 +125,8 @@ struct Post: Codable {
     var timestamp: String  // 실제로는 Timestamp 타입 사용해야할거같네요? - ChanHo
     /// 헤어 디자인 카테고리
     var hairCategory: HairCategory
+    ///게시물 시술 가격
+    var price: Int
 }
 
 enum HairCategory: String, Codable {
@@ -150,4 +152,21 @@ enum HairCategory: String, Codable {
             self = .Else // 기본값 설정
         }
     }
+}
+
+/// - 휴무일 설정 구조체
+struct ClosedDay: Identifiable, Codable {
+    /// Firestore 문서 ID
+    @DocumentID var id: String?
+    /// 휴무일 설정한 계정의 디자이너 ID
+    var designerID: String
+    /// 설정한 휴무일
+    var day: [String]
+}
+
+/// - 휴식시간 설정 구조체
+struct BreakTime: Codable {
+    @DocumentID var id: String?
+    var designerID: String
+    var breakTime: [String]
 }

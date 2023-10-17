@@ -19,6 +19,7 @@ struct DMEditPostView: View {
     @State private var newImageUrl = ""
     @State private var showAlert = false
     @State private var hairCategory: HairCategory = .Else
+    @State private var price: String = ""
 
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -65,6 +66,8 @@ struct DMEditPostView: View {
             self.title = post.title
             self.description = post.description ?? ""
             self.imageUrls = post.photos.map { $0.imageURL }
+            self.hairCategory = post.hairCategory
+            self.price = String(post.price)
         }
         .alert(isPresented: $showAlert) {
             Alert(
@@ -90,6 +93,10 @@ struct DMEditPostView: View {
                 .background(Color.gray.opacity(0.2))
                 .cornerRadius(8)
             categoryPickerView
+            TextField("가격", text:$price)
+                .padding()
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(8)
             imageUrlsSection
             
         }
@@ -99,13 +106,12 @@ struct DMEditPostView: View {
     private var categoryPickerView: some View {
             VStack{
                 Text("스타일 종류를 선택하세요")
+                    .font(.subheadline)
                 Picker("", selection: $hairCategory) {
                     ForEach(hairCategoryArray, id: \.self) { style in
                         Text("\(style.rawValue)")
                     }
-
                 }
-
             }
         }
     
@@ -167,7 +173,7 @@ struct DMEditPostView: View {
 
 struct DMEditPostView_Previews: PreviewProvider {
     static var previews: some View {
-        let samplePost = State(initialValue: Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전", hairCategory: .Cut))
+        let samplePost = State(initialValue: Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전", hairCategory: .Cut, price: 15000))
         let shouldRefresh = State(initialValue: false)
         DMEditPostView(post: samplePost.projectedValue, shouldRefresh: shouldRefresh.projectedValue)
     }

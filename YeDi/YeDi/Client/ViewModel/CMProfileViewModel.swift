@@ -47,18 +47,16 @@ final class CMProfileViewModel: ObservableObject {
                 if !newClient.profileImageURLString.isEmpty {
                     let localFile = URL(string: newClient.profileImageURLString)!
                     
-                    URLSession.shared.dataTask(with: localFile) { data, response, error in
-                        guard let data = data else { return }
-                        
-                        let localJpeg = UIImage(data: data)?.jpegData(compressionQuality: 0.2)
-                        if let localJpeg {
-                            self.storageRef.child("clients/profiles/\(clientId)").putData(localJpeg)
-                        }
+                    let data = try await URLSession.shared.data(from: localFile).0
+                    
+                    let localJpeg = UIImage(data: data)?.jpegData(compressionQuality: 0.2)
+                    if let localJpeg {
+                        self.storageRef.child("clients/profiles/\(clientId)").putData(localJpeg)
                     }
                     
                     let downloadURL = try await storageRef.child("clients/profiles/\(clientId)").downloadURL()
                     newClient.profileImageURLString = downloadURL.absoluteString
-                    
+
                     self.client.profileImageURLString = downloadURL.absoluteString
                 }
                 
