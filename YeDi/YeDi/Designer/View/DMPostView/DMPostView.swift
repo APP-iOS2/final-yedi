@@ -102,7 +102,9 @@ struct DMPostView: View {
                     DMExpandableText(text: description)
                         .padding(.horizontal)
                 }
+                // MARK: - 게시글 시술 카테고리
                 Text("\(selectedPost.hairCategory.rawValue)")
+                    .padding(.horizontal)
                 // MARK: - 게시 시간
                 Text(selectedPost.timestamp)
                     .font(.caption)
