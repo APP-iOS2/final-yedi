@@ -17,11 +17,16 @@ struct DMNewPostView: View {
     @State private var imageUrls: [String] = []
     @State private var newImageUrl = ""
     @State private var showAlert = false
-    
+    @State private var hairCategory: HairCategory = .Else
     @State private var isShowingPhotoPicker: Bool = false
 
     @EnvironmentObject var userAuth: UserAuth
     @Environment(\.presentationMode) var presentationMode
+    
+    let hairCategoryArray: [HairCategory] = [HairCategory.Cut,
+                                             HairCategory.Dying,
+                                             HairCategory.Perm,
+                                             HairCategory.Else]
 
     // 폼 유효성 검사
     private var isFormValid: Bool {
@@ -55,6 +60,7 @@ struct DMNewPostView: View {
                 .foregroundStyle(.black)
             navigationLinkToTextEditor(title: "내용", text: $description, placeholder: "내용을 입력해주세요.")
                 .foregroundStyle(.black)
+            categoryPickerView
             imageUrlsSection
             Spacer()
         }
@@ -67,6 +73,19 @@ struct DMNewPostView: View {
             InputField(title: title, text: text, placeholder: placeholder)
         }
     }
+    
+    private var categoryPickerView: some View {
+            VStack{
+                Text("스타일 종류를 선택하세요")
+                Picker("", selection: $hairCategory) {
+                    ForEach(hairCategoryArray, id: \.self) { style in
+                        Text("\(style.rawValue)")
+                    }
+
+                }
+
+            }
+        }
     
     /// 이미지 URL 섹션
     private var imageUrlsSection: some View {
@@ -120,7 +139,8 @@ struct DMNewPostView: View {
             description: description,
             photos: photos,
             comments: 0,
-            timestamp: "just now"
+            timestamp: SingleTonDateFormatter.sharedDateFommatter.firebaseDate(from: Date()),
+            hairCategory: hairCategory
         )
         Task {
             await savePostToFirestore(post: newPost)
