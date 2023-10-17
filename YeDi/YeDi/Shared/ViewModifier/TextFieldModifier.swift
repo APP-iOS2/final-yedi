@@ -7,12 +7,16 @@
 
 import SwiftUI
 
-struct TextFieldModifier: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct TextFieldModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .textInputAutocapitalization(.never)
+            .disableAutocorrection(true)
+            .padding(12)
+            .foregroundStyle(Color.primary)
+            .background {
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color.quaternarySystemFill)
+            }
     }
-}
-
-#Preview {
-    TextFieldModifier()
 }
