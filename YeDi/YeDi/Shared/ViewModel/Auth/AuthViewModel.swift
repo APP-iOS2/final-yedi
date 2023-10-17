@@ -18,32 +18,35 @@ final class UserAuth: ObservableObject {
     @Published var currentDesignerID: String?
     @Published var userType: UserType?
     @Published var userSession: FirebaseAuth.User?
+    @Published var isLogin: Bool = false
     
     private let auth = Auth.auth()
     private let storeService = Firestore.firestore()
     private let userDefaults: UserDefaults = UserDefaults.standard
     
     init() {
-        fetchUserTypeinUserDefaults()
-        fetchUser()
+        if isLogin {
+            fetchUserTypeinUserDefaults()
+            fetchUser()
+        }
     }
     
     func fetchUser() {
-        auth.addStateDidChangeListener { _, user in
+        auth.addStateDidChangeListener { [weak self] _, user in
             if let user = user {
-                self.userSession = user
-                self.userType = self.userType
+                self?.userSession = user
+                self?.userType = self?.userType
                 
-                switch self.userType {
+                switch self?.userType {
                 case .client:
-                    self.currentClientID = user.uid
+                    self?.currentClientID = user.uid
                 case .designer:
-                    self.currentDesignerID = user.uid
+                    self?.currentDesignerID = user.uid
                 case nil:
                     return
                 }
             } else {
-                self.userSession = nil
+                self?.userSession = nil
             }
         }
     }
@@ -106,6 +109,7 @@ final class UserAuth: ObservableObject {
                     self.userSession = user
                     self.userType = type
                     self.saveUserTypeinUserDefaults(type.rawValue)
+                    self.isLogin = true
                     
                     completion(true)
                 } else {
@@ -144,6 +148,7 @@ final class UserAuth: ObservableObject {
                     .setData(data, merge: true)
                 
                 self.userSession = nil
+                self.isLogin = false
             }
         }
     }
@@ -182,6 +187,7 @@ final class UserAuth: ObservableObject {
                     .setData(data, merge: true)
                 
                 self.userSession = nil
+                self.isLogin = false
             }
         }
     }
@@ -218,13 +224,7 @@ final class UserAuth: ObservableObject {
     }
     
     func signOut() {
-        userSession = nil
-        userType = nil
-        currentClientID = nil
-        currentDesignerID = nil
-        
-        removeUserTypeinUserDefaults()
-        
+        resetUserInfo()
         try? auth.signOut()
     }
     
@@ -253,5 +253,15 @@ final class UserAuth: ObservableObject {
             
             self.signOut()
         }
+    }
+    
+    func resetUserInfo() {
+        userSession = nil
+        userType = nil
+        currentClientID = nil
+        currentDesignerID = nil
+        isLogin = false
+        
+        removeUserTypeinUserDefaults()
     }
 }
