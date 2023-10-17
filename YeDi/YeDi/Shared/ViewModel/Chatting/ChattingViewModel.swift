@@ -66,7 +66,7 @@ class ChattingViewModel: ObservableObject {
                     }
                 }
                 
-                if self!.isFirstListening { ///첫 Listener 호출
+                if ((self?.isFirstListening) != nil) { ///첫 Listener 호출
                     self?.anyMoreChats = self?.chattings.count ?? 0 >= (self!.limitLength) ? true : false
                     self!.isFirstListening = false
                 }
