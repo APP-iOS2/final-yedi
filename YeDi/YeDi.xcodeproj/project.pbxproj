@@ -592,9 +592,9 @@
 		639DB6852AC11B4A002692E5 /* DMPostView */ = {
 			isa = PBXGroup;
 			children = (
+				1D9067202AC1F61D0028A660 /* DMGridView.swift */,
 				639DB6862AC11B56002692E5 /* DMPostView.swift */,
 				1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */,
-				1D9067202AC1F61D0028A660 /* DMGridView.swift */,
 				1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */,
 			);
 			path = DMPostView;
