@@ -45,7 +45,7 @@ class CMPostViewModel: ObservableObject {
                         }
                     }
                     
-                    let post = Post(id: id, designerID: designerID, location: location, title: title, description: description, photos: photos, comments: 0, timestamp: "")
+                    let post = Post(id: id, designerID: designerID, location: location, title: title, description: description, photos: photos, comments: 0, timestamp: "", hairCategory: .Cut)
                     
                     tempPosts.append(post)
                 }

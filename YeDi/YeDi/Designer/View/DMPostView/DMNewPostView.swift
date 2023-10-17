@@ -33,7 +33,7 @@ struct DMNewPostView: View {
     private var isFormValid: Bool {
         return !title.isEmpty && !description.isEmpty && !imageUrls.isEmpty
     }
-
+    
     // MARK: - Body
     var body: some View {
         NavigationStack {
@@ -82,9 +82,7 @@ struct DMNewPostView: View {
                 ForEach(hairCategoryArray, id: \.self) { style in
                     Text("\(style.rawValue)")
                 }
-                
             }
-
         }
     }
     
@@ -140,7 +138,8 @@ struct DMNewPostView: View {
             description: description,
             photos: photos,
             comments: 0,
-            timestamp: "just now"
+            timestamp: SingleTonDateFormatter.sharedDateFommatter.firebaseDate(from: Date()),
+            hairCategory: hairCategory
         )
         Task {
             await savePostToFirestore(post: newPost)

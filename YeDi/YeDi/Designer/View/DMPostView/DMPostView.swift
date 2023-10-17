@@ -105,6 +105,8 @@ struct DMPostView: View {
                     .font(.caption)
                     .foregroundColor(Color.gray)
                     .padding(.horizontal)
+                
+                Text("\(selectedPost.hairCategory.rawValue)")
             }
             // 새로고침 기능
             .refreshable {
@@ -171,7 +173,7 @@ struct DMPostView: View {
 // MARK: - 미리보기
 struct DMPostView_Previews: PreviewProvider {
     static var previews: some View {
-        let samplePost = Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1 This is post 1 Thisㅁㅁㅁㅁㅁㅁㅁㅁㄴㄴㅁㅁ", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전")
+        let samplePost = Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1 This is post 1 Thisㅁㅁㅁㅁㅁㅁㅁㅁㄴㄴㅁㅁ", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전", hairCategory: .Cut)
         
         DMPostView(selectedPost: samplePost)
     }

@@ -127,6 +127,8 @@ struct Post: Codable {
     var comments: Int
     /// 게시 시간 (타임스탬프)
     var timestamp: String  // 실제로는 Timestamp 타입 사용해야할거같네요? - ChanHo
+    /// 헤어 디자인 카테고리
+    var hairCategory: HairCategory
 }
 
 

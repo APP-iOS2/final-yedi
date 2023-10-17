@@ -190,7 +190,7 @@ class ChattingViewModel: ObservableObject {
                     }
                 }
                 
-                let post = Post(id: id, designerID: designerID, location: location, title: title, description: description, photos: photos, comments: 0, timestamp: "")
+                let post = Post(id: id, designerID: designerID, location: location, title: title, description: description, photos: photos, comments: 0, timestamp: "", hairCategory: .Cut)
                 ///새로 생성된 채팅방에 바로 게시물 버블 보내기
                 self.sendBoardBubble(content: "이 게시물 보고 상담하러 왔어요", imagePath: post.photos[0].imageURL, sender: sender)
             }
