@@ -142,6 +142,8 @@ final class UserAuth: ObservableObject {
                 self.storeService.collection("clients")
                     .document(user.uid)
                     .setData(data, merge: true)
+                
+                self.userSession = nil
             }
         }
     }
@@ -178,6 +180,8 @@ final class UserAuth: ObservableObject {
                 self.storeService.collection("designers")
                     .document(user.uid)
                     .setData(data, merge: true)
+                
+                self.userSession = nil
             }
         }
     }
