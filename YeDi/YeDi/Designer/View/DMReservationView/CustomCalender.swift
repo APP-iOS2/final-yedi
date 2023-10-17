@@ -24,14 +24,11 @@ struct CustomCalender: View {
     
     var body: some View {
         VStack {
-            headerView
-            calendarGridView
-           
             HStack {
                 VStack {
                     Divider().padding(.trailing, 3)
                 }
-                    Text("선택된 날짜")
+                    Text("휴무일 설정")
                     .foregroundStyle(.gray)
                     .font(.system(size: 14))
                 VStack {
@@ -40,13 +37,12 @@ struct CustomCalender: View {
             }
             .padding(.top)
             
-            ScrollView {
-                ForEach(clickedDates.map { $0 }, id: \.self) { date in
-                    Text(date, style: .date)
-                        .hAlign(.leading)
-                }
-            }
-            
+            headerView
+            calendarGridView
+           
+            Spacer().frame(height: 50)
+            Divider()
+            Spacer().frame(height: 50)
             Button(action: {
                 dayModel.addDay("designer1", dateSetToStringArray(dateSet: clickedDates))
                 
@@ -61,6 +57,7 @@ struct CustomCalender: View {
                             .foregroundColor(.gray)
                     }
             })
+            Spacer()
         }
         .padding(.horizontal, 9)
         .gesture(
