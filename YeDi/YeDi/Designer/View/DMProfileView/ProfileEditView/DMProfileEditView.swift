@@ -77,24 +77,24 @@ struct DMProfileEditView: View {
                 }
                 
                 Section {
-                    DMDesignerInfoEditView(
-                        designerName: $designerName,
-                        designerRank: $designerRank,
-                        designerGender: $designerGender,
-                        designerBirthDate: $designerBirthDate,
-                        isShowingDatePicker: $isShowingDatePicker
-                    )
-                    .padding(.bottom, 40)
-                } header: {
-                    HStack {
-                        Text("회원 정보")
-                            .fontWeight(.semibold)
-                            .padding(.leading)
-                        Spacer()
-                    }
-                    Divider()
-                        .frame(width: 360)
-                }
+                     DMDesignerInfoEditView(
+                         designerName: $designerName,
+                         designerRank: $designerRank,
+                         designerGender: $designerGender,
+                         designerBirthDate: $designerBirthDate,
+                         isShowingDatePicker: $isShowingDatePicker
+                     )
+                     .padding(.bottom, 40)
+                 } header: {
+                     HStack {
+                         Text("회원 정보")
+                             .fontWeight(.semibold)
+                             .padding(.leading)
+                         Spacer()
+                     }
+                     Divider()
+                         .frame(width: 360)
+                 }
                 
                 Section {
                     DMAccountInfoEditView(
@@ -150,17 +150,13 @@ struct DMProfileEditView: View {
             .onAppear {
                 Task {
                     await profileViewModel.fetchDesignerProfile(userAuth: userAuth)
+                    designerName = profileViewModel.designer.name
+                    designerRank = profileViewModel.designer.rank
+                    designerGender = profileViewModel.designer.gender
+                    designerBirthDate = profileViewModel.designer.birthDate
+                    accountEmail = profileViewModel.designer.email
+                    accountPhoneNumber = profileViewModel.designer.phoneNumber
                 }
-                
-                selectedPhotoURL = profileViewModel.designer.imageURLString ?? ""
-                
-                designerName = profileViewModel.designer.name
-                designerRank = profileViewModel.designer.rank
-                designerGender = profileViewModel.designer.gender
-                designerBirthDate = profileViewModel.designer.birthDate
-                
-                accountEmail = profileViewModel.designer.email
-                accountPhoneNumber = profileViewModel.designer.phoneNumber
             }
             .sheet(isPresented: $isShowingPhotoPicker, content: {
                 PhotoPicker { imageURL in
