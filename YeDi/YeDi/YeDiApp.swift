@@ -22,8 +22,9 @@ struct YeDiApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var userAuth = UserAuth()
     @StateObject var consultationViewModel = ConsultationViewModel()
-    @StateObject var profileViewModel: CMProfileViewModel = CMProfileViewModel()
+    @StateObject var cmProfileViewModel: CMProfileViewModel = CMProfileViewModel()
     @StateObject var reviewViewModel: CMReviewViewModel = CMReviewViewModel()
+    @StateObject var dmPostViewModel: DMPostViewModel = DMPostViewModel()
     @StateObject var chattingListViewModel = ChattingListRoomViewModel()
     
     var body: some Scene {
@@ -31,8 +32,9 @@ struct YeDiApp: App {
             ContentView()
                 .environmentObject(userAuth)
                 .environmentObject(consultationViewModel)
-                .environmentObject(profileViewModel)
+                .environmentObject(cmProfileViewModel)
                 .environmentObject(reviewViewModel)
+                .environmentObject(dmPostViewModel)
                 .environmentObject(chattingListViewModel)
         }
     }

@@ -6,16 +6,15 @@
 //
 
 import SwiftUI
+import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
-
-import Firebase
-
 struct ContentView: View {
     @EnvironmentObject var userAuth: UserAuth
-    @EnvironmentObject var profileViewModel: CMProfileViewModel
+    @EnvironmentObject var cmProfileViewModel: CMProfileViewModel
     @EnvironmentObject var reviewViewModel: CMReviewViewModel
+    @EnvironmentObject var dmPostViewModel: DMPostViewModel
     @EnvironmentObject var chattingListViewModel: ChattingListRoomViewModel
     
     var body: some View {
@@ -24,10 +23,11 @@ struct ContentView: View {
                 switch userAuth.userType {
                 case .client:
                     ClientMainTabView()
-                        .environmentObject(profileViewModel)
+                        .environmentObject(cmProfileViewModel)
                         .environmentObject(reviewViewModel)
                 case .designer:
                     DesignerMainTabView()
+                        .environmentObject(dmPostViewModel)
                 case .none:
                     EmptyView()
                 }
@@ -47,16 +47,6 @@ struct ContentView: View {
 //        )
     }
 }
-
-/*
- c1@gmail.com / 111111
- c2@gmail.com / 111111
- c3@gmail.com / 111111
- d1@gmail.com / 111111
- d2@gmail.com / 111111
- d3@gmail.com / 111111
- */
-
 
 #Preview {
     ContentView()

@@ -26,7 +26,7 @@ struct PhotoSelectionView: View {
                     }
                     .foregroundStyle(.gray)
                 }
-                .padding(EdgeInsets(top: 10, leading: 20, bottom: 40, trailing: 0))
+                .padding(EdgeInsets(top: 10, leading: 20, bottom: 20, trailing: 0))
                 .onTapGesture(perform: {
                     isShowingPhotoPicker.toggle()
                 })
@@ -49,7 +49,7 @@ struct PhotoSelectionView: View {
                         .offset(x: 52, y: -50)
                     }
                 }
-                .padding(EdgeInsets(top: 10, leading: 5, bottom: 40, trailing: 0))
+                .padding(EdgeInsets(top: 10, leading: 5, bottom: 20, trailing: 0))
             }
             .padding(.trailing)
         }
