@@ -32,6 +32,8 @@
 		3B6346DC2AD8DDD300D3D110 /* NSCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6346DB2AD8DDD300D3D110 /* NSCacheManager.swift */; };
 		3B6346DE2AD9004600D3D110 /* ChatListUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6346DD2AD9004600D3D110 /* ChatListUserInfo.swift */; };
 		3BA51B6B2AD53212009D7902 /* SingleTonDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA51B6A2AD53212009D7902 /* SingleTonDateFormatter.swift */; };
+		3BA862DD2ADF630200385507 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BA862DC2ADF630200385507 /* GoogleService-Info.plist */; };
+		3BA862E12ADF96D500385507 /* DMShopEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA862E02ADF96D500385507 /* DMShopEditView.swift */; };
 		3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */; };
 		3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */; };
 		3BAB00F32ACD97EB009053A4 /* ReservationSDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */; };
@@ -157,6 +159,8 @@
 		3B6346DB2AD8DDD300D3D110 /* NSCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCacheManager.swift; sourceTree = "<group>"; };
 		3B6346DD2AD9004600D3D110 /* ChatListUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListUserInfo.swift; sourceTree = "<group>"; };
 		3BA51B6A2AD53212009D7902 /* SingleTonDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTonDateFormatter.swift; sourceTree = "<group>"; };
+		3BA862DC2ADF630200385507 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3BA862E02ADF96D500385507 /* DMShopEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMShopEditView.swift; sourceTree = "<group>"; };
 		3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMAccount.swift; sourceTree = "<group>"; };
 		3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMExpandableText.swift; sourceTree = "<group>"; };
 		3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReservationSDetail.swift; sourceTree = "<group>"; };
@@ -565,6 +569,7 @@
 			isa = PBXGroup;
 			children = (
 				965ECCEC2AD93E7F00BC0D41 /* ProfileEditView */,
+				3BA862E02ADF96D500385507 /* DMShopEditView.swift */,
 			);
 			path = DMProfileView;
 			sourceTree = "<group>";
@@ -848,6 +853,7 @@
 				96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */,
 				96F637DF2AC2BCFD00EF74FF /* ReservationCellView.swift in Sources */,
 				1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */,
+				3BA862E12ADF96D500385507 /* DMShopEditView.swift in Sources */,
 				097EAD332AD03FC70037B848 /* CMLikedPostListViewModel.swift in Sources */,
 				3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */,
 				1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */,
