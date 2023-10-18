@@ -133,6 +133,7 @@ struct Post: Codable {
 }
 
 // 헤어 디자인 카테고리를 정의하는 Enum
+
 enum HairCategory: String, Codable {
     case Cut = "커트"
     case Perm = "펌"

@@ -51,35 +51,40 @@ class CMReviewViewModel: ObservableObject {
     func uploadReview(review: Review) async {
         self.downloadURLs = []
         
-        do {
-            var newReview = review
+        for imageURLString in review.imageURLStrings {
+            let temp = UUID().uuidString
+            
+            let localFile = URL(string: imageURLString)!
             
             // 로컬에 임시로 저장된 이미지를 Jpeg으로 압축 > storage에 업로드하고 URL 다운받기
-            for imageURLString in newReview.imageURLStrings {
-                let temp = UUID().uuidString
+            let uploadTask = URLSession.shared.dataTask(with: localFile) { data, response, error in
+                guard let data = data else { return }
                 
-                let localFile = URL(string: imageURLString)!
-                
-                URLSession.shared.dataTask(with: localFile) { data, response, error in
-                    guard let data = data else { return }
-                    
-                    let localJpeg = UIImage(data: data)?.jpegData(compressionQuality: 0.2)
-                    if let localJpeg {
-                        self.storageRef.child("reviews/\(temp)").putData(localJpeg)
+                let localJpeg = UIImage(data: data)?.jpegData(compressionQuality: 0.2)
+                if let localJpeg {
+                    let uploadTask = self.storageRef.child("reviews/\(temp)").putData(localJpeg)
+                    uploadTask.observe(.success) { StorageTaskSnapshot in
+                        if StorageTaskSnapshot.status == .success {
+                            Task {
+                                do {
+                                    var capturedReview = review
+                                    
+                                    let downloadURL = try await self.storageRef.child("reviews/\(temp)").downloadURL()
+                                    self.downloadURLs.append(downloadURL.absoluteString)
+                                    
+                                    capturedReview.imageURLStrings = self.downloadURLs
+                                    try self.collectionRef.document(capturedReview.id ?? "").setData(from: capturedReview)
+                                } catch {
+                                    print("Error uploading client reviews: \(error)")
+                                }
+                            }
+                        }
                     }
                 }
-                
-                try await Task.sleep(for: .seconds(1.5))
-                
-                let downloadURL = try await storageRef.child("reviews/\(temp)").downloadURL()
-                self.downloadURLs.append(downloadURL.absoluteString)
             }
             
-            newReview.imageURLStrings = downloadURLs
-            
-            try collectionRef.document(newReview.id ?? "").setData(from: newReview)
-        } catch {
-            print("Error updating client reviews: \(error)")
+            uploadTask.resume()
         }
     }
 }
+

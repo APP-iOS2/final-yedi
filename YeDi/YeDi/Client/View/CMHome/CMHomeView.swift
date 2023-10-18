@@ -22,9 +22,9 @@ struct CMHomeView: View {
                         VStack {
                             Text(segment)
                                 .fontWeight(selectedSegment == segment ? .semibold : .medium)
-                                .foregroundStyle(.black)
+                                .foregroundStyle(Color.mainColor)
                             Rectangle()
-                                .fill(selectedSegment == segment ? .black : .white)
+                                .fill(selectedSegment == segment ? Color.mainColor : .clear)
                                 .frame(width: 180, height: 3)
                         }
                     })

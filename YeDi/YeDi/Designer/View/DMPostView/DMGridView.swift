@@ -8,10 +8,11 @@
 import SwiftUI
 import FirebaseFirestore
 
-// MARK: - DMGridView (내 게시물 그리드 뷰)
+/// 내 게시물 그리드 뷰
 struct DMGridView: View {
-    @State var posts: [Post] = []
+    // MARK: - Properties
     @EnvironmentObject var userAuth: UserAuth // UserAuth 객체를 주입
+    @EnvironmentObject var postViewModel: DMPostViewModel
     
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 16),
@@ -20,10 +21,10 @@ struct DMGridView: View {
     
     let imageSize: CGFloat = 174
 
-    
+    // MARK: - Body
     var body: some View {
         NavigationStack {
-            GridContentView(posts: posts, columns: columns, imageSize: imageSize)
+            GridContentView(posts: postViewModel.posts, columns: columns, imageSize: imageSize)
                 .background(Color.gray.opacity(0.1))
                 .navigationTitle("내 게시물")
                 .navigationBarItems(trailing:
@@ -34,35 +35,8 @@ struct DMGridView: View {
                     }
                 )
                 .onAppear() {
-                    fetchPostsFromFirestore()
+                    postViewModel.fetchPostsFromFirestore(userAuth: userAuth)
                 }
-        }
-    }
-    
-    private func fetchPostsFromFirestore() {
-        let db = Firestore.firestore()
-        
-        guard let currentDesignerID = userAuth.currentDesignerID else {
-            print("No designer is currently logged in.")
-            return
-        }
-        
-        db.collection("posts")
-          .whereField("designerID", isEqualTo: currentDesignerID) // 현재 디자이너 아이디로 필터링
-          .addSnapshotListener { querySnapshot, error in
-            if let error = error {
-                print("Error fetching documents: \(error)")
-                return
-            }
-            
-            guard let documents = querySnapshot?.documents else {
-                print("No documents found")
-                return
-            }
-            
-            self.posts = documents.compactMap { queryDocumentSnapshot in
-                try? queryDocumentSnapshot.data(as: Post.self)
-            }
         }
     }
     
@@ -123,4 +97,5 @@ struct DMGridView: View {
 #Preview {
     DMGridView()
         .environmentObject(UserAuth())
+        .environmentObject(DMPostViewModel())
 }

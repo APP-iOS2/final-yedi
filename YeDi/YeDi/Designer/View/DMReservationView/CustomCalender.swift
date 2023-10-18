@@ -25,8 +25,10 @@ struct CustomCalender: View {
     var body: some View {
         VStack {
             HStack {
+
                     Text("날짜를 선택하세요.")
                     .foregroundStyle(.black)
+
                     .font(.system(size: 14))
                 VStack {
                     Divider().padding(.leading, 3)
@@ -42,6 +44,7 @@ struct CustomCalender: View {
             Divider()
             Spacer().frame(height: 50)
             
+
             Button(action: {
                 // 선택된 날짜 파이어베이스에 저장
                 dayModel.addDay("designer1", dateSetToStringArray(dateSet: clickedDates))

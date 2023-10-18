@@ -15,11 +15,7 @@ struct CMReviewWriteContentView: View {
     var body: some View {
         Section {
             TextField("리뷰를 작성해주세요.", text: $reviewContent, axis: .vertical)
-                .padding(10)
-                .background(
-                    RoundedRectangle(cornerRadius: 2)
-                        .stroke(Color(white: 0.9), lineWidth: 1)
-                )
+                .textFieldStyle(CMCustomTextAreaStyle())
                 .padding(EdgeInsets(top: 0, leading: 20, bottom: 50, trailing: 20))
         } header: {
             HStack {
