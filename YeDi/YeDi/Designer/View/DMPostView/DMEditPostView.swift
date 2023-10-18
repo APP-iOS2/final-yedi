@@ -123,7 +123,8 @@ struct DMEditPostView: View {
                 Text("내용")
                     .fontWeight(.semibold)
                 TextField("내용", text: $description, axis: .vertical)
-                    .textFieldStyle(CMCustomTextAreaStyle())
+                    .textAreaModifier(200)
+                    .padding(.bottom)
                 
                 Text("가격")
                     .fontWeight(.semibold)
