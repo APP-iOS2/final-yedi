@@ -541,6 +541,7 @@
 			children = (
 				3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */,
 				3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */,
+                1D63595C2ACEED0A00FBD37B /* DMProfileViewModel.swift */,
 				1D9067182AC151A80028A660 /* DMAsyncImage.swift */,
 				1D90671C2AC176020028A660 /* DMPostViewModel.swift */,
 				1DD969A02ACFFD9A000AD7D2 /* AddDesignerDataView.swift */,
