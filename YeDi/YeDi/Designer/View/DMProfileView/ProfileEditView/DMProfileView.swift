@@ -119,6 +119,26 @@ struct DMProfileView: View {
                         await profileVM.fetchShopInfo(userAuth: userAuth)
                     }
                 }
+                
+                // 현재 사용자의 유형에 따라 적절한 ID를 가져옵니다.
+                let designerUID: String?
+                switch userAuth.userType {
+                case .client:
+                    designerUID = userAuth.currentClientID
+                case .designer:
+                    designerUID = userAuth.currentDesignerID
+                case .none:
+                    designerUID = nil
+                }
+
+                // UID 확인 후 팔로워 수 업데이트
+                if let designerUID = designerUID, !designerUID.isEmpty {
+                    Task {
+                        await profileVM.updateFollowerCountForDesigner(designerUID: designerUID)
+                    }
+                } else {
+                    print("디자이너 UID가 유효하지 않습니다.")
+                }
             }
         }
     }
