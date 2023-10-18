@@ -100,6 +100,12 @@ struct RegisterNavigationView: View {
             RegisterButton(.client)
         }
         .navigationTitle("고객 회원가입")
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                DismissButton(color: nil) { }
+            }
+        }
     }
     
     var registerForDesigner: some View {
@@ -116,6 +122,12 @@ struct RegisterNavigationView: View {
             RegisterButton(.designer)
         }
         .navigationTitle("디자이너 회원가입")
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                DismissButton(color: nil) { }
+            }
+        }
     }
     
     private func inputUserInfo(_ userType: UserType) -> some View {
@@ -203,7 +215,7 @@ struct RegisterNavigationView: View {
                 Text("생년월일 *")
                 HStack {
                     Text(changedBirthText)
-                        .foregroundColor(changedBirthText=="생년월일" ? .gray : .primary)
+                        .foregroundStyle(changedBirthText=="생년월일" ? Color.placeholderText : Color.primaryLabel)
                     
                     Spacer()
                     Image(systemName: "calendar")
@@ -235,13 +247,13 @@ struct RegisterNavigationView: View {
                         }, label: {
                             Text(gender)
                                 .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-                                .foregroundStyle(.black)
+                                .foregroundStyle(Color.primaryLabel)
                                 .background(
                                     RoundedRectangle(cornerRadius: 2)
-                                        .stroke(Color(white: 0.9), lineWidth: 1)
+                                        .stroke(Color.gray6, lineWidth: 2)
                                 )
                         })
-                        .background(selectedGender == gender ? Color(white: 0.9) : .white)
+                        .background(selectedGender == gender ? Color.gray4 : Color.gray6)
                     }
                 }
                 Spacer()
@@ -252,14 +264,27 @@ struct RegisterNavigationView: View {
     }
     
     private var inputDesignerRank: some View {
-        VStack(alignment: .leading) {
-            Picker("select your rank", selection: $rank) {
-                ForEach(ranks, id: \.self) { rank in
-                    Text(rank.rawValue)
+        HStack(alignment: .center) {
+            Text("직급 *")
+            
+            Spacer()
+            
+            Menu(rank.rawValue) {
+                Picker("select your rank", selection: $rank) {
+                    ForEach(ranks, id: \.self) { rank in
+                        Text(rank.rawValue)
+                    }
                 }
             }
-            .pickerStyle(.menu)
+            .frame(maxWidth: .infinity)
+            .padding(11)
+            .foregroundStyle(Color.primary)
+            .background {
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color.quaternarySystemFill)
+            }
         }
+        .padding(.vertical, 8)
         .padding(.horizontal)
     }
     
@@ -278,13 +303,7 @@ struct RegisterNavigationView: View {
                 pressedButtonRegister(userType)
             } label: {
                 Text("회원가입")
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background {
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(.black)
-                    }
+                    .buttonModifier(.mainColor)
             }
         }
         .padding([.horizontal, .bottom])

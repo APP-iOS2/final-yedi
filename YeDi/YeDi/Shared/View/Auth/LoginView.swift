@@ -54,6 +54,12 @@ struct LoginView: View {
         }
         .padding(.horizontal)
         .navigationTitle("고객 로그인")
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                DismissButton(color: nil) { }
+            }
+        }
     }
     
     private var loginForDesigner: some View {
@@ -70,6 +76,12 @@ struct LoginView: View {
         }
         .padding(.horizontal)
         .navigationTitle("디자이너 로그인")
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                DismissButton(color: nil) { }
+            }
+        }
     }
     
     private var inputEmailTextField: some View {
@@ -99,6 +111,7 @@ struct LoginView: View {
     private var resetPassword: some View {
         VStack(alignment: .leading) {
             Divider()
+                .background(Color.separator)
                 .padding(.bottom)
             
             HStack {
@@ -123,13 +136,7 @@ struct LoginView: View {
                 }
             } label: {
                 Text("로그인")
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background {
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(.black)
-                    }
+                    .buttonModifier(.mainColor)
             }
         }
         .padding(.bottom)
