@@ -97,7 +97,8 @@
 		639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB67D2AC11AF5002692E5 /* DMProfileView.swift */; };
 		639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6802AC11B21002692E5 /* DMMainChattingView.swift */; };
 		639DB6872AC11B56002692E5 /* DMPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6862AC11B56002692E5 /* DMPostView.swift */; };
-		63A888242ADF623B00790EBA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63A888232ADF623B00790EBA /* GoogleService-Info.plist */; };
+
+		63A888282ADF9A5A00790EBA /* DateDeviderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A888272ADF9A5A00790EBA /* DateDeviderCell.swift */; };
 		63CD89B12ABD85C300E70A56 /* YeDiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CD89B02ABD85C300E70A56 /* YeDiApp.swift */; };
 		63CD89B32ABD85C300E70A56 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CD89B22ABD85C300E70A56 /* ContentView.swift */; };
 		63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63CD89B42ABD85C500E70A56 /* Assets.xcassets */; };
@@ -220,7 +221,8 @@
 		639DB67D2AC11AF5002692E5 /* DMProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMProfileView.swift; sourceTree = "<group>"; };
 		639DB6802AC11B21002692E5 /* DMMainChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMMainChattingView.swift; sourceTree = "<group>"; };
 		639DB6862AC11B56002692E5 /* DMPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostView.swift; sourceTree = "<group>"; };
-		63A888232ADF623B00790EBA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+
+		63A888272ADF9A5A00790EBA /* DateDeviderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDeviderCell.swift; sourceTree = "<group>"; };
 		63CD89AD2ABD85C300E70A56 /* YeDi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YeDi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63CD89B02ABD85C300E70A56 /* YeDiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YeDiApp.swift; sourceTree = "<group>"; };
 		63CD89B22ABD85C300E70A56 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 				3BCF2C1A2ACD3E72009C18C2 /* TempPhotoPickerView.swift */,
 				3BCF2C1B2ACD3E72009C18C2 /* ChatUtilityMenuView.swift */,
 				3BCF2C1C2ACD3E72009C18C2 /* ImageBubbleCell.swift */,
+				63A888272ADF9A5A00790EBA /* DateDeviderCell.swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -912,6 +915,7 @@
 				3BCF2C872ACD4248009C18C2 /* CMAccountInfoEditView.swift in Sources */,
 				DC7695C92ADD119D00D2FB69 /* ButtonModifier.swift in Sources */,
 				3BCF2C6B2ACD4248009C18C2 /* Client.swift in Sources */,
+				63A888282ADF9A5A00790EBA /* DateDeviderCell.swift in Sources */,
 				3BCF2C832ACD4248009C18C2 /* CMFilterView.swift in Sources */,
 				1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */,
 				1DD969A12ACFFD9A000AD7D2 /* AddDesignerDataView.swift in Sources */,

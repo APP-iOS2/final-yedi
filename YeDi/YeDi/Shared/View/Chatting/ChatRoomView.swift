@@ -18,6 +18,8 @@ struct ChatRoomView: View {
     
     @State private var inputText: String = ""
     @State private var isShowingUtilityMenu: Bool = false
+    ///채팅창에 년/월/일을 따로 보여주는 텍스트를 위한 값 : 년/월/일 분기점
+    @State private var devideDate: String = ""
     
     private var userId: String {
         switch userAuth.userType {
