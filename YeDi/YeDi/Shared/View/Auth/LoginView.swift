@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct LoginView: View {
-    @EnvironmentObject var userAuth: UserAuth
+    let userType: UserType
     
-    @State private var userType: UserType?
+    @EnvironmentObject var userAuth: UserAuth
     
     @State private var email: String = ""
     @State private var password: String = ""
@@ -22,15 +22,11 @@ struct LoginView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            NavigationLink {
+            switch userType {
+            case .client:
                 loginForClient
-            } label: {
-                Text("고객 로그인")
-            }
-            NavigationLink {
+            case .designer:
                 loginForDesigner
-            } label: {
-                Text("디자이너 로그인")
             }
         }
         .task {
@@ -41,7 +37,7 @@ struct LoginView: View {
     }
     
     private var loginForClient: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 10) {
             inputEmailTextField
             inputPasswordTextField
             
@@ -49,21 +45,12 @@ struct LoginView: View {
                 .cautionTextStyle()
             
             LoginButton(.client)
-            
-            resetPassword
         }
         .padding(.horizontal)
-        .navigationTitle("고객 로그인")
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                DismissButton(color: nil) { }
-            }
-        }
     }
     
     private var loginForDesigner: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 10) {
             inputEmailTextField
             inputPasswordTextField
             
@@ -71,17 +58,8 @@ struct LoginView: View {
                 .cautionTextStyle()
             
             LoginButton(.designer)
-            
-            resetPassword
         }
         .padding(.horizontal)
-        .navigationTitle("디자이너 로그인")
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                DismissButton(color: nil) { }
-            }
-        }
     }
     
     private var inputEmailTextField: some View {
@@ -108,24 +86,6 @@ struct LoginView: View {
         }
     }
     
-    private var resetPassword: some View {
-        VStack(alignment: .leading) {
-            Divider()
-                .background(Color.separator)
-                .padding(.bottom)
-            
-            HStack {
-                Text("비밀번호를 잊으셨나요?")
-                
-                NavigationLink {
-                    ResetPasswordView()
-                } label: {
-                    Text("재설정 이메일 보내기")
-                }
-            }
-        }
-    }
-    
     private func LoginButton(_ userType: UserType) -> some View {
         VStack {
             Button {
@@ -139,7 +99,6 @@ struct LoginView: View {
                     .buttonModifier(.mainColor)
             }
         }
-        .padding(.bottom)
     }
     
     private func initTextField() {
