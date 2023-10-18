@@ -21,7 +21,7 @@ struct CMRecommendPostView: View {
                                 // 사용자가 스크롤을 끝까지 내렸을 때, 마지막 게시물이 보이면 다음 페이지를 가져옴
                                 if post.id == postViewModel.posts.last?.id {
                                     Task {
-                                        await postViewModel.fetchPosts() // 다음 페이지를 가져오는 함수 호출
+                                        await postViewModel.fetchPosts()
                                         
                                     }
                                 }

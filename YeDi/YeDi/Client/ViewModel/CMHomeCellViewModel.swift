@@ -13,22 +13,24 @@ import FirebaseFirestore
 class CMHomeCellViewModel: ObservableObject {
     @Published var isLiked: Bool = false
     @Published var designer: Designer?
-        
-        func fetchDesignerInfo(post: Post) async {
-            let db = Firestore.firestore()
-            let designerRef = db.collection("designers").document(post.designerID)
-            
-            do {
-                let document = try await designerRef.getDocument()
-                if let designerData = document.data() {
-                    // Initialize the designer model using Codable
-                    designer = try? document.data(as: Designer.self)
-                }
-            } catch {
-                print("Error fetching designer document: \(error)")
-            }
-        }
     
+    // 게시물을 올린 디자이너의 정보 불러오기
+    func fetchDesignerInfo(post: Post) async {
+        let db = Firestore.firestore()
+        let designerRef = db.collection("designers").document(post.designerID)
+        
+        do {
+            let document = try await designerRef.getDocument()
+            if let designerData = document.data() {
+                // Initialize the designer model using Codable
+                designer = try? document.data(as: Designer.self)
+            }
+        } catch {
+            print("Error fetching designer document: \(error)")
+        }
+    }
+    
+    // 게시물의 찜 여부 확인
     func checkIfLiked(forClientID clientID: String, post: Post) {
         let db = Firestore.firestore()
         
@@ -56,6 +58,7 @@ class CMHomeCellViewModel: ObservableObject {
             }
     }
     
+    // 게시물 찜 관리
     func likePost(forClientID clientID: String, post: Post) {
         let db = Firestore.firestore()
         let likeCollection = db.collection("likedPosts")
@@ -90,7 +93,7 @@ class CMHomeCellViewModel: ObservableObject {
                             print("Post liked successfully.")
                             
                             if !self.isLiked {
-                                // isLiked가 false인 경우, 해당 게시물을 Firestore에서 삭제합니다.
+                                // isLiked가 false인 경우, 해당 게시물을 Firestore에서 삭제
                                 self.deleteFromFirestore(forClientID: clientID, post: post)
                             }
                         }
@@ -99,7 +102,7 @@ class CMHomeCellViewModel: ObservableObject {
             }
     }
     
-    
+    // 게시물 찜 취소
     private func deleteFromFirestore(forClientID clientID: String, post: Post) {
         let db = Firestore.firestore()
         

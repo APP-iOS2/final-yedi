@@ -11,6 +11,7 @@ import FirebaseFirestore
 class CMLikePostListViewModel: ObservableObject {
     @Published var likedPosts: [Post] = []
     
+    // 클라이언트가 찜한 게시물만 불러오기
     func fetchLikedPosts(forClientID clientID: String) {
         let db = Firestore.firestore()
         

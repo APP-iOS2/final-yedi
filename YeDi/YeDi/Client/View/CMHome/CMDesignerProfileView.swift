@@ -31,6 +31,7 @@ struct CMDesignerProfileView: View {
                     Text(designer.name)
                         .font(.title2)
                         .fontWeight(.semibold)
+                        .foregroundStyle(Color.mainColor)
                     Text(designer.description ?? "")
                         .foregroundStyle(.gray)
                         .lineLimit(1)
@@ -65,6 +66,7 @@ struct CMDesignerProfileView: View {
             
             HStack {
                 Text("\(designer.followerCount) 팔로워")
+                    .foregroundStyle(Color.mainColor)
                 Spacer()
                 Button {
                     Task {
@@ -72,11 +74,12 @@ struct CMDesignerProfileView: View {
                     }
                 } label: {
                     Text("\(viewModel.isFollowing ? "팔로잉" : "팔로우")")
+                        .foregroundStyle(Color.mainColor)
                         .padding(.horizontal, 15)
                         .padding(.vertical, 7)
                         .background {
                             Capsule(style: .continuous)
-                                .stroke(.black.opacity(0.5), lineWidth: 1)
+                                .stroke(Color.mainColor.opacity(0.5), lineWidth: 1)
                         }
                 }
             }
@@ -87,6 +90,7 @@ struct CMDesignerProfileView: View {
                     Text("근무지 이름")
                         .font(.title3)
                         .fontWeight(.semibold)
+                        .foregroundStyle(Color.mainColor)
                     Text("근무지 주소")
                         .foregroundStyle(.gray)
                     Divider()
@@ -103,11 +107,13 @@ struct CMDesignerProfileView: View {
                     Text("이 디자이너의 게시물")
                         .font(.title3)
                         .fontWeight(.semibold)
+                        .foregroundStyle(Color.mainColor)
                     Spacer()
                 }
                 Divider()
                 if designerPosts.isEmpty {
                     Text("업로드된 게시물이 없습니다")
+                        .foregroundStyle(Color.mainColor)
                         .padding()
                 } else {
                     LazyVGrid(columns: gridItems, spacing: 1) {
@@ -121,10 +127,9 @@ struct CMDesignerProfileView: View {
                     }
                     NavigationLink(destination: CMStyleDetailView(designer: designer)) {
                         Text("스타일 전체보기")
+                            .foregroundStyle(Color.mainColor)
                     }
                     .padding()
-                    .buttonStyle(.borderedProminent)
-                    .tint(.black)
                 }
             }
             .padding(.horizontal)
