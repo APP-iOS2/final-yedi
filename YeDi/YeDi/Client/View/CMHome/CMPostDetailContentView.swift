@@ -249,7 +249,7 @@ struct CMFeedDetailContentView: View {
 
 #Preview {
     NavigationStack {
-        CMFeedDetailView(post: Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1", photos: [Photo(id: "p1", imageURL: "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MThfNTUg%2FMDAxNjYwNzkyNTY0NjM4.7AB8JmZVjAbAT2o2ACDRIPMLwdm63rC8OM2dCz6huTEg.1e6s7_D9ihi7VxTP-nNfLE1FzEP4kgXCuGy2TNDukuYg.JPEG.hjjyy1209%2FIMG_9195.jpg&type=sc960_832"),Photo(id: "p2", imageURL: "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjZfMjU2%2FMDAxNjYxNTE4MjkzMzYw.ztWMtqeoDOGfIPGTtQ9H_o0Kkinyuud5nNgy-izSgEog.g0f0NGZbBTM8zcS8B8i4EtwU5n8-XdLJqPZxzehQXKEg.JPEG.yongminjoe%2FIMG_7361.JPG&type=sc960_832")], comments: 5, timestamp: "1시간 전", hairCategory: .Cut))
+        CMFeedDetailView(post: Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1", photos: [Photo(id: "p1", imageURL: "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MThfNTUg%2FMDAxNjYwNzkyNTY0NjM4.7AB8JmZVjAbAT2o2ACDRIPMLwdm63rC8OM2dCz6huTEg.1e6s7_D9ihi7VxTP-nNfLE1FzEP4kgXCuGy2TNDukuYg.JPEG.hjjyy1209%2FIMG_9195.jpg&type=sc960_832"),Photo(id: "p2", imageURL: "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjZfMjU2%2FMDAxNjYxNTE4MjkzMzYw.ztWMtqeoDOGfIPGTtQ9H_o0Kkinyuud5nNgy-izSgEog.g0f0NGZbBTM8zcS8B8i4EtwU5n8-XdLJqPZxzehQXKEg.JPEG.yongminjoe%2FIMG_7361.JPG&type=sc960_832")], comments: 5, timestamp: "1시간 전", hairCategory: .Cut, price: 15000))
             .environmentObject(ConsultationViewModel())
     }
 }
