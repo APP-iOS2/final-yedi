@@ -411,9 +411,3 @@ struct RegisterView: View {
         return isBirthValid
     }
 }
-
-#Preview(body: {
-    NavigationStack{
-        RegisterNavigationView(userType: .designer)
-    }
-})
