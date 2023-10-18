@@ -8,22 +8,50 @@
 import SwiftUI
 
 struct DMProfileView: View {
-    @EnvironmentObject var userAuth: UserAuth  // 사용자 인증 정보
-    @StateObject var profileVM: DMProfileViewModel = DMProfileViewModel()  // 프로필 뷰 모델
+    @EnvironmentObject var userAuth: UserAuth
+    @StateObject var profileVM: DMProfileViewModel = DMProfileViewModel.shared
     
     var body: some View {
         NavigationStack {
             VStack {
-                // 디자이너 이름과 자기소개
-                VStack(alignment: .leading) {
-                    Text("원장 \(profileVM.designer.name)")  // 디자이너 이름
-                        .font(.system(size: 20, weight: .bold))
-                    Text(profileVM.designer.description ?? "자기소개가 없습니다.")  // 자기소개
-                        .font(.subheadline)
-                    Text("팔로워: \(profileVM.designer.followerCount)")  // 팔로워 수
-                        .font(.subheadline)
+                HStack {
+                    // 디자이너 프로필 사진
+                    if let url = URL(string: profileVM.designer.imageURLString ?? "") {
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 80, height: 80)
+                                    .clipShape(Circle())
+                            case .failure(_):
+                                defaultProfileImage()
+                            case .empty:
+                                ProgressView()
+                            @unknown default:
+                                defaultProfileImage()
+                            }
+                        }
+                        .padding(.trailing, 20)  // 사진과 텍스트 간의 간격을 조절
+                    } else {
+                        defaultProfileImage()
+                            .padding(.trailing, 20)
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        Text("\(profileVM.designer.rank.rawValue) \(profileVM.designer.name)")  // 디자이너 이름과 직급
+                            .font(.system(size: 20, weight: .bold))
+                        Text(profileVM.designer.description ?? "자기소개가 없습니다.")  // 자기소개
+                            .font(.subheadline)
+                        Text("팔로워: \(profileVM.designer.followerCount)")  // 팔로워 수
+                            .font(.subheadline)
+                    }
+                    
+                    Spacer()
                 }
-                .padding()
+                .padding([.leading], 20)  // HStack의 전체 왼쪽 패딩을 조절
+                
                 
                 // 샵 정보
                 VStack(alignment: .leading) {
@@ -32,15 +60,15 @@ struct DMProfileView: View {
                     Text(profileVM.shop.headAddress)  // 샵 위치
                         .font(.subheadline)
                     Divider()
-                    Text("휴무일: 월요일")  // 휴무일 정보
+                    Text("휴무일: \(profileVM.shop.closedDays.joined(separator: ", "))")  // 휴무일 정보
                         .font(.subheadline)
                 }
                 .padding()
                 
                 // 프로필 편집으로 이동하는 버튼
                 NavigationLink {
-                    DMProfileEditView()  // 프로필 편집 뷰로 이동
-                        .environmentObject(profileVM)
+                    DMProfileEditView()
+                        .environmentObject(profileVM)  // ViewModel 전달
                 } label: {
                     Text("프로필 편집")
                         .frame(width: 350, height: 40)
@@ -78,17 +106,36 @@ struct DMProfileView: View {
                 }
             }
             .onAppear {
-                Task {
-                    await profileVM.fetchDesignerProfile(userAuth: userAuth)  // 디자이너 프로필 정보 가져오기
+                // 디자이너 정보가 변경되지 않았다면 로딩하지 않음
+                if profileVM.designer.id == nil {
+                    Task {
+                        await profileVM.fetchDesignerProfile(userAuth: userAuth)
+                    }
+                }
+                
+                // 샵 정보가 변경되지 않았다면 로딩하지 않음
+                if profileVM.shop.shopName.isEmpty {
+                    Task {
+                        await profileVM.fetchShopInfo(userAuth: userAuth)
+                    }
                 }
             }
         }
     }
-}
+     
+     // 기본 프로필 이미지를 반환하는 함수
+     func defaultProfileImage() -> some View {
+         return Image(systemName: "person.circle.fill")
+             .resizable()
+             .aspectRatio(contentMode: .fill)
+             .frame(width: 80, height: 80)
+             .clipShape(Circle())
+     }
+ }
 
-#Preview {
-    NavigationStack {
-        DMProfileView()
-            .environmentObject(UserAuth())
-    }
-}
+ #Preview {
+     NavigationView {
+         DMProfileView()
+             .environmentObject(UserAuth())
+     }
+ }

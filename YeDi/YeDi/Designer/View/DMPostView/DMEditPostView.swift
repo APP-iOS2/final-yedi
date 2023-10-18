@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseFirestore
+import Firebase
 
 // MARK: - DMEditPostView
 // 게시물을 수정하는 뷰

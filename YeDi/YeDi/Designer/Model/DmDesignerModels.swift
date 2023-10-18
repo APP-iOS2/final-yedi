@@ -91,11 +91,11 @@ enum Rank: String, CaseIterable, Codable {
     }
 }
 
+/// 사진에 대한 정보를 담는 구조체
 struct Photo: Identifiable, Codable {
-    var id: String
-    var imageURL: String
+    var id: String  // 사진의 고유 ID
+    var imageURL: String  // 사진의 URL
     
-    // Firestore에 저장하기 적합한 Dictionary로 변환
     var dictionary: [String: Any] {
         return [
             "id": id,
@@ -103,7 +103,6 @@ struct Photo: Identifiable, Codable {
         ]
     }
 }
-
 
 struct Post: Codable {
     @DocumentID var id: String?  // Firestore 문서 ID
@@ -129,6 +128,7 @@ struct Post: Codable {
     var price: Int
 }
 
+// 헤어 디자인 카테고리를 정의하는 Enum
 enum HairCategory: String, Codable {
     case Cut = "커트"
     case Perm = "펌"
