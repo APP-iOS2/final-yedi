@@ -20,8 +20,10 @@ struct DMNewPostView: View {
     @State private var title = ""
     @State private var description = ""
     @State private var imageUrls: [String] = []
-    @State private var isShowingAlert = false
     @State private var hairCategory: HairCategory = .Else
+    @State private var price: String = ""
+    
+    @State private var isShowingAlert = false
     @State private var isShowingPhotoPicker: Bool = false
 
     let hairCategoryArray: [HairCategory] = [
@@ -30,8 +32,6 @@ struct DMNewPostView: View {
         HairCategory.Perm,
         HairCategory.Else
     ]
-    @State private var price: String = ""
-    
 
     // 폼 유효성 검사
     private var isFormValid: Bool {
@@ -157,12 +157,12 @@ struct DMNewPostView: View {
             photos: photos,
             comments: 0,
             timestamp: SingleTonDateFormatter.sharedDateFommatter.firebaseDate(from: Date()),
-            hairCategory: hairCategory
+            hairCategory: hairCategory,
+            price: Int(price) ?? 0
         )
         
         Task {
             await postViewModel.savePostToFirestore(post: newPost, imageURLs: imageUrls)
-            price: Int(price) ?? 0
         }
         isShowingAlert = true
     }

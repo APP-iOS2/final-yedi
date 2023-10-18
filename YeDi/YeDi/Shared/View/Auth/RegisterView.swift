@@ -430,8 +430,8 @@ struct RegisterView: View {
     }
 }
 
-#Preview(body: {
-    NavigationStack{
-        RegisterNavigationView(userType: .designer)
-    }
-})
+//#Preview(body: {
+//    NavigationStack{
+//        RegisterNavigationView(userType: .designer)
+//    }
+//})

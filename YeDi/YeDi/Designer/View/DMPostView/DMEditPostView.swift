@@ -23,6 +23,7 @@ struct DMEditPostView: View {
     @State private var description: String = ""
     @State private var imageUrls: [String] = []
     @State private var hairCategory: HairCategory = .Else
+    @State private var price: String = ""
     
     @State private var isShowingPhotoPicker: Bool = false
     @State private var isShowingConfirmAlert = false
@@ -33,16 +34,6 @@ struct DMEditPostView: View {
         HairCategory.Perm,
         HairCategory.Else
     ]
-
-    @State private var price: String = ""
-
-
-
-    
-    let hairCategoryArray: [HairCategory] = [HairCategory.Cut,
-                            HairCategory.Dying,
-                            HairCategory.Perm,
-                            HairCategory.Else]
     
     private var isFormValid: Bool {
         return !title.isEmpty && !description.isEmpty && !imageUrls.isEmpty
@@ -57,7 +48,7 @@ struct DMEditPostView: View {
             
             VStack {
                 // MARK: - 수정 완료 버튼
-                Button(action: {
+                Button {
                     let updatedPost: Post = Post(
                         id: post.id,
                         designerID: post.designerID,
@@ -65,14 +56,17 @@ struct DMEditPostView: View {
                         title: title,
                         description: description,
                         photos: [],
-                        comments: post.comments, 
+                        comments: post.comments,
                         timestamp: post.timestamp,
                         hairCategory: hairCategory,
+                        price: Int(price) ?? 0
                     )
+                    
                     Task {
                         await postViewModel.updatePost(updatedPost: updatedPost, imageURLs: imageUrls)
-                        isShowingConfirmAlert.toggle() 
-                }) {
+                        isShowingConfirmAlert.toggle()
+                    }
+                } label: {
                     Text("확인")
                 }
                 .buttonModifier(.main)
@@ -121,65 +115,25 @@ struct DMEditPostView: View {
                 // MARK: - 시술명 수정 섹션
                 Text("제목")
                     .fontWeight(.semibold)
-                    .padding(.trailing)
                 TextField("시술명", text: $title)
-                    .textFieldStyle(CMCustomTextFieldStyle())
+                    .textFieldModifier()
                     .padding(.bottom)
-            
+                
                 // MARK: - 내용 수정 섹션
                 Text("내용")
                     .fontWeight(.semibold)
-                    .padding(.trailing)
                 TextField("내용", text: $description, axis: .vertical)
                     .textFieldStyle(CMCustomTextAreaStyle())
-            TextField("가격", text:$price)
-                .textFieldModifier()
-            
-        }
-        .padding([.leading, .trailing], 20)
-    }
-    
-    private var categoryPickerView: some View {
-            HStack{
-                Text("스타일 종류를 선택하세요")
-                    .font(.subheadline)
-                Spacer()
-                Picker("", selection: $hairCategory) {
-                    ForEach(hairCategoryArray, id: \.self) { style in
-                        Text("\(style.rawValue)")
-                    }
-                }
-            }.padding([.top, .bottom], 5)
-        }
-    
-    private var imageUrlsSection: some View {
-        VStack(alignment: .leading) {
-            Text("이미지 URL")
-                .font(.headline)
-            ForEach(Array(zip(imageUrls.indices, imageUrls)), id: \.0) { index, imageUrl in
-                HStack {
-                    Text(imageUrl)
-                    Spacer()
-                    Button("수정") {
-                        // 수정 버튼을 누를 경우, 수정할 수 있도록 구현
-                        newImageUrl = imageUrl
-                        imageUrls.remove(at: index)
-                    }
-                    Button("삭제") {
-                        imageUrls.remove(at: index)
-                    }
-                }
+                
+                Text("가격")
+                    .fontWeight(.semibold)
+                TextField("가격", text:$price)
+                    .textFieldModifier()
             }
-            .padding([.leading, .trailing])
-            .sheet(isPresented: $isShowingPhotoPicker, content: {
-                PhotoPicker { imageURL in
-                    imageUrls.append(imageURL.absoluteString)
-                }
-            })
+            .padding([.leading, .trailing], 20)
         }
     }
     
-
     /// 시술 카테고리 피커 뷰
     private var categoryPickerView: some View {
         HStack{

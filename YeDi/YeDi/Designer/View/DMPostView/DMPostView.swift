@@ -13,23 +13,9 @@ struct DMPostView: View {
 
     // MARK: - Properties
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-
-    // 상태 변수 선언
-    @State var selectedPost: Post
-    @State private var selectedTab = 0
-    @State private var showActionSheet = false
-    @State private var showDeleteAlert = false
-    @State private var navigateToEditView = false
-    @State private var shouldRefresh = false
-    @State private var expanded: Bool = false
-    @State private var hairCategory: HairCategory = .Else
-
-
-
-
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var postViewModel: DMPostViewModel
-    
+
     /// 선택한 포스트
     @State var selectedPost: Post
     /// 포스트 사진 인덱스
