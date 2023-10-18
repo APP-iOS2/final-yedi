@@ -132,6 +132,7 @@
 		DC7695C52ADD0E0B00D2FB69 /* CapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695C42ADD0E0B00D2FB69 /* CapsuleButton.swift */; };
 		DC7695C92ADD119D00D2FB69 /* ButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695C82ADD119D00D2FB69 /* ButtonModifier.swift */; };
 		DC7695CF2ADF1DC800D2FB69 /* TextFieldModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695CE2ADF1DC800D2FB69 /* TextFieldModifier.swift */; };
+		DC94ED592ADFDA540052AD6E /* TextAreaModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -255,6 +256,7 @@
 		DC7695C42ADD0E0B00D2FB69 /* CapsuleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleButton.swift; sourceTree = "<group>"; };
 		DC7695C82ADD119D00D2FB69 /* ButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifier.swift; sourceTree = "<group>"; };
 		DC7695CE2ADF1DC800D2FB69 /* TextFieldModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldModifier.swift; sourceTree = "<group>"; };
+		DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -706,6 +708,7 @@
 				3BCF2C152ACD3E72009C18C2 /* ChatBubbleModifier.swift */,
 				DC7695C82ADD119D00D2FB69 /* ButtonModifier.swift */,
 				DC7695CE2ADF1DC800D2FB69 /* TextFieldModifier.swift */,
+				DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */,
 			);
 			path = ViewModifier;
 			sourceTree = "<group>";
@@ -918,6 +921,7 @@
 				63A888282ADF9A5A00790EBA /* DateDeviderCell.swift in Sources */,
 				3BCF2C832ACD4248009C18C2 /* CMFilterView.swift in Sources */,
 				1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */,
+				DC94ED592ADFDA540052AD6E /* TextAreaModifier.swift in Sources */,
 				1DD969A12ACFFD9A000AD7D2 /* AddDesignerDataView.swift in Sources */,
 				9615C78C2AD6A2FE00DD4F37 /* DMReviewView.swift in Sources */,
 			);
