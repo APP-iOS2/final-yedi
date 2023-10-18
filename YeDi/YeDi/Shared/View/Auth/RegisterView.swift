@@ -254,27 +254,6 @@ struct RegisterView: View {
             } label: {
                 Text("샵정보 입력")
             }
-
-//            HStack(alignment: .center) {
-//                Text("직급 *")
-//                
-//                Spacer()
-//                
-//                Menu(rank.rawValue) {
-//                    Picker("select your rank", selection: $rank) {
-//                        ForEach(ranks, id: \.self) { rank in
-//                            Text(rank.rawValue)
-//                        }
-//                    }
-//                }
-//                .frame(maxWidth: .infinity)
-//                .padding(11)
-//                .foregroundStyle(Color.primary)
-//                .background {
-//                    RoundedRectangle(cornerRadius: 4)
-//                        .fill(Color.quaternarySystemFill)
-//                }
-//            }
         }
         .padding(.vertical, 8)
         .padding(.horizontal)

@@ -89,9 +89,6 @@ struct DMShopEditView: View {
                 
                 Spacer()
             }
-            .onDisappear(perform: {
-                print(shop)
-            })
             .padding(.vertical, 8)
             .padding(.horizontal)
             .toolbar(content: {

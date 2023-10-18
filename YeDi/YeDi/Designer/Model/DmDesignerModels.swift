@@ -10,7 +10,7 @@ import Foundation
 
 // 샵에 대한 정보를 담는 구조체
 struct Shop: Codable {
-    var id: String = UUID().uuidString
+    @DocumentID var id: String?
     
     var shopName: String  // 샵 이름
     /// [시] 만 담고 있는 주소

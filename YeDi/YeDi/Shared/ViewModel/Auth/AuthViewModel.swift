@@ -201,11 +201,10 @@ final class UserAuth: ObservableObject {
                 ]
                 
                 self.storeService.collection("designers").document(user.uid).collection("shop")
-                    .document(shop.id)
-                    .setData(shopData, merge: true)
-                
-                self.userSession = nil
-                self.isLogin = false
+                    .addDocument(data: shopData, completion: { _ in
+                        self.userSession = nil
+                        self.isLogin = false
+                    })
             }
         }
     }
