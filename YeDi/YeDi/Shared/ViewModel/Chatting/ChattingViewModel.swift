@@ -137,15 +137,18 @@ class ChattingViewModel: ObservableObject {
     
     ///텍스트 버블을 보내는 메소드
     func sendTextBubble(content: String, sender: String) {
-        let bubble = CommonBubble( content: content, date: "\(Date())", sender: sender, isRead: false)
+        let instance = SingleTonDateFormatter.sharedDateFommatter
+        
+        let bubble = CommonBubble( content: content, date: "\(instance.firebaseDate(from: Date()))", sender: sender, isRead: false)
         
         sendBubble(bubble: bubble)
     }
     
     ///게시물 버블을 보내는 메소드
     func sendBoardBubble(content: String, imagePath: String, sender: String) {
+        let instance = SingleTonDateFormatter.sharedDateFommatter
         
-        let bubble = CommonBubble(content: content, imagePath: imagePath, date: "\(Date())", sender: sender, isRead: false
+        let bubble = CommonBubble(content: content, imagePath: imagePath, date: "\(instance.firebaseDate(from: Date()))", sender: sender, isRead: false
                                   
         )
         
@@ -156,6 +159,7 @@ class ChattingViewModel: ObservableObject {
     func sendImageBubble(imageData: Data, sender: String) {
         
         let bubble: CommonBubble = CommonBubble(imagePath: "", date: "", sender: "", isRead: false)
+        let instance = SingleTonDateFormatter.sharedDateFommatter
         
         self.storageRef = storageRef.child("\(bubble.id).jpg")
         
@@ -177,7 +181,7 @@ class ChattingViewModel: ObservableObject {
                 
                 let imageURL = "\(String(describing: url!))"
                 
-                let updatedBubble = CommonBubble(imagePath: "\(imageURL)", date: "\(Date())", sender: sender, isRead: false)
+                let updatedBubble = CommonBubble(imagePath: "\(imageURL)", date: "\(instance.firebaseDate(from: Date()))", sender: sender, isRead: false)
                 
                 
                 self?.sendBubble(bubble: updatedBubble)
