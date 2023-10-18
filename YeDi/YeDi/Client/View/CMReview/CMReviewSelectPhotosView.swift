@@ -19,6 +19,7 @@ struct CMReviewSelectPhotosView: View {
         Section {
             ScrollView(.horizontal) {
                 PhotoSelectionView(selectedPhotoURLs: $selectedPhotoURLs, isShowingPhotoPicker: $isShowingPhotoPicker)
+                    .padding(.bottom, 10)
             }
             .scrollIndicators(.never)
         } header: {
