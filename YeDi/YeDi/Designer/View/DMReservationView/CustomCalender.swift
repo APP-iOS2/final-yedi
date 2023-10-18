@@ -25,17 +25,15 @@ struct CustomCalender: View {
     var body: some View {
         VStack {
             HStack {
-                VStack {
-                    Divider().padding(.trailing, 3)
-                }
-                    Text("휴무일 설정")
-                    .foregroundStyle(.gray)
+                    Text("날짜를 선택하세요.")
+                    .foregroundStyle(.black)
                     .font(.system(size: 14))
                 VStack {
                     Divider().padding(.leading, 3)
                 }
             }
             .padding(.top)
+            .padding(.leading)
             
             headerView
             calendarGridView
@@ -43,10 +41,13 @@ struct CustomCalender: View {
             Spacer().frame(height: 50)
             Divider()
             Spacer().frame(height: 50)
+            
             Button(action: {
+                // 선택된 날짜 파이어베이스에 저장
                 dayModel.addDay("designer1", dateSetToStringArray(dateSet: clickedDates))
                 
                 clickedDates = []
+                
                 // toast messege 추후 구현
             }, label: {
                 Text("설정하기")
