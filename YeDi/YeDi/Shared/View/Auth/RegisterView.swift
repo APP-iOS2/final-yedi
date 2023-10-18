@@ -29,6 +29,9 @@ struct RegisterView: View {
     /// 디자이너 프로퍼티
     @State private var description: String = ""
     @State private var rank: Rank = .Owner
+    @State private var shop: Shop = .init(shopName: "", headAddress: "", subAddress: "", detailAddress: "", openingHour: "", closingHour: "", closedDays: [])
+    @State private var isShowDesignerShopEditView: Bool = false
+    
     /// caution 프로퍼티
     @State private var cautionEmail: String = ""
     @State private var cautionPassword: String = ""
@@ -47,7 +50,7 @@ struct RegisterView: View {
     @State private var isNotEmptyDescription: Bool = true
     /// birth 프로퍼티
     @State private var changedBirthText: String = "생년월일"
-    
+    @State private var tempDate: Date = Date()
     private let genders: [String] = ["여성", "남성"]
     private let ranks: [Rank] = [.Owner, .Principal, .Designer, .Intern]
     
@@ -92,8 +95,8 @@ struct RegisterView: View {
         VStack(alignment: .leading) {
             ScrollView {
                 inputUserInfo(.designer)
-                inputDesignerRank
                 inputDesignerDescription
+                inputDesignerRank
             }
             .onTapGesture {
                 hideKeyboard()
@@ -244,28 +247,42 @@ struct RegisterView: View {
     }
     
     private var inputDesignerRank: some View {
-        HStack(alignment: .center) {
-            Text("직급 *")
-            
-            Spacer()
-            
-            Menu(rank.rawValue) {
-                Picker("select your rank", selection: $rank) {
-                    ForEach(ranks, id: \.self) { rank in
-                        Text(rank.rawValue)
-                    }
-                }
+        
+        VStack(alignment: .leading, spacing: 5)  {
+            Button {
+                isShowDesignerShopEditView = true
+            } label: {
+                Text("샵정보 입력")
             }
-            .frame(maxWidth: .infinity)
-            .padding(11)
-            .foregroundStyle(Color.primary)
-            .background {
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(Color.quaternarySystemFill)
-            }
+
+//            HStack(alignment: .center) {
+//                Text("직급 *")
+//                
+//                Spacer()
+//                
+//                Menu(rank.rawValue) {
+//                    Picker("select your rank", selection: $rank) {
+//                        ForEach(ranks, id: \.self) { rank in
+//                            Text(rank.rawValue)
+//                        }
+//                    }
+//                }
+//                .frame(maxWidth: .infinity)
+//                .padding(11)
+//                .foregroundStyle(Color.primary)
+//                .background {
+//                    RoundedRectangle(cornerRadius: 4)
+//                        .fill(Color.quaternarySystemFill)
+//                }
+//            }
         }
         .padding(.vertical, 8)
         .padding(.horizontal)
+        .fullScreenCover(isPresented: $isShowDesignerShopEditView){
+            DMShopEditView(shop: $shop,
+                           rank: $rank,
+                           isShowDesignerShopEditView: $isShowDesignerShopEditView)
+        }
     }
     
     private var inputDesignerDescription: some View {
@@ -333,7 +350,7 @@ struct RegisterView: View {
                     designerUID: ""
                 )
                 
-                userAuth.registerDesigner(designer: designer, password: password) { success in
+                userAuth.registerDesigner(designer: designer, shop: shop, password: password) { success in
                     if success {
                         cautionEmail = "사용 가능한 이메일입니다."
                         dismiss()
@@ -412,3 +429,9 @@ struct RegisterView: View {
         return isBirthValid
     }
 }
+
+#Preview(body: {
+    NavigationStack{
+        RegisterNavigationView(userType: .designer)
+    }
+})

@@ -39,12 +39,12 @@ struct DMPostView: View {
                         NavigationLink(destination: DMProfileView()) {
                             Text(selectedPost.designerID)
                                 .font(.headline)
-                                .foregroundColor(Color.black)
+                                .foregroundColor(Color(UIColor.label))
                         }
                         NavigationLink(destination: DMProfileView()) {
                             Text("\(selectedPost.location) | \(selectedPost.title)")
                                 .font(.caption)
-                                .foregroundColor(Color.gray)
+                                .foregroundColor(Color(UIColor.secondaryLabel))
                         }
                     }
                     Spacer()
@@ -57,7 +57,7 @@ struct DMPostView: View {
                         }) {
                             Image(systemName: "ellipsis")
                                 .imageScale(.large)
-                                .foregroundColor(Color.black)
+                                .foregroundColor(Color(UIColor.label))
                         }
                     }
                     // 액션 시트
@@ -102,11 +102,16 @@ struct DMPostView: View {
                     DMExpandableText(text: description)
                         .padding(.horizontal)
                 }
+                // MARK: - 게시글 시술 카테고리
                 Text("\(selectedPost.hairCategory.rawValue)")
+                    .padding(.horizontal)
+                // MARK: - 게시글 시술 가격
+                Text("\(selectedPost.price)")
+                    .padding(.horizontal)
                 // MARK: - 게시 시간
                 Text(selectedPost.timestamp)
                     .font(.caption)
-                    .foregroundColor(Color.gray)
+                    .foregroundColor(Color(UIColor.secondaryLabel))
                     .padding(.horizontal)
             }
             // 새로고침 기능
@@ -174,7 +179,7 @@ struct DMPostView: View {
 // MARK: - 미리보기
 struct DMPostView_Previews: PreviewProvider {
     static var previews: some View {
-        let samplePost = Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1 This is post 1 Thisㅁㅁㅁㅁㅁㅁㅁㅁㄴㄴㅁㅁ", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전", hairCategory: .Cut)
+        let samplePost = Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1 This is post 1 Thisㅁㅁㅁㅁㅁㅁㅁㅁㄴㄴㅁㅁ", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전", hairCategory: .Cut, price: 15000)
         
         DMPostView(selectedPost: samplePost)
     }

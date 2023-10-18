@@ -20,6 +20,7 @@ struct DMEditPostView: View {
     @State private var newImageUrl = ""
     @State private var showAlert = false
     @State private var hairCategory: HairCategory = .Else
+    @State private var price: String = ""
 
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -47,12 +48,13 @@ struct DMEditPostView: View {
                             updatePost()
                         }) {
                             Text("확인")
-                                .frame(minWidth: 0, maxWidth: .infinity)
-                                .padding()
-                                .foregroundColor(.white)
-                                .background(isFormValid ? Color.black : Color.gray)
-                                .cornerRadius(10)
+//                                .frame(minWidth: 0, maxWidth: .infinity)
+//                                .padding()
+//                                .foregroundColor(.white)
+//                                .background(isFormValid ? Color.black : Color.gray)
+//                                .cornerRadius(10)
                         }
+                        .buttonModifier(.mainColor)
                         .padding([.leading, .trailing], 16)
                         .padding(.bottom, 16)
                     }
@@ -66,6 +68,8 @@ struct DMEditPostView: View {
             self.title = post.title
             self.description = post.description ?? ""
             self.imageUrls = post.photos.map { $0.imageURL }
+            self.hairCategory = post.hairCategory
+            self.price = String(post.price)
         }
         .alert(isPresented: $showAlert) {
             Alert(
@@ -83,14 +87,12 @@ struct DMEditPostView: View {
     private var contentForm: some View {
         VStack(alignment: .leading) {
             TextField("시술명", text: $title)
-                .padding()
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(8)
+                .textFieldModifier()
             TextField("내용", text: $description)
-                .padding()
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(8)
+                .textFieldModifier()
             categoryPickerView
+            TextField("가격", text:$price)
+                .textFieldModifier()
             imageUrlsSection
             
         }
@@ -98,16 +100,16 @@ struct DMEditPostView: View {
     }
     
     private var categoryPickerView: some View {
-            VStack{
+            HStack{
                 Text("스타일 종류를 선택하세요")
+                    .font(.subheadline)
+                Spacer()
                 Picker("", selection: $hairCategory) {
                     ForEach(hairCategoryArray, id: \.self) { style in
                         Text("\(style.rawValue)")
                     }
-
                 }
-
-            }
+            }.padding([.top, .bottom], 5)
         }
     
     private var imageUrlsSection: some View {
@@ -168,7 +170,7 @@ struct DMEditPostView: View {
 
 struct DMEditPostView_Previews: PreviewProvider {
     static var previews: some View {
-        let samplePost = State(initialValue: Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전", hairCategory: .Cut))
+        let samplePost = State(initialValue: Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전", hairCategory: .Cut, price: 15000))
         let shouldRefresh = State(initialValue: false)
         DMEditPostView(post: samplePost.projectedValue, shouldRefresh: shouldRefresh.projectedValue)
     }
