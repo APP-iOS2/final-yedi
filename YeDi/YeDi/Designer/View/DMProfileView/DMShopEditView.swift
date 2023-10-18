@@ -14,6 +14,7 @@ struct DMShopEditView: View {
     @Binding var shop: Shop
     @Binding var rank: Rank
     @Binding var isShowDesignerShopEditView: Bool
+    
     @State private var isNotEmptyDescription: Bool = true
     @State private var isPhoneNumberValid: Bool = false
     @State private var closedDay: String = ""
@@ -97,14 +98,6 @@ struct DMShopEditView: View {
                         convertDateString()
                     }, label: {
                         Image(systemName: "xmark")
-                            .foregroundStyle(colorScheme == .light ? .black : .white)
-                    })
-                }
-                ToolbarItemGroup(placement: .topBarTrailing) {
-                    Button(role: .destructive, action: {
-                        convertDateString()
-                    }, label: {
-                        Text("저장")
                             .foregroundStyle(colorScheme == .light ? .black : .white)
                     })
                 }

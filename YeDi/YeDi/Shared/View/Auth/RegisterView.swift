@@ -96,7 +96,6 @@ struct RegisterView: View {
             ScrollView {
                 inputUserInfo(.designer)
                 inputDesignerDescription
-                inputDesignerRank
             }
             .onTapGesture {
                 hideKeyboard()
@@ -246,27 +245,31 @@ struct RegisterView: View {
         .padding(.horizontal)
     }
     
-    private var inputDesignerRank: some View {
-        
-        VStack(alignment: .leading, spacing: 5)  {
-            Button {
-                isShowDesignerShopEditView = true
-            } label: {
-                Text("샵정보 입력")
-            }
-        }
-        .padding(.vertical, 8)
-        .padding(.horizontal)
-        .fullScreenCover(isPresented: $isShowDesignerShopEditView){
-            DMShopEditView(shop: $shop,
-                           rank: $rank,
-                           isShowDesignerShopEditView: $isShowDesignerShopEditView)
-        }
-    }
+    
     
     private var inputDesignerDescription: some View {
         VStack(alignment: .leading) {
-            Text("소개글")
+            HStack {
+                Text("소개글")
+                
+                Spacer()
+                
+                VStack(alignment: .leading, spacing: 5)  {
+                    CapsuleButton(text: "샵정보 입력", isFollowed: false) {
+                        isShowDesignerShopEditView = true
+                    }
+                }
+                .padding(.vertical, 8)
+                .sheet(isPresented: $isShowDesignerShopEditView){
+                    DMShopEditView(shop: $shop,
+                                   rank: $rank,
+                                   isShowDesignerShopEditView: $isShowDesignerShopEditView)
+                    
+                    .presentationDragIndicator(.visible)
+                    .presentationDetents([.large])
+                }
+              
+            }
             TextField("디자이너 소개글", text: $description, axis: .vertical)
                 .signInTextFieldStyle(isTextFieldValid: $isNotEmptyDescription)
         }
