@@ -13,7 +13,8 @@ import FirebaseStorage
 // 디자이너 프로필에 대한 데이터를 관리하는 ViewModel 클래스입니다.
 class DMProfileViewModel: ObservableObject {
     static let shared = DMProfileViewModel() // 싱글톤 인스턴스 생성
-
+    var previousFollowerCount: Int = 0
+    
     // 디자이너 정보를 저장하는 Published 변수입니다.
     @Published var designer = Designer(
         id: nil,
@@ -31,7 +32,7 @@ class DMProfileViewModel: ObservableObject {
         rank: .Designer,
         designerUID: ""
     )
-
+    
     // 샵 정보를 저장하는 Published 변수입니다.
     @Published var shop = Shop(
         shopName: "",
@@ -46,7 +47,7 @@ class DMProfileViewModel: ObservableObject {
         messangerLinkURL: nil,
         closedDays: []
     )
-
+    
     // Firebase Storage에서 디자이너 프로필 이미지를 업로드하는 함수입니다.
     func uploadDesignerProfileImage(userAuth: UserAuth, image: UIImage, completion: @escaping (Result<String, Error>) -> Void) {
         guard let designerId = userAuth.currentDesignerID, let imageData = image.jpegData(compressionQuality: 0.8) else {
@@ -68,7 +69,7 @@ class DMProfileViewModel: ObservableObject {
             }
         }
     }
-
+    
     // Firebase Storage에서 디자이너 프로필 이미지를 다운로드하는 함수입니다.
     func downloadDesignerProfileImage(completion: @escaping (Result<UIImage, Error>) -> Void) {
         guard let imageURLString = self.designer.imageURLString, let url = URL(string: imageURLString) else {
@@ -84,7 +85,7 @@ class DMProfileViewModel: ObservableObject {
             }
         }
     }
-
+    
     // 디자이너 프로필을 업데이트하는 비동기 함수입니다.
     func updateDesignerProfile(userAuth: UserAuth, designer: Designer) async -> Bool {
         let designerRef = Firestore.firestore().collection("designers").document(designer.id ?? "")
@@ -112,7 +113,7 @@ class DMProfileViewModel: ObservableObject {
             return false
         }
     }
-
+    
     // 디자이너 프로필 정보를 Firestore에서 가져오는 비동기 함수입니다.
     func fetchDesignerProfile(userAuth: UserAuth) async {
         let db = Firestore.firestore()
@@ -148,13 +149,13 @@ class DMProfileViewModel: ObservableObject {
             }
         }
     }
-
+    
     // 샵 정보를 Firestore에 업데이트하는 비동기 함수입니다.
     func updateShopInfo(userAuth: UserAuth, shop: Shop) async {
         let db = Firestore.firestore()
         if let designerId = userAuth.currentDesignerID {
             let docRef = db.collection("shops").document(designerId)
-
+            
             let shopData: [String: Any] = [
                 "shopName": shop.shopName,
                 "headAddress": shop.headAddress,
@@ -168,7 +169,7 @@ class DMProfileViewModel: ObservableObject {
                 "messangerLinkURL": shop.messangerLinkURL ?? NSNull(),
                 "closedDays": shop.closedDays
             ]
-
+            
             do {
                 try await docRef.setData(shopData)
                 print("Shop info successfully updated.")
@@ -177,7 +178,7 @@ class DMProfileViewModel: ObservableObject {
             }
         }
     }
-
+    
     // 샵 정보를 Firestore에서 가져오는 비동기 함수입니다.
     func fetchShopInfo(userAuth: UserAuth) async {
         let db = Firestore.firestore()
@@ -204,6 +205,43 @@ class DMProfileViewModel: ObservableObject {
             } catch {
                 print("Error fetching shop data: \(error)")
             }
+        }
+    }
+    
+    // 해당 디자이너를 팔로워 갯수 가져오는 함수
+    func updateFollowerCountForDesigner(designerUID: String) async {
+        // UID가 비어 있거나 nil인지 확인
+        print("Received designerUID: \(designerUID)")
+        guard !designerUID.isEmpty else {
+            print("UID가 유효하지 않습니다.")
+            return
+        }
+        
+        let followingCollection = Firestore.firestore().collection("following")
+        let designerRef = Firestore.firestore().collection("designers").document(designerUID)
+        
+        do {
+            let followingDocuments = try await followingCollection.whereField("uids", arrayContains: designerUID).getDocuments()
+            
+            let validDocuments = followingDocuments.documents
+            if !validDocuments.isEmpty {
+                let followerCountFromFirebase = validDocuments.count
+                
+                if followerCountFromFirebase != self.previousFollowerCount {
+                    try await designerRef.updateData(["followerCount": followerCountFromFirebase])
+                    // 앱의 상태에도 최신 팔로워 수 반영
+                    self.designer.followerCount = followerCountFromFirebase
+                    print("팔로워 수가 \(followerCountFromFirebase)로 업데이트되었습니다.")
+                    // 현재 팔로워 수를 이전 팔로워 수로 저장
+                    self.previousFollowerCount = followerCountFromFirebase
+                } else {
+                    print("팔로워 수가 변경되지 않았습니다.")
+                }
+            } else {
+                print("팔로우한 디자이너를 찾지 못했습니다.")
+            }
+        } catch let error {
+            print("Error updating follower count: \(error.localizedDescription)")
         }
     }
 }
