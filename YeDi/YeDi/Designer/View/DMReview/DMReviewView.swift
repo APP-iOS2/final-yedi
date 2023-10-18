@@ -17,21 +17,7 @@ struct DMReviewView: View {
                 NavigationLink {
                     DMReviewDetailView(review: review)
                 } label: {
-                    HStack {
-                        AsyncImage(url: URL(string: "\(review.imageURLStrings)")) { item in
-                            item
-                                .resizable()
-                                .frame(width: 100, height: 100, alignment: .center)
-                        } placeholder: {
-                            ProgressView()
-                        }
-                        
-                        VStack(alignment: .leading) {
-                            Text("평점: \(review.designerScore)점")
-                            Text("\(review.content)")
-                                .lineLimit(1)
-                        }
-                    }
+                   DMReviewCell(review: review)
                 }
             }
             .listStyle(.plain)
@@ -41,6 +27,32 @@ struct DMReviewView: View {
     
     init() {
         reviewsModel.getData()
+    }
+}
+
+struct DMReviewCell: View{
+    let review: Review
+    
+    var body: some View {
+        HStack {
+            DMAsyncImage(url: review.imageURLStrings[0])
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 70, height: 70)
+                .clipShape(RoundedRectangle(cornerRadius: 5))
+            
+            VStack(alignment: .leading){
+                HStack(spacing: 0.5){
+                    ForEach(1...5, id: \.self) { index in
+                        Image(systemName: index <= review.designerScore ? "star.fill" : "star")
+                            .foregroundStyle(index <= review.designerScore ? .yellow : Color(white: 0.9))
+                            .font(.title3)
+                    }
+                }
+                Text("\(review.content)")
+                    .lineLimit(1)
+                
+            }
+        }
     }
 }
 

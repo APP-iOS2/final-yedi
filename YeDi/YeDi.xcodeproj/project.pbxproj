@@ -13,8 +13,8 @@
 		09CA54B02AD661F300796113 /* CMSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CA54AF2AD661F300796113 /* CMSearchViewModel.swift */; };
 		09EFB7F02ADAE81700238BAD /* CMStyleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EFB7EF2ADAE81700238BAD /* CMStyleDetailView.swift */; };
 		1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */; };
-		1D42D6392ADE0DBE00E9C5DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D42D6382ADE0DBE00E9C5DA /* GoogleService-Info.plist */; };
 		1D63595D2ACEED0A00FBD37B /* DMProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D63595C2ACEED0A00FBD37B /* DMProfileViewModel.swift */; };
+		1D63595B2ACEECC200FBD37B /* DMProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D63595A2ACEECC200FBD37B /* DMProfileEditView.swift */; };
 		1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067162AC150D60028A660 /* DmDesignerModels.swift */; };
 		1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067182AC151A80028A660 /* DMAsyncImage.swift */; };
 		1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90671C2AC176020028A660 /* DMPostViewModel.swift */; };
@@ -29,10 +29,15 @@
 		2F7B60652ADFAF2B00EF1B96 /* CMCustomTextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B60642ADFAF2B00EF1B96 /* CMCustomTextArea.swift */; };
 		2FA36FFE2AD93C1F00E750B0 /* CMReservationInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA36FFD2AD93C1F00E750B0 /* CMReservationInfoView.swift */; };
 		2FA370002AD945A000E750B0 /* PhotoSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA36FFF2AD945A000E750B0 /* PhotoSelectionView.swift */; };
+
+		3B2442F52ADE5CF7005D3021 /* StarScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2442F42ADE5CF7005D3021 /* StarScoreView.swift */; };
+
 		3B517D482ACE46420082E2F6 /* ConsultationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B517D472ACE46420082E2F6 /* ConsultationViewModel.swift */; };
 		3B6346DC2AD8DDD300D3D110 /* NSCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6346DB2AD8DDD300D3D110 /* NSCacheManager.swift */; };
 		3B6346DE2AD9004600D3D110 /* ChatListUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6346DD2AD9004600D3D110 /* ChatListUserInfo.swift */; };
 		3BA51B6B2AD53212009D7902 /* SingleTonDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA51B6A2AD53212009D7902 /* SingleTonDateFormatter.swift */; };
+		3BA862DD2ADF630200385507 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BA862DC2ADF630200385507 /* GoogleService-Info.plist */; };
+		3BA862E12ADF96D500385507 /* DMShopEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA862E02ADF96D500385507 /* DMShopEditView.swift */; };
 		3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */; };
 		3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */; };
 		3BAB00F32ACD97EB009053A4 /* ReservationSDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */; };
@@ -95,6 +100,8 @@
 		639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB67D2AC11AF5002692E5 /* DMProfileView.swift */; };
 		639DB6812AC11B21002692E5 /* DMMainChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6802AC11B21002692E5 /* DMMainChattingView.swift */; };
 		639DB6872AC11B56002692E5 /* DMPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DB6862AC11B56002692E5 /* DMPostView.swift */; };
+
+		63A888282ADF9A5A00790EBA /* DateDeviderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A888272ADF9A5A00790EBA /* DateDeviderCell.swift */; };
 		63CD89B12ABD85C300E70A56 /* YeDiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CD89B02ABD85C300E70A56 /* YeDiApp.swift */; };
 		63CD89B32ABD85C300E70A56 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CD89B22ABD85C300E70A56 /* ContentView.swift */; };
 		63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63CD89B42ABD85C500E70A56 /* Assets.xcassets */; };
@@ -128,6 +135,7 @@
 		DC7695C12ADCFBED00D2FB69 /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695C02ADCFBED00D2FB69 /* DismissButton.swift */; };
 		DC7695C52ADD0E0B00D2FB69 /* CapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695C42ADD0E0B00D2FB69 /* CapsuleButton.swift */; };
 		DC7695C92ADD119D00D2FB69 /* ButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695C82ADD119D00D2FB69 /* ButtonModifier.swift */; };
+		DC7695CF2ADF1DC800D2FB69 /* TextFieldModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695CE2ADF1DC800D2FB69 /* TextFieldModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -137,8 +145,8 @@
 		09CA54AF2AD661F300796113 /* CMSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSearchViewModel.swift; sourceTree = "<group>"; };
 		09EFB7EF2ADAE81700238BAD /* CMStyleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMStyleDetailView.swift; sourceTree = "<group>"; };
 		1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMEditPostView.swift; sourceTree = "<group>"; };
-		1D42D6382ADE0DBE00E9C5DA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1D63595C2ACEED0A00FBD37B /* DMProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMProfileViewModel.swift; sourceTree = "<group>"; };
+		1D63595A2ACEECC200FBD37B /* DMProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMProfileEditView.swift; sourceTree = "<group>"; };
 		1D9067162AC150D60028A660 /* DmDesignerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmDesignerModels.swift; sourceTree = "<group>"; };
 		1D9067182AC151A80028A660 /* DMAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMAsyncImage.swift; sourceTree = "<group>"; };
 		1D90671C2AC176020028A660 /* DMPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostViewModel.swift; sourceTree = "<group>"; };
@@ -153,10 +161,15 @@
 		2F7B60642ADFAF2B00EF1B96 /* CMCustomTextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMCustomTextArea.swift; sourceTree = "<group>"; };
 		2FA36FFD2AD93C1F00E750B0 /* CMReservationInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReservationInfoView.swift; sourceTree = "<group>"; };
 		2FA36FFF2AD945A000E750B0 /* PhotoSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectionView.swift; sourceTree = "<group>"; };
+
+		3B2442F42ADE5CF7005D3021 /* StarScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarScoreView.swift; sourceTree = "<group>"; };
+
 		3B517D472ACE46420082E2F6 /* ConsultationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultationViewModel.swift; sourceTree = "<group>"; };
 		3B6346DB2AD8DDD300D3D110 /* NSCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCacheManager.swift; sourceTree = "<group>"; };
 		3B6346DD2AD9004600D3D110 /* ChatListUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListUserInfo.swift; sourceTree = "<group>"; };
 		3BA51B6A2AD53212009D7902 /* SingleTonDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTonDateFormatter.swift; sourceTree = "<group>"; };
+		3BA862DC2ADF630200385507 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3BA862E02ADF96D500385507 /* DMShopEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMShopEditView.swift; sourceTree = "<group>"; };
 		3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMAccount.swift; sourceTree = "<group>"; };
 		3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMExpandableText.swift; sourceTree = "<group>"; };
 		3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReservationSDetail.swift; sourceTree = "<group>"; };
@@ -214,6 +227,8 @@
 		639DB67D2AC11AF5002692E5 /* DMProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMProfileView.swift; sourceTree = "<group>"; };
 		639DB6802AC11B21002692E5 /* DMMainChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMMainChattingView.swift; sourceTree = "<group>"; };
 		639DB6862AC11B56002692E5 /* DMPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostView.swift; sourceTree = "<group>"; };
+
+		63A888272ADF9A5A00790EBA /* DateDeviderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDeviderCell.swift; sourceTree = "<group>"; };
 		63CD89AD2ABD85C300E70A56 /* YeDi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YeDi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63CD89B02ABD85C300E70A56 /* YeDiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YeDiApp.swift; sourceTree = "<group>"; };
 		63CD89B22ABD85C300E70A56 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -247,6 +262,7 @@
 		DC7695C02ADCFBED00D2FB69 /* DismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissButton.swift; sourceTree = "<group>"; };
 		DC7695C42ADD0E0B00D2FB69 /* CapsuleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleButton.swift; sourceTree = "<group>"; };
 		DC7695C82ADD119D00D2FB69 /* ButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifier.swift; sourceTree = "<group>"; };
+		DC7695CE2ADF1DC800D2FB69 /* TextFieldModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,6 +382,7 @@
 				3BCF2C1A2ACD3E72009C18C2 /* TempPhotoPickerView.swift */,
 				3BCF2C1B2ACD3E72009C18C2 /* ChatUtilityMenuView.swift */,
 				3BCF2C1C2ACD3E72009C18C2 /* ImageBubbleCell.swift */,
+				63A888272ADF9A5A00790EBA /* DateDeviderCell.swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -540,9 +557,9 @@
 			children = (
 				3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */,
 				3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */,
+                1D63595C2ACEED0A00FBD37B /* DMProfileViewModel.swift */,
 				1D9067182AC151A80028A660 /* DMAsyncImage.swift */,
 				1D90671C2AC176020028A660 /* DMPostViewModel.swift */,
-				1D63595C2ACEED0A00FBD37B /* DMProfileViewModel.swift */,
 				1DD969A02ACFFD9A000AD7D2 /* AddDesignerDataView.swift */,
 				9615C78F2AD6A31D00DD4F37 /* DMReviewViewModel.swift */,
 				9691C5D32ADE554300434377 /* ClosedDaySettingVM.swift */,
@@ -564,6 +581,7 @@
 			isa = PBXGroup;
 			children = (
 				965ECCEC2AD93E7F00BC0D41 /* ProfileEditView */,
+				3BA862E02ADF96D500385507 /* DMShopEditView.swift */,
 			);
 			path = DMProfileView;
 			sourceTree = "<group>";
@@ -595,9 +613,9 @@
 		639DB6852AC11B4A002692E5 /* DMPostView */ = {
 			isa = PBXGroup;
 			children = (
+				1D9067202AC1F61D0028A660 /* DMGridView.swift */,
 				639DB6862AC11B56002692E5 /* DMPostView.swift */,
 				1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */,
-				1D9067202AC1F61D0028A660 /* DMGridView.swift */,
 				1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */,
 			);
 			path = DMPostView;
@@ -606,7 +624,8 @@
 		63CD89A42ABD85C300E70A56 = {
 			isa = PBXGroup;
 			children = (
-				1D42D6382ADE0DBE00E9C5DA /* GoogleService-Info.plist */,
+
+				63A888232ADF623B00790EBA /* GoogleService-Info.plist */,
 				63CD89AF2ABD85C300E70A56 /* YeDi */,
 				63CD89AE2ABD85C300E70A56 /* Products */,
 				9691C5CE2ADE549600434377 /* Frameworks */,
@@ -695,6 +714,7 @@
 				DC7695442AD0888800D2FB69 /* AuthModifier.swift */,
 				3BCF2C152ACD3E72009C18C2 /* ChatBubbleModifier.swift */,
 				DC7695C82ADD119D00D2FB69 /* ButtonModifier.swift */,
+				DC7695CE2ADF1DC800D2FB69 /* TextFieldModifier.swift */,
 			);
 			path = ViewModifier;
 			sourceTree = "<group>";
@@ -704,6 +724,7 @@
 			children = (
 				DC7695C02ADCFBED00D2FB69 /* DismissButton.swift */,
 				DC7695C42ADD0E0B00D2FB69 /* CapsuleButton.swift */,
+				3B2442F42ADE5CF7005D3021 /* StarScoreView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -777,9 +798,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D42D6392ADE0DBE00E9C5DA /* GoogleService-Info.plist in Resources */,
 				63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */,
 				63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */,
+				63A888242ADF623B00790EBA /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -845,6 +866,7 @@
 				96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */,
 				96F637DF2AC2BCFD00EF74FF /* ReservationCellView.swift in Sources */,
 				1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */,
+				3BA862E12ADF96D500385507 /* DMShopEditView.swift in Sources */,
 				097EAD332AD03FC70037B848 /* CMLikedPostListViewModel.swift in Sources */,
 				3BAB00F12ACD948C009053A4 /* DMExpandableText.swift in Sources */,
 				1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */,
@@ -857,6 +879,7 @@
 				2F7B60652ADFAF2B00EF1B96 /* CMCustomTextArea.swift in Sources */,
 				3BCF2C8F2ACD4248009C18C2 /* CMSettingsView.swift in Sources */,
 				3BCF2C712ACD4248009C18C2 /* CMNewReviewView.swift in Sources */,
+				DC7695CF2ADF1DC800D2FB69 /* TextFieldModifier.swift in Sources */,
 				3BCF2C2A2ACD3E73009C18C2 /* ChatRoomView.swift in Sources */,
 				2FA36FFE2AD93C1F00E750B0 /* CMReservationInfoView.swift in Sources */,
 				3BCF2C262ACD3E73009C18C2 /* MessageType.swift in Sources */,
@@ -888,6 +911,7 @@
 				3BCF2C7F2ACD4248009C18C2 /* CMPostDetailContentView.swift in Sources */,
 				DC7695BD2ADCF1CA00D2FB69 /* View.swift in Sources */,
 				1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */,
+				3B2442F52ADE5CF7005D3021 /* StarScoreView.swift in Sources */,
 				DC7695532AD08A3600D2FB69 /* RegisterView.swift in Sources */,
 				639DB67E2AC11AF5002692E5 /* DMProfileView.swift in Sources */,
 				DC7695C12ADCFBED00D2FB69 /* DismissButton.swift in Sources */,
@@ -900,6 +924,7 @@
 				3BCF2C872ACD4248009C18C2 /* CMAccountInfoEditView.swift in Sources */,
 				DC7695C92ADD119D00D2FB69 /* ButtonModifier.swift in Sources */,
 				3BCF2C6B2ACD4248009C18C2 /* Client.swift in Sources */,
+				63A888282ADF9A5A00790EBA /* DateDeviderCell.swift in Sources */,
 				3BCF2C832ACD4248009C18C2 /* CMFilterView.swift in Sources */,
 				1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */,
 				1DD969A12ACFFD9A000AD7D2 /* AddDesignerDataView.swift in Sources */,
@@ -1037,7 +1062,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"YeDi/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2QJX795Q3R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -1067,7 +1092,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"YeDi/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2QJX795Q3R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

@@ -6,28 +6,8 @@
 //
 
 import SwiftUI
-
+    
 struct RegisterView: View {
-    @EnvironmentObject var userAuth: UserAuth
-    @State var userType: UserType?
-    
-    var body: some View {
-        VStack(spacing: 20) {
-            NavigationLink {
-                RegisterNavigationView(userType: .client)
-            } label: {
-                Text("고객 회원가입")
-            }
-            NavigationLink {
-                RegisterNavigationView(userType: .designer)
-            } label: {
-                Text("디자이너 회원가입")
-            }
-        }
-    }
-}
-    
-struct RegisterNavigationView: View {
     var userType: UserType
     
     @EnvironmentObject private var userAuth: UserAuth
@@ -49,6 +29,9 @@ struct RegisterNavigationView: View {
     /// 디자이너 프로퍼티
     @State private var description: String = ""
     @State private var rank: Rank = .Owner
+    @State private var shop: Shop = .init(shopName: "", headAddress: "", subAddress: "", detailAddress: "", openingHour: "", closingHour: "", closedDays: [])
+    @State private var isShowDesignerShopEditView: Bool = false
+    
     /// caution 프로퍼티
     @State private var cautionEmail: String = ""
     @State private var cautionPassword: String = ""
@@ -67,7 +50,7 @@ struct RegisterNavigationView: View {
     @State private var isNotEmptyDescription: Bool = true
     /// birth 프로퍼티
     @State private var changedBirthText: String = "생년월일"
-    
+    @State private var tempDate: Date = Date()
     private let genders: [String] = ["여성", "남성"]
     private let ranks: [Rank] = [.Owner, .Principal, .Designer, .Intern]
     
@@ -88,7 +71,7 @@ struct RegisterNavigationView: View {
         }
     }
     
-    var registerForClient: some View {
+    private var registerForClient: some View {
         VStack(alignment: .leading) {
             ScrollView {
                 inputUserInfo(.client)
@@ -100,14 +83,20 @@ struct RegisterNavigationView: View {
             RegisterButton(.client)
         }
         .navigationTitle("고객 회원가입")
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                DismissButton(color: nil) { }
+            }
+        }
     }
     
-    var registerForDesigner: some View {
+    private var registerForDesigner: some View {
         VStack(alignment: .leading) {
             ScrollView {
                 inputUserInfo(.designer)
-                inputDesignerRank
                 inputDesignerDescription
+                inputDesignerRank
             }
             .onTapGesture {
                 hideKeyboard()
@@ -116,6 +105,12 @@ struct RegisterNavigationView: View {
             RegisterButton(.designer)
         }
         .navigationTitle("디자이너 회원가입")
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                DismissButton(color: nil) { }
+            }
+        }
     }
     
     private func inputUserInfo(_ userType: UserType) -> some View {
@@ -203,7 +198,7 @@ struct RegisterNavigationView: View {
                 Text("생년월일 *")
                 HStack {
                     Text(changedBirthText)
-                        .foregroundColor(changedBirthText=="생년월일" ? .gray : .primary)
+                        .foregroundStyle(changedBirthText=="생년월일" ? Color.placeholderText : Color.primaryLabel)
                     
                     Spacer()
                     Image(systemName: "calendar")
@@ -235,13 +230,13 @@ struct RegisterNavigationView: View {
                         }, label: {
                             Text(gender)
                                 .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-                                .foregroundStyle(.black)
+                                .foregroundStyle(Color.primaryLabel)
                                 .background(
                                     RoundedRectangle(cornerRadius: 2)
-                                        .stroke(Color(white: 0.9), lineWidth: 1)
+                                        .stroke(Color.gray6, lineWidth: 2)
                                 )
                         })
-                        .background(selectedGender == gender ? Color(white: 0.9) : .white)
+                        .background(selectedGender == gender ? Color.gray4 : Color.gray6)
                     }
                 }
                 Spacer()
@@ -252,15 +247,42 @@ struct RegisterNavigationView: View {
     }
     
     private var inputDesignerRank: some View {
-        VStack(alignment: .leading) {
-            Picker("select your rank", selection: $rank) {
-                ForEach(ranks, id: \.self) { rank in
-                    Text(rank.rawValue)
-                }
+        
+        VStack(alignment: .leading, spacing: 5)  {
+            Button {
+                isShowDesignerShopEditView = true
+            } label: {
+                Text("샵정보 입력")
             }
-            .pickerStyle(.menu)
+
+//            HStack(alignment: .center) {
+//                Text("직급 *")
+//                
+//                Spacer()
+//                
+//                Menu(rank.rawValue) {
+//                    Picker("select your rank", selection: $rank) {
+//                        ForEach(ranks, id: \.self) { rank in
+//                            Text(rank.rawValue)
+//                        }
+//                    }
+//                }
+//                .frame(maxWidth: .infinity)
+//                .padding(11)
+//                .foregroundStyle(Color.primary)
+//                .background {
+//                    RoundedRectangle(cornerRadius: 4)
+//                        .fill(Color.quaternarySystemFill)
+//                }
+//            }
         }
+        .padding(.vertical, 8)
         .padding(.horizontal)
+        .fullScreenCover(isPresented: $isShowDesignerShopEditView){
+            DMShopEditView(shop: $shop,
+                           rank: $rank,
+                           isShowDesignerShopEditView: $isShowDesignerShopEditView)
+        }
     }
     
     private var inputDesignerDescription: some View {
@@ -278,13 +300,7 @@ struct RegisterNavigationView: View {
                 pressedButtonRegister(userType)
             } label: {
                 Text("회원가입")
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background {
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(.black)
-                    }
+                    .buttonModifier(.mainColor)
             }
         }
         .padding([.horizontal, .bottom])
@@ -334,7 +350,7 @@ struct RegisterNavigationView: View {
                     designerUID: ""
                 )
                 
-                userAuth.registerDesigner(designer: designer, password: password) { success in
+                userAuth.registerDesigner(designer: designer, shop: shop, password: password) { success in
                     if success {
                         cautionEmail = "사용 가능한 이메일입니다."
                         dismiss()
@@ -413,3 +429,9 @@ struct RegisterNavigationView: View {
         return isBirthValid
     }
 }
+
+#Preview(body: {
+    NavigationStack{
+        RegisterNavigationView(userType: .designer)
+    }
+})

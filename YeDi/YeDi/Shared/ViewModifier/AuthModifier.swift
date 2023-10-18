@@ -15,9 +15,10 @@ struct SignInTextFieldStyle: ViewModifier {
             .textInputAutocapitalization(.never)
             .disableAutocorrection(true)
             .padding(12)
+            .foregroundStyle(Color.primary)
             .background {
                 RoundedRectangle(cornerRadius: 4)
-                    .fill(isTextFieldValid ? Color(white: 0.95) : .red.opacity(0.1))
+                    .fill(isTextFieldValid ? Color.quaternarySystemFill : .red.opacity(0.2))
             }
     }
 }

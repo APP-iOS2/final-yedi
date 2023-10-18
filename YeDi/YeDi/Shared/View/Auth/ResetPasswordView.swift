@@ -47,18 +47,18 @@ struct ResetPasswordView: View {
                 }
             } label: {
                 Text("보내기")
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background {
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(.black)
-                    }
+                    .buttonModifier(.mainColor)
             }
             .padding(.top)
         }
         .padding(.horizontal)
         .navigationTitle("비밀번호 재설정")
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                DismissButton(color: nil) { }
+            }
+        }
         .alert("재설정 메일을 성공적으로 전송했습니다.", isPresented: $isShowingEmailSentSuccessAlert) {
             Button(role: .none) {
                 isShowingEmailSentSuccessAlert.toggle()

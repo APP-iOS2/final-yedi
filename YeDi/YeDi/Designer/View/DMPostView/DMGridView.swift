@@ -31,7 +31,7 @@ struct DMGridView: View {
                     NavigationLink(destination: DMNewPostView()) {
                         Image(systemName: "plus")
                             .resizable()
-                            .foregroundStyle(.black)
+                            .foregroundStyle(Color(UIColor.label))
                     }
                 )
                 .onAppear() {
@@ -87,7 +87,7 @@ struct DMGridView: View {
                 
                 Text(post.title)
                     .font(.caption)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Color(UIColor.label))
                     .multilineTextAlignment(.center)
             }
         }

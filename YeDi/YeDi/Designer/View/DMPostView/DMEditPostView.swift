@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseFirestore
+import Firebase
 
 /// 포스트 수정 뷰
 struct DMEditPostView: View {
@@ -32,6 +33,16 @@ struct DMEditPostView: View {
         HairCategory.Perm,
         HairCategory.Else
     ]
+
+    @State private var price: String = ""
+
+
+
+    
+    let hairCategoryArray: [HairCategory] = [HairCategory.Cut,
+                            HairCategory.Dying,
+                            HairCategory.Perm,
+                            HairCategory.Else]
     
     private var isFormValid: Bool {
         return !title.isEmpty && !description.isEmpty && !imageUrls.isEmpty
@@ -56,13 +67,11 @@ struct DMEditPostView: View {
                         photos: [],
                         comments: post.comments, 
                         timestamp: post.timestamp,
-                        hairCategory: hairCategory
+                        hairCategory: hairCategory,
                     )
-                    
                     Task {
                         await postViewModel.updatePost(updatedPost: updatedPost, imageURLs: imageUrls)
-                        isShowingConfirmAlert.toggle()
-                    }
+                        isShowingConfirmAlert.toggle() 
                 }) {
                     Text("확인")
                 }
@@ -78,6 +87,7 @@ struct DMEditPostView: View {
             self.description = post.description ?? ""
             self.imageUrls = post.photos.map { $0.imageURL }
             self.hairCategory = post.hairCategory
+            self.price = String(post.price)
         }
         .alert(isPresented: $isShowingConfirmAlert) {
             Alert(
@@ -122,6 +132,43 @@ struct DMEditPostView: View {
                     .padding(.trailing)
                 TextField("내용", text: $description, axis: .vertical)
                     .textFieldStyle(CMCustomTextAreaStyle())
+            TextField("가격", text:$price)
+                .textFieldModifier()
+            
+        }
+        .padding([.leading, .trailing], 20)
+    }
+    
+    private var categoryPickerView: some View {
+            HStack{
+                Text("스타일 종류를 선택하세요")
+                    .font(.subheadline)
+                Spacer()
+                Picker("", selection: $hairCategory) {
+                    ForEach(hairCategoryArray, id: \.self) { style in
+                        Text("\(style.rawValue)")
+                    }
+                }
+            }.padding([.top, .bottom], 5)
+        }
+    
+    private var imageUrlsSection: some View {
+        VStack(alignment: .leading) {
+            Text("이미지 URL")
+                .font(.headline)
+            ForEach(Array(zip(imageUrls.indices, imageUrls)), id: \.0) { index, imageUrl in
+                HStack {
+                    Text(imageUrl)
+                    Spacer()
+                    Button("수정") {
+                        // 수정 버튼을 누를 경우, 수정할 수 있도록 구현
+                        newImageUrl = imageUrl
+                        imageUrls.remove(at: index)
+                    }
+                    Button("삭제") {
+                        imageUrls.remove(at: index)
+                    }
+                }
             }
             .padding([.leading, .trailing])
             .sheet(isPresented: $isShowingPhotoPicker, content: {
@@ -132,6 +179,7 @@ struct DMEditPostView: View {
         }
     }
     
+
     /// 시술 카테고리 피커 뷰
     private var categoryPickerView: some View {
         HStack{
@@ -150,13 +198,7 @@ struct DMEditPostView: View {
 
 struct DMEditPostView_Previews: PreviewProvider {
     static var previews: some View {
-        let samplePost = State(
-            initialValue: Post(
-                id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1",
-                photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")],
-                comments: 5, timestamp: "1시간 전", hairCategory: .Cut
-            )
-        )
+        let samplePost = State(initialValue: Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1", photos: [Photo(id: "p1", imageURL: "https://i.pinimg.com/564x/1a/cb/ac/1acbacd1cbc2a1510c629305e71b9847.jpg")], comments: 5, timestamp: "1시간 전", hairCategory: .Cut, price: 15000))
         let shouldRefresh = State(initialValue: false)
         
         NavigationStack {

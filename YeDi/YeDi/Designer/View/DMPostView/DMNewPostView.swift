@@ -22,7 +22,6 @@ struct DMNewPostView: View {
     @State private var imageUrls: [String] = []
     @State private var isShowingAlert = false
     @State private var hairCategory: HairCategory = .Else
-    
     @State private var isShowingPhotoPicker: Bool = false
 
     let hairCategoryArray: [HairCategory] = [
@@ -31,12 +30,14 @@ struct DMNewPostView: View {
         HairCategory.Perm,
         HairCategory.Else
     ]
+    @State private var price: String = ""
+    
 
     // 폼 유효성 검사
     private var isFormValid: Bool {
         return !title.isEmpty && !description.isEmpty && !imageUrls.isEmpty
     }
-
+    
     // MARK: - Body
     var body: some View {
         NavigationStack {
@@ -54,6 +55,7 @@ struct DMNewPostView: View {
                 imageUrls.append(imageURL.absoluteString)
             }
         }
+
         .alert(isPresented: $isShowingAlert) {
             Alert(
                 title: Text("성공"),
@@ -64,7 +66,7 @@ struct DMNewPostView: View {
             )
         }
     }
-
+    
     // MARK: - Custom Views
     /// 게시물 폼 레이아웃
     private var contentForm: some View {
@@ -74,6 +76,7 @@ struct DMNewPostView: View {
             navigationLinkToTextEditor(title: "내용", text: $description, placeholder: "내용을 입력해주세요.")
                 .foregroundStyle(.black)
             categoryPickerView
+            inputPrice
             imageUrlsSection
             Spacer()
         }
@@ -87,30 +90,42 @@ struct DMNewPostView: View {
         }
     }
     
+    private var inputPrice: some View {
+        VStack(alignment: .leading) {
+            Text("가격")
+                .font(.headline)
+            TextField("가격을 입력해주세요", text: $price)
+                .textFieldModifier()
+        }
+    }
+    
     private var categoryPickerView: some View {
-            VStack{
-                Text("스타일 종류를 선택하세요")
-                Picker("", selection: $hairCategory) {
-                    ForEach(hairCategoryArray, id: \.self) { style in
-                        Text("\(style.rawValue)")
-                    }
-
+        HStack{
+            Text("스타일 종류를 선택하세요")
+                .font(.headline)
+            Spacer()
+            Picker("", selection: $hairCategory) {
+                ForEach(hairCategoryArray, id: \.self) { style in
+                    Text("\(style.rawValue)")
                 }
-
             }
         }
+        .padding([.bottom], 5)
+    }
     
     /// 이미지 URL 섹션
     private var imageUrlsSection: some View {
         VStack(alignment: .leading) {
             Text("이미지 URL")
                 .font(.headline)
-            
+            ForEach(imageUrls, id: \.self) { imageUrl in
+                Text(imageUrl)
+            }           
             PhotoSelectionView(selectedPhotoURLs: $imageUrls, isShowingPhotoPicker: $isShowingPhotoPicker)
         }
         .padding(.bottom, 20)
     }
-
+    
     /// 게시물 생성 버튼
     private var postButton: some View {
         VStack {
@@ -118,16 +133,17 @@ struct DMNewPostView: View {
             Button("게시물 생성") {
                 createPost()
             }
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(isFormValid ? Color.black : Color.gray)
-            .foregroundStyle(.white)
+//            .padding()
+//            .frame(maxWidth: .infinity)
+//            .background(isFormValid ? Color.black : Color.gray)
+//            .foregroundStyle(.white)
+            .buttonModifier(.mainColor)
             .cornerRadius(10)
             .padding([.horizontal, .bottom])
             .disabled(!isFormValid)
         }
     }
-
+    
     // MARK: - Helper Functions
     /// 게시물 생성 함수
     private func createPost() {
@@ -146,8 +162,8 @@ struct DMNewPostView: View {
         
         Task {
             await postViewModel.savePostToFirestore(post: newPost, imageURLs: imageUrls)
+            price: Int(price) ?? 0
         }
-        
         isShowingAlert = true
     }
 }
@@ -159,7 +175,7 @@ struct InputField: View {
     var title: String
     @Binding var text: String
     var placeholder: String
-
+    
     // MARK: - Body
     var body: some View {
         VStack(alignment: .leading) {
@@ -175,13 +191,13 @@ struct InputField: View {
         }
         .padding(.bottom, 20)
     }
-
+    
     // MARK: - Helpers
     /// 텍스트가 비어 있거나 플레이스홀더와 동일한지 확인
     private var isPlaceholderText: Bool {
         return text.isEmpty || text == placeholder
     }
-
+    
     /// 표시할 텍스트 결정
     private var displayText: String {
         if text.isEmpty || text == placeholder {
@@ -198,7 +214,7 @@ struct TextEditorView: View {
     enum Field {
         case editor
     }
-
+    
     // MARK: - Properties
     var editingField: String
     @Binding var text: String
@@ -206,7 +222,7 @@ struct TextEditorView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @FocusState private var focusedField: Field?
     @State private var showPlaceholder: Bool = true
-
+    
     // MARK: - Body
     var body: some View {
         ZStack (alignment: .topLeading) {
@@ -228,10 +244,10 @@ struct TextEditorView: View {
                         showPlaceholder = false
                     }
                 }
-            .padding()
-            .navigationTitle(editingField)
-            .navigationBarBackButtonHidden(true)  // 뒤로 가기 버튼 숨기기
-
+                .padding()
+                .navigationTitle(editingField)
+                .navigationBarBackButtonHidden(true)  // 뒤로 가기 버튼 숨기기
+            
             // 플레이스홀더 표시
             if showPlaceholder {
                 Text(placeholder)
@@ -244,7 +260,7 @@ struct TextEditorView: View {
                         focusedField = .editor
                     }
             }
-
+            
             // 확인 버튼
             VStack {
                 Spacer()

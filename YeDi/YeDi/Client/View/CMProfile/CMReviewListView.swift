@@ -49,7 +49,7 @@ struct CMReviewCell: View {
                     Image(systemName: index <= review.designerScore ? "star.fill" : "star")
                         .foregroundStyle(index <= review.designerScore ? .yellow : Color(white: 0.9))
                         .font(.title3)
-                }
+               }
                 Spacer()
                 
                 Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yyyy.MM.dd.", from: review.date)) 작성")
