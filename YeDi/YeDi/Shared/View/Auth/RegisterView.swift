@@ -6,28 +6,8 @@
 //
 
 import SwiftUI
-
+    
 struct RegisterView: View {
-    @EnvironmentObject var userAuth: UserAuth
-    @State var userType: UserType?
-    
-    var body: some View {
-        VStack(spacing: 20) {
-            NavigationLink {
-                RegisterNavigationView(userType: .client)
-            } label: {
-                Text("고객 회원가입")
-            }
-            NavigationLink {
-                RegisterNavigationView(userType: .designer)
-            } label: {
-                Text("디자이너 회원가입")
-            }
-        }
-    }
-}
-    
-struct RegisterNavigationView: View {
     var userType: UserType
     
     @EnvironmentObject private var userAuth: UserAuth
@@ -88,7 +68,7 @@ struct RegisterNavigationView: View {
         }
     }
     
-    var registerForClient: some View {
+    private var registerForClient: some View {
         VStack(alignment: .leading) {
             ScrollView {
                 inputUserInfo(.client)
@@ -108,7 +88,7 @@ struct RegisterNavigationView: View {
         }
     }
     
-    var registerForDesigner: some View {
+    private var registerForDesigner: some View {
         VStack(alignment: .leading) {
             ScrollView {
                 inputUserInfo(.designer)
