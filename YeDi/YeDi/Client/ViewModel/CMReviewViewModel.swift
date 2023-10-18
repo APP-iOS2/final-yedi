@@ -51,8 +51,8 @@ class CMReviewViewModel: ObservableObject {
     func uploadReview(review: Review) async {
         self.downloadURLs = []
         
-        do {
-            var newReview = review
+        
+            let newReview = review
             
             // 로컬에 임시로 저장된 이미지를 Jpeg으로 압축 > storage에 업로드하고 URL 다운받기
             for imageURLString in newReview.imageURLStrings {
@@ -60,26 +60,43 @@ class CMReviewViewModel: ObservableObject {
                 
                 let localFile = URL(string: imageURLString)!
                 
-                URLSession.shared.dataTask(with: localFile) { data, response, error in
+                let uploadTask = URLSession.shared.dataTask(with: localFile) { data, response, error in
                     guard let data = data else { return }
                     
                     let localJpeg = UIImage(data: data)?.jpegData(compressionQuality: 0.2)
                     if let localJpeg {
-                        self.storageRef.child("reviews/\(temp)").putData(localJpeg)
+                        let uploadTask = self.storageRef.child("reviews/\(temp)").putData(localJpeg)
+                        uploadTask.observe(.success) { StorageTaskSnapshot in
+                            if StorageTaskSnapshot.status == .success {
+                                Task {
+                                    do {
+                                        var capturedReview = newReview
+                                        
+                                        let downloadURL = try await self.storageRef.child("reviews/\(temp)").downloadURL()
+                                        self.downloadURLs.append(downloadURL.absoluteString)
+                                        
+                                        capturedReview.imageURLStrings = self.downloadURLs
+                                        try self.collectionRef.document(capturedReview.id ?? "").setData(from: capturedReview)
+                                    } catch {
+                                        print("Error updating client reviews: \(error)")
+                                    }
+                                }
+                            }
+                        }
                     }
+                    
                 }
                 
-                try await Task.sleep(for: .seconds(1.5))
+                uploadTask.resume()
                 
-                let downloadURL = try await storageRef.child("reviews/\(temp)").downloadURL()
-                self.downloadURLs.append(downloadURL.absoluteString)
+                // MARK: 비동기 함수라 아래 코드(다운)은 위에(업로드) putData랑 코드가 같이 실행되서 업로드, 다운로드가 동시에 진행 가능성이 있음
+                // MARK: sleep을 강제로 거는 건 위험할 수 있을거 같아요!
+//                try await Task.sleep(for: .seconds(1.5))
+//                
+//                let downloadURL = try await storageRef.child("reviews/\(temp)").downloadURL()
+//                self.downloadURLs.append(downloadURL.absoluteString)
             }
             
-            newReview.imageURLStrings = downloadURLs
-            
-            try collectionRef.document(newReview.id ?? "").setData(from: newReview)
-        } catch {
-            print("Error updating client reviews: \(error)")
         }
     }
-}
+

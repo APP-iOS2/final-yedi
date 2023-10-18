@@ -123,4 +123,48 @@ struct Post: Codable {
     var comments: Int
     /// 게시 시간 (타임스탬프)
     var timestamp: String  // 실제로는 Timestamp 타입 사용해야할거같네요? - ChanHo
+    /// 헤어 디자인 카테고리
+    var hairCategory: HairCategory
+}
+
+enum HairCategory: String, Codable {
+    case Cut = "커트"
+    case Perm = "펌"
+    case Dying = "염색"
+    case Else = "기타 시술"
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        
+        switch rawValue {
+        case "커트":
+            self = .Cut
+        case "펌":
+            self = .Perm
+        case "염색":
+            self = .Dying
+        case "기타 시술":
+            self = .Else
+        default:
+            self = .Else // 기본값 설정
+        }
+    }
+}
+
+/// - 휴무일 설정 구조체
+struct ClosedDay: Identifiable, Codable {
+    /// Firestore 문서 ID
+    @DocumentID var id: String?
+    /// 휴무일 설정한 계정의 디자이너 ID
+    var designerID: String
+    /// 설정한 휴무일
+    var day: [String]
+}
+
+/// - 휴식시간 설정 구조체
+struct BreakTime: Codable {
+    @DocumentID var id: String?
+    var designerID: String
+    var breakTime: [String]
 }

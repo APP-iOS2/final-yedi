@@ -13,16 +13,22 @@ struct CustomCalender: View {
     @State var offset: CGSize = CGSize()
     @State var clickedDates: Set<Date> = []
     
+    @ObservedObject var dayModel = ClosedDaySetting()
+    
+    func dateSetToStringArray(dateSet: Set<Date>) -> [String] {
+        return dateSet.map { date in
+            let dateString = date.formatted(.iso8601)
+            return dateString
+        }
+    }
+    
     var body: some View {
         VStack {
-            headerView
-            calendarGridView
-           
             HStack {
                 VStack {
                     Divider().padding(.trailing, 3)
                 }
-                    Text("선택된 날짜")
+                    Text("휴무일 설정")
                     .foregroundStyle(.gray)
                     .font(.system(size: 14))
                 VStack {
@@ -31,14 +37,17 @@ struct CustomCalender: View {
             }
             .padding(.top)
             
-            ScrollView {
-                ForEach(clickedDates.map { $0 }, id: \.self) { date in
-                    Text(date, style: .date)
-                        .hAlign(.leading)
-                }
-            }
+            headerView
+            calendarGridView
+           
+            Spacer().frame(height: 50)
+            Divider()
+            Spacer().frame(height: 50)
             Button(action: {
-                //설정완료 toast message 생성
+                dayModel.addDay("designer1", dateSetToStringArray(dateSet: clickedDates))
+                
+                clickedDates = []
+                // toast messege 추후 구현
             }, label: {
                 Text("설정하기")
                     .foregroundColor(.black)
@@ -48,6 +57,7 @@ struct CustomCalender: View {
                             .foregroundColor(.gray)
                     }
             })
+            Spacer()
         }
         .padding(.horizontal, 9)
         .gesture(
