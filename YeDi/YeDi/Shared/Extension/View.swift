@@ -37,4 +37,9 @@ extension View {
     func buttonModifier(_ color: Color) -> some View {
         return modifier(ButtonModifier(color: color))
     }
+    
+    /// text field Modifier
+    func textFieldModifier() -> some View {
+        return modifier(TextFieldModifier())
+    }
 }
