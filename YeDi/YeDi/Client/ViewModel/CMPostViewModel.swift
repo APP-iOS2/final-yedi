@@ -17,6 +17,7 @@ class CMPostViewModel: ObservableObject {
     
     let dbRef = Firestore.firestore().collection("posts")
     
+    // 모든 게시물 불러오기 (페이지네이션)
     func fetchPosts() async {
             var query = dbRef
                 .order(by: "timestamp", descending: true)
@@ -25,7 +26,6 @@ class CMPostViewModel: ObservableObject {
             if let lastDocument = self.lastDocument {
                 query = query.start(afterDocument: lastDocument)
             }
-            
             do {
                 let snapshot = try await query.getDocuments()
                 
@@ -35,9 +35,7 @@ class CMPostViewModel: ObservableObject {
                             try? document.data(as: Post.self)
                         }
                     )
-                    
                     self.lastDocument = snapshot.documents.last
-                    
                     print("Fetched page. Total count:", self.posts.count)
                 }
                 
@@ -46,7 +44,7 @@ class CMPostViewModel: ObservableObject {
            }
         }
     
-    // 클라이언트가 팔로우한 디자이너의 ID 목록을 가져오는 함수
+    // 클라이언트가 팔로우한 디자이너의 ID 목록 불러오기
     func getFollowedDesignerIDs(forClientID clientID: String, completion: @escaping ([String]?) -> Void) {
         let followingCollection = Firestore.firestore().collection("following")
         let clientDocument = followingCollection.document(clientID)
@@ -67,7 +65,7 @@ class CMPostViewModel: ObservableObject {
         }
     }
     
-    // 클라이언트가 팔로우한 디자이너의 게시물만 가져오는 함수
+    // 클라이언트가 팔로우한 디자이너의 게시물만 불러오기
     func fetchPostsForFollowedDesigners(clientID: String) {
         getFollowedDesignerIDs(forClientID: clientID) { designerIDs in
             if let designerIDs = designerIDs, !designerIDs.isEmpty {
@@ -82,7 +80,6 @@ class CMPostViewModel: ObservableObject {
                         self.posts = snapshot.documents.compactMap { document in
                             try? document.data(as: Post.self)
                         }
-                        // 여기에서 필터링된 게시물을 사용하여 SwiftUI 뷰를 업데이트합니다.
                     }
                 }
             } else {

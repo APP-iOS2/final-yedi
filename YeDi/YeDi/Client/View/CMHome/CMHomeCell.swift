@@ -11,10 +11,9 @@ import FirebaseFirestore
 
 struct CMHomeCell: View {
     var post: Post
-    @EnvironmentObject var consultationViewModel: ConsultationViewModel
-    /// 상담하기 버튼 채팅방 시트 표출 변수
-    @State private var showChattingRoom = false
+    
     @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var consultationViewModel: ConsultationViewModel
     @StateObject private var viewModel = CMHomeCellViewModel()
     
     /// 이미지의 수를 판단할 수 있는 변수
@@ -23,6 +22,8 @@ struct CMHomeCell: View {
     @State private var shouldShowMoreText: Bool = false
     /// 이미지를 두 번 연속 눌렀을 때 나오는 하트 이미지 변수
     @State private var showHeartImage: Bool = false
+    /// 상담하기 버튼 채팅방 시트 표출 변수
+    @State private var showChattingRoom = false
     
     private let imageDimension: CGFloat = (UIScreen.main.bounds.width) - 10
     
@@ -60,6 +61,7 @@ struct CMHomeCell: View {
                         // 디자이너 아이디 & 디자이너 근무 지점
                         VStack(alignment: .leading) {
                             Text(designer.name)
+                                .foregroundStyle(Color.mainColor)
                             Text(post.location)
                                 .font(.callout)
                                 .foregroundStyle(.gray)
@@ -141,7 +143,7 @@ struct CMHomeCell: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 25, height: 25)
-                        .foregroundStyle(viewModel.isLiked ? .red : .black)
+                        .foregroundStyle(viewModel.isLiked ? Color.subColor : Color.mainColor)
                 })
                 Spacer()
                 // 상담하기 Button
@@ -153,10 +155,10 @@ struct CMHomeCell: View {
                         .padding(.vertical, 7)
                         .background {
                             Capsule(style: .continuous)
-                                .stroke(.black.opacity(0.5), lineWidth: 1)
+                                .stroke(Color.mainColor.opacity(0.5), lineWidth: 1)
                         }
                 })
-                .foregroundColor(.black)
+                .foregroundColor(Color.mainColor)
             }
             .padding(.horizontal)
             
@@ -171,10 +173,19 @@ struct CMHomeCell: View {
                 }
                 Spacer()
             }
+            .foregroundStyle(Color.mainColor)
             .padding(.horizontal)
             .onTapGesture {
                 shouldShowMoreText.toggle()
             }
+            
+            HStack {
+                Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일", from: post.timestamp))")
+                    .font(.footnote)
+                    .foregroundStyle(.gray)
+                Spacer()
+            }
+            .padding(.horizontal)
         }
         .padding(.bottom)
         .overlay( // 이미지를 2번 연속 눌렀을 경우 이미지 위에 하트 이미지가 뜨도록 설정
@@ -184,7 +195,7 @@ struct CMHomeCell: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 50, height: 50)
-                        .foregroundStyle(.red)
+                        .foregroundStyle(Color.subColor)
                         .padding()
                         .zIndex(1) // 메시지를 이미지 위에 배치
                 }

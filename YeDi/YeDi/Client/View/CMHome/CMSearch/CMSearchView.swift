@@ -2,7 +2,7 @@
 //  CMSearchView.swift
 //  YeDi
 //
-//  Created by 박채영 on 2023/09/25.
+//  Created by Jaehui Yu on 2023/09/25.
 //
 
 import SwiftUI
@@ -35,13 +35,14 @@ struct CMSearchView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         Text("최근 검색어")
+                            .foregroundStyle(Color.mainColor)
                         Spacer()
                         if !viewModel.recentSearches.isEmpty {
                             Button(action: {
                                 viewModel.removeAllRecentSearches()
                             }) {
                                 Text("전체 삭제")
-                                    .foregroundColor(.red)
+                                    .foregroundColor(Color.subColor)
                             }
                         }
                     }
@@ -67,7 +68,7 @@ struct CMSearchView: View {
                                         .padding(.leading,5)
                                     Spacer()
                                 }
-                                .foregroundStyle(.black)
+                                .foregroundStyle(Color.mainColor)
                             }
                             Button(action: {viewModel.removeRecentSearch(search)}, label: {
                                 Image(systemName: "xmark")
@@ -87,6 +88,7 @@ struct CMSearchView: View {
                 if viewModel.filteredDesignerCount > 0 {
                     HStack {
                         Text("디자이너 (\(viewModel.filteredDesignerCount)건)")
+                            .foregroundStyle(Color.mainColor)
                         Spacer()
                     }
                     .padding(.horizontal)
@@ -121,8 +123,8 @@ struct CMSearchView: View {
                                     }
                                     VStack(alignment: .leading) {
                                         Text(designer.name)
-                                            .foregroundStyle(.black)
-                                        Text("유칼립투스 헤어 | 단원구 선부동")
+                                            .foregroundStyle(Color.mainColor)
+                                        Text("Shop 이름")
                                             .font(.subheadline)
                                             .foregroundStyle(.gray)
                                     }
@@ -136,6 +138,7 @@ struct CMSearchView: View {
                     .listStyle(.plain)
                 } else {
                     Text("검색 결과가 없습니다.")
+                        .foregroundStyle(Color.mainColor)
                 }
             }
             
