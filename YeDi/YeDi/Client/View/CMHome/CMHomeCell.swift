@@ -29,37 +29,47 @@ struct CMHomeCell: View {
     var body: some View {
         VStack {
             // MARK: - Post Header
-            HStack {
-                // 디자이너 프로필 이미지
-                if let imageURLString = viewModel.designerImage {
-                    AsyncImage(url: URL(string: "\(imageURLString)")) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(maxWidth: 50, maxHeight: 50)
-                            .clipShape(Circle())
-                    } placeholder: {
-                        ProgressView()
-                    }
-                } else {
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(maxWidth: 50, maxHeight: 50)
-                        .clipShape(Circle())
-                        .foregroundStyle(.gray)
+            if let designer = viewModel.designer {
+                NavigationLink(destination: CMDesignerProfileView(designer: designer)) {
+                    HStack {
+                        // 디자이너 프로필 이미지
+                        if let imageURLString = designer.imageURLString {
+                            AsyncImage(url: URL(string: "\(imageURLString)")) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(maxWidth: 50, maxHeight: 50)
+                                    .clipShape(Circle())
+                            } placeholder: {
+                                Image(systemName: "person.circle")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(maxWidth: 50, maxHeight: 50)
+                                    .clipShape(Circle())
+                                    .foregroundStyle(.gray)
+                            }
+                        } else {
+                            Image(systemName: "person.circle")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(maxWidth: 50, maxHeight: 50)
+                                .clipShape(Circle())
+                                .foregroundStyle(.gray)
 
+                        }
+                        // 디자이너 아이디 & 디자이너 근무 지점
+                        VStack(alignment: .leading) {
+                            Text(designer.name)
+                            Text(post.location)
+                                .font(.callout)
+                                .foregroundStyle(.gray)
+                        }
+                        Spacer()
+                    }
+                    .padding(.horizontal)
                 }
-                // 디자이너 아이디 & 디자이너 근무 지점
-                VStack(alignment: .leading) {
-                    Text(viewModel.designerName ?? "디자이너 이름")
-                    Text(post.location)
-                        .font(.callout)
-                        .foregroundStyle(.gray)
-                }
-                Spacer()
             }
-            .padding(.horizontal)
+            
             
             // MARK: - Post Image
             // 업로드한 이미지의 수가 1장일 경우와 1장 이상일 경우 분리
@@ -154,9 +164,9 @@ struct CMHomeCell: View {
             // 게시글의 텍스트 제한이 없기 때문에 게시글이 방대해질 경우를 대비하여 더보기 설정
             HStack {
                 if shouldShowMoreText || post.description?.count ?? 0 <= 60 {
-                    Text("\(viewModel.designerName ?? "디자이너 이름") ").fontWeight(.semibold) + Text(post.description ?? "")
+                    Text("\(viewModel.designer?.name ?? "디자이너 이름") ").fontWeight(.semibold) + Text(post.description ?? "")
                 } else {
-                    Text("\(viewModel.designerName ?? "디자이너 이름") ").fontWeight(.semibold) + Text(post.description?.prefix(60) ?? "") + Text("...더보기")
+                    Text("\(viewModel.designer?.name ?? "디자이너 이름") ").fontWeight(.semibold) + Text(post.description?.prefix(60) ?? "") + Text("...더보기")
                     
                 }
                 Spacer()

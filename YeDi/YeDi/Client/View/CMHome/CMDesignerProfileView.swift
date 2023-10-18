@@ -12,6 +12,7 @@ import FirebaseFirestore
 struct CMDesignerProfileView: View {
     var designer: Designer
     @State private var designerPosts: [Post] = []
+    @StateObject var viewModel = PostDetailViewModel()
     
     let db = Firestore.firestore()
     
@@ -32,6 +33,7 @@ struct CMDesignerProfileView: View {
                         .fontWeight(.semibold)
                     Text(designer.description ?? "")
                         .foregroundStyle(.gray)
+                        .lineLimit(1)
                 }
                 Spacer()
                 if let imageURLString = designer.imageURLString {
@@ -42,7 +44,12 @@ struct CMDesignerProfileView: View {
                             .frame(maxWidth: 50, maxHeight: 50)
                             .clipShape(Circle())
                     } placeholder: {
-                        ProgressView()
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(maxWidth: 50, maxHeight: 50)
+                            .clipShape(Circle())
+                            .foregroundStyle(.gray)
                     }
                 } else {
                     Image(systemName: "person.circle")
@@ -51,13 +58,29 @@ struct CMDesignerProfileView: View {
                         .frame(maxWidth: 50, maxHeight: 50)
                         .clipShape(Circle())
                         .foregroundStyle(.gray)
-
+                    
                 }
             }
             .padding()
             
-            Text("\(designer.followerCount) 팔로잉")
-                .padding(.horizontal)
+            HStack {
+                Text("\(designer.followerCount) 팔로워")
+                Spacer()
+                Button {
+                    Task {
+                        await viewModel.toggleFollow(designerUid: designer.designerUID)
+                    }
+                } label: {
+                    Text("\(viewModel.isFollowing ? "팔로잉" : "팔로우")")
+                        .padding(.horizontal, 15)
+                        .padding(.vertical, 7)
+                        .background {
+                            Capsule(style: .continuous)
+                                .stroke(.black.opacity(0.5), lineWidth: 1)
+                        }
+                }
+            }
+            .padding(.horizontal)
             
             VStack {
                 VStack(alignment: .leading) {
@@ -107,6 +130,9 @@ struct CMDesignerProfileView: View {
             .padding(.horizontal)
         }
         .onAppear {
+                Task {
+                    await viewModel.isFollowed(designerUid: designer.designerUID)
+                }
             fetchDesignerPosts()
         }
         

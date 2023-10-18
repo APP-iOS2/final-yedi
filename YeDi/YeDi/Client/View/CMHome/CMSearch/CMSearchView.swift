@@ -103,7 +103,12 @@ struct CMSearchView: View {
                                                 .frame(maxWidth: 50, maxHeight: 50)
                                                 .clipShape(Circle())
                                         } placeholder: {
-                                            ProgressView()
+                                            Image(systemName: "person.circle")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(maxWidth: 50, maxHeight: 50)
+                                                .clipShape(Circle())
+                                                .foregroundStyle(.gray)
                                         }
                                     } else {
                                         Image(systemName: "person.circle")
