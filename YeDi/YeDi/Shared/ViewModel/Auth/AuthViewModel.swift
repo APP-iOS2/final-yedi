@@ -152,7 +152,7 @@ final class UserAuth: ObservableObject {
         }
     }
     
-    func registerDesigner(designer: Designer, password: String, completion: @escaping (Bool) -> Void) {
+    func registerDesigner(designer: Designer, shop: Shop, password: String, completion: @escaping (Bool) -> Void) {
         auth.createUser(withEmail: designer.email, password: password) { result, error in
             if let error = error {
                 completion(false)
@@ -184,6 +184,25 @@ final class UserAuth: ObservableObject {
                 self.storeService.collection("designers")
                     .document(user.uid)
                     .setData(data, merge: true)
+                
+                let shopData : [String: Any] = [
+                    "id": shop.id,
+                    "shopName" : shop.shopName,
+                    "headAddress" : shop.headAddress,
+                    "subAddress" : shop.subAddress,
+                    "detailAddress" : shop.detailAddress,
+                    // "telNumber" : "",
+                    // "longitude" : "",
+                    // "latitude" : "",
+                    "openingHour" : shop.openingHour,
+                    "closingHour" : shop.closingHour,
+                    // "messangerLinkURL" : ["": ""],
+                    "closedDays" : shop.closedDays
+                ]
+                
+                self.storeService.collection("designers").document(user.uid).collection("shop")
+                    .document(shop.id)
+                    .setData(shopData, merge: true)
                 
                 self.userSession = nil
                 self.isLogin = false

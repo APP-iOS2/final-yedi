@@ -6,9 +6,12 @@
 //
 
 import FirebaseFirestoreSwift  // Firestore를 사용
+import Foundation
 
 // 샵에 대한 정보를 담는 구조체
 struct Shop: Codable {
+    var id: String = UUID().uuidString
+    
     var shopName: String  // 샵 이름
     /// [시] 만 담고 있는 주소
     var headAddress: String
@@ -19,9 +22,9 @@ struct Shop: Codable {
     /// 샵 전화번호
     var telNumber: String?
     /// 위도
-    var longitude: Double  // 오타 수정: langitude -> longitude
+    var longitude: Double?  // 오타 수정: langitude -> longitude
     /// 경도
-    var latitude: Double
+    var latitude: Double?
     /// 시작시간
     var openingHour: String
     /// 마감시간
@@ -30,6 +33,7 @@ struct Shop: Codable {
     var messangerLinkURL: [String: String]? // ["KakaoTalk" : "URL"]
     /// 휴무일 정보
     var closedDays: [String]
+    
 }
 
 // 디자이너에 대한 정보를 담는 구조체
