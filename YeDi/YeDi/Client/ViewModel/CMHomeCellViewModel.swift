@@ -12,18 +12,17 @@ import FirebaseFirestore
 @MainActor
 class CMHomeCellViewModel: ObservableObject {
     @Published var isLiked: Bool = false
-    @Published var designerName: String?
-    @Published var designerImage: String?
-    
-    func fetchDesignerInfo(post: Post) async {
+    @Published var designer: Designer?
+        
+        func fetchDesignerInfo(post: Post) async {
             let db = Firestore.firestore()
             let designerRef = db.collection("designers").document(post.designerID)
-
+            
             do {
                 let document = try await designerRef.getDocument()
                 if let designerData = document.data() {
-                    designerName = designerData["name"] as? String
-                    designerImage = designerData["imageURLString"] as? String
+                    // Initialize the designer model using Codable
+                    designer = try? document.data(as: Designer.self)
                 }
             } catch {
                 print("Error fetching designer document: \(error)")
