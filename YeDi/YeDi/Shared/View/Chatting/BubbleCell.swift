@@ -11,9 +11,9 @@ struct BubbleCell: View {
     var chat: CommonBubble
     var isMyBubble: Bool
     
-    private var chatDate: String {
+    private var chatTime: String {
         let instance = SingleTonDateFormatter.sharedDateFommatter
-        let date = instance.changeDateString(transition: "MM월 dd일 HH:mm", from: chat.date)
+        let date = instance.changeDateString(transition: "MM/dd HH:mm", from: chat.date)
         return date
     }
     
@@ -61,7 +61,7 @@ struct BubbleCell: View {
     }
     
     private var chatDateMark: some View {
-        Text("\(chatDate)")
+        Text("\(chatTime)")
             .font(.caption2)
             .foregroundStyle(.gray)
     }
