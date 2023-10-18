@@ -39,12 +39,12 @@ struct DMPostView: View {
                         NavigationLink(destination: DMProfileView()) {
                             Text(selectedPost.designerID)
                                 .font(.headline)
-                                .foregroundColor(Color.black)
+                                .foregroundColor(Color(UIColor.label))
                         }
                         NavigationLink(destination: DMProfileView()) {
                             Text("\(selectedPost.location) | \(selectedPost.title)")
                                 .font(.caption)
-                                .foregroundColor(Color.gray)
+                                .foregroundColor(Color(UIColor.secondaryLabel))
                         }
                     }
                     Spacer()
@@ -57,7 +57,7 @@ struct DMPostView: View {
                         }) {
                             Image(systemName: "ellipsis")
                                 .imageScale(.large)
-                                .foregroundColor(Color.black)
+                                .foregroundColor(Color(UIColor.label))
                         }
                     }
                     // 액션 시트
@@ -111,7 +111,7 @@ struct DMPostView: View {
                 // MARK: - 게시 시간
                 Text(selectedPost.timestamp)
                     .font(.caption)
-                    .foregroundColor(Color.gray)
+                    .foregroundColor(Color(UIColor.secondaryLabel))
                     .padding(.horizontal)
             }
             // 새로고침 기능

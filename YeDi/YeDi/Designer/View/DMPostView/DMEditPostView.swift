@@ -48,12 +48,13 @@ struct DMEditPostView: View {
                             updatePost()
                         }) {
                             Text("확인")
-                                .frame(minWidth: 0, maxWidth: .infinity)
-                                .padding()
-                                .foregroundColor(.white)
-                                .background(isFormValid ? Color.black : Color.gray)
-                                .cornerRadius(10)
+//                                .frame(minWidth: 0, maxWidth: .infinity)
+//                                .padding()
+//                                .foregroundColor(.white)
+//                                .background(isFormValid ? Color.black : Color.gray)
+//                                .cornerRadius(10)
                         }
+                        .buttonModifier(.mainColor)
                         .padding([.leading, .trailing], 16)
                         .padding(.bottom, 16)
                     }
@@ -86,18 +87,12 @@ struct DMEditPostView: View {
     private var contentForm: some View {
         VStack(alignment: .leading) {
             TextField("시술명", text: $title)
-                .padding()
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(8)
+                .textFieldModifier()
             TextField("내용", text: $description)
-                .padding()
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(8)
+                .textFieldModifier()
             categoryPickerView
             TextField("가격", text:$price)
-                .padding()
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(8)
+                .textFieldModifier()
             imageUrlsSection
             
         }
@@ -105,15 +100,16 @@ struct DMEditPostView: View {
     }
     
     private var categoryPickerView: some View {
-            VStack{
+            HStack{
                 Text("스타일 종류를 선택하세요")
                     .font(.subheadline)
+                Spacer()
                 Picker("", selection: $hairCategory) {
                     ForEach(hairCategoryArray, id: \.self) { style in
                         Text("\(style.rawValue)")
                     }
                 }
-            }
+            }.padding([.top, .bottom], 5)
         }
     
     private var imageUrlsSection: some View {

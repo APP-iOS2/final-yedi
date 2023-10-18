@@ -19,7 +19,7 @@ struct DMExpandableText: View {
             // MARK: - 확장된 상태
             if expanded {
                 Text(text)
-                    .foregroundColor(Color.black)
+                    .foregroundColor(Color(UIColor.label))
                     .padding(.horizontal, 5)
                 
                 // 접기 버튼
@@ -30,7 +30,7 @@ struct DMExpandableText: View {
                             self.expanded.toggle()
                         }
                     }
-                    .foregroundColor(Color.gray)
+                    .foregroundColor(Color(UIColor.secondaryLabel))
                     .font(.caption)
                 }
             } else {
@@ -44,7 +44,7 @@ struct DMExpandableText: View {
                                     .preference(key: ViewWidthKey.self, value: proxy.size.width)
                             }
                         )
-                        .foregroundColor(Color.black)
+                        .foregroundColor(Color(UIColor.label))
                     
                     // 텍스트가 생략되면 더보기 버튼 표시
                     if isTruncated {
@@ -53,7 +53,7 @@ struct DMExpandableText: View {
                                 self.expanded.toggle()
                             }
                         }
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(Color(UIColor.secondaryLabel))
                         .font(.caption)
                     }
                 }
