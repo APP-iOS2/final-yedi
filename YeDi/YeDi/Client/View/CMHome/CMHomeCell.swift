@@ -25,7 +25,7 @@ struct CMHomeCell: View {
     /// 상담하기 버튼 채팅방 시트 표출 변수
     @State private var showChattingRoom = false
     
-    private let imageDimension: CGFloat = (UIScreen.main.bounds.width) - 10
+    private let imageDimension: CGFloat = (UIScreen.main.bounds.width)
     
     var body: some View {
         VStack {
@@ -47,7 +47,7 @@ struct CMHomeCell: View {
                                     .aspectRatio(contentMode: .fill)
                                     .frame(maxWidth: 50, maxHeight: 50)
                                     .clipShape(Circle())
-                                    .foregroundStyle(.gray)
+                                    .foregroundStyle(Color.primaryLabel)
                             }
                         } else {
                             Image(systemName: "person.circle")
@@ -55,13 +55,13 @@ struct CMHomeCell: View {
                                 .aspectRatio(contentMode: .fill)
                                 .frame(maxWidth: 50, maxHeight: 50)
                                 .clipShape(Circle())
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(Color.primaryLabel)
 
                         }
                         // 디자이너 아이디 & 디자이너 근무 지점
                         VStack(alignment: .leading) {
                             Text(designer.name)
-                                .foregroundStyle(Color.mainColor)
+                                .foregroundStyle(Color.primaryLabel)
                             Text(post.location)
                                 .font(.callout)
                                 .foregroundStyle(.gray)
@@ -83,7 +83,6 @@ struct CMHomeCell: View {
                         .scaledToFill()
                         .frame(width: imageDimension, height: imageDimension)
                         .clipped()
-                        .cornerRadius(8)
                         .onTapGesture(count: 2) { // 이미지를 2번 연속 눌렀을 때
                             viewModel.isLiked = true
                             showHeartImage = true
@@ -101,7 +100,6 @@ struct CMHomeCell: View {
                                 .scaledToFill()
                                 .frame(width: imageDimension, height: imageDimension)
                                 .clipped()
-                                .cornerRadius(8)
                                 .tag(index)
                                 .overlay( // 현재 이미지가 총 이미지 중에서 몇 번째인지를 나타냄
                                     ZStack {
@@ -143,7 +141,7 @@ struct CMHomeCell: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 25, height: 25)
-                        .foregroundStyle(viewModel.isLiked ? Color.subColor : Color.mainColor)
+                        .foregroundStyle(viewModel.isLiked ? Color.subColor : Color.primaryLabel)
                 })
                 Spacer()
                 // 상담하기 Button
@@ -155,10 +153,10 @@ struct CMHomeCell: View {
                         .padding(.vertical, 7)
                         .background {
                             Capsule(style: .continuous)
-                                .stroke(Color.mainColor.opacity(0.5), lineWidth: 1)
+                                .stroke(Color.primaryLabel.opacity(0.5), lineWidth: 1)
                         }
                 })
-                .foregroundColor(Color.mainColor)
+                .foregroundColor(Color.primaryLabel)
             }
             .padding(.horizontal)
             
@@ -173,7 +171,7 @@ struct CMHomeCell: View {
                 }
                 Spacer()
             }
-            .foregroundStyle(Color.mainColor)
+            .foregroundStyle(Color.primaryLabel)
             .padding(.horizontal)
             .onTapGesture {
                 shouldShowMoreText.toggle()
@@ -226,3 +224,10 @@ struct CMHomeCell: View {
 
         .environmentObject(ConsultationViewModel())
 }
+
+//private struct CMHomeCellHeaderView: View {
+//    
+//    fileprivate var body: some View {
+//        
+//    }
+//}
