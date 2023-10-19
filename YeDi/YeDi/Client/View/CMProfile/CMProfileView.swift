@@ -57,7 +57,7 @@ struct CMProfileView: View {
                 } label: {
                     Text("정보 수정")
                         .frame(width: 350, height: 40)
-                        .background(.black)
+                        .background(Color(UIColor.separator))
                         .foregroundStyle(.white)
                         .clipShape(.rect(cornerRadius: 5))
                         .padding(.bottom, 40)

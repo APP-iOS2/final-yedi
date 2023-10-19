@@ -102,8 +102,8 @@ struct CMNewReviewView: View {
             Text(buttonText)
                 .frame(width: 330, height: 30)
         })
-        .buttonStyle(.borderedProminent)
-        .tint(.black)
+        .buttonModifier(.mainColor)
+        .padding()
     }
 }
 
