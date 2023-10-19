@@ -4,7 +4,6 @@ import FirebaseFirestore
 
 class CMSearchViewModel: ObservableObject {
     @Published var designers: [Designer] = []
-    @Published var posts: [Post] = []
     @Published var searchText: String = ""
     @Published var recentSearches: [String] = []
     @Published var isTextFieldActive: Bool = false
@@ -82,22 +81,6 @@ class CMSearchViewModel: ObservableObject {
             }
             self.designers = documents.compactMap{ document in
                 try? document.data(as: Designer.self)
-            }
-        }
-    }
-    
-    func loadPostData() {
-        let db = Firestore.firestore()
-        
-        db.collection("posts").getDocuments { snapshot, error in
-            if let error = error {
-                return
-            }
-            guard let documents = snapshot?.documents else {
-                return
-            }
-            self.posts = documents.compactMap { documents in
-                try? documents.data(as: Post.self)
             }
         }
     }
