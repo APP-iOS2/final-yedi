@@ -31,6 +31,7 @@ struct CMReviewSelectPhotosView: View {
             }
             Divider()
                 .frame(width: 360)
+                .background(Color.systemFill)
                 .padding(.bottom, 10)
         }
         .sheet(isPresented: $isShowingPhotoPicker, content: {

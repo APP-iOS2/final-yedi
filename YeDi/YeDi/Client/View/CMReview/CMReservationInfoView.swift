@@ -38,9 +38,9 @@ struct CMReservationInfoView: View {
         .background(
             RoundedRectangle(cornerRadius: 50)
                 .frame(height: 300)
-                .foregroundColor(.white)
-                .shadow(color: .gray, radius: 5, x: 0, y: 5)
-                .opacity(0.3)
+                .foregroundColor(.systemBackground)
+                .shadow(color: Color.systemFill, radius: 5, x: 0, y: 5)
+                .opacity(0.2)
         )
         .offset(y: -50)
     }
