@@ -82,11 +82,6 @@ struct HCustomCalendar: View {
                     })
                     .cornerRadius(8)
                     .foregroundColor(calendar.isDate(selectedDate, equalTo: date, toGranularity: .day) ? .black : .white)
-
-                    
-//                    .background(calendar.isDate(selectedDate, equalTo: date, toGranularity: .day) ? Color.green : Color.clear)
-//                    .cornerRadius(8)
-//                    .foregroundColor(calendar.isDate(selectedDate, equalTo: date, toGranularity: .day) ? .white : .black)
                     .onTapGesture {
                         selectedDate = date
                     }
