@@ -16,53 +16,48 @@ struct TimeSettingDetail: View {
 struct TimeHome: View {
     
     @StateObject var timeModel = BreakTimeSetting()
-    @State var selectedHour = Date()
-    @State var showPicker = false
+    @State private var selectedHour: Int = 1
+    @State private var selectedTimePeriod: TimePeriod = .am
     
     var body: some View {
-        VStack {
-            Text("Picker View 구현 중...")
-            
-            Text(selectedHour, style: .time)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .onTapGesture {
-                    withAnimation(.spring()) {
-                        showPicker.toggle()
-                    }
-                }
-            //picker view
+        GeometryReader { geometry in
             VStack {
-                
-                HStack(spacing: 15) {
+                Text("쉬는 시간 설정을 하세요")
+                HStack(alignment: .center, spacing: 0) {
                     Spacer()
-                    
-                    HStack(spacing: 0) {
-                        Text("\(timeModel.hour):00")
-                            .font(.largeTitle)
-                            .fontWeight(timeModel.changeToHour ? .bold : .light)
-                            .onTapGesture {
-                                timeModel.changeToHour = false
-                            }
+                    Picker("SelectedTimePriod", selection: $selectedTimePeriod) {
+                        ForEach(TimePeriod.allCases, id: \.self) {
+                            timePeriod in
+                            Text(timePeriod.displayText)
+                        }
                     }
+                    .pickerStyle(.wheel)
+                    .frame(width: geometry.size.width/4, height: 200)
+                    .clipped()
                     
-                    VStack(spacing: 8) {
-                        Text("AM")
-                            .font(.title3)
-                            .fontWeight(.bold)
-                        
-                        Text("PM")
-                            .font(.title3)
-                            .fontWeight(.bold)
+                    Picker("Selected Hour", selection: $selectedHour) {
+                        ForEach(1..<13, id: \.self) {
+                            hour in
+                            Text("\(hour)")
+                        }
+                    }
+                    .pickerStyle(.wheel)
+                    .frame(width: geometry.size.width/4, height: 200)
+                    .clipped()
+                    Text("시")
+                    Spacer()
+                }
+                List {
+                    HStack {
+                        if selectedTimePeriod == .am {
+                            Text("AM")
+                        } else {
+                            Text("PM")
+                        }
+                        Text("\(selectedHour)시")
                     }
                 }
-                .padding()
-                .foregroundColor(.white)
             }
-            //Max width
-            .frame(width: getWidth() - 120)
-            .background(Color.primary)
-            .cornerRadius(8)
         }
     }
 }
