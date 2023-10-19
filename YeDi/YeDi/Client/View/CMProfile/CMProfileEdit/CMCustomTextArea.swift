@@ -15,8 +15,8 @@ struct CMCustomTextAreaStyle: TextFieldStyle {
             .frame(height: 200, alignment: .topLeading)
             .padding(10)
             .background(
-                RoundedRectangle(cornerRadius: 2)
-                    .stroke(Color(white: 0.9), lineWidth: 1)
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(Color.gray6)
             )
     }
 }

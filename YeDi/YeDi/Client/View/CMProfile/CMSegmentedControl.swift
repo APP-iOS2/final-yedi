@@ -30,7 +30,7 @@ struct CMSegmentedControl: View {
                                 .fontWeight(selectedSegment == segment ? .semibold : .medium)
                                 .foregroundStyle(Color(UIColor.label))
                             Rectangle()
-                                .fill(selectedSegment == segment ? .black : .white)
+                                .fill(selectedSegment == segment ? Color.primaryLabel : .gray6)
                                 .frame(width: 120, height: 3)
                         }
                     })

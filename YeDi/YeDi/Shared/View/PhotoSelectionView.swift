@@ -18,7 +18,7 @@ struct PhotoSelectionView: View {
             HStack {
                 ZStack {
                     RoundedRectangle(cornerRadius: 5)
-                        .fill(Color(white: 0.9))
+                        .fill(Color.gray6)
                         .frame(width: 100, height: 100)
                     VStack(spacing: 10) {
                         Image(systemName: "plus")
@@ -44,12 +44,12 @@ struct PhotoSelectionView: View {
                         }, label: {
                             Image(systemName: "x.circle.fill")
                                 .font(.title3)
-                                .foregroundStyle(.black)
+                                .foregroundStyle(.main)
                         })
-                        .offset(x: 52, y: -50)
+                        .offset(x: 52, y: -53)
                     }
                 }
-                .padding(EdgeInsets(top: 10, leading: 5, bottom: 20, trailing: 0))
+                .padding(EdgeInsets(top: 13, leading: 5, bottom: 20, trailing: 0))
             }
             .padding(.trailing)
         }

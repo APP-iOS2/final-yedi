@@ -26,6 +26,7 @@ struct CMReviewWriteContentView: View {
             }
             Divider()
                 .frame(width: 360)
+                .background(Color.systemFill)
                 .padding(.bottom, 10)
         }
     }
