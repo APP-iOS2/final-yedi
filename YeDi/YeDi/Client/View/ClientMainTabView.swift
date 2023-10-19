@@ -11,7 +11,7 @@ struct ClientMainTabView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var profileViewModel: CMProfileViewModel
     @EnvironmentObject var reviewViewModel: CMReviewViewModel
-    @StateObject var chattingListViewModel = ChattingListRoomViewModel()
+    @EnvironmentObject var chattingListRoomViewModel : ChattingListRoomViewModel
     @State private var selectedIndex = 0
     
     var body: some View {
@@ -33,11 +33,11 @@ struct ClientMainTabView: View {
                 }.tag(2)
                 
                 CMMainChattingView()
-                    .environmentObject(chattingListViewModel)
+                    .environmentObject(chattingListRoomViewModel)
                 .tabItem {
                     Label("채팅", systemImage: "bubble.left.fill")
                         
-                }.tag(3).badge(chattingListViewModel.getUnReadTotalCount)
+                }.tag(3).badge(chattingListRoomViewModel.getUnReadTotalCount)
                 
                 CMProfileView()
                 .tabItem {
@@ -46,7 +46,7 @@ struct ClientMainTabView: View {
             }
         }
         .onAppear {
-            chattingListViewModel.fetchChattingList(login: userAuth.userType)
+            chattingListRoomViewModel.fetchChattingList(login: userAuth.userType)
         }
     }
 }
