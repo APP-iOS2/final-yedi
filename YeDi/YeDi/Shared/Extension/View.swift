@@ -42,4 +42,9 @@ extension View {
     func textFieldModifier() -> some View {
         return modifier(TextFieldModifier())
     }
+    
+    /// 커스텀 텍스트 Area 스타일 Modifier
+    func textAreaModifier(_ height: CGFloat) -> some View {
+        return modifier(TextAreaModifier(height: height))
+    }
 }

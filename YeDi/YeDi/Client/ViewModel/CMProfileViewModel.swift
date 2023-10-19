@@ -38,34 +38,49 @@ final class CMProfileViewModel: ObservableObject {
     
     /// 고객 프로필 업데이트 메서드
     @MainActor
-    func updateClientProfile(userAuth: UserAuth, newClient: Client) async {
-        do {
-            if let clientId = userAuth.currentClientID {
-                var newClient = newClient
+    func updateClientProfile(userAuth: UserAuth, client: Client) async {
+        if let clientId = userAuth.currentClientID {
+            // MARK: - 프로필 이미지 바꾸는 경우
+            if !client.profileImageURLString.isEmpty {
+                let localFile = URL(string: client.profileImageURLString)!
                 
                 // 로컬에 임시로 저장된 이미지를 Jpeg으로 압축 > storage에 업로드하고 URL 다운받기
-                if !newClient.profileImageURLString.isEmpty {
-                    let localFile = URL(string: newClient.profileImageURLString)!
+                let uploadTask = URLSession.shared.dataTask(with: localFile) { data, response, error in
+                    guard let data = data else { return }
                     
-                    let data = try await URLSession.shared.data(from: localFile).0
-                    
-                    let localJpeg = UIImage(data: data)?.jpegData(compressionQuality: 0.2)
+                    let localJpeg = UIImage(data: data)?.jpegData(compressionQuality: 0.4)
                     if let localJpeg {
-                        self.storageRef.child("clients/profiles/\(clientId)").putData(localJpeg)
+                        let uploadTask = self.storageRef.child("clients/profiles/\(clientId)").putData(localJpeg)
+                        uploadTask.observe(.success) { StorageTaskSnapshot in
+                            if StorageTaskSnapshot.status == .success {
+                                Task {
+                                    do {
+                                        var capturedClient = client
+                                        
+                                        let downloadURL = try await self.storageRef.child("clients/profiles/\(clientId)").downloadURL()
+                                        
+                                        capturedClient.profileImageURLString = downloadURL.absoluteString
+                                        try self.collectionRef.document(clientId).setData(from: capturedClient)
+                                    } catch {
+                                        print("Error updating client profile: \(error)")
+                                    }
+                                }
+                            }
+                        }
                     }
-                    
-                    let downloadURL = try await storageRef.child("clients/profiles/\(clientId)").downloadURL()
-                    newClient.profileImageURLString = downloadURL.absoluteString
-
-                    self.client.profileImageURLString = downloadURL.absoluteString
                 }
                 
-                try collectionRef.document(clientId).setData(from: newClient)
-                
-                try await Task.sleep(for: .seconds(0.5))
+                uploadTask.resume()
+            } else {
+                // MARK: - 프로필 이미지 바꾸지 않는 경우
+                Task {
+                    do {
+                        try self.collectionRef.document(clientId).setData(from: client)
+                    } catch {
+                        print("Error updating client profile: \(error)")
+                    }
+                }
             }
-        } catch {
-            print("Error updating client profile: \(error)")
         }
     }
     

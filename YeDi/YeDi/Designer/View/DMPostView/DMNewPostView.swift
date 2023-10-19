@@ -12,23 +12,27 @@ import FirebaseStorage
 // 메인 게시물 생성 뷰
 struct DMNewPostView: View {
     // MARK: - Properties
+    @Environment(\.presentationMode) var presentationMode
+    
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var postViewModel: DMPostViewModel
+    
     @State private var title = ""
     @State private var description = ""
     @State private var imageUrls: [String] = []
-    @State private var newImageUrl = ""
-    @State private var showAlert = false
     @State private var hairCategory: HairCategory = .Else
-    @State private var isShowingPhotoPicker: Bool = false
     @State private var price: String = ""
     
-    @EnvironmentObject var userAuth: UserAuth
-    @Environment(\.presentationMode) var presentationMode
-    
-    let hairCategoryArray: [HairCategory] = [HairCategory.Cut,
-                                             HairCategory.Dying,
-                                             HairCategory.Perm,
-                                             HairCategory.Else]
-    
+    @State private var isShowingAlert = false
+    @State private var isShowingPhotoPicker: Bool = false
+
+    let hairCategoryArray: [HairCategory] = [
+        HairCategory.Cut,
+        HairCategory.Dying,
+        HairCategory.Perm,
+        HairCategory.Else
+    ]
+
     // 폼 유효성 검사
     private var isFormValid: Bool {
         return !title.isEmpty && !description.isEmpty && !imageUrls.isEmpty
@@ -50,6 +54,16 @@ struct DMNewPostView: View {
             PhotoPicker { imageURL in
                 imageUrls.append(imageURL.absoluteString)
             }
+        }
+
+        .alert(isPresented: $isShowingAlert) {
+            Alert(
+                title: Text("성공"),
+                message: Text("게시물이 생성되었습니다."),
+                dismissButton: .default(Text("확인")) {
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            )
         }
     }
     
@@ -106,8 +120,7 @@ struct DMNewPostView: View {
                 .font(.headline)
             ForEach(imageUrls, id: \.self) { imageUrl in
                 Text(imageUrl)
-            }
-            
+            }           
             PhotoSelectionView(selectedPhotoURLs: $imageUrls, isShowingPhotoPicker: $isShowingPhotoPicker)
         }
         .padding(.bottom, 20)
@@ -128,15 +141,6 @@ struct DMNewPostView: View {
             .cornerRadius(10)
             .padding([.horizontal, .bottom])
             .disabled(!isFormValid)
-            .alert(isPresented: $showAlert) {
-                Alert(
-                    title: Text("성공"),
-                    message: Text("게시물이 생성되었습니다."),
-                    dismissButton: .default(Text("확인")) {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }
-                )
-            }
         }
     }
     
@@ -145,7 +149,7 @@ struct DMNewPostView: View {
     private func createPost() {
         let photos = imageUrls.map { Photo(id: UUID().uuidString, imageURL: $0) }
         let newPost = Post(
-            id: nil,
+            id: UUID().uuidString,
             designerID: userAuth.currentDesignerID ?? "Unknown",
             location: "예디샵 홍대지점",
             title: title,
@@ -156,38 +160,11 @@ struct DMNewPostView: View {
             hairCategory: hairCategory,
             price: Int(price) ?? 0
         )
-        Task {
-            await savePostToFirestore(post: newPost)
-        }
-        showAlert = true
-    }
-    
-    /// Firestore에 게시물 저장
-    private func savePostToFirestore(post: Post) async {
-        let db = Firestore.firestore()
-        let storageRef = Storage.storage().reference()
         
-        do {
-            var index = 0
-            
-            for url in imageUrls {
-                let localFile = URL(string: url)!
-                let temp = UUID().uuidString
-                
-                storageRef.child("posts/\(temp)").putFile(from: localFile)
-                
-                try await Task.sleep(for: .seconds(3))
-                
-                let downloadURL = try await storageRef.child("posts/\(temp)").downloadURL()
-                self.imageUrls[index] = downloadURL.absoluteString
-                
-                index += 1
-            }
-            
-            try db.collection("posts").addDocument(from: post)
-        } catch let error {
-            print("Error writing to Firestore: \(error)")
+        Task {
+            await postViewModel.savePostToFirestore(post: newPost, imageURLs: imageUrls)
         }
+        isShowingAlert = true
     }
 }
 
@@ -301,4 +278,5 @@ struct TextEditorView: View {
 
 #Preview {
     DMNewPostView()
+        .environmentObject(DMPostViewModel())
 }

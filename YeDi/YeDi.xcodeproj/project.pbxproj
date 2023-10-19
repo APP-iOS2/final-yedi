@@ -25,6 +25,8 @@
 		2F0A21952ACFD8950070CA42 /* CMReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */; };
 		2F45A1282AD2739C005018A5 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F45A1272AD2739C005018A5 /* Color.swift */; };
 		2F6363E92AD542AA00E980F8 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6363E82AD542AA00E980F8 /* PhotoPicker.swift */; };
+		2F7B60652ADFAF2B00EF1B96 /* CMCustomTextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B60642ADFAF2B00EF1B96 /* CMCustomTextArea.swift */; };
+		2F7B60672ADFD51500EF1B96 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2F7B60662ADFD51500EF1B96 /* GoogleService-Info.plist */; };
 		2FA36FFE2AD93C1F00E750B0 /* CMReservationInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA36FFD2AD93C1F00E750B0 /* CMReservationInfoView.swift */; };
 		2FA370002AD945A000E750B0 /* PhotoSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA36FFF2AD945A000E750B0 /* PhotoSelectionView.swift */; };
 		3B2442F52ADE5CF7005D3021 /* StarScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2442F42ADE5CF7005D3021 /* StarScoreView.swift */; };
@@ -131,6 +133,7 @@
 		DC7695C52ADD0E0B00D2FB69 /* CapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695C42ADD0E0B00D2FB69 /* CapsuleButton.swift */; };
 		DC7695C92ADD119D00D2FB69 /* ButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695C82ADD119D00D2FB69 /* ButtonModifier.swift */; };
 		DC7695CF2ADF1DC800D2FB69 /* TextFieldModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695CE2ADF1DC800D2FB69 /* TextFieldModifier.swift */; };
+		DC94ED592ADFDA540052AD6E /* TextAreaModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -152,6 +155,8 @@
 		2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReviewViewModel.swift; sourceTree = "<group>"; };
 		2F45A1272AD2739C005018A5 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2F6363E82AD542AA00E980F8 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
+		2F7B60642ADFAF2B00EF1B96 /* CMCustomTextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMCustomTextArea.swift; sourceTree = "<group>"; };
+		2F7B60662ADFD51500EF1B96 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2FA36FFD2AD93C1F00E750B0 /* CMReservationInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReservationInfoView.swift; sourceTree = "<group>"; };
 		2FA36FFF2AD945A000E750B0 /* PhotoSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectionView.swift; sourceTree = "<group>"; };
 		3B2442F42ADE5CF7005D3021 /* StarScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarScoreView.swift; sourceTree = "<group>"; };
@@ -253,6 +258,7 @@
 		DC7695C42ADD0E0B00D2FB69 /* CapsuleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleButton.swift; sourceTree = "<group>"; };
 		DC7695C82ADD119D00D2FB69 /* ButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifier.swift; sourceTree = "<group>"; };
 		DC7695CE2ADF1DC800D2FB69 /* TextFieldModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldModifier.swift; sourceTree = "<group>"; };
+		DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -506,6 +512,7 @@
 				3BCF2C622ACD4248009C18C2 /* CMClientInfoEditView.swift */,
 				3BCF2C5F2ACD4248009C18C2 /* CMAccountInfoEditView.swift */,
 				3BCF2C612ACD4248009C18C2 /* CMCustomTextField.swift */,
+				2F7B60642ADFAF2B00EF1B96 /* CMCustomTextArea.swift */,
 			);
 			path = CMProfileEdit;
 			sourceTree = "<group>";
@@ -630,7 +637,7 @@
 		63CD89AF2ABD85C300E70A56 /* YeDi */ = {
 			isa = PBXGroup;
 			children = (
-				3BA862E22ADFD22400385507 /* GoogleService-Info.plist */,
+				2F7B60662ADFD51500EF1B96 /* GoogleService-Info.plist */,
 				3BCF2C032ACD3E72009C18C2 /* Shared */,
 				3BCF2C362ACD4247009C18C2 /* Client */,
 				639DB6282AC10DED002692E5 /* Designer */,
@@ -703,6 +710,7 @@
 				3BCF2C152ACD3E72009C18C2 /* ChatBubbleModifier.swift */,
 				DC7695C82ADD119D00D2FB69 /* ButtonModifier.swift */,
 				DC7695CE2ADF1DC800D2FB69 /* TextFieldModifier.swift */,
+				DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */,
 			);
 			path = ViewModifier;
 			sourceTree = "<group>";
@@ -788,7 +796,7 @@
 			files = (
 				63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */,
 				63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */,
-				3BA862E32ADFD22400385507 /* GoogleService-Info.plist in Resources */,
+				2F7B60672ADFD51500EF1B96 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -864,6 +872,7 @@
 				3B6346DE2AD9004600D3D110 /* ChatListUserInfo.swift in Sources */,
 				DC76954F2AD088DB00D2FB69 /* AuthViewModel.swift in Sources */,
 				965ECCF22AD93EEB00BC0D41 /* DMAccountInfoEditView.swift in Sources */,
+				2F7B60652ADFAF2B00EF1B96 /* CMCustomTextArea.swift in Sources */,
 				3BCF2C8F2ACD4248009C18C2 /* CMSettingsView.swift in Sources */,
 				3BCF2C712ACD4248009C18C2 /* CMNewReviewView.swift in Sources */,
 				DC7695CF2ADF1DC800D2FB69 /* TextFieldModifier.swift in Sources */,
@@ -914,6 +923,7 @@
 				63A888282ADF9A5A00790EBA /* DateDeviderCell.swift in Sources */,
 				3BCF2C832ACD4248009C18C2 /* CMFilterView.swift in Sources */,
 				1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */,
+				DC94ED592ADFDA540052AD6E /* TextAreaModifier.swift in Sources */,
 				1DD969A12ACFFD9A000AD7D2 /* AddDesignerDataView.swift in Sources */,
 				9615C78C2AD6A2FE00DD4F37 /* DMReviewView.swift in Sources */,
 			);

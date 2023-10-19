@@ -11,10 +11,9 @@ import FirebaseFirestore
 
 struct CMHomeCell: View {
     var post: Post
-    @EnvironmentObject var consultationViewModel: ConsultationViewModel
-    /// 상담하기 버튼 채팅방 시트 표출 변수
-    @State private var showChattingRoom = false
+    
     @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var consultationViewModel: ConsultationViewModel
     @StateObject private var viewModel = CMHomeCellViewModel()
     
     /// 이미지의 수를 판단할 수 있는 변수
@@ -23,43 +22,56 @@ struct CMHomeCell: View {
     @State private var shouldShowMoreText: Bool = false
     /// 이미지를 두 번 연속 눌렀을 때 나오는 하트 이미지 변수
     @State private var showHeartImage: Bool = false
+    /// 상담하기 버튼 채팅방 시트 표출 변수
+    @State private var showChattingRoom = false
     
     private let imageDimension: CGFloat = (UIScreen.main.bounds.width) - 10
     
     var body: some View {
         VStack {
             // MARK: - Post Header
-            HStack {
-                // 디자이너 프로필 이미지
-                if let imageURLString = viewModel.designerImage {
-                    AsyncImage(url: URL(string: "\(imageURLString)")) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(maxWidth: 50, maxHeight: 50)
-                            .clipShape(Circle())
-                    } placeholder: {
-                        ProgressView()
-                    }
-                } else {
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(maxWidth: 50, maxHeight: 50)
-                        .clipShape(Circle())
-                        .foregroundStyle(.gray)
+            if let designer = viewModel.designer {
+                NavigationLink(destination: CMDesignerProfileView(designer: designer)) {
+                    HStack {
+                        // 디자이너 프로필 이미지
+                        if let imageURLString = designer.imageURLString {
+                            AsyncImage(url: URL(string: "\(imageURLString)")) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(maxWidth: 50, maxHeight: 50)
+                                    .clipShape(Circle())
+                            } placeholder: {
+                                Image(systemName: "person.circle")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(maxWidth: 50, maxHeight: 50)
+                                    .clipShape(Circle())
+                                    .foregroundStyle(.gray)
+                            }
+                        } else {
+                            Image(systemName: "person.circle")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(maxWidth: 50, maxHeight: 50)
+                                .clipShape(Circle())
+                                .foregroundStyle(.gray)
 
+                        }
+                        // 디자이너 아이디 & 디자이너 근무 지점
+                        VStack(alignment: .leading) {
+                            Text(designer.name)
+                                .foregroundStyle(Color.mainColor)
+                            Text(post.location)
+                                .font(.callout)
+                                .foregroundStyle(.gray)
+                        }
+                        Spacer()
+                    }
+                    .padding(.horizontal)
                 }
-                // 디자이너 아이디 & 디자이너 근무 지점
-                VStack(alignment: .leading) {
-                    Text(viewModel.designerName ?? "디자이너 이름")
-                    Text(post.location)
-                        .font(.callout)
-                        .foregroundStyle(.gray)
-                }
-                Spacer()
             }
-            .padding(.horizontal)
+            
             
             // MARK: - Post Image
             // 업로드한 이미지의 수가 1장일 경우와 1장 이상일 경우 분리
@@ -131,7 +143,7 @@ struct CMHomeCell: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 25, height: 25)
-                        .foregroundStyle(viewModel.isLiked ? .red : .black)
+                        .foregroundStyle(viewModel.isLiked ? Color.subColor : Color.mainColor)
                 })
                 Spacer()
                 // 상담하기 Button
@@ -143,10 +155,10 @@ struct CMHomeCell: View {
                         .padding(.vertical, 7)
                         .background {
                             Capsule(style: .continuous)
-                                .stroke(.black.opacity(0.5), lineWidth: 1)
+                                .stroke(Color.mainColor.opacity(0.5), lineWidth: 1)
                         }
                 })
-                .foregroundColor(.black)
+                .foregroundColor(Color.mainColor)
             }
             .padding(.horizontal)
             
@@ -154,17 +166,26 @@ struct CMHomeCell: View {
             // 게시글의 텍스트 제한이 없기 때문에 게시글이 방대해질 경우를 대비하여 더보기 설정
             HStack {
                 if shouldShowMoreText || post.description?.count ?? 0 <= 60 {
-                    Text("\(viewModel.designerName ?? "디자이너 이름") ").fontWeight(.semibold) + Text(post.description ?? "")
+                    Text("\(viewModel.designer?.name ?? "디자이너 이름") ").fontWeight(.semibold) + Text(post.description ?? "")
                 } else {
-                    Text("\(viewModel.designerName ?? "디자이너 이름") ").fontWeight(.semibold) + Text(post.description?.prefix(60) ?? "") + Text("...더보기")
+                    Text("\(viewModel.designer?.name ?? "디자이너 이름") ").fontWeight(.semibold) + Text(post.description?.prefix(60) ?? "") + Text("...더보기")
                     
                 }
                 Spacer()
             }
+            .foregroundStyle(Color.mainColor)
             .padding(.horizontal)
             .onTapGesture {
                 shouldShowMoreText.toggle()
             }
+            
+            HStack {
+                Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일", from: post.timestamp))")
+                    .font(.footnote)
+                    .foregroundStyle(.gray)
+                Spacer()
+            }
+            .padding(.horizontal)
         }
         .padding(.bottom)
         .overlay( // 이미지를 2번 연속 눌렀을 경우 이미지 위에 하트 이미지가 뜨도록 설정
@@ -174,7 +195,7 @@ struct CMHomeCell: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 50, height: 50)
-                        .foregroundStyle(.red)
+                        .foregroundStyle(Color.subColor)
                         .padding()
                         .zIndex(1) // 메시지를 이미지 위에 배치
                 }
@@ -202,5 +223,6 @@ struct CMHomeCell: View {
 
 #Preview {
     CMHomeCell(post: Post(id: "1", designerID: "디자이너 이름", location: "디자이너 근무 지점", title: "게시물 제목", description: "게시물 설명", photos: [Photo(id: "1", imageURL: "https://example.com/image1.jpg"), Photo(id: "2", imageURL: "https://example.com/image2.jpg")], comments: 0, timestamp: "타임스탬프", hairCategory: .Cut, price: 15000))
+
         .environmentObject(ConsultationViewModel())
 }

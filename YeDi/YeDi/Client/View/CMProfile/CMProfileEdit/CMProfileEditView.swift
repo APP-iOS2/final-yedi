@@ -110,7 +110,7 @@ struct CMProfileEditView: View {
                     )
                     
                     Task {
-                        await profileViewModel.updateClientProfile(userAuth: userAuth, newClient: newClient)
+                        await profileViewModel.updateClientProfile(userAuth: userAuth, client: newClient)
                         dismiss()
                     }
                 }

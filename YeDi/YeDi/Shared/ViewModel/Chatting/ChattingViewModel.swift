@@ -206,6 +206,7 @@ class ChattingViewModel: ObservableObject {
                let title = docData["title"] as? String,
                let description = docData["description"] as? String,
                let hairCategory = docData["hairCategory"] as? HairCategory,
+
                let price = docData["price"] as? Int,
                let photosDataArray = docData["photos"] as? [[String:Any]] {
                 
