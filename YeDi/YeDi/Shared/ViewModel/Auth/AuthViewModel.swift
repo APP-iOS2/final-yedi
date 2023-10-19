@@ -178,15 +178,8 @@ final class UserAuth: ObservableObject {
                     "birthDate": designer.birthDate,
                     "gender": designer.gender,
                     "rank": designer.rank.rawValue,
-                    "designerUID": user.uid
-                ]
-                
-                self.storeService.collection("designers")
-                    .document(user.uid)
-                    .setData(data, merge: true)
-                
-                let shopData : [String: Any] = [
-                    "id": shop.id,
+                    "designerUID": user.uid,
+                    //MARK: shop information
                     "shopName" : shop.shopName,
                     "headAddress" : shop.headAddress,
                     "subAddress" : shop.subAddress,
@@ -200,9 +193,9 @@ final class UserAuth: ObservableObject {
                     "closedDays" : shop.closedDays
                 ]
                 
-                self.storeService.collection("designers").document(user.uid).collection("shop")
-                    .document(shop.id)
-                    .setData(shopData, merge: true)
+                self.storeService.collection("designers")
+                    .document(user.uid)
+                    .setData(data, merge: true)
                 
                 self.userSession = nil
                 self.isLogin = false
