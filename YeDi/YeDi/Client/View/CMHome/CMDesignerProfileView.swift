@@ -25,30 +25,20 @@ struct CMDesignerProfileView: View {
     private let imageDimension: CGFloat = (UIScreen.main.bounds.width / 3) - 1
     
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(designer.name)
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Color.mainColor)
-                    Text(designer.description ?? "")
-                        .foregroundStyle(.gray)
-                        .lineLimit(1)
-                }
-                Spacer()
+        VStack {
+            VStack {
                 if let imageURLString = designer.imageURLString {
                     AsyncImage(url: URL(string: "\(imageURLString)")) { image in
                         image
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                            .frame(maxWidth: 50, maxHeight: 50)
+                            .frame(maxWidth: 100, maxHeight: 100)
                             .clipShape(Circle())
                     } placeholder: {
                         Image(systemName: "person.circle")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                            .frame(maxWidth: 50, maxHeight: 50)
+                            .frame(maxWidth: 100, maxHeight: 100)
                             .clipShape(Circle())
                             .foregroundStyle(.gray)
                     }
@@ -56,34 +46,40 @@ struct CMDesignerProfileView: View {
                     Image(systemName: "person.circle")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(maxWidth: 50, maxHeight: 50)
+                        .frame(maxWidth: 100, maxHeight: 100)
                         .clipShape(Circle())
                         .foregroundStyle(.gray)
                     
                 }
-            }
-            .padding()
-            
-            HStack {
-                Text("\(designer.followerCount) 팔로워")
-                    .foregroundStyle(Color.mainColor)
-                Spacer()
+                Text(designer.name)
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding(.top,10)
+                Text(designer.description ?? "")
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .font(.callout)
+                    .fontWeight(.light)
+                    .padding(.horizontal)
+                Text("팔로워 \(formattedFollowerCount()) · 게시물 \(designerPosts.count)")
+                    .fontWeight(.medium)
+                    .padding(.vertical,10)
                 Button {
                     Task {
                         await viewModel.toggleFollow(designerUid: designer.designerUID)
                     }
                 } label: {
                     Text("\(viewModel.isFollowing ? "팔로잉" : "팔로우")")
-                        .foregroundStyle(Color.mainColor)
+                        .foregroundStyle(viewModel.isFollowing ? Color.primaryLabel :  .white)
                         .padding(.horizontal, 15)
                         .padding(.vertical, 7)
                         .background {
                             Capsule(style: .continuous)
-                                .stroke(Color.mainColor.opacity(0.5), lineWidth: 1)
+                                .fill(viewModel.isFollowing ? Color.mainColor : Color.subColor)
                         }
                 }
             }
-            .padding(.horizontal)
+            .padding(.top)
             
             VStack {
                 VStack(alignment: .leading) {
@@ -99,40 +95,49 @@ struct CMDesignerProfileView: View {
                 }
                 .padding()
             }
-            .background(.gray.opacity(0.2))
+            .background(Color.brightGrayColor)
             .padding()
             
-            VStack {
-                HStack {
-                    Text("이 디자이너의 게시물")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Color.mainColor)
-                    Spacer()
-                }
-                Divider()
-                if designerPosts.isEmpty {
-                    Text("업로드된 게시물이 없습니다")
+            if designerPosts.isEmpty {
+                VStack {
+                    HStack {
+                        Text("이 디자이너의 게시물")
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Color.mainColor)
+                        Spacer()
+                    }
+                    Divider()
+                    Text("업로드된 게시물이 없습니다.")
                         .foregroundStyle(Color.mainColor)
                         .padding()
-                } else {
+                }
+                .padding(.horizontal)
+            } else {
+                VStack {
+                    HStack {
+                        Text("이 디자이너의 게시물")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Color.mainColor)
+                        Spacer()
+                        NavigationLink(destination: CMStyleDetailView(designer: designer)) {
+                            Text("스타일 전체보기")
+                                .foregroundStyle(Color.mainColor)
+                        }
+                    }
+                    Divider()
                     LazyVGrid(columns: gridItems, spacing: 1) {
                         ForEach(designerPosts.prefix(6), id: \.id) { post in
                             DMAsyncImage(url: post.photos[0].imageURL, placeholder: Image(systemName: "photo"))
                                 .scaledToFill()
                                 .frame(width: imageDimension, height: imageDimension)
                                 .clipped()
-                            
                         }
-                    }
-                    NavigationLink(destination: CMStyleDetailView(designer: designer)) {
-                        Text("스타일 전체보기")
-                            .foregroundStyle(Color.mainColor)
                     }
                     .padding()
                 }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
         }
         .onAppear {
                 Task {
@@ -167,8 +172,25 @@ struct CMDesignerProfileView: View {
                 }
             }
     }
+    
+    func formattedFollowerCount() -> String {
+        if designer.followerCount < 10_000 {
+            return "\(designer.followerCount)"
+        } else if designer.followerCount < 1_000_000 {
+            let followers = Double(designer.followerCount) / 10_000.0
+            if followers.truncatingRemainder(dividingBy: 1) == 0 {
+                return "\(Int(followers))만"
+            } else {
+                return "\(followers)만"
+            }
+        } else {
+            let millions = designer.followerCount / 10_000
+            return "\(millions)만"
+        }
+    }
+
 }
 
 #Preview {
-    CMDesignerProfileView(designer: Designer(name: "가나다", email: "", phoneNumber: "", designerScore: 0, reviewCount: 0, followerCount: 0, skill: [], chatRooms: [], birthDate: "", gender: "", rank: .Owner, designerUID: ""))
+    CMDesignerProfileView(designer: Designer(name: "양파쿵야", email: "", phoneNumber: "", designerScore: 0, reviewCount: 0, followerCount: 15430020, skill: [], chatRooms: [], birthDate: "", gender: "", rank: .Owner, designerUID: ""))
 }

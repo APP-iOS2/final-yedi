@@ -21,7 +21,7 @@ struct CMReviewGiveScoreView: View {
                             reviewScore = index
                         }
                         .font(.title3)
-                        .foregroundStyle(index <= reviewScore ? .yellow : Color(white: 0.9))
+                        .foregroundStyle(index <= reviewScore ? .yellow : Color.systemFill)
                 }
                 Spacer()
             }
@@ -35,6 +35,7 @@ struct CMReviewGiveScoreView: View {
             }
             Divider()
                 .frame(width: 360)
+                .background(Color.systemFill)
                 .padding(.bottom, 10)
         }
     }

@@ -49,7 +49,7 @@ struct CMSettingsView: View {
                 } label: {
                     Text("로그아웃")
                 }
-                .buttonModifier(.black)
+                .buttonModifier(.mainColor)
                 
                 Button(role: .destructive) {
                     isShowingDeleteClientAccountAlert.toggle()
