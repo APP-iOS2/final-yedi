@@ -175,3 +175,10 @@ struct BreakTime: Codable {
     var designerID: String
     var breakTime: [String]
 }
+
+struct Reservation: Codable, Identifiable {
+    @DocumentID var id: String?
+    var designerID: String
+    var dmDate: Date
+    var desciption: String
+}

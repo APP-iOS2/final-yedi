@@ -105,7 +105,6 @@
 		9615C78C2AD6A2FE00DD4F37 /* DMReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9615C78B2AD6A2FD00DD4F37 /* DMReviewView.swift */; };
 		9615C78E2AD6A30A00DD4F37 /* DMReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9615C78D2AD6A30A00DD4F37 /* DMReviewDetailView.swift */; };
 		9615C7902AD6A31D00DD4F37 /* DMReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9615C78F2AD6A31D00DD4F37 /* DMReviewViewModel.swift */; };
-		965ECCE52AD9241600BC0D41 /* taskdata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965ECCE42AD9241600BC0D41 /* taskdata.swift */; };
 		965ECCF02AD93EEB00BC0D41 /* DMDesignerInfoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965ECCED2AD93EEB00BC0D41 /* DMDesignerInfoEditView.swift */; };
 		965ECCF12AD93EEB00BC0D41 /* DMProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965ECCEE2AD93EEB00BC0D41 /* DMProfileEditView.swift */; };
 		965ECCF22AD93EEB00BC0D41 /* DMAccountInfoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965ECCEF2AD93EEB00BC0D41 /* DMAccountInfoEditView.swift */; };
@@ -117,6 +116,7 @@
 		96BF382B2AE01217000DC15D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96BF382A2AE01217000DC15D /* GoogleService-Info.plist */; };
 		96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */; };
 		96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */; };
+		96D8753D2AE0CEED00F35226 /* DMReservationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D8753C2AE0CEED00F35226 /* DMReservationVM.swift */; };
 		96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F637DA2AC2AA1200EF74FF /* ReservationView.swift */; };
 		96F637DF2AC2BCFD00EF74FF /* ReservationCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */; };
 		DC7695462AD0888800D2FB69 /* AuthHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695422AD0888800D2FB69 /* AuthHomeView.swift */; };
@@ -230,7 +230,6 @@
 		9615C78B2AD6A2FD00DD4F37 /* DMReviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMReviewView.swift; sourceTree = "<group>"; };
 		9615C78D2AD6A30A00DD4F37 /* DMReviewDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMReviewDetailView.swift; sourceTree = "<group>"; };
 		9615C78F2AD6A31D00DD4F37 /* DMReviewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMReviewViewModel.swift; sourceTree = "<group>"; };
-		965ECCE42AD9241600BC0D41 /* taskdata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = taskdata.swift; sourceTree = "<group>"; };
 		965ECCED2AD93EEB00BC0D41 /* DMDesignerInfoEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMDesignerInfoEditView.swift; sourceTree = "<group>"; };
 		965ECCEE2AD93EEB00BC0D41 /* DMProfileEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMProfileEditView.swift; sourceTree = "<group>"; };
 		965ECCEF2AD93EEB00BC0D41 /* DMAccountInfoEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMAccountInfoEditView.swift; sourceTree = "<group>"; };
@@ -241,6 +240,7 @@
 		96BF382A2AE01217000DC15D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetail.swift; sourceTree = "<group>"; };
 		96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WkDaySettingDetail.swift; sourceTree = "<group>"; };
+		96D8753C2AE0CEED00F35226 /* DMReservationVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMReservationVM.swift; sourceTree = "<group>"; };
 		96F637DA2AC2AA1200EF74FF /* ReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationView.swift; sourceTree = "<group>"; };
 		96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCellView.swift; sourceTree = "<group>"; };
 		DC7695422AD0888800D2FB69 /* AuthHomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthHomeView.swift; sourceTree = "<group>"; };
@@ -558,6 +558,7 @@
 				9615C78F2AD6A31D00DD4F37 /* DMReviewViewModel.swift */,
 				9691C5D32ADE554300434377 /* ClosedDaySettingVM.swift */,
 				9691C5D52ADE554A00434377 /* BreakTimeSettingVM.swift */,
+				96D8753C2AE0CEED00F35226 /* DMReservationVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -599,7 +600,6 @@
 				9666A21A2ACDBB6D0081C711 /* TimeSettingDetail.swift */,
 				9691C5D12ADE552100434377 /* CustomCalender.swift */,
 				9615C7892AD6A1D600DD4F37 /* HCustomCalendar.swift */,
-				965ECCE42AD9241600BC0D41 /* taskdata.swift */,
 			);
 			path = DMReservationView;
 			sourceTree = "<group>";
@@ -859,6 +859,7 @@
 				3BCF2C792ACD4248009C18C2 /* CMReservationView.swift in Sources */,
 				96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */,
 				96F637DF2AC2BCFD00EF74FF /* ReservationCellView.swift in Sources */,
+				96D8753D2AE0CEED00F35226 /* DMReservationVM.swift in Sources */,
 				1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */,
 				3BA862E12ADF96D500385507 /* DMShopEditView.swift in Sources */,
 				097EAD332AD03FC70037B848 /* CMLikedPostListViewModel.swift in Sources */,
@@ -890,7 +891,6 @@
 				3BAB00EB2ACD92D6009053A4 /* DMAccount.swift in Sources */,
 				3BCF2C7D2ACD4248009C18C2 /* CMHomeCell.swift in Sources */,
 				3BCF2C732ACD4248009C18C2 /* CMUpcomingReservationView.swift in Sources */,
-				965ECCE52AD9241600BC0D41 /* taskdata.swift in Sources */,
 				1D63595D2ACEED0A00FBD37B /* DMProfileViewModel.swift in Sources */,
 				DC7695472AD0888800D2FB69 /* AuthModifier.swift in Sources */,
 				1D63595D2ACEED0A00FBD37B /* DMProfileViewModel.swift in Sources */,
