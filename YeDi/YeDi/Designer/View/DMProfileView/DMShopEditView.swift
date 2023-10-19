@@ -94,10 +94,18 @@ struct DMShopEditView: View {
             .padding(.horizontal)
             .toolbar(content: {
                 ToolbarItemGroup(placement: .topBarLeading) {
-                    Button(role: .destructive, action: {
+                    Button(role: .cancel, action: {
                         convertDateString()
                     }, label: {
                         Image(systemName: "xmark")
+                            .foregroundStyle(colorScheme == .light ? .black : .white)
+                    })
+                }
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button(role: .destructive, action: {
+                        convertDateString()
+                    }, label: {
+                       Text("완료")
                             .foregroundStyle(colorScheme == .light ? .black : .white)
                     })
                 }
