@@ -11,9 +11,7 @@ import Firebase
 class BreakTimeSetting: ObservableObject {
     
     @Published var breakTimes = [BreakTime]()
-    @Published var hour: Int = 12
-    @Published var changeToHour: Bool = false
-    @Published var symbol: String = "AM"
+    
     /// - firestore에 시간 데이터를 저장한다.
     func addTimes(_ designerID: String, _ breakTime: [String]) {
        
@@ -39,7 +37,8 @@ class BreakTimeSetting: ObservableObject {
                     DispatchQueue.main.async {
                         self.breakTimes = snapshot.documents.map { d in
                             return BreakTime(designerID: d["designerID"] as? String ?? "[디자이너 없음]",
-                                             breakTime: d["breakTime"] as? [String] ?? ["[시간을 설정하세요]"])
+                                             selectedTime: d["selectedTime"] as? [String] ?? ["[시간을 설정하세요]"], 
+                                             timePeriod: d["timePeriod"] as? TimePeriod ?? .am)
                         }
                     }
                 }
@@ -49,3 +48,5 @@ class BreakTimeSetting: ObservableObject {
         }
     }
 }
+
+
