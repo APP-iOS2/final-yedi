@@ -10,8 +10,6 @@ import Firebase
 import FirebaseFirestore
 
 struct CMStyleDetailView: View {
-    @Environment(\.dismiss) private var dismiss
-    
     var designer: Designer
     @State private var designerPosts: [Post] = []
     
@@ -38,6 +36,7 @@ struct CMStyleDetailView: View {
                 }
             }
         }
+        .navigationTitle("\(designer.name)의 style")
         .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .tabBar)
         .toolbar {
@@ -46,9 +45,6 @@ struct CMStyleDetailView: View {
             }
         }
         .task { await fetchDesignerPosts() }
-//        .onAppear {
-//            fetchDesignerPosts()
-//        }
     }
     
     // Firestore에서 디자이너의 게시물 데이터를 가져오는 함수

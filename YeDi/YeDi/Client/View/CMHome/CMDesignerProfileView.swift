@@ -10,8 +10,7 @@ import Firebase
 import FirebaseFirestore
 
 struct CMDesignerProfileView: View {
-//    @Environment(\.) private var dismiss
-
+    
     var designer: Designer
     @State private var designerPosts: [Post] = []
     @StateObject var viewModel = PostDetailViewModel()
@@ -27,7 +26,6 @@ struct CMDesignerProfileView: View {
     private let imageDimension: CGFloat = (UIScreen.main.bounds.width / 3) - 1
     
     var body: some View {
-    
         ScrollView {
             VStack {
                 VStack {
@@ -145,7 +143,6 @@ struct CMDesignerProfileView: View {
                     }
                 }
             }
-//            .navigationBarBackButtonHidden(true)
         }
         .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .tabBar)
@@ -154,27 +151,16 @@ struct CMDesignerProfileView: View {
                 DismissButton(color: nil, action: {})
             }
         }
-//        .toolbar {
-//            ToolbarItem(placement: .navigationBarLeading) {
-//                Image(systemName: "chevron.left")
-//                    .imageScale(.large)
-//                    .onTapGesture { }
-//            }
-            
-//            DismissButton(dismiss: <#T##arg#>, color: <#T##Color?#>, action: <#T##() -> Void#>)
-//        }
-        .onAppear {
-                Task {
-                    await viewModel.isFollowed(designerUid: designer.designerUID)
-                }
-            fetchDesignerPosts()
+        .task {
+            await viewModel.isFollowed(designerUid: designer.designerUID)
+            await fetchDesignerPosts()
         }
         
         Spacer()
     }
     
     // Firestore에서 디자이너의 게시물 데이터를 가져오는 함수
-    func fetchDesignerPosts() {
+    func fetchDesignerPosts() async {
         db.collection("posts")
             .whereField("designerID", isEqualTo: designer.designerUID)
             .getDocuments { snapshot, error in
@@ -212,7 +198,7 @@ struct CMDesignerProfileView: View {
             return "\(millions)만"
         }
     }
-
+    
 }
 
 #Preview {

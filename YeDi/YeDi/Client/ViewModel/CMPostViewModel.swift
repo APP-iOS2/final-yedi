@@ -19,30 +19,30 @@ class CMPostViewModel: ObservableObject {
     
     // 모든 게시물 불러오기 (페이지네이션)
     func fetchPosts() async {
-            var query = dbRef
-                .order(by: "timestamp", descending: true)
-                .limit(to: pageSize)  // 한 페이지에 표시할 게시물 수
-            
-            if let lastDocument = self.lastDocument {
-                query = query.start(afterDocument: lastDocument)
-            }
-            do {
-                let snapshot = try await query.getDocuments()
-                
-                if !snapshot.isEmpty {
-                    self.posts.append(contentsOf:
-                        snapshot.documents.compactMap { document in
-                            try? document.data(as: Post.self)
-                        }
-                    )
-                    self.lastDocument = snapshot.documents.last
-                    print("Fetched page. Total count:", self.posts.count)
-                }
-                
-            } catch {
-               print("Error fetching posts: \(error)")
-           }
+        var query = dbRef
+            .order(by: "timestamp", descending: true)
+            .limit(to: pageSize)  // 한 페이지에 표시할 게시물 수
+        
+        if let lastDocument = self.lastDocument {
+            query = query.start(afterDocument: lastDocument)
         }
+        do {
+            
+            let snapshot = try await query.getDocuments()
+            
+            if !snapshot.isEmpty {
+                self.posts.append(contentsOf: snapshot.documents.compactMap { document in
+                    try? document.data(as: Post.self)
+                })
+               
+                self.lastDocument = snapshot.documents.last
+                print("Fetched page. Total count:", self.posts.count)
+            }
+            
+        } catch {
+            print("Error fetching posts: \(error)")
+        }
+    }
     
     // 클라이언트가 팔로우한 디자이너의 ID 목록 불러오기
     func getFollowedDesignerIDs(forClientID clientID: String, completion: @escaping ([String]?) -> Void) {

@@ -14,6 +14,10 @@ class CMHomeCellViewModel: ObservableObject {
     @Published var isLiked: Bool = false
     @Published var designer: Designer?
     
+    @Published var showHeartImage: Bool = false
+    @Published var selectedImageIndex: Int = 0
+    @Published var shouldShowMoreText: Bool = false
+    
     // 게시물을 올린 디자이너의 정보 불러오기
     func fetchDesignerInfo(post: Post) async {
         let db = Firestore.firestore()
