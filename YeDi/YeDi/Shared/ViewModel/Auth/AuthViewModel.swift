@@ -48,8 +48,7 @@ final class UserAuth: ObservableObject {
                             return
                         }
                     } else {
-                        // 사용자 데이터가 서버에 없으면 사용자 정보 저장하지 않음
-                        self?.signOut() // 로그아웃 처리 예시
+                        self?.signOut()
                     }
                 }
             } else {
