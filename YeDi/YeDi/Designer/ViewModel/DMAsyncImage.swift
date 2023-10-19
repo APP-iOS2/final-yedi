@@ -21,6 +21,7 @@ class ImageLoader: ObservableObject {
     var cancellable: AnyCancellable?
     
     // MARK: - 이미지 로딩 메소드
+    @MainActor
     func load(from url: String) {
         // 메모리 캐시에서 이미지를 먼저 검색
         
@@ -38,16 +39,17 @@ class ImageLoader: ObservableObject {
         cancellable = URLSession.shared.dataTaskPublisher(for: imageURL)
             .map { UIImage(data: $0.data) }  // 받은 데이터를 UIImage로 변환
             .replaceError(with: nil)  // 에러 처리
-            .receive(on: DispatchQueue.main)  // 요청 완료 후 메인 스레드에서 처리
-            .sink { [weak self] in
+            .receive(on: DispatchQueue.global(qos: .userInteractive))  // 요청 완료 후 글로벌 DispatchQueue에서 실행
+            .sink { [self] in
                 // 로드된 이미지를 캐시에 저장
                 if let image = $0 {
                     DispatchQueue.global(qos: .default).async {
-                        self?.imageCache.setObject(image, forKey: url as NSString)
+                        let imageCache = self.imageCache
+                        imageCache.setObject(image, forKey: url as NSString)
                     }
                 }
                 // 이미지를 화면에 표시
-                self?.image = $0
+                self.image = $0
             }
     }
 }
