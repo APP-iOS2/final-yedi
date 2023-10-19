@@ -32,20 +32,71 @@ final class UserAuth: ObservableObject {
     func fetchUser() {
         auth.addStateDidChangeListener { [weak self] _, user in
             if let user = user {
-                self?.userSession = user
-                self?.userType = self?.userType
-                self?.isLogin = true
-                
-                switch self?.userType {
-                case .client:
-                    self?.currentClientID = user.uid
-                case .designer:
-                    self?.currentDesignerID = user.uid
-                case nil:
-                    return
+                self?.checkIfUserExistsInFirestore(user: user) { exists in
+                    if exists {
+                        // 사용자 데이터가 서버에 존재하면 사용자 정보 저장
+                        self?.userSession = user
+                        self?.userType = self?.userType
+                        self?.isLogin = true
+                        
+                        switch self?.userType {
+                        case .client:
+                            self?.currentClientID = user.uid
+                        case .designer:
+                            self?.currentDesignerID = user.uid
+                        case nil:
+                            return
+                        }
+                    } else {
+                        self?.signOut()
+                    }
                 }
             } else {
+                self?.isLogin = false
                 self?.userSession = nil
+                self?.currentClientID = nil
+                self?.currentDesignerID = nil
+            }
+        }
+    }
+    
+    func checkIfUserExistsInFirestore(user: User, completion: @escaping (Bool) -> Void) {
+        let clientCollection = storeService.collection("clients")
+        let designerCollection = storeService.collection("designers")
+        
+        // clients collection에서 사용자 데이터를 확인할 함수
+        func checkClientCollection(completion: @escaping (Bool) -> Void) {
+            clientCollection.document(user.uid).getDocument { document, error in
+                if let document = document, document.exists {
+                    // 사용자 데이터가 clients collection에 존재
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            }
+        }
+        
+        // designers collection에서 사용자 데이터를 확인할 함수
+        func checkDesignerCollection(completion: @escaping (Bool) -> Void) {
+            designerCollection.document(user.uid).getDocument { document, error in
+                if let document = document, document.exists {
+                    // 사용자 데이터가 designers collection에 존재
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            }
+        }
+        
+        // 두 컬렉션에서 사용자 데이터 확인
+        checkClientCollection { existsInClientCollection in
+            checkDesignerCollection { existsInDesignerCollection in
+                // 두 컬렉션 모두 사용자 데이터가 존재하면 completion(true) 호출
+                if existsInClientCollection && existsInDesignerCollection {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
             }
         }
     }
@@ -178,15 +229,8 @@ final class UserAuth: ObservableObject {
                     "birthDate": designer.birthDate,
                     "gender": designer.gender,
                     "rank": designer.rank.rawValue,
-                    "designerUID": user.uid
-                ]
-                
-                self.storeService.collection("designers")
-                    .document(user.uid)
-                    .setData(data, merge: true)
-                
-                let shopData : [String: Any] = [
-                    "id": shop.id,
+                    "designerUID": user.uid,
+                    //MARK: shop information
                     "shopName" : shop.shopName,
                     "headAddress" : shop.headAddress,
                     "subAddress" : shop.subAddress,
@@ -200,9 +244,9 @@ final class UserAuth: ObservableObject {
                     "closedDays" : shop.closedDays
                 ]
                 
-                self.storeService.collection("designers").document(user.uid).collection("shop")
-                    .document(shop.id)
-                    .setData(shopData, merge: true)
+                self.storeService.collection("designers")
+                    .document(user.uid)
+                    .setData(data, merge: true)
                 
                 self.userSession = nil
                 self.isLogin = false

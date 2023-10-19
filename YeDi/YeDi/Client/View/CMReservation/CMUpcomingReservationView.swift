@@ -18,8 +18,8 @@ struct CMUpcomingReservationView: View {
             } label: {
                 Text("내 주변 디자이너 찾아보기")
             }
-            .buttonStyle(.borderedProminent)
-            .tint(.black)
+            .buttonModifier(.mainColor)
+            .padding([.leading, .trailing], 50)
             Spacer()
         }
     }

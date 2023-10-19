@@ -28,7 +28,7 @@ struct CMSegmentedControl: View {
                         VStack {
                             Text(segment)
                                 .fontWeight(selectedSegment == segment ? .semibold : .medium)
-                                .foregroundStyle(.black)
+                                .foregroundStyle(Color(UIColor.label))
                             Rectangle()
                                 .fill(selectedSegment == segment ? .black : .white)
                                 .frame(width: 120, height: 3)
