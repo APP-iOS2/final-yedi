@@ -77,11 +77,11 @@ struct HCustomCalendar: View {
                         if colorScheme == .light {
                             calendar.isDate(selectedDate, equalTo: date, toGranularity: .day) ? Color.green : Color.clear
                         } else if colorScheme == .dark {
-                            calendar.isDate(selectedDate, equalTo: date, toGranularity: .day) ? Color.white : Color.clear
+                            calendar.isDate(selectedDate, equalTo: date, toGranularity: .day) ? Color.blue : Color.white
                         }
                     })
                     .cornerRadius(8)
-                    .foregroundColor(calendar.isDate(selectedDate, equalTo: date, toGranularity: .day) ? .black : .white)
+                    .foregroundColor( calendar.isDate(selectedDate, equalTo: date, toGranularity: .day) ? .white : .black)
                     .onTapGesture {
                         selectedDate = date
                     }
@@ -91,7 +91,7 @@ struct HCustomCalendar: View {
     }
     
     // MARK: - 날짜 블러 뷰
-    private var blurView: some View {
+     private var blurView: some View {
         HStack {
             LinearGradient(
                 gradient: Gradient(
@@ -125,7 +125,7 @@ struct HCustomCalendar: View {
 }
 
 // MARK: - 로직
-private extension HCustomCalendar {
+    extension HCustomCalendar {
     /// 월 표시
     func monthTitle(from date: Date) -> String {
         let dateFormatter = DateFormatter()
