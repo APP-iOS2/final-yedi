@@ -12,26 +12,71 @@ import FirebaseFirestore
 struct CMSearchView: View {
     @ObservedObject var viewModel = CMSearchViewModel()
     
+    private let gridItems: [GridItem] = [
+        .init(.flexible(), spacing: 1),
+        .init(.flexible(), spacing: 1),
+        .init(.flexible(), spacing: 1)
+    ]
+    
+    private let imageDimension: CGFloat = (UIScreen.main.bounds.width / 3)
+    
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .trailing) {
-                TextField("디자이너를 검색해보세요.", text: $viewModel.searchText, onCommit: {
-                    viewModel.saveRecentSearch()
-                })
-                .textFieldModifier()
-                if !viewModel.searchText.isEmpty {
-                    Button(action: {
-                        viewModel.saveRecentSearch()
-                    }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.gray)
+            if !viewModel.isTextFieldActive {
+                ScrollView {
+                    HStack {
+                        TextField("디자이너를 검색해보세요.", text: $viewModel.searchText, onCommit: {
+                            viewModel.saveRecentSearch()
+                        })
+                        .textFieldModifier()
+                        .onTapGesture {
+                            viewModel.isTextFieldActive = true
+                        }
                     }
-                    .padding(.horizontal)
+                    .padding()
+                    
+                    
+                    LazyVGrid(columns: gridItems, spacing: 1) {
+                        ForEach(viewModel.posts, id: \.id) { post in
+                            NavigationLink(destination: CMFeedDetailView(post: post)) {
+                                DMAsyncImage(url: post.photos[0].imageURL, placeholder: Image(systemName: "photo"))
+                                    .scaledToFill()
+                                    .frame(width: imageDimension, height: imageDimension)
+                                    .clipped()
+                            }
+                        }
+                    }
                 }
             }
-            .padding()
             
-            if viewModel.searchText.isEmpty && viewModel.showRecentSearches {
+            if viewModel.isTextFieldActive {
+                HStack {
+                    ZStack(alignment: .trailing) {
+                        TextField("디자이너를 검색해보세요.", text: $viewModel.searchText, onCommit: {
+                            viewModel.saveRecentSearch()
+                        })
+                        .textFieldModifier()
+                        if !viewModel.searchText.isEmpty {
+                            Button(action: {
+                                viewModel.saveRecentSearch()
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.gray)
+                            }
+                            .padding(.horizontal)
+                        }
+                    }
+                    Button(action: {
+                        viewModel.searchText = ""
+                        viewModel.isTextFieldActive = false
+                    }) {
+                        Text("취소")
+                    }
+                }
+                .padding()
+            }
+            
+            if viewModel.isTextFieldActive && viewModel.searchText.isEmpty {
                 VStack(alignment: .leading) {
                     HStack {
                         Text("최근 검색어")
@@ -84,7 +129,7 @@ struct CMSearchView: View {
                 }
             }
             
-            if !viewModel.searchText.isEmpty {
+            if viewModel.isTextFieldActive && !viewModel.searchText.isEmpty {
                 if viewModel.filteredDesignerCount > 0 {
                     HStack {
                         Text("디자이너 (\(viewModel.filteredDesignerCount)건)")
@@ -119,7 +164,7 @@ struct CMSearchView: View {
                                             .frame(maxWidth: 50, maxHeight: 50)
                                             .clipShape(Circle())
                                             .foregroundStyle(Color.primaryLabel)
-
+                                        
                                     }
                                     VStack(alignment: .leading) {
                                         Text(designer.name)
@@ -147,6 +192,7 @@ struct CMSearchView: View {
         .onAppear {
             viewModel.loadRecentSearches()
             viewModel.loadData()
+            viewModel.loadPostData()
         }
     }
 }
