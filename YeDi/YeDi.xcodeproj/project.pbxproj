@@ -115,6 +115,7 @@
 		9691C5D22ADE552100434377 /* CustomCalender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9691C5D12ADE552100434377 /* CustomCalender.swift */; };
 		9691C5D42ADE554300434377 /* ClosedDaySettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9691C5D32ADE554300434377 /* ClosedDaySettingVM.swift */; };
 		9691C5D62ADE554A00434377 /* BreakTimeSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9691C5D52ADE554A00434377 /* BreakTimeSettingVM.swift */; };
+		96BF382B2AE01217000DC15D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96BF382A2AE01217000DC15D /* GoogleService-Info.plist */; };
 		96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */; };
 		96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */; };
 		96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F637DA2AC2AA1200EF74FF /* ReservationView.swift */; };
@@ -239,6 +240,7 @@
 		9691C5D12ADE552100434377 /* CustomCalender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCalender.swift; sourceTree = "<group>"; };
 		9691C5D32ADE554300434377 /* ClosedDaySettingVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClosedDaySettingVM.swift; sourceTree = "<group>"; };
 		9691C5D52ADE554A00434377 /* BreakTimeSettingVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BreakTimeSettingVM.swift; sourceTree = "<group>"; };
+		96BF382A2AE01217000DC15D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetail.swift; sourceTree = "<group>"; };
 		96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WkDaySettingDetail.swift; sourceTree = "<group>"; };
 		96F637DA2AC2AA1200EF74FF /* ReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationView.swift; sourceTree = "<group>"; };
@@ -636,6 +638,10 @@
 		63CD89AF2ABD85C300E70A56 /* YeDi */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+=======
+				96BF382A2AE01217000DC15D /* GoogleService-Info.plist */,
+>>>>>>> bcc36f6 (feat: Support darkmode of HCustomCalendar)
 				3BCF2C032ACD3E72009C18C2 /* Shared */,
 				3BCF2C362ACD4247009C18C2 /* Client */,
 				639DB6282AC10DED002692E5 /* Designer */,
@@ -793,8 +799,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */,
+				96BF382B2AE01217000DC15D /* GoogleService-Info.plist in Resources */,
 				63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */,
+<<<<<<< HEAD
 				2F0B733B2AE0E9B100868EF6 /* GoogleService-Info.plist in Resources */,
+=======
+>>>>>>> bcc36f6 (feat: Support darkmode of HCustomCalendar)
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
