@@ -9,17 +9,16 @@ import SwiftUI
 
 struct ChatRoomView: View {
     var chatRoomId: String
-//    var userProfile: ChatListUserInfo
     
     @StateObject var chattingVM = ChattingViewModel()
     @ObservedObject var chattingListRoomViewModel = ChattingListRoomViewModel()
     @EnvironmentObject var userAuth: UserAuth
-    @Environment(\.dismiss) var dismiss
     
     @State private var inputText: String = ""
     @State private var isShowingUtilityMenu: Bool = false
-    ///채팅창에 년/월/일을 따로 보여주는 텍스트를 위한 값 : 년/월/일 분기점
-    @State private var devideDate: String = ""
+    @State private var lastBubbleId: String = ""
+    
+    @FocusState private var inputTextIsFocused: Bool
     
     private var userId: String {
         switch userAuth.userType {
@@ -46,15 +45,26 @@ struct ChatRoomView: View {
     var body: some View {
         VStack(spacing: 0) {
             chatScroll
+            inputchatTextField
             if isShowingUtilityMenu {
                 ChatUtilityMenuView(chattingVM: chattingVM, userID: userId)
+                    .transition(.move(edge: .bottom))
             }
-            inputchatTextField
         }
         .onAppear {
             chattingVM.chatRoomId = chatRoomId
             chattingVM.fetchFirstChattingBubbles()
             chattingVM.fetchUserInfo(login: userAuth.userType!, chatRooms: chatRoomId)
+        }
+        .onChange(of: isShowingUtilityMenu) { _ in
+            if isShowingUtilityMenu {
+                hideKeyboard()
+            }
+        }
+        .onChange(of: inputTextIsFocused) { _ in
+            if inputTextIsFocused {
+                isShowingUtilityMenu = false
+            }
         }
         .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .tabBar)
@@ -67,19 +77,15 @@ struct ChatRoomView: View {
     
     private var toolbarProfileInfo: some View {
         HStack {
-            Button {
+            DismissButton(color: nil) {
                 chattingVM.removeListener()
-                dismiss()
-            } label: {
-                Image(systemName: "chevron.left")
-                    .foregroundStyle(.black)
             }
             HStack(alignment: .center) {
                 DMAsyncImage(url: userProfile.profileImageURLString, placeholder: Image(systemName: "person.circle.fill"))
                     .aspectRatio(contentMode: .fill)
                     .clipShape(Circle())
                     .frame(width: 30, height: 30)
-                    
+                
                 Text(userProfile.name)
                     .lineLimit(1)
             }
@@ -90,23 +96,46 @@ struct ChatRoomView: View {
         ScrollView {
             VStack{
                 if chattingVM.anyMoreChats {
-                Button {
-                    chattingVM.fetchMoreChattingBubble()
-                } label: {
-                    Text("지난 대화보기")
+                    ZStack {
+                        Divider()
+                            .background(Color.separator.opacity(0.8))
+                        
+                        VStack {
+                            Button {
+                                chattingVM.fetchMoreChattingBubble()
+                            } label: {
+                                Text("지난 대화 보기")
+                                    .font(.caption)
+                                    .foregroundStyle(Color.tertiaryLabel)
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 3)
+                                    .background {
+                                        Capsule()
+                                            .fill(Color.tertiarySystemBackground.opacity(0.5))
+                                    }
+                            }
+                        }
+                        .padding(.horizontal)
+                        .background(Color.secondarySystemBackground)
+                    }
+                    .padding(.vertical)
                 }
-            }
+                
                 ForEach(chattingVM.chattings) { chat in
                     var isMyBubble: Bool {
                         chat.sender == userId ? true : false
                     }
                     BubbleCell(chat: chat, isMyBubble: isMyBubble)
+                        .id(chat.id)
+                        .padding(.bottom, lastBubbleId == chat.id ? 10 : 0)
                         .onAppear {
                             if !isMyBubble {
                                 chattingVM.getReceivedBubbleId(chatRoomId: chatRoomId, sender: chat.sender)
                             }
-                            
                         }
+                }
+                .onChange(of: chattingVM.chattings.count) { _ in
+                    lastBubbleId = chattingVM.chattings.last?.id ?? ""
                 }
             }
             .rotationEffect(Angle(degrees: 180))
@@ -114,8 +143,13 @@ struct ChatRoomView: View {
         }
         .rotationEffect(Angle(degrees: 180))
         .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
+        .background(Color.secondarySystemBackground)
+        .scrollDismissesKeyboard(.interactively)
         .onTapGesture {
             hideKeyboard()
+            withAnimation {
+                isShowingUtilityMenu = false
+            }
         }
     }
     
@@ -132,6 +166,7 @@ struct ChatRoomView: View {
             
             HStack {
                 TextField("메시지를 입력해주세요.", text: $inputText, axis: .vertical)
+                    .focused($inputTextIsFocused)
                 
                 Button(action: {
                     if !isInputTextEmpty {
@@ -141,19 +176,21 @@ struct ChatRoomView: View {
                 }, label: {
                     Image(systemName: "arrow.up.circle.fill")
                         .font(.title)
-                        .foregroundColor(isInputTextEmpty ? .gray : .black)
+                        .foregroundColor(isInputTextEmpty ? .tertiarySystemFill : .subColor)
                 })
                 .disabled(isInputTextEmpty)
             }
-            .padding(.leading)
-            .padding([.trailing, .vertical], 8)
+            .padding(.leading, 5)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 5)
             .background {
                 RoundedRectangle(cornerRadius: 15)
-                    .fill(.white)
+                    .fill(Color.secondarySystemBackground)
             }
             
         }
-        .padding()
-        .background(Color(red: 0.85, green: 0.85, blue: 0.85))
+        .padding(.horizontal, 12)
+        .padding(.vertical, 5)
+        .background(Color.tertiarySystemBackground)
     }
 }

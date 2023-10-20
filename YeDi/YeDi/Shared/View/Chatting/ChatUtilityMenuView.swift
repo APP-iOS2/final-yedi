@@ -10,8 +10,10 @@ import PhotosUI
 
 struct ChatUtilityMenuView: View {
     @State private var selectedItem: PhotosPickerItem?
+    
     var chattingVM : ChattingViewModel
     var userID: String
+    
     var body: some View {
         HStack {
             Spacer()
@@ -22,9 +24,16 @@ struct ChatUtilityMenuView: View {
                         Image(systemName: "photo.circle.fill")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 50, height: 50)
-                        Text("사진")
+                            .frame(width: 25)
+                            .foregroundStyle(Color.white)
                     }
+                    .padding(13)
+                    .background {
+                        Circle()
+                            .fill(Color.pointColor)
+                    }
+                    Text("사진")
+                        .font(.caption)
                 }
             }
             .onChange(of: selectedItem) { newItem in ///사진앱에서 선택된 사진이 저장되고 Data로 형변환 되는 코드
@@ -39,20 +48,29 @@ struct ChatUtilityMenuView: View {
             Spacer()
             
             Button(action: {}, label: {
-                VStack{
-                    Image(systemName: "clock.badge.checkmark.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50, height: 50)
+                VStack {
+                    VStack{
+                        Image(systemName: "clock.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 25)
+                            .foregroundStyle(Color.white)
+                    }
+                    .padding(13)
+                    .background {
+                        Circle()
+                            .fill(Color.indigo)
+                    }
                     Text("바로예약")
+                        .font(.caption)
                 }
             })
             
             Spacer()
         }
-        .padding()
-        .background(.gray.opacity(0.4))
-        //MARK: 색상 변경시 여기 수정
+        .padding(.top)
+        .padding(.bottom, 30)
+        .background(Color.tertiarySystemBackground)
         .foregroundStyle(.primary)
         .frame(minWidth: 0, maxWidth: .infinity)
     }
