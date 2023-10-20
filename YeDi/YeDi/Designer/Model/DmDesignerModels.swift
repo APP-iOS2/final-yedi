@@ -7,6 +7,7 @@
 
 import FirebaseFirestoreSwift  // Firestore를 사용
 import Foundation
+import SwiftUI
 
 // 샵에 대한 정보를 담는 구조체
 struct Shop: Codable {
@@ -157,6 +158,20 @@ enum HairCategory: String, Codable {
             self = .Else
         default:
             self = .Else // 기본값 설정
+        }
+    }
+    
+    // 각 카테고리에 대한 색상을 반환하는 메소드
+    var color: Color {
+        switch self {
+        case .Cut:
+            return Color.red
+        case .Perm:
+            return Color.blue
+        case .Dying:
+            return Color.purple
+        case .Else:
+            return Color.gray
         }
     }
 }
