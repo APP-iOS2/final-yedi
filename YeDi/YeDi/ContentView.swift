@@ -15,7 +15,7 @@ struct ContentView: View {
     @EnvironmentObject var cmProfileViewModel: CMProfileViewModel
     @EnvironmentObject var reviewViewModel: CMReviewViewModel
     @EnvironmentObject var dmPostViewModel: DMPostViewModel
-    @EnvironmentObject var chattingListViewModel: ChattingListRoomViewModel
+    @EnvironmentObject var chattingListRoomViewModel: ChattingListRoomViewModel
     
     var body: some View {
         if userAuth.isLogin {

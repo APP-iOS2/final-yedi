@@ -69,6 +69,6 @@ struct BubbleCell: View {
     private var readMarkCircle: some View {
         Circle()
             .frame(width: 8, height: 8)
-            .foregroundStyle(Color(red: 1, green: 0.19, blue: 0.53))
+            .foregroundStyle(Color.subColor)
     }
 }
