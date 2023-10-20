@@ -31,30 +31,46 @@ struct ChattingListRoomView: View {
                             .frame(width: 0, height: 0)
                             .background()
                             
-                            DMAsyncImage(url: chattingListRoomViewModel.userProfile[chattingRoom.id]?.profileImageURLString ?? "", placeholder: Image(systemName: "person.circle.fill"))
+                            DMAsyncImage(url: chattingListRoomViewModel.userProfile[chattingRoom.id]?.profileImageURLString ?? "")
                                 .aspectRatio(contentMode: .fill)
                                 .clipShape(Circle())
                                 .frame(width: 50, height: 50)
                             
-                            VStack(alignment: .leading) {
-                                Text(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name ?? "닉네임 오류")
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name ?? "UnKown")
                                     .font(.title3.bold())
-                                
-                                if let recentMessage =  chattingRoom.chattingBubles?.first {
-                                    Text(recentMessage.content ?? "메세지가 비어있습니다.")
-                                        .foregroundStyle(.gray)
-                                        .lineLimit(1)
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        if let recentMessage =  chattingRoom.chattingBubles?.first {
+                                            if recentMessage.messageType == MessageType.imageBubble {
+                                                Text("사진")
+                                                    .foregroundStyle(.gray)
+                                                    .lineLimit(1)
+                                            } else {
+                                                Text(recentMessage.content ?? "메세지가 비어있습니다.")
+                                                    .foregroundStyle(.gray)
+                                                    .lineLimit(1)
+                                            }
+                                            
+                                            Text(changetoDateFormat(recentMessage.date))
+                                                .font(.caption2)
+                                                .foregroundStyle(.gray)
+                                            
+                                        } else {
+                                            Text("메세지가 존재하지 않습니다")
+                                                .foregroundStyle(.gray)
+                                                .lineLimit(1)
+                                        }
+                                    }
                                     
-                                    Text(changetoDateFormat(recentMessage.date))
-                                        .font(.caption2)
-                                        .foregroundStyle(.gray)
-                                        .badge(chattingListRoomViewModel.unReadCount[chattingRoom.id] ?? 0)
-                                } else {
-                                    Text("메세지가 존재하지 않습니다")
-                                        .foregroundStyle(.gray)
-                                        .lineLimit(1)
+                                    Spacer()
+                                    
+                                    if chattingListRoomViewModel.unReadCount[chattingRoom.id] ?? 0 != 0 {
+                                        UnReadCountCircle(unreadCount: chattingListRoomViewModel.unReadCount[chattingRoom.id] ?? 0)
+                                    }
                                 }
                             }
+                            .padding(.leading, 8)
                         }
                     }
                 }
@@ -69,7 +85,7 @@ struct ChattingListRoomView: View {
     
     private func changetoDateFormat(_ messageDate: String) -> String {
         let instance = SingleTonDateFormatter.sharedDateFommatter
-        let date = instance.changeDateString(transition: "yyyy년 MM월 dd일 HH:mm", from: messageDate)
+        let date = instance.changeDateString(transition: "MM/dd HH:mm", from: messageDate)
         return date
     }
     
@@ -78,4 +94,5 @@ struct ChattingListRoomView: View {
 #Preview {
     ChattingListRoomView()
         .environmentObject(ChattingListRoomViewModel())
+        .environmentObject(UserAuth())
 }

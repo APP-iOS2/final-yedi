@@ -40,9 +40,9 @@ struct DMPostView: View {
                 HStack {
                     // MARK: - 디자이너 정보와 위치
                     VStack(alignment: .leading) {
-                        // 디자이너 정보
+                        // hairCategory 정보
                         NavigationLink(destination: DMProfileView()) {
-                            Text(selectedPost.designerID)
+                            Text(selectedPost.hairCategory.rawValue)
                                 .font(.headline)
                                 .foregroundColor(Color(UIColor.label))
                         }
@@ -118,18 +118,32 @@ struct DMPostView: View {
                 if let description = selectedPost.description {
                     DMExpandableText(text: description)
                         .padding(.horizontal)
+                        .padding(.bottom, 8)  // 아래쪽에 여백 추가
                 }
+                
+                // MARK: - 게시글 시술 가격
+                Text("\(selectedPost.price) ₩")
+                    .padding(.horizontal)
+                    .padding(.bottom, 8)  // 아래쪽에 여백 추가
+                
                 // MARK: - 게시글 시술 카테고리
                 Text("\(selectedPost.hairCategory.rawValue)")
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 5)
+                    .background(
+                        Capsule()
+                            .fill(selectedPost.hairCategory.color.opacity(0.1))
+                    )
                     .padding(.horizontal)
-                // MARK: - 게시글 시술 가격
-                Text("\(selectedPost.price)")
-                    .padding(.horizontal)
+                    .padding(.bottom, 8)  // 아래쪽에 여백 추가
+
+
                 // MARK: - 게시 시간
                 Text(selectedPost.timestamp)
                     .font(.caption)
                     .foregroundColor(Color(UIColor.secondaryLabel))
                     .padding(.horizontal)
+                    .padding(.bottom, 8)  // 아래쪽에 여백 추가
             }
             // 새로고침 기능
             .refreshable {
@@ -137,11 +151,17 @@ struct DMPostView: View {
             }
         }
         .navigationBarTitle("", displayMode: .inline)
-        .navigationBarBackButtonHidden()
-        .toolbar(.hidden, for: .tabBar)
+        .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                DismissButton(color: nil, action: {})
+                HStack {
+                    DismissButton(color: nil) {
+                        
+                    }
+                    Text("YeDi")
+                        .font(.title)
+                        .fontWeight(.bold)
+                }
             }
         }
         .onAppear {

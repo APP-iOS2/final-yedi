@@ -1,25 +1,17 @@
-//
-//  DMGridView.swift
-//  YeDi
-//
-//  Created by 박찬호 on 2023/09/26.
-//
-
 import SwiftUI
 import FirebaseFirestore
 
 /// 내 게시물 그리드 뷰
 struct DMGridView: View {
     // MARK: - Properties
-    @EnvironmentObject var userAuth: UserAuth // UserAuth 객체를 주입
+    @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var postViewModel: DMPostViewModel
     
-    let columns: [GridItem] = [
-        GridItem(.flexible(), spacing: 16),
-        GridItem(.flexible(), spacing: 16)
-    ]
+    let columns: [GridItem] = Array(repeating: .init(.flexible(), spacing: 16), count: 3)
     
-    let imageSize: CGFloat = 174
+    var imageSize: CGFloat {
+        (UIScreen.main.bounds.width - (16 * 2 + 16 * 2)) / 3
+    }
 
     // MARK: - Body
     var body: some View {
@@ -37,9 +29,16 @@ struct DMGridView: View {
                 .onAppear() {
                     postViewModel.fetchPostsFromFirestore(userAuth: userAuth)
                 }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Text("YeDi")
+                            .font(.title)
+                            .fontWeight(.bold)
+                    }
+                }
         }
     }
-    
+
     // MARK: - GridContentView (그리드 형식의 컨텐츠 뷰)
     struct GridContentView: View {
         let posts: [Post]
@@ -59,7 +58,7 @@ struct DMGridView: View {
             }
         }
     }
-    
+
     // MARK: - PostThumbnail (게시물 썸네일 뷰)
     struct PostThumbnail: View {
         let post: Post

@@ -19,7 +19,7 @@ struct CMLikePostListView: View {
         .init(.flexible(), spacing: 1)
     ]
     
-    private let imageDimension: CGFloat = (UIScreen.main.bounds.width / 3) - 1
+    private let imageDimension: CGFloat = (UIScreen.main.bounds.width / 3) - 5
     
     // MARK: - Body
     var body: some View {
@@ -33,7 +33,7 @@ struct CMLikePostListView: View {
                         ForEach(viewModel.likedPosts, id: \.id) { post in
                             NavigationLink(destination: CMFeedDetailView(post: post)) {
                                 ZStack(alignment: .topTrailing) { // 이미지와 아이콘을 겹치기 위해 ZStack 사용
-                                    DMAsyncImage(url: post.photos[0].imageURL, placeholder: Image(systemName: "photo"))
+                                    DMAsyncImage(url: post.photos[0].imageURL)
                                         .scaledToFill()
                                         .frame(width: imageDimension, height: imageDimension)
                                         .clipped()

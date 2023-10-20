@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct DesignerMainTabView: View {
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var chattingListRoomViewModel: ChattingListRoomViewModel
     @State private var selectedIndex = 0
     
     var body: some View {
@@ -31,12 +33,15 @@ struct DesignerMainTabView: View {
             DMMainChattingView()
                 .tabItem {
                     Label("채팅", systemImage: "message.fill")
-                }.tag(3)
+                }.tag(3).badge(chattingListRoomViewModel.getUnReadTotalCount)
             
             DMProfileView()
                 .tabItem {
                     Label("프로필", systemImage: "person.fill")
                 }.tag(4)
+        }
+        .onAppear {
+            chattingListRoomViewModel.fetchChattingList(login: userAuth.userType)
         }
     }
 }

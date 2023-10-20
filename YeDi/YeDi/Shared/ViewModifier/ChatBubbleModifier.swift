@@ -14,10 +14,10 @@ struct ChatBubbleModifier: ViewModifier {
         content
             .padding(.horizontal)
             .padding(.vertical, 11)
-            .foregroundColor(isMyChat ? .white : .black)
+            .foregroundColor(isMyChat ? .white : .primaryLabel)
             .background {
                 RoundedRectangle(cornerRadius: 15)
-                    .fill(isMyChat ? .black : Color(red: 0.85, green: 0.85, blue: 0.85))
+                    .fill(isMyChat ? .mainColor : Color.gray5)
             }
     }
 }
