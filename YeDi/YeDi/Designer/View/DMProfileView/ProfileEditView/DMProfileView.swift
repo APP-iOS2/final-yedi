@@ -15,8 +15,6 @@ struct DMProfileView: View {
         NavigationStack {
             VStack {
                 HStack {
-
-                    
                     VStack(alignment: .leading) {
                         Text("\(profileVM.designer.rank.rawValue) \(profileVM.designer.name)")  // 디자이너 이름과 직급
                             .font(.system(size: 20, weight: .bold))
@@ -52,6 +50,7 @@ struct DMProfileView: View {
                 }
                 .padding([.leading], 20)  // HStack의 전체 왼쪽 패딩을 조절
                 
+                // MARK: - Shop Info Section
                 // 샵 정보 섹션
                 VStack {
                     VStack(alignment: .leading) {
@@ -72,7 +71,6 @@ struct DMProfileView: View {
                 .background(.gray.opacity(0.2))
                 .padding()
 
-                
                 // 프로필 편집으로 이동하는 버튼
                 NavigationLink {
                     DMProfileEditView()
@@ -106,45 +104,39 @@ struct DMProfileView: View {
                         .fontWeight(.bold)
                 }
             }
-
+            // MARK: - Fetch Data on Appear
             .onAppear {
-                // 디자이너 정보가 변경되지 않았다면 로딩하지 않음
-                if profileVM.designer.id == nil {
-                    Task {
+                Task {
+                    // 디자이너 정보가 변경되지 않았다면 로딩하지 않음
+                    if profileVM.designer.id == nil {
                         await profileVM.fetchDesignerProfile(userAuth: userAuth)
                     }
-                }
-                
-                // 샵 정보가 변경되지 않았다면 로딩하지 않음
-                if profileVM.shop.shopName.isEmpty {
-                    Task {
-                        await profileVM.fetchShopInfo(userAuth: userAuth)
+                    
+                    // 샵 정보를 항상 업데이트
+                    await profileVM.fetchShopInfo(userAuth: userAuth)
+                    
+                    // 현재 사용자의 유형에 따라 적절한 ID를 가져옵니다.
+                    let designerUID: String?
+                    switch userAuth.userType {
+                    case .client:
+                        designerUID = userAuth.currentClientID
+                    case .designer:
+                        designerUID = userAuth.currentDesignerID
+                    case .none:
+                        designerUID = nil
                     }
-                }
-                
-                // 현재 사용자의 유형에 따라 적절한 ID를 가져옵니다.
-                let designerUID: String?
-                switch userAuth.userType {
-                case .client:
-                    designerUID = userAuth.currentClientID
-                case .designer:
-                    designerUID = userAuth.currentDesignerID
-                case .none:
-                    designerUID = nil
-                }
 
-                // UID 확인 후 팔로워 수 업데이트
-                if let designerUID = designerUID, !designerUID.isEmpty {
-                    Task {
+                    // UID 확인 후 팔로워 수 업데이트
+                    if let designerUID = designerUID, !designerUID.isEmpty {
                         await profileVM.updateFollowerCountForDesigner(designerUID: designerUID)
                         // 팔로워의 수가 변경되었을 때만 디자이너 정보와 샵 정보를 가져옵니다.
                         if profileVM.designer.followerCount != profileVM.previousFollowerCount {
                             await profileVM.fetchDesignerProfile(userAuth: userAuth)
                             await profileVM.fetchShopInfo(userAuth: userAuth)
                         }
+                    } else {
+                        print("디자이너 UID가 유효하지 않습니다.")
                     }
-                } else {
-                    print("디자이너 UID가 유효하지 않습니다.")
                 }
             }
         }
