@@ -74,6 +74,7 @@ struct CMProfileEditView: View {
                 }
                 Divider()
                     .frame(width: 360)
+                    .background(Color.systemFill)
             }
             
             // MARK: - 계정 정보 수정 섹션
@@ -90,6 +91,7 @@ struct CMProfileEditView: View {
                 }
                 Divider()
                     .frame(width: 360)
+                    .background(Color.systemFill)
             }
             
             Spacer()
@@ -119,7 +121,7 @@ struct CMProfileEditView: View {
                     .frame(width: 330, height: 30)
             })
             .buttonStyle(.borderedProminent)
-            .tint(.black)
+            .tint(.mainColor)
         }
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
