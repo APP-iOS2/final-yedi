@@ -14,28 +14,31 @@ struct CMSearchView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .trailing) {
-                TextField("디자이너를 검색해보세요.", text: $viewModel.searchText, onCommit: {
-                    viewModel.saveRecentSearch()
-                })
-                .textFieldStyle(.roundedBorder)
-                if !viewModel.searchText.isEmpty {
-                    Button(action: {
+            HStack {
+                ZStack(alignment: .trailing) {
+                    TextField("디자이너를 검색해보세요.", text: $viewModel.searchText, onCommit: {
                         viewModel.saveRecentSearch()
-                    }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.gray)
+                    })
+                    .textFieldModifier()
+                    if !viewModel.searchText.isEmpty {
+                        Button(action: {
+                            viewModel.saveRecentSearch()
+                        }) {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
                 }
+                
             }
             .padding()
             
-            if viewModel.searchText.isEmpty && viewModel.showRecentSearches {
+            if viewModel.searchText.isEmpty {
                 VStack(alignment: .leading) {
                     HStack {
                         Text("최근 검색어")
-                            .foregroundStyle(Color.mainColor)
+                            .foregroundStyle(Color.primaryLabel)
                         Spacer()
                         if !viewModel.recentSearches.isEmpty {
                             Button(action: {
@@ -46,7 +49,6 @@ struct CMSearchView: View {
                             }
                         }
                     }
-                    
                     .padding(.horizontal)
                     .padding(.bottom)
                     
@@ -68,7 +70,7 @@ struct CMSearchView: View {
                                         .padding(.leading,5)
                                     Spacer()
                                 }
-                                .foregroundStyle(Color.mainColor)
+                                .foregroundStyle(Color.primaryLabel)
                             }
                             Button(action: {viewModel.removeRecentSearch(search)}, label: {
                                 Image(systemName: "xmark")
@@ -79,7 +81,6 @@ struct CMSearchView: View {
                         .padding(.vertical, 7)
                     }
                     Spacer()
-                    
                         .listStyle(.plain)
                 }
             }
@@ -88,7 +89,7 @@ struct CMSearchView: View {
                 if viewModel.filteredDesignerCount > 0 {
                     HStack {
                         Text("디자이너 (\(viewModel.filteredDesignerCount)건)")
-                            .foregroundStyle(Color.mainColor)
+                            .foregroundStyle(Color.primaryLabel)
                         Spacer()
                     }
                     .padding(.horizontal)
@@ -110,7 +111,7 @@ struct CMSearchView: View {
                                                 .aspectRatio(contentMode: .fill)
                                                 .frame(maxWidth: 50, maxHeight: 50)
                                                 .clipShape(Circle())
-                                                .foregroundStyle(.gray)
+                                                .foregroundStyle(Color.primaryLabel)
                                         }
                                     } else {
                                         Image(systemName: "person.circle")
@@ -118,12 +119,12 @@ struct CMSearchView: View {
                                             .aspectRatio(contentMode: .fill)
                                             .frame(maxWidth: 50, maxHeight: 50)
                                             .clipShape(Circle())
-                                            .foregroundStyle(.gray)
-
+                                            .foregroundStyle(Color.primaryLabel)
+                                        
                                     }
                                     VStack(alignment: .leading) {
                                         Text(designer.name)
-                                            .foregroundStyle(Color.mainColor)
+                                            .foregroundStyle(Color.primaryLabel)
                                         Text("Shop 이름")
                                             .font(.subheadline)
                                             .foregroundStyle(.gray)
@@ -138,7 +139,7 @@ struct CMSearchView: View {
                     .listStyle(.plain)
                 } else {
                     Text("검색 결과가 없습니다.")
-                        .foregroundStyle(Color.mainColor)
+                        .foregroundStyle(Color.primaryLabel)
                 }
             }
             

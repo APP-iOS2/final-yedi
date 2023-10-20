@@ -22,6 +22,7 @@ struct CMSettingsView: View {
             VStack(spacing: 5) {
                 Divider()
                     .frame(width: 360)
+                    .background(Color.systemFill)
                     .padding(.bottom, 10)
                 HStack {
                     Text("앱 버전")
@@ -30,6 +31,7 @@ struct CMSettingsView: View {
                 }
                 Divider()
                     .frame(width: 360)
+                    .background(Color.systemFill)
                     .padding([.top, .bottom], 10)
                 HStack {
                     Text("오픈소스 라이선스")
@@ -37,6 +39,7 @@ struct CMSettingsView: View {
                 }
                 Divider()
                     .frame(width: 360)
+                    .background(Color.systemFill)
                     .padding([.top, .bottom], 10)
             }
             .padding([.leading, .trailing, .bottom])

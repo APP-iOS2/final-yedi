@@ -41,7 +41,8 @@ class ImageLoader: ObservableObject {
         cancellable = URLSession.shared.dataTaskPublisher(for: imageURL)
             .map { UIImage(data: $0.data) }  // 받은 데이터를 UIImage로 변환
             .replaceError(with: nil)  // 에러 처리
-            .receive(on: DispatchQueue.main)  // 요청 완료 후 메인 DispatchQueue에서 실행
+            .receive(on: RunLoop.main)
+//            .receive(on: DispatchQueue.global(qos: .userInteractive))  // 요청 완료 후 글로벌 DispatchQueue에서 실행
             .sink { [self] in
                 // 로드된 이미지를 캐시에 저장
                 if let image = $0 {

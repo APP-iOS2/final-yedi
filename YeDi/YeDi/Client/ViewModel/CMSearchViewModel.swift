@@ -6,8 +6,8 @@ class CMSearchViewModel: ObservableObject {
     @Published var designers: [Designer] = []
     @Published var searchText: String = ""
     @Published var recentSearches: [String] = []
-    @Published var showRecentSearches = true
-    @Published var isHeartSelected: Bool = false
+    @Published var isTextFieldActive: Bool = false
+
     
     private let db = Firestore.firestore()
     

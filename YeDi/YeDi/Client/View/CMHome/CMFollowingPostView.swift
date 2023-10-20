@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CMFollowingPostView: View {
     @EnvironmentObject var userAuth: UserAuth
-    @ObservedObject var postViewModel = CMPostViewModel()
+    @StateObject var postViewModel = CMPostViewModel()
     
     var body: some View {
         NavigationStack {
@@ -23,7 +23,7 @@ struct CMFollowingPostView: View {
                     ScrollView {
                         LazyVStack(content: {
                             ForEach(postViewModel.posts, id: \.id) { post in
-                                CMHomeCell(post: post)
+                                CMHomeCellView(post: post)
                             }
                         })
                     }
