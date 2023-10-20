@@ -42,6 +42,7 @@ struct CMSettingsView: View {
                 }
                 Divider()
                     .frame(width: 360)
+                    .background(Color.systemFill)
                     .padding([.top, .bottom], 10)
                 
                 // MARK: - 오픈소스 라이선스 섹션
