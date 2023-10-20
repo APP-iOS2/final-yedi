@@ -22,9 +22,9 @@ struct CMReservationHistoryView: View {
                             VStack {
                                 Text(segment)
                                     .fontWeight(selectedSegment == segment ? .semibold : .medium)
-                                    .foregroundStyle(Color(UIColor.label))
+                                    .foregroundStyle(Color.primaryLabel)
                                 Rectangle()
-                                    .fill(selectedSegment == segment ? .black : .white)
+                                    .fill(selectedSegment == segment ? Color.primaryLabel : .clear)
                                     .frame(width: 180, height: 3)
                             }
                         })

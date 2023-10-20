@@ -14,39 +14,41 @@ struct CMStyleDetailView: View {
     @State private var designerPosts: [Post] = []
     
     let db = Firestore.firestore()
-
+    
     private let gridItems: [GridItem] = [
         .init(.flexible(), spacing: 1),
         .init(.flexible(), spacing: 1)
     ]
     
     private let imageDimension: CGFloat = (UIScreen.main.bounds.width / 2) - 5
-
+    
     var body: some View {
-        NavigationStack {
-            VStack {
-                ScrollView {
-                    LazyVGrid(columns: gridItems, spacing: 5) {
-                        ForEach(designerPosts, id: \.id) { post in
-                            NavigationLink(destination: CMFeedDetailView(post: post)) {
-                                DMAsyncImage(url: post.photos[0].imageURL, placeholder: Image(systemName: "photo"))
-                                    .scaledToFill()
-                                    .frame(width: imageDimension, height: imageDimension)
-                                    .clipped()
-                            }
-                        }
+        
+        ScrollView {
+            LazyVGrid(columns: gridItems, spacing: 5) {
+                ForEach(designerPosts, id: \.id) { post in
+                    NavigationLink(destination: CMFeedDetailView(post: post)) {
+                        DMAsyncImage(url: post.photos[0].imageURL, placeholder: Image(systemName: "photo"))
+                            .scaledToFill()
+                            .frame(width: imageDimension, height: imageDimension)
+                            .clipped()
                     }
                 }
             }
-            .navigationTitle("\(designer.name)의 Style")
         }
-        .onAppear {
-            fetchDesignerPosts()
+        .navigationTitle("\(designer.name)의 style")
+        .navigationBarBackButtonHidden()
+        .toolbar(.hidden, for: .tabBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                DismissButton(color: nil, action: {})
+            }
         }
+        .task { await fetchDesignerPosts() }
     }
     
     // Firestore에서 디자이너의 게시물 데이터를 가져오는 함수
-    func fetchDesignerPosts() {
+    func fetchDesignerPosts() async {
         db.collection("posts")
             .whereField("designerID", isEqualTo: designer.designerUID)
             .getDocuments { snapshot, error in
