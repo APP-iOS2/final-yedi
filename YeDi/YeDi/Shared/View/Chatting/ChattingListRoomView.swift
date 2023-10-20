@@ -37,7 +37,7 @@ struct ChattingListRoomView: View {
                                 .frame(width: 50, height: 50)
                             
                             VStack(alignment: .leading, spacing: 8) {
-                                Text(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name ?? "")
+                                Text(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name ?? "UnKown")
                                     .font(.title3.bold())
                                 HStack {
                                     VStack(alignment: .leading) {
@@ -62,12 +62,15 @@ struct ChattingListRoomView: View {
                                                 .lineLimit(1)
                                         }
                                     }
+                                    
                                     Spacer()
+                                    
                                     if chattingListRoomViewModel.unReadCount[chattingRoom.id] ?? 0 != 0 {
                                         UnReadCountCircle(unreadCount: chattingListRoomViewModel.unReadCount[chattingRoom.id] ?? 0)
                                     }
                                 }
                             }
+                            .padding(.leading, 8)
                         }
                     }
                 }
