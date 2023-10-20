@@ -158,8 +158,20 @@ struct DMProfileEditView: View {
                 .buttonStyle(.borderedProminent)
                 .tint(.black)
             }
-            .navigationTitle("")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    HStack {
+                        DismissButton(color: nil) {
+                            
+                        }
+                        Text("YeDi")
+                            .font(.title)
+                            .fontWeight(.bold)
+                    }
+                }
+            }
             .onAppear {
                 DispatchQueue.main.async {
                     designerName = profileViewModel.designer.name

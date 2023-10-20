@@ -17,6 +17,8 @@ struct DMNewPostView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var postViewModel: DMPostViewModel
     
+    @StateObject private var profileViewModel = DMProfileViewModel.shared
+    
     @State private var title = ""
     @State private var description = ""
     @State private var imageUrls: [String] = []
@@ -47,6 +49,16 @@ struct DMNewPostView: View {
                 }
                 .navigationTitle("새 게시물")
                 .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackButtonHidden(true)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        HStack {
+                            DismissButton(color: nil) {
+                                
+                            }
+                        }
+                    }
+                }
                 postButton
             }
         }
@@ -151,7 +163,7 @@ struct DMNewPostView: View {
         let newPost = Post(
             id: UUID().uuidString,
             designerID: userAuth.currentDesignerID ?? "Unknown",
-            location: "예디샵 홍대지점",
+            location: profileViewModel.shop.headAddress,
             title: title,
             description: description,
             photos: photos,
