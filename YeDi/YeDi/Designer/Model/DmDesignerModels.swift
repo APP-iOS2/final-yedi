@@ -10,7 +10,7 @@ import Foundation
 
 // 샵에 대한 정보를 담는 구조체
 struct Shop: Codable {
-    var id: String = UUID().uuidString
+    @DocumentID var id: String?
     
     var shopName: String  // 샵 이름
     /// [시] 만 담고 있는 주소
@@ -22,7 +22,7 @@ struct Shop: Codable {
     /// 샵 전화번호
     var telNumber: String?
     /// 위도
-    var longitude: Double?  // 오타 수정: langitude -> longitude
+    var longitude: Double?
     /// 경도
     var latitude: Double?
     /// 시작시간
@@ -67,6 +67,8 @@ struct Designer: Codable {
     var rank: Rank
     /// 디자이너 고유 ID
     var designerUID: String
+    /// 디자이너 샵 정보
+    var shop: Shop?
 }
 
 /// 직급
