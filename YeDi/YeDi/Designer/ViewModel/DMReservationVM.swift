@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 import FirebaseFirestore
 
+//MARK: - Reservation History View Model
 class ReservationVM: ObservableObject {
     /// - 예약내용을 담는 프로퍼티
     @Published var reservationList = [String]()
@@ -18,7 +19,7 @@ class ReservationVM: ObservableObject {
 
 
 
-/// sample structure
+//sample structure
 /// -  sample task
 struct Tasks: Identifiable {
     var id: UUID = .init()

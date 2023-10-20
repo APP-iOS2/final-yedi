@@ -11,8 +11,7 @@ struct ReservationView: View {
     @State var show: Bool = false
     @State private var isClicked: Bool = false
     @State private var isShowing: Bool = false
-    // 예약내역 받아오는 걸로 바꿔야 함
-    @State private var tasks: [Tasks] = sampleTasks
+    @State private var tasks: [Tasks] = sampleTasks // 예약내역 받아오는 걸로 바꿔야 함
     @State private var currentDay: Date = .init()
     @State var showingRestDaySetting: Bool = false
     @State var showingBreakTimeSetting: Bool = false
@@ -199,6 +198,7 @@ struct FloatingButton: View {
 #Preview {
     ReservationView()
 }
+
 // MARK: - Extension
 extension View {
     func hAlign(_ alignment: Alignment) -> some View {
