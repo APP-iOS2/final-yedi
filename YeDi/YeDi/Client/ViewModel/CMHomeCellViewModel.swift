@@ -28,11 +28,22 @@ class CMHomeCellViewModel: ObservableObject {
             if let designerData = document.data() {
                 // Initialize the designer model using Codable
                 designer = try? document.data(as: Designer.self)
+                
+                // "shop" 하위 컬렉션을 가져오기
+                let shopCollectionRef = designerRef.collection("shop")
+                let shopSnapshot = try await shopCollectionRef.getDocuments()
+                let shopData = shopSnapshot.documents.compactMap { document in
+                    return try? document.data(as: Shop.self)
+                }
+                
+                // "shop" 정보를 디자이너 모델에 할당
+                designer?.shop = shopData.first
             }
         } catch {
             print("Error fetching designer document: \(error)")
         }
     }
+
     
     // 게시물의 찜 여부 확인
     func checkIfLiked(forClientID clientID: String, post: Post) {

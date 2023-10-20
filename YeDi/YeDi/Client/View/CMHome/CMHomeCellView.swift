@@ -102,7 +102,7 @@ private struct CMHomeCellHeaderView: View {
                     VStack(alignment: .leading) {
                         Text(designer.name)
                             .foregroundStyle(Color.primaryLabel)
-                        Text(post.location)
+                        Text(designer.shop?.shopName ?? "Shop 이름")
                             .font(.callout)
                             .foregroundStyle(.gray)
                     }

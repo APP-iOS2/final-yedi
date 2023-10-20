@@ -85,15 +85,20 @@ struct CMDesignerProfileView: View {
                 
                 VStack {
                     VStack(alignment: .leading) {
-                        Text("근무지 이름")
+                        Text(designer.shop?.shopName ?? "Shop 이름")
                             .font(.title3)
                             .fontWeight(.semibold)
                             .foregroundStyle(Color.primaryLabel)
-                        Text("근무지 주소")
+                        Text(designer.shop?.headAddress ?? "Shop 주소")
                             .foregroundStyle(.gray)
                         Divider()
-                        Text("휴무일")
-                            .foregroundStyle(.gray)
+                        if let closedDays = designer.shop?.closedDays {
+                            Text("휴무일 : \(closedDays.joined(separator: ", "))")
+                                .foregroundStyle(.gray)
+                        } else {
+                            Text("Shop휴무일")
+                                .foregroundStyle(.gray)
+                        }
                     }
                     .padding()
                 }
@@ -151,16 +156,18 @@ struct CMDesignerProfileView: View {
                 DismissButton(color: nil, action: {})
             }
         }
-        .task {
-            await viewModel.isFollowed(designerUid: designer.designerUID)
-            await fetchDesignerPosts()
+        .onAppear {
+            Task {
+                await viewModel.isFollowed(designerUid: designer.designerUID)
+            }
+            fetchDesignerPosts()
         }
         
         Spacer()
     }
     
     // Firestore에서 디자이너의 게시물 데이터를 가져오는 함수
-    func fetchDesignerPosts() async {
+    func fetchDesignerPosts() {
         db.collection("posts")
             .whereField("designerID", isEqualTo: designer.designerUID)
             .getDocuments { snapshot, error in

@@ -79,11 +79,41 @@ class CMSearchViewModel: ObservableObject {
                 print("No documents")
                 return
             }
-            self.designers = documents.compactMap{ document in
-                try? document.data(as: Designer.self)
+            
+            var designersWithShops: [Designer] = []
+            let dispatchGroup = DispatchGroup() // Create a DispatchGroup to use
+            
+            for document in documents {
+                if var designer = try? document.data(as: Designer.self) {
+                    let designerID = document.documentID
+                    let shopCollection = db.collection("designers").document(designerID).collection("shop")
+                    
+                    dispatchGroup.enter() // Enter the DispatchGroup
+                    
+                    shopCollection.getDocuments { (shopSnapshot, shopError) in
+                        if let shopError = shopError {
+                            print("Shop data retrieval failed: \(shopError)")
+                        } else {
+                            if let shopData = shopSnapshot?.documents.compactMap({ try? $0.data(as: Shop.self) }) {
+                                designer.shop = shopData.first
+                            }
+                        }
+                        
+                        designersWithShops.append(designer)
+                        dispatchGroup.leave() // Leave the DispatchGroup
+                    }
+                }
+            }
+            
+            // Wait for all tasks to complete
+            dispatchGroup.notify(queue: .main) {
+                // The designersWithShops array contains all designers with related shop data
+                self.designers = designersWithShops
             }
         }
     }
+
+
     
     func performSearch() {
         designers = []
