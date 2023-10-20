@@ -23,7 +23,6 @@
 		2F0A21912ACE753F0070CA42 /* CMProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */; };
 		2F0A21932ACFD4B00070CA42 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21922ACFD4B00070CA42 /* Review.swift */; };
 		2F0A21952ACFD8950070CA42 /* CMReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */; };
-		2F0B733B2AE0E9B100868EF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2F0B733A2AE0E9B100868EF6 /* GoogleService-Info.plist */; };
 		2F45A1282AD2739C005018A5 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F45A1272AD2739C005018A5 /* Color.swift */; };
 		2F6363E92AD542AA00E980F8 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6363E82AD542AA00E980F8 /* PhotoPicker.swift */; };
 		2F7B60652ADFAF2B00EF1B96 /* CMCustomTextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B60642ADFAF2B00EF1B96 /* CMCustomTextArea.swift */; };
@@ -119,7 +118,6 @@
 		96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */; };
 		96D8753D2AE0CEED00F35226 /* DMReservationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D8753C2AE0CEED00F35226 /* DMReservationVM.swift */; };
 		96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F637DA2AC2AA1200EF74FF /* ReservationView.swift */; };
-		96F637DF2AC2BCFD00EF74FF /* ReservationCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */; };
 		DC7695462AD0888800D2FB69 /* AuthHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695422AD0888800D2FB69 /* AuthHomeView.swift */; };
 		DC7695472AD0888800D2FB69 /* AuthModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695442AD0888800D2FB69 /* AuthModifier.swift */; };
 		DC7695482AD0888800D2FB69 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695452AD0888800D2FB69 /* LoginView.swift */; };
@@ -153,7 +151,6 @@
 		2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMProfileViewModel.swift; sourceTree = "<group>"; };
 		2F0A21922ACFD4B00070CA42 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReviewViewModel.swift; sourceTree = "<group>"; };
-		2F0B733A2AE0E9B100868EF6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2F45A1272AD2739C005018A5 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2F6363E82AD542AA00E980F8 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		2F7B60642ADFAF2B00EF1B96 /* CMCustomTextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMCustomTextArea.swift; sourceTree = "<group>"; };
@@ -244,7 +241,6 @@
 		96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WkDaySettingDetail.swift; sourceTree = "<group>"; };
 		96D8753C2AE0CEED00F35226 /* DMReservationVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMReservationVM.swift; sourceTree = "<group>"; };
 		96F637DA2AC2AA1200EF74FF /* ReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationView.swift; sourceTree = "<group>"; };
-		96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCellView.swift; sourceTree = "<group>"; };
 		DC7695422AD0888800D2FB69 /* AuthHomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthHomeView.swift; sourceTree = "<group>"; };
 		DC7695442AD0888800D2FB69 /* AuthModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthModifier.swift; sourceTree = "<group>"; };
 		DC7695452AD0888800D2FB69 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -597,7 +593,6 @@
 				96F637DA2AC2AA1200EF74FF /* ReservationView.swift */,
 				3BAB00F22ACD97EA009053A4 /* ReservationSDetail.swift */,
 				96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */,
-				96F637DE2AC2BCFD00EF74FF /* ReservationCellView.swift */,
 				96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */,
 				9666A21A2ACDBB6D0081C711 /* TimeSettingDetail.swift */,
 				9691C5D12ADE552100434377 /* CustomCalender.swift */,
@@ -620,7 +615,6 @@
 		63CD89A42ABD85C300E70A56 = {
 			isa = PBXGroup;
 			children = (
-				2F0B733A2AE0E9B100868EF6 /* GoogleService-Info.plist */,
 				63CD89AF2ABD85C300E70A56 /* YeDi */,
 				63CD89AE2ABD85C300E70A56 /* Products */,
 				9691C5CE2ADE549600434377 /* Frameworks */,
@@ -798,7 +792,6 @@
 				63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */,
 				96BF382B2AE01217000DC15D /* GoogleService-Info.plist in Resources */,
 				63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */,
-				2F0B733B2AE0E9B100868EF6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -862,7 +855,6 @@
 				3BCF2C782ACD4248009C18C2 /* CMReservationCancelView.swift in Sources */,
 				3BCF2C792ACD4248009C18C2 /* CMReservationView.swift in Sources */,
 				96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */,
-				96F637DF2AC2BCFD00EF74FF /* ReservationCellView.swift in Sources */,
 				96D8753D2AE0CEED00F35226 /* DMReservationVM.swift in Sources */,
 				1D9067172AC150D60028A660 /* DmDesignerModels.swift in Sources */,
 				3BA862E12ADF96D500385507 /* DMShopEditView.swift in Sources */,
@@ -1069,7 +1061,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1099,7 +1091,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

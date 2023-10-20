@@ -12,12 +12,11 @@ class BreakTimeSetting: ObservableObject {
     
     @Published var breakTimes = [BreakTime]()
     
+    let db = Firestore.firestore().collection("breakTimes")
+    
     /// - firestore에 시간 데이터를 저장한다.
     func addTimes(_ designerID: String, _ breakTime: [String]) {
-       
-        let db = Firestore.firestore()
-        
-        db.collection("breakTimes").addDocument(data: ["designerID" : designerID, "breakTime": breakTime]) { error in
+        db.addDocument(data: ["designerID" : designerID, "breakTime": breakTime]) { error in
             if error == nil {
                 self.getTimes()
             } else {
@@ -28,17 +27,17 @@ class BreakTimeSetting: ObservableObject {
     
     /// - firestore 에서 시간을 들고온다
     func getTimes() {
-        let db = Firestore.firestore()
-        
-        db.collection("breakTimes").getDocuments { snapshot, error in
+        db.getDocuments { snapshot, error in
             if error == nil {
                 if let snapshot = snapshot {
                     /// Update the days property in the main thread
                     DispatchQueue.main.async {
                         self.breakTimes = snapshot.documents.map { d in
-                            return BreakTime(designerID: d["designerID"] as? String ?? "[디자이너 없음]",
-                                             selectedTime: d["selectedTime"] as? [String] ?? ["[시간을 설정하세요]"], 
-                                             timePeriod: d["timePeriod"] as? TimePeriod ?? .am)
+                            return BreakTime(
+                                designerID: d["designerID"] as? String ?? "[디자이너 없음]",
+                                selectedTime: d["selectedTime"] as? [String] ?? ["[시간을 설정하세요]"],
+                                timePeriod: d["timePeriod"] as? TimePeriod ?? .am
+                            )
                         }
                     }
                 }
@@ -46,6 +45,10 @@ class BreakTimeSetting: ObservableObject {
                 // Handle the error
             }
         }
+    }
+    /// -  저장된 시간 삭제
+    func deleteTime() {
+        
     }
 }
 

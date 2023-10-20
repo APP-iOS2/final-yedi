@@ -8,62 +8,52 @@
 import SwiftUI
 
 struct ReservationView: View {
-    
+    @State var show: Bool = false
     @State private var isClicked: Bool = false
     @State private var isShowing: Bool = false
+    // 예약내역 받아오는 걸로 바꿔야 함
     @State private var tasks: [Tasks] = sampleTasks
     @State private var currentDay: Date = .init()
+    @State var showingRestDaySetting: Bool = false
+    @State var showingBreakTimeSetting: Bool = false
     
+    // MARK: - Reservation List View
     var body: some View {
-        NavigationStack {
-            HStack {
-                NavigationLink {
-                    WkDaySettingDetail()
-                } label: {
-                    Text("휴무일 설정")
-                        .frame(width: 150, height: 40)
-                        .background(RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.black, lineWidth: 1))
-                }
-                Spacer().frame(width: 25)
-                NavigationLink {
-                   // MARK: Dev머지 후 해당파일 경로수정 필요
-                    TimeSettingDetail()
-                } label: {
-                    Text("브레이크 타임 설정")
-                        .frame(width: 150, height: 40)
-                        .background(RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.black, lineWidth: 1))
-                }
-            }
-            .padding(.top)
+        HCustomCalendar(singleDateF: .sharedDateFommatter)
             .padding(.bottom)
-            
-            HCustomCalendar(singleDateF: .sharedDateFommatter)
-                .padding(.bottom)
-                .padding(.horizontal)
-            .scrollIndicators(.hidden)
-            
-            HStack {
-                VStack {
-                    Divider().padding(.leading)
-                }
-                Text("예약현황")
-                    .font(.caption)
-                    .foregroundStyle(.gray)
-                VStack {
-                    Divider().padding(.trailing)
-                }
-            }
             .padding(.horizontal)
-            
+            .scrollIndicators(.hidden)
+        HStack {
+            VStack {
+                Divider()
+            }
+            Text("예약현황")
+                .font(.caption)
+                .foregroundStyle(.gray)
+            VStack {
+                Divider()
+            }
+        }
+        .padding(.horizontal)
+        ZStack {
             ScrollView {
                 TimeLineView()
             }
             .padding(.horizontal, 10)
+            HStack {
+                Spacer()
+                VStack {
+                    Spacer()
+                    FloatingButton(show: $show, showingRestDaySetting: $showingRestDaySetting, showingBreakTimeSetting: $showingBreakTimeSetting)
+                        .padding(.top)
+                        .padding(.bottom)
+                }
+            }
+            .padding(.trailing, 40)
         }
+        
     }
-    
+    /// - Timeline Main View
     @ViewBuilder
     func TimeLineView() -> some View {
         ScrollViewReader { proxy in
@@ -102,7 +92,7 @@ struct ReservationView: View {
             
             if filteredTasks.isEmpty {
                 Rectangle()
-                    .stroke(.gray.opacity(0.3), style: StrokeStyle(lineWidth: 0.5, lineCap: .butt, lineJoin: .bevel, dash: [15], dashPhase: 10))
+                    .stroke(.gray.opacity(0.3), style: StrokeStyle(lineWidth: 0.5, lineCap: .butt, lineJoin: .bevel))
                     .frame(height: 0.5)
                     .offset(y: 10)
             } else {
@@ -118,7 +108,7 @@ struct ReservationView: View {
         .padding(.vertical, 15)
     }
     
-    /// - Task Row
+    /// - Reservation History Row
     @ViewBuilder
     func TaskRow(_ task: Tasks) -> some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -128,7 +118,6 @@ struct ReservationView: View {
             
             if task.reservationDC != "" {
                 Text(task.reservationDC)
-                    
                     .foregroundColor(.red.opacity(0.8))
             }
         }
@@ -144,22 +133,82 @@ struct ReservationView: View {
     }
 }
 
+// MARK: - Custom FloatingButton
+struct FloatingButton: View {
+    
+    @Binding var show: Bool
+    @State var angle: Double = 180
+    @Binding var showingRestDaySetting: Bool
+    @Binding var showingBreakTimeSetting: Bool
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            if self.show {
+                Button {
+                    showingRestDaySetting.toggle()
+                } label: {
+                    Image(systemName: "bed.double")
+                        .resizable()
+                        .frame(width: 25, height: 25).padding(7)
+                }
+                .background(Color.white)
+                .foregroundColor(Color.gray4)
+                .clipShape(Circle())
+                .shadow(radius: 5)
+                .sheet(isPresented: $showingRestDaySetting, content: {
+                    WkDaySettingDetail()
+                        .presentationCornerRadius(20)
+                        .presentationDetents([.fraction(0.6)])
+                })
+                
+                Button {
+                    showingBreakTimeSetting.toggle()
+                } label: {
+                    Image(systemName: "calendar.badge.clock")
+                        .resizable()
+                        .frame(width: 25, height: 25).padding(7)
+                }
+                .background(Color.white)
+                .foregroundColor(Color.gray4)
+                .clipShape(Circle())
+                .shadow(radius: 5)
+                .sheet(isPresented: $showingBreakTimeSetting, content: {
+                    TimeSettingDetail()
+                        .presentationCornerRadius(20)
+                        .presentationDetents([.fraction(0.6)])
+                })
+            }
+            
+            Button {
+                self.show.toggle()
+            } label: {
+                Image(systemName: "gearshape")
+                    .resizable()
+                    .frame(width: 30, height: 30).padding(7)
+            }
+            .background(Color.white)
+            .foregroundColor(Color.gray4)
+            .clipShape(Circle())
+            .shadow(radius: 5)
+            .rotationEffect(.init(degrees: self.show ? 100 : 0))
+        }
+        .animation(.spring, value: angle)
+    }
+}
+
 #Preview {
     ReservationView()
 }
-
+// MARK: - Extension
 extension View {
     func hAlign(_ alignment: Alignment) -> some View {
         self
             .frame(maxWidth: .infinity, alignment: alignment)
     }
+    
     func vAlign(_ alignment: Alignment) -> some View {
         self
             .frame(maxHeight: .infinity, alignment: alignment)
-    }
-    
-    func isSameDate(_ date1: Date, _ date2: Date) -> Bool {
-        return Calendar.current.isDate(date1, inSameDayAs: date2)
     }
 }
 
