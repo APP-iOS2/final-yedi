@@ -44,13 +44,13 @@ struct CMClientInfoEditView: View {
                         }, label: {
                             Text(gender)
                                 .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-                                .foregroundStyle(.black)
+                                .foregroundStyle(Color.primaryLabel)
                                 .background(
                                     RoundedRectangle(cornerRadius: 2)
-                                        .stroke(Color(white: 0.9), lineWidth: 1)
+                                        .stroke(Color.systemFill, lineWidth: 1)
                                 )
                         })
-                        .background(selectedGender == gender ? Color(white: 0.9) : .white)
+                        .background(selectedGender == gender ? Color.systemFill : .myColor)
                     }
                 }
                 Spacer()
@@ -68,13 +68,13 @@ struct CMClientInfoEditView: View {
                         isShowingDatePicker.toggle()
                     }, label: {
                         Image(systemName: "calendar")
-                            .foregroundStyle(.black)
+                            .foregroundStyle(Color.primaryLabel)
                     })
                 }
                 .padding(10)
                 .background(
                     RoundedRectangle(cornerRadius: 2)
-                        .stroke(Color(white: 0.9), lineWidth: 1)
+                        .stroke(Color.systemFill, lineWidth: 1)
                 )
             }
         }
@@ -102,7 +102,7 @@ struct CMClientInfoEditView: View {
                         .frame(width: 330, height: 30)
                 })
                 .buttonStyle(.borderedProminent)
-                .tint(.black)
+                .tint(.mainColor)
             }
             .presentationDetents([.fraction(0.4)])
         })

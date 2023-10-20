@@ -36,6 +36,7 @@ extension Color {
     static let mainColor = Color("mainColor")
     static let subColor = Color("subColor")
     static let pointColor = Color("pointColor")
+    static let myColor = Color("myColor")
     static let brightGrayColor = Color(hex: "F6F6F6")
     
     // MARK: - gray
