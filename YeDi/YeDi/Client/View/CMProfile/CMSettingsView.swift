@@ -12,18 +12,17 @@ struct CMSettingsView: View {
     // MARK: - Properties
     @EnvironmentObject var userAuth: UserAuth
     
+    @State private var isTappedDeveloperInfo: Bool = false
+    @State private var isTappedEmailInquiry: Bool = false
+    
     @State private var isShowingSignOutAlert: Bool = false
     @State private var isShowingDeleteClientAccountAlert: Bool = false
     
     // MARK: - Body
     var body: some View {
         VStack {
-            // MARK: - 이용 안내 섹션
             VStack(spacing: 5) {
-                Divider()
-                    .frame(width: 360)
-                    .background(Color.systemFill)
-                    .padding(.bottom, 10)
+                // MARK: - 앱 버전 섹션
                 HStack {
                     Text("앱 버전")
                     Spacer()
@@ -33,6 +32,28 @@ struct CMSettingsView: View {
                     .frame(width: 360)
                     .background(Color.systemFill)
                     .padding([.top, .bottom], 10)
+                // MARK: - 개발자 정보 섹션
+                VStack {
+                    HStack {
+                        Text("저작권자 정보")
+                        Spacer()
+                    }
+                    
+                    if isTappedDeveloperInfo {
+                        HStack {
+                            Text("Copyright 2023. 루예삐오 all rights deserved.")
+                            Spacer()
+                        }
+                        .padding(.top, 5)
+                    }
+                }
+                .onTapGesture {
+                    isTappedDeveloperInfo.toggle()
+                }
+                Divider()
+                    .frame(width: 360)
+                    .padding([.top, .bottom], 10)
+                // MARK: - 오픈소스 라이선스 섹션
                 HStack {
                     Text("오픈소스 라이선스")
                     Spacer()
@@ -40,6 +61,31 @@ struct CMSettingsView: View {
                 Divider()
                     .frame(width: 360)
                     .background(Color.systemFill)
+                    .padding([.top, .bottom], 10)
+                // MARK: - 이메일 문의 섹션
+                VStack {
+                    HStack {
+                        Text("이메일 문의")
+                        Spacer()
+                    }
+            
+                    if isTappedEmailInquiry {
+                        HStack {
+                            Text("rofxnaos@gmail.com")
+                                .onTapGesture {
+                                    let clipboard = UIPasteboard.general
+                                    clipboard.string = "rofxnaos@gmail.com"
+                                }
+                            Spacer()
+                        }
+                        .padding(.top, 5)
+                    }
+                }
+                .onTapGesture {
+                    isTappedEmailInquiry.toggle()
+                }
+                Divider()
+                    .frame(width: 360)
                     .padding([.top, .bottom], 10)
             }
             .padding([.leading, .trailing, .bottom])
@@ -64,6 +110,7 @@ struct CMSettingsView: View {
             .padding([.leading, .trailing])
         }
         .navigationTitle("설정")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
