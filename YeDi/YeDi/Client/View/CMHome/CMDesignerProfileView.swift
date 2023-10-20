@@ -128,7 +128,7 @@ struct CMDesignerProfileView: View {
                     Divider()
                     LazyVGrid(columns: gridItems, spacing: 1) {
                         ForEach(designerPosts.prefix(6), id: \.id) { post in
-                            DMAsyncImage(url: post.photos[0].imageURL, placeholder: Image(systemName: "photo"))
+                            DMAsyncImage(url: post.photos[0].imageURL)
                                 .scaledToFill()
                                 .frame(width: imageDimension, height: imageDimension)
                                 .clipped()

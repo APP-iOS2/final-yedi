@@ -75,7 +75,7 @@ struct ChatRoomView: View {
                     .foregroundStyle(.black)
             }
             HStack(alignment: .center) {
-                DMAsyncImage(url: userProfile.profileImageURLString, placeholder: Image(systemName: "person.circle.fill"))
+                DMAsyncImage(url: userProfile.profileImageURLString)
                     .aspectRatio(contentMode: .fill)
                     .clipShape(Circle())
                     .frame(width: 30, height: 30)

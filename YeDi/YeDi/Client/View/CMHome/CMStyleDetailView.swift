@@ -29,7 +29,7 @@ struct CMStyleDetailView: View {
                     LazyVGrid(columns: gridItems, spacing: 5) {
                         ForEach(designerPosts, id: \.id) { post in
                             NavigationLink(destination: CMFeedDetailView(post: post)) {
-                                DMAsyncImage(url: post.photos[0].imageURL, placeholder: Image(systemName: "photo"))
+                                DMAsyncImage(url: post.photos[0].imageURL)
                                     .scaledToFill()
                                     .frame(width: imageDimension, height: imageDimension)
                                     .clipped()
