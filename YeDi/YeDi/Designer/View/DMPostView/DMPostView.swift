@@ -144,6 +144,13 @@ struct DMPostView: View {
                 DismissButton(color: nil, action: {})
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Text("YeDi")
+                    .font(.title)
+                    .fontWeight(.bold)
+            }
+        }
         .onAppear {
             refreshPost(post: selectedPost)
         }

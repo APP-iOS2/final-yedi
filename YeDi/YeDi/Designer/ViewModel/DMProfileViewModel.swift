@@ -70,21 +70,21 @@ class DMProfileViewModel: ObservableObject {
         }
     }
     
-    // Firebase Storage에서 디자이너 프로필 이미지를 다운로드하는 함수입니다.
-    func downloadDesignerProfileImage(completion: @escaping (Result<UIImage, Error>) -> Void) {
-        guard let imageURLString = self.designer.imageURLString, let url = URL(string: imageURLString) else {
-            completion(.failure(NSError(domain: "YeDi", code: -1, userInfo: [NSLocalizedDescriptionKey: "이미지 URL 누락"])))
-            return
-        }
-        let storageRef = Storage.storage().reference(forURL: url.absoluteString)
-        storageRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
-            if let error = error {
-                completion(.failure(error))
-            } else if let data = data, let image = UIImage(data: data) {
-                completion(.success(image))
-            }
-        }
-    }
+//    // Firebase Storage에서 디자이너 프로필 이미지를 다운로드하는 함수입니다.
+//    func downloadDesignerProfileImage(completion: @escaping (Result<UIImage, Error>) -> Void) {
+//        guard let imageURLString = self.designer.imageURLString, let url = URL(string: imageURLString) else {
+//            completion(.failure(NSError(domain: "YeDi", code: -1, userInfo: [NSLocalizedDescriptionKey: "이미지 URL 누락"])))
+//            return
+//        }
+//        let storageRef = Storage.storage().reference(forURL: url.absoluteString)
+//        storageRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
+//            if let error = error {
+//                completion(.failure(error))
+//            } else if let data = data, let image = UIImage(data: data) {
+//                completion(.success(image))
+//            }
+//        }
+//    }
     
     // 디자이너 프로필을 업데이트하는 비동기 함수입니다.
     func updateDesignerProfile(userAuth: UserAuth, designer: Designer) async -> Bool {
@@ -141,6 +141,22 @@ class DMProfileViewModel: ObservableObject {
                                 rank: rank,
                                 designerUID: designerData["designerUID"] as! String
                             )
+
+                            if let shopData = designerData as? [String: Any] {
+                                self.shop = Shop(
+                                    shopName: shopData["shopName"] as? String ?? "",
+                                    headAddress: shopData["headAddress"] as? String ?? "",
+                                    subAddress: shopData["subAddress"] as? String ?? "",
+                                    detailAddress: shopData["detailAddress"] as? String ?? "",
+                                    telNumber: shopData["telNumber"] as? String,
+                                    longitude: shopData["longitude"] as? Double ?? 0.0,
+                                    latitude: shopData["latitude"] as? Double ?? 0.0,
+                                    openingHour: shopData["openingHour"] as? String ?? "",
+                                    closingHour: shopData["closingHour"] as? String ?? "",
+                                    messangerLinkURL: shopData["messangerLinkURL"] as? [String: String],
+                                    closedDays: shopData["closedDays"] as? [String] ?? []
+                                )
+                            }
                         }
                     }
                 }
@@ -162,8 +178,8 @@ class DMProfileViewModel: ObservableObject {
                 "subAddress": shop.subAddress,
                 "detailAddress": shop.detailAddress,
                 "telNumber": shop.telNumber ?? NSNull(),
-                "longitude": shop.longitude,
-                "latitude": shop.latitude,
+                "longitude": shop.longitude ?? 0.0,
+                "latitude": shop.latitude ?? 0.0,
                 "openingHour": shop.openingHour,
                 "closingHour": shop.closingHour,
                 "messangerLinkURL": shop.messangerLinkURL ?? NSNull(),
@@ -193,8 +209,8 @@ class DMProfileViewModel: ObservableObject {
                         subAddress: shopData["subAddress"] as! String,
                         detailAddress: shopData["detailAddress"] as! String,
                         telNumber: shopData["telNumber"] as? String,
-                        longitude: shopData["longitude"] as! Double,
-                        latitude: shopData["latitude"] as! Double,
+                        longitude: shopData["longitude"] as? Double,
+                        latitude: shopData["latitude"] as? Double,
                         openingHour: shopData["openingHour"] as! String,
                         closingHour: shopData["closingHour"] as! String,
                         messangerLinkURL: shopData["messangerLinkURL"] as? [String: String],

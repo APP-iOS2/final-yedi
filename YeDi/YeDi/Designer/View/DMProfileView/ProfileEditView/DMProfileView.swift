@@ -15,6 +15,17 @@ struct DMProfileView: View {
         NavigationStack {
             VStack {
                 HStack {
+
+                    
+                    VStack(alignment: .leading) {
+                        Text("\(profileVM.designer.rank.rawValue) \(profileVM.designer.name)")  // 디자이너 이름과 직급
+                            .font(.system(size: 20, weight: .bold))
+                        Text(profileVM.designer.description ?? "자기소개가 없습니다.")  // 자기소개
+                            .font(.subheadline)
+                        Text("팔로워: \(profileVM.designer.followerCount)")  // 팔로워 수
+                            .font(.subheadline)
+                    }
+                    Spacer()
                     // 디자이너 프로필 사진
                     if let url = URL(string: profileVM.designer.imageURLString ?? "") {
                         AsyncImage(url: url) { phase in
@@ -38,35 +49,29 @@ struct DMProfileView: View {
                         defaultProfileImage()
                             .padding(.trailing, 20)
                     }
-                    
-                    VStack(alignment: .leading) {
-                        Text("\(profileVM.designer.rank.rawValue) \(profileVM.designer.name)")  // 디자이너 이름과 직급
-                            .font(.system(size: 20, weight: .bold))
-                        Text(profileVM.designer.description ?? "자기소개가 없습니다.")  // 자기소개
-                            .font(.subheadline)
-                        Text("팔로워: \(profileVM.designer.followerCount)")  // 팔로워 수
-                            .font(.subheadline)
-                    }
-                    
-                    Spacer()
                 }
                 .padding([.leading], 20)  // HStack의 전체 왼쪽 패딩을 조절
                 
+                // 샵 정보 섹션
                 VStack {
                     VStack(alignment: .leading) {
                         Text(profileVM.shop.shopName)  // 샵 이름
                             .font(.title3)
                             .fontWeight(.semibold)
+                        
                         Text(profileVM.shop.headAddress)  // 샵 위치
                             .foregroundStyle(.gray)
+                        
                         Divider()
-                        Text("휴무일: \(profileVM.shop.closedDays.joined(separator: ", "))월 요일")  // 휴무일 정보
+                        
+                        Text("휴무일: \(profileVM.shop.closedDays.joined(separator: ", "))")  // 휴무일 정보
                             .foregroundStyle(.gray)
                     }
                     .padding()
                 }
                 .background(.gray.opacity(0.2))
                 .padding()
+
                 
                 // 프로필 편집으로 이동하는 버튼
                 NavigationLink {
@@ -86,28 +91,22 @@ struct DMProfileView: View {
             .padding([.leading, .trailing], 5)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        // TODO: 알림 뷰로 이동
-                        Text("Notifications")
-                    } label: {
-                        Image(systemName: "bell")
-                            .foregroundColor(.black)
+                    HStack {
+                        NavigationLink {
+                            CMSettingsView()
+                        } label: {
+                            Image(systemName: "gearshape")
+                                .foregroundStyle(Color.primaryLabel)
+                        }
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        // TODO: 설정 뷰로 이동 & 임시 로그아웃 버튼
-                        Button {
-                            userAuth.signOut()
-                        } label: {
-                            Text("로그아웃")
-                        }
-                    } label: {
-                        Image(systemName: "gearshape")
-                            .foregroundColor(.black)
-                    }
+                ToolbarItem(placement: .topBarLeading) {
+                    Text("YeDi")
+                        .font(.title)
+                        .fontWeight(.bold)
                 }
             }
+
             .onAppear {
                 // 디자이너 정보가 변경되지 않았다면 로딩하지 않음
                 if profileVM.designer.id == nil {
