@@ -33,7 +33,7 @@ struct DMProfileEditView: View {
     @State private var shopName: String = ""
     @State private var shopHeadAddress: String = ""
     @State private var shopSubAddress: String = ""
-
+    
     func imageFromURL(_ url: URL) -> UIImage? {
         do {
             let data = try Data(contentsOf: url)
@@ -43,7 +43,7 @@ struct DMProfileEditView: View {
             return nil
         }
     }
-
+    
     func uploadImageToFirebaseStorage(_ image: UIImage, completion: @escaping (String?) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
             print("이미지를 Data 형식으로 변환하는 데 실패했습니다.")
@@ -54,7 +54,7 @@ struct DMProfileEditView: View {
         let storageRef = Storage.storage().reference()
         let imageName = UUID().uuidString
         let imageRef = storageRef.child("profile_images/\(imageName).jpg")
-
+        
         imageRef.putData(imageData, metadata: nil) { (metadata, error) in
             if let error = error {
                 print("Firebase Storage에 이미지 업로드 실패: \(error.localizedDescription)")
@@ -73,7 +73,7 @@ struct DMProfileEditView: View {
             }
         }
     }
-
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -81,24 +81,24 @@ struct DMProfileEditView: View {
                 
                 // 디자이너 정보 수정 섹션
                 Section {
-                     DMDesignerInfoEditView(
-                         designerName: $designerName,
-                         designerRank: $designerRank,
-                         designerGender: $designerGender,
-                         designerBirthDate: $designerBirthDate,
-                         isShowingDatePicker: $isShowingDatePicker
-                     )
-                     .padding(.bottom, 40)
-                 } header: {
-                     HStack {
-                         Text("회원 정보")
-                             .fontWeight(.semibold)
-                             .padding(.leading)
-                         Spacer()
-                     }
-                     Divider()
-                         .frame(width: 360)
-                 }
+                    DMDesignerInfoEditView(
+                        designerName: $designerName,
+                        designerRank: $designerRank,
+                        designerGender: $designerGender,
+                        designerBirthDate: $designerBirthDate,
+                        isShowingDatePicker: $isShowingDatePicker
+                    )
+                    .padding(.bottom, 40)
+                } header: {
+                    HStack {
+                        Text("회원 정보")
+                            .fontWeight(.semibold)
+                            .padding(.leading)
+                        Spacer()
+                    }
+                    Divider()
+                        .frame(width: 360)
+                }
                 
                 // 계정 정보 수정 섹션
                 Section {
@@ -139,7 +139,7 @@ struct DMProfileEditView: View {
                             rank: designerRank,
                             designerUID: designerId
                         )
-
+                        
                         Task {
                             let isSuccess = await profileViewModel.updateDesignerProfile(userAuth: userAuth, designer: newDesigner)
                             if isSuccess {
@@ -153,37 +153,37 @@ struct DMProfileEditView: View {
                     }
                 }, label: {
                     Text("저장")
-                         .frame(width: 330, height: 30)
-                 })
-                 .buttonStyle(.borderedProminent)
-                 .tint(.black)
-             }
-             .navigationTitle("")
-             .navigationBarTitleDisplayMode(.inline)
-             .onAppear {
-                 DispatchQueue.main.async {
-                     designerName = profileViewModel.designer.name
-                     designerRank = profileViewModel.designer.rank
-                     designerGender = profileViewModel.designer.gender
-                     designerBirthDate = profileViewModel.designer.birthDate
-                     accountEmail = profileViewModel.designer.email
-                     accountPhoneNumber = profileViewModel.designer.phoneNumber
-                     selectedPhotoURL = profileViewModel.designer.imageURLString ?? ""
-                 }
-             }
-
+                        .frame(width: 330, height: 30)
+                })
+                .buttonStyle(.borderedProminent)
+                .tint(.black)
+            }
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                DispatchQueue.main.async {
+                    designerName = profileViewModel.designer.name
+                    designerRank = profileViewModel.designer.rank
+                    designerGender = profileViewModel.designer.gender
+                    designerBirthDate = profileViewModel.designer.birthDate
+                    accountEmail = profileViewModel.designer.email
+                    accountPhoneNumber = profileViewModel.designer.phoneNumber
+                    selectedPhotoURL = profileViewModel.designer.imageURLString ?? ""
+                }
+            }
+            
             .sheet(isPresented: $isShowingPhotoPicker, content: {
                 PhotoPicker { selectedImageURL in
                     guard let selectedImage = imageFromURL(selectedImageURL) else {
                         // 이미지 변환 오류 처리
                         return
                     }
-
+                    
                     // Firebase Storage에 이미지 업로드
                     uploadImageToFirebaseStorage(selectedImage) { uploadedImageURL in
                         if let uploadedImageURL = uploadedImageURL {
                             selectedPhotoURL = uploadedImageURL
-
+                            
                             // Firestore에 저장
                             let designerRef = Firestore.firestore().collection("designers").document(userAuth.currentDesignerID ?? "")
                             designerRef.updateData(["imageURLString": uploadedImageURL])
@@ -195,14 +195,14 @@ struct DMProfileEditView: View {
             })
         }
     }
-
+    
     // 프로필 이미지 선택 및 표시 섹션
     private func profileImageSection() -> some View {
         Group {
             if selectedPhotoURL.isEmpty {
                 Image(systemName: "person.circle.fill")
                     .font(.system(size: 80))
-                    .padding([.top, .bottom])
+                    .padding(.vertical)
                     .overlay(
                         ZStack {
                             Circle()
@@ -219,31 +219,25 @@ struct DMProfileEditView: View {
                         isShowingPhotoPicker.toggle()
                     })
             } else {
-                AsyncImage(url: URL(string: selectedPhotoURL)) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 80, height: 80)
-                        .clipShape(Circle())
-                        .padding([.top, .bottom])
-                        .overlay(
-                            ZStack {
-                                Circle()
-                                    .trim(from: 0.07, to: 0.43)
-                                    .fill(Color(white: 0.2))
-                                    .frame(width: 80)
-                                Text("편집")
-                                    .font(.system(size: 13))
-                                    .foregroundStyle(.white)
-                                    .offset(y: 27)
-                            }
-                        )
-                        .onTapGesture(perform: {
-                            isShowingPhotoPicker.toggle()
-                        })
-                } placeholder: {
-                    ProgressView()
-                }
+                DMAsyncImage(url: selectedPhotoURL)
+                    .frame(width: 80, height: 80)
+                    .clipShape(Circle())
+                    .padding(.vertical)
+                    .overlay(
+                        ZStack {
+                            Circle()
+                                .trim(from: 0.07, to: 0.43)
+                                .fill(Color(white: 0.2))
+                                .frame(width: 80)
+                            Text("편집")
+                                .font(.system(size: 13))
+                                .foregroundStyle(.white)
+                                .offset(y: 27)
+                        }
+                    )
+                    .onTapGesture(perform: {
+                        isShowingPhotoPicker.toggle()
+                    })
             }
         }
     }
