@@ -37,30 +37,34 @@ struct ChattingListRoomView: View {
                                 .frame(width: 50, height: 50)
                             
                             VStack(alignment: .leading, spacing: 8) {
-                                Text(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name ?? "닉네임 오류")
+                                Text(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name ?? "")
                                     .font(.title3.bold())
-                                
-                                VStack(alignment: .leading) {
-                                    if let recentMessage =  chattingRoom.chattingBubles?.first {
-                                        if recentMessage.messageType == MessageType.imageBubble {
-                                            Text("사진")
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        if let recentMessage =  chattingRoom.chattingBubles?.first {
+                                            if recentMessage.messageType == MessageType.imageBubble {
+                                                Text("사진")
+                                                    .foregroundStyle(.gray)
+                                                    .lineLimit(1)
+                                            } else {
+                                                Text(recentMessage.content ?? "메세지가 비어있습니다.")
+                                                    .foregroundStyle(.gray)
+                                                    .lineLimit(1)
+                                            }
+                                            
+                                            Text(changetoDateFormat(recentMessage.date))
+                                                .font(.caption2)
                                                 .foregroundStyle(.gray)
-                                                .badge(chattingListRoomViewModel.unReadCount[chattingRoom.id] ?? 0)
-                                                .lineLimit(1)
+                                            
                                         } else {
-                                            Text(recentMessage.content ?? "메세지가 비어있습니다.")
+                                            Text("메세지가 존재하지 않습니다")
                                                 .foregroundStyle(.gray)
                                                 .lineLimit(1)
                                         }
-                                        
-                                        Text(changetoDateFormat(recentMessage.date))
-                                            .font(.caption2)
-                                            .foregroundStyle(.gray)
-                                        
-                                    } else {
-                                        Text("메세지가 존재하지 않습니다")
-                                            .foregroundStyle(.gray)
-                                            .lineLimit(1)
+                                    }
+                                    Spacer()
+                                    if chattingListRoomViewModel.unReadCount[chattingRoom.id] ?? 0 != 0 {
+                                        UnReadCountCircle(unreadCount: chattingListRoomViewModel.unReadCount[chattingRoom.id] ?? 0)
                                     }
                                 }
                             }
@@ -87,4 +91,5 @@ struct ChattingListRoomView: View {
 #Preview {
     ChattingListRoomView()
         .environmentObject(ChattingListRoomViewModel())
+        .environmentObject(UserAuth())
 }
