@@ -11,7 +11,7 @@ struct CMFeedDetailContentView: View {
     @Environment(\.presentationMode) private var presentationMode
     
     @EnvironmentObject var userAuth: UserAuth
-    @EnvironmentObject var consultationViewModel: ConsultationViewModel
+    @ObservedObject var consultationViewModel: ConsultationViewModel = ConsultationViewModel()
     
     @StateObject var postViewModel: PostDetailViewModel = PostDetailViewModel()
 
