@@ -56,7 +56,7 @@ struct CMSearchView: View {
                         HStack {
                             Button {
                                 viewModel.searchText = search
-                                viewModel.performSearch()
+                                //viewModel.performSearch()
                             } label: {
                                 HStack {
                                     Image(systemName: "magnifyingglass")
@@ -125,9 +125,13 @@ struct CMSearchView: View {
                                     VStack(alignment: .leading) {
                                         Text(designer.name)
                                             .foregroundStyle(Color.primaryLabel)
-                                        Text("Shop 이름")
-                                            .font(.subheadline)
-                                            .foregroundStyle(.gray)
+                                        if let shop = designer.shop {
+                                            Text(shop.shopName)
+                                                .font(.subheadline)
+                                                .foregroundStyle(.gray)
+                                        }
+                                        
+                                        
                                     }
                                     .padding(.leading,5)
                                     Spacer()
@@ -146,8 +150,8 @@ struct CMSearchView: View {
             Spacer()
         }
         .onAppear {
-            viewModel.loadRecentSearches()
             viewModel.loadData()
+            viewModel.loadRecentSearches()
         }
     }
 }
