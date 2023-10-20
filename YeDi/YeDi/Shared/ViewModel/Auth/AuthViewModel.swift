@@ -205,26 +205,31 @@ final class UserAuth: ObservableObject {
                     "gender": designer.gender,
                     "rank": designer.rank.rawValue,
                     "designerUID": user.uid,
-                    //MARK: shop information
-                    "shopName" : shop.shopName,
-                    "headAddress" : shop.headAddress,
-                    "subAddress" : shop.subAddress,
-                    "detailAddress" : shop.detailAddress,
-                    // "telNumber" : "",
-                    // "longitude" : "",
-                    // "latitude" : "",
-                    "openingHour" : shop.openingHour,
-                    "closingHour" : shop.closingHour,
-                    // "messangerLinkURL" : ["": ""],
-                    "closedDays" : shop.closedDays
                 ]
                 
                 self.storeService.collection("designers")
                     .document(user.uid)
                     .setData(data, merge: true)
                 
-                self.userSession = nil
-                self.isLogin = false
+                let shopData : [String: Any] = [
+                                    "shopName" : shop.shopName,
+                                    "headAddress" : shop.headAddress,
+                                    "subAddress" : shop.subAddress,
+                                    "detailAddress" : shop.detailAddress,
+//                                    "telNumber" : "",
+//                                    "longitude" : "",
+//                                    "latitude" : "",
+                                    "openingHour" : shop.openingHour,
+                                    "closingHour" : shop.closingHour,
+//                                    "messangerLinkURL" : ["": ""],
+                                    "closedDays" : shop.closedDays
+                                ]
+                
+                self.storeService.collection("designers").document(user.uid).collection("shop")
+                                  .addDocument(data: shopData, completion: { _ in
+                                      self.userSession = nil
+                                      self.isLogin = false
+                                  })
             }
         }
     }
