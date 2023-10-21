@@ -39,6 +39,13 @@ struct DMReviewDetailView: View {
         }
         .listStyle(.plain)
         .navigationTitle("상세리뷰")
+        .toolbar(.hidden, for: .tabBar)
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                DismissButton(color: nil) { }
+            }
+        }
     }
     
     var averageScore: some View {
