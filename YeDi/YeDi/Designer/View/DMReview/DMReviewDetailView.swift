@@ -65,7 +65,7 @@ struct DMReviewDetailView: View {
                 ForEach(review.keywordReviews) { keywordReview in
                     Text("\(keywordReview.keyword)")
                         .font(.subheadline)
-                        .foregroundStyle(.black)
+                        .foregroundStyle(.primary)
                         .padding(10)
                         .background(
                             RoundedRectangle(cornerRadius: 5)
