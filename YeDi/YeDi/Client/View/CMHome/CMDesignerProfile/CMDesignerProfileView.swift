@@ -10,20 +10,10 @@ import Firebase
 import FirebaseFirestore
 
 struct CMDesignerProfileView: View {
+    @State private var showAllKeywords = false
     
     var designer: Designer
-    @State private var designerPosts: [Post] = []
-    @StateObject var viewModel = PostDetailViewModel()
-    
-    let db = Firestore.firestore()
-    
-    private let gridItems: [GridItem] = [
-        .init(.flexible(), spacing: 1),
-        .init(.flexible(), spacing: 1),
-        .init(.flexible(), spacing: 1)
-    ]
-    
-    private let imageDimension: CGFloat = (UIScreen.main.bounds.width / 3) - 1
+    @StateObject var viewModel = CMDesignerProfileViewModel()
     
     var body: some View {
         ScrollView {
@@ -63,7 +53,7 @@ struct CMDesignerProfileView: View {
                         .font(.callout)
                         .fontWeight(.light)
                         .padding(.horizontal)
-                    Text("팔로워 \(formattedFollowerCount()) · 게시물 \(designerPosts.count)")
+                    Text("팔로워 \(viewModel.formattedFollowerCount(followerCount: designer.followerCount)) · 게시물 \(viewModel.designerPosts.count)")
                         .fontWeight(.medium)
                         .padding(.vertical,10)
                     Button {
@@ -108,45 +98,7 @@ struct CMDesignerProfileView: View {
                 }
                 .padding()
                 
-                if designerPosts.isEmpty {
-                    VStack {
-                        HStack {
-                            Text("이 디자이너의 게시물")
-                                .fontWeight(.semibold)
-                                .foregroundStyle(Color.primaryLabel)
-                            Spacer()
-                        }
-                        Divider()
-                        Text("업로드된 게시물이 없습니다.")
-                            .foregroundStyle(Color.primaryLabel)
-                            .padding()
-                    }
-                    .padding(.horizontal)
-                } else {
-                    VStack {
-                        HStack {
-                            Text("이 디자이너의 게시물")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(Color.primaryLabel)
-                            Spacer()
-                            NavigationLink(destination: CMStyleDetailView(designer: designer)) {
-                                Text("스타일 전체보기")
-                                    .foregroundStyle(Color.primaryLabel)
-                            }
-                        }
-                        .padding(.horizontal)
-                        Divider()
-                        LazyVGrid(columns: gridItems, spacing: 1) {
-                            ForEach(designerPosts.prefix(6), id: \.id) { post in
-                                DMAsyncImage(url: post.photos[0].imageURL)
-                                    .scaledToFill()
-                                    .frame(width: imageDimension, height: imageDimension)
-                                    .clipped()
-                            }
-                        }
-                    }
-                }
+                CMDesignerProfileSegmentedView(designer: designer, designerPosts: viewModel.designerPosts, reviews: viewModel.reviews, keywords: viewModel.keywords, keywordCount: viewModel.keywordCount)
             }
         }
         .navigationBarBackButtonHidden()
@@ -160,53 +112,31 @@ struct CMDesignerProfileView: View {
             Task {
                 await viewModel.isFollowed(designerUid: designer.designerUID)
             }
-            fetchDesignerPosts()
+            viewModel.fetchDesignerPosts(designerUID: designer.designerUID)
+            viewModel.fetchReview()
+            viewModel.fetchKeywords()
         }
-        
         Spacer()
     }
+}
+
+struct RatingView: View {
+    let score: Int
+    let maxScore: Int
+    let filledColor: Color
     
-    // Firestore에서 디자이너의 게시물 데이터를 가져오는 함수
-    func fetchDesignerPosts() {
-        db.collection("posts")
-            .whereField("designerID", isEqualTo: designer.designerUID)
-            .getDocuments { snapshot, error in
-                if let error = error {
-                    print("Error fetching designer posts: \(error.localizedDescription)")
-                    return
-                }
-                
-                if let documents = snapshot?.documents {
-                    designerPosts = documents.compactMap { document in
-                        do {
-                            let post = try document.data(as: Post.self)
-                            return post
-                        } catch {
-                            print("Error decoding post: \(error.localizedDescription)")
-                            return nil
-                        }
-                    }
-                }
+    var body: some View {
+        HStack {
+            ForEach(0..<maxScore, id: \.self) { index in
+                Image(systemName: index < score ? "star.fill" : "star")
+                    .font(.footnote)
+                    .fontWeight(.bold)
+                    .foregroundColor(index < score ? filledColor : Color.gray)
             }
-    }
-    
-    func formattedFollowerCount() -> String {
-        if designer.followerCount < 10_000 {
-            return "\(designer.followerCount)"
-        } else if designer.followerCount < 1_000_000 {
-            let followers = Double(designer.followerCount) / 10_000.0
-            if followers.truncatingRemainder(dividingBy: 1) == 0 {
-                return "\(Int(followers))만"
-            } else {
-                return "\(followers)만"
-            }
-        } else {
-            let millions = designer.followerCount / 10_000
-            return "\(millions)만"
         }
     }
-    
 }
+
 
 #Preview {
     CMDesignerProfileView(designer: Designer(name: "양파쿵야", email: "", phoneNumber: "", designerScore: 0, reviewCount: 0, followerCount: 15430020, skill: [], chatRooms: [], birthDate: "", gender: "", rank: .Owner, designerUID: ""))
