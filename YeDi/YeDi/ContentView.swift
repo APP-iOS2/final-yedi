@@ -19,7 +19,7 @@ struct ContentView: View {
     
     var body: some View {
         if userAuth.isLogin {
-            if userAuth.userSession != nil {
+            if $userAuth.userSession != nil {
                 switch userAuth.userType {
                 case .client:
                     ClientMainTabView()
@@ -35,7 +35,6 @@ struct ContentView: View {
         } else {
             AuthHomeView()
         }
-        
 //        let _ = print(
 //            """
 //            ================================================================
