@@ -14,8 +14,7 @@ struct RegisterView: View {
     @Environment(\.dismiss) private var dismiss
     
     private let authRegex = AuthRegex.shared
-    
-    @State private var birthPicker = Date()
+    private let instance = SingleTonDateFormatter.sharedDateFommatter
     
     /// 고객, 디자이너 공통 프로퍼티
     @State private var name: String = ""
@@ -50,15 +49,12 @@ struct RegisterView: View {
     @State private var isNotEmptyDescription: Bool = true
     /// birth 프로퍼티
     @State private var changedBirthText: String = "생년월일"
-    @State private var tempDate: Date = Date()
+    @State private var selectedBirthDate = Date()
+    @State private var birthDate: String = ""
+    @State private var isShowingDatePicker: Bool = false
+    
     private let genders: [String] = ["여성", "남성"]
     private let ranks: [Rank] = [.Owner, .Principal, .Designer, .Intern]
-    
-    private var birthDate: String {
-        let formatter: DateFormatter = DateFormatter()
-        formatter.dateFormat = "yyyy년 MM월 dd일"
-        return formatter.string(from: birthPicker)
-    }
     
     var body: some View {
         VStack {
@@ -134,6 +130,7 @@ struct RegisterView: View {
                         .cautionTextStyle()
                 }
             }
+            .padding(.top)
             
             VStack(alignment: .leading, spacing: 5) {
                 Text("패스워드 *")
@@ -200,25 +197,41 @@ struct RegisterView: View {
                         .foregroundStyle(changedBirthText=="생년월일" ? Color.placeholderText : Color.primaryLabel)
                     
                     Spacer()
-                    Image(systemName: "calendar")
-                        .overlay {
-                            DatePicker("birth", selection: $birthPicker, in: ...Date(), displayedComponents: .date)
-                                .blendMode(.destinationOver)
-                                .onChange(of: birthPicker, perform: { newValue in
-                                    if checkBirth() {
-                                        birthPicker = newValue
-                                    }
-                                })
-                        }
+                    
+                    Button(action: {
+                        isShowingDatePicker.toggle()
+                    }, label: {
+                        Image(systemName: "calendar")
+                            .foregroundStyle(Color.primaryLabel)
+                    })
                 }
                 .signInTextFieldStyle(isTextFieldValid: $isBirthValid)
-                .onChange(of: birthPicker) { _ in
-                    changedBirthText = birthDate
-                }
                 
                 Text(cautionBirth)
                     .cautionTextStyle()
             }
+            .sheet(isPresented: $isShowingDatePicker, content: {
+                VStack {
+                    DatePicker("생년월일", selection: $selectedBirthDate, in: ...Date(), displayedComponents: .date)
+                        .datePickerStyle(.wheel)
+                        .labelsHidden()
+
+                    Button(action: {
+                        let date = instance.firebaseDate(from: selectedBirthDate)
+                        birthDate = instance.changeDateString(transition: "yyyy년 MM월 dd일", from: date)
+
+                        changedBirthText = birthDate
+
+                        isShowingDatePicker.toggle()
+                    }, label: {
+                        Text("선택 완료")
+                            .frame(width: 330, height: 30)
+                    })
+                    .buttonStyle(.borderedProminent)
+                    .tint(.black)
+                }
+                .presentationDetents([.fraction(0.4)])
+            })
             
             HStack(alignment: .center) {
                 Text("성별 *")
@@ -232,10 +245,13 @@ struct RegisterView: View {
                                 .foregroundStyle(Color.primaryLabel)
                                 .background(
                                     RoundedRectangle(cornerRadius: 2)
-                                        .stroke(Color.gray6, lineWidth: 2)
+                                        .fill(selectedGender == gender ? Color.gray4 : Color.gray6)
                                 )
                         })
-                        .background(selectedGender == gender ? Color.gray4 : Color.gray6)
+                        .background {
+                            RoundedRectangle(cornerRadius: 2)
+                                .fill(Color.gray6)
+                        }
                     }
                 }
                 Spacer()
@@ -401,7 +417,7 @@ struct RegisterView: View {
     }
     
     private func checkBirth() -> Bool {
-        if birthPicker > Date() {
+        if selectedBirthDate > Date() {
             cautionBirth = "올바르지 않은 생년월일입니다"
             isBirthValid = false
         } else {
