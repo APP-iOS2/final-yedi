@@ -30,10 +30,21 @@ struct CMDesignerProfilePostView: View {
             VStack {
                 LazyVGrid(columns: gridItems, spacing: 1) {
                     ForEach(designerPosts.prefix(6), id: \.id) { post in
-                        DMAsyncImage(url: post.photos[0].imageURL)
-                            .scaledToFill()
-                            .frame(width: imageDimension, height: imageDimension)
-                            .clipped()
+                        NavigationLink(destination: CMFeedDetailView(post: post)) {
+                            ZStack(alignment: .topTrailing) {
+                                DMAsyncImage(url: post.photos[0].imageURL)
+                                    .scaledToFill()
+                                    .frame(width: imageDimension, height: imageDimension)
+                                    .clipped()
+                                
+                                if post.photos.count > 1 { // 이미지가 여러 장인 경우에만 아이콘 표시
+                                    Image(systemName: "square.on.square.fill")
+                                        .foregroundColor(.white)
+                                        .padding(10)
+                                }
+                                
+                            }
+                        }
                     }
                 }
             }

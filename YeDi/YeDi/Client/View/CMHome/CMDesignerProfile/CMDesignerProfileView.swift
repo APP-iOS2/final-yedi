@@ -10,8 +10,6 @@ import Firebase
 import FirebaseFirestore
 
 struct CMDesignerProfileView: View {
-    @State private var showAllKeywords = false
-    
     var designer: Designer
     @StateObject var viewModel = CMDesignerProfileViewModel()
     
@@ -27,20 +25,20 @@ struct CMDesignerProfileView: View {
                                 .frame(maxWidth: 100, maxHeight: 100)
                                 .clipShape(Circle())
                         } placeholder: {
-                            Image(systemName: "person.circle")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(maxWidth: 100, maxHeight: 100)
-                                .clipShape(Circle())
-                                .foregroundStyle(Color.primaryLabel)
+                            Text(String(designer.name.first ?? " ").capitalized)
+                                        .font(.largeTitle)
+                                        .fontWeight(.bold)
+                                        .frame(width: 100, height: 100)
+                                        .background(Circle().fill(.gray))
+                                        .foregroundColor(Color.primaryLabel)
                         }
                     } else {
-                        Image(systemName: "person.circle")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(maxWidth: 100, maxHeight: 100)
-                            .clipShape(Circle())
-                            .foregroundStyle(Color.primaryLabel)
+                        Text(String(designer.name.first ?? " ").capitalized)
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                                    .frame(width: 100, height: 100)
+                                    .background(Circle().fill(.gray))
+                                    .foregroundColor(Color.primaryLabel)
                         
                     }
                     Text(designer.name)
@@ -53,7 +51,7 @@ struct CMDesignerProfileView: View {
                         .font(.callout)
                         .fontWeight(.light)
                         .padding(.horizontal)
-                    Text("팔로워 \(viewModel.formattedFollowerCount(followerCount: designer.followerCount)) · 게시물 \(viewModel.designerPosts.count)")
+                    Text("팔로워 \(viewModel.isFollowing ? viewModel.formattedFollowerCount(followerCount: designer.followerCount + 1) : viewModel.formattedFollowerCount(followerCount: designer.followerCount)) · 게시물 \(viewModel.designerPosts.count)")
                         .fontWeight(.medium)
                         .padding(.vertical,10)
                     Button {

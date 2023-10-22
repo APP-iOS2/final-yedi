@@ -106,20 +106,20 @@ struct CMSearchView: View {
                                                 .frame(maxWidth: 50, maxHeight: 50)
                                                 .clipShape(Circle())
                                         } placeholder: {
-                                            Image(systemName: "person.circle")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                                .frame(maxWidth: 50, maxHeight: 50)
-                                                .clipShape(Circle())
-                                                .foregroundStyle(Color.primaryLabel)
+                                            Text(String(designer.name.first ?? " ").capitalized)
+                                                        .font(.title3)
+                                                        .fontWeight(.bold)
+                                                        .frame(width: 50, height: 50)
+                                                        .background(Circle().fill(.gray))
+                                                        .foregroundColor(Color.primaryLabel)
                                         }
                                     } else {
-                                        Image(systemName: "person.circle")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(maxWidth: 50, maxHeight: 50)
-                                            .clipShape(Circle())
-                                            .foregroundStyle(Color.primaryLabel)
+                                        Text(String(designer.name.first ?? " ").capitalized)
+                                                    .font(.title3)
+                                                    .fontWeight(.bold)
+                                                    .frame(width: 50, height: 50)
+                                                    .background(Circle().fill(.gray))
+                                                    .foregroundColor(Color.primaryLabel)
                                         
                                     }
                                     VStack(alignment: .leading) {

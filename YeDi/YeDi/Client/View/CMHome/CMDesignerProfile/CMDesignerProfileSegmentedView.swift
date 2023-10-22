@@ -14,6 +14,8 @@ struct CMDesignerProfileSegmentedView: View {
     var keywords: [String]
     var keywordCount: [(String, Int)]
     
+    private let imageDimension: CGFloat = (UIScreen.main.bounds.width / 2)
+    
     @State private var selectedSegment: String = "게시물"
     let segments: [String] = ["게시물", "리뷰"]
     
@@ -30,7 +32,7 @@ struct CMDesignerProfileSegmentedView: View {
                                 .foregroundStyle(Color(UIColor.label))
                             Rectangle()
                                 .fill(selectedSegment == segment ? Color.primaryLabel : .gray6)
-                                .frame(width: 180, height: 3)
+                                .frame(width: imageDimension, height: 3)
                         }
                     })
                 }
