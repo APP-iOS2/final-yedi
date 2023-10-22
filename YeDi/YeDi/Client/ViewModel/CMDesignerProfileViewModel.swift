@@ -44,9 +44,12 @@ class CMDesignerProfileViewModel: ObservableObject {
         if isFollowing {
             isFollowing = false
             await unfollowing(designerUid: designerUid, currentUserUid: uid)
+            await updateFollowerCount(increment: false, designerUid: designerUid)
+
         } else {
             isFollowing = true
             await following(designerUid: designerUid, currentUserUid: uid)
+            await updateFollowerCount(increment: false, designerUid: designerUid)
         }
     }
     
@@ -74,6 +77,43 @@ class CMDesignerProfileViewModel: ObservableObject {
             ])
         } catch {
             print("Error unfollowing: \(error)")
+        }
+    }
+    
+    private func updateFollowerCount(increment: Bool, designerUid: String) async {
+        do {
+            let designerRef = db.collection("designers").document(designerUid)
+            
+            try await db.runTransaction({ transaction, errorPointer in
+                let designerDocument: DocumentSnapshot
+                do {
+                    designerDocument = try transaction.getDocument(designerRef)
+                } catch let fetchError as NSError {
+                    errorPointer?.pointee = fetchError
+                    return nil
+                }
+                
+                guard let designerData = designerDocument.data() else {
+                    let error = NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Designer document does not exist"])
+                    errorPointer?.pointee = error
+                    return nil
+                }
+                
+                let currentFollowerCount = designerData["followerCount"] as? Int ?? 0
+                var newFollowerCount = currentFollowerCount
+                
+                if increment {
+                    newFollowerCount += 1
+                } else {
+                    newFollowerCount = max(0, newFollowerCount - 1)
+                }
+                
+                transaction.updateData(["followerCount": newFollowerCount], forDocument: designerRef)
+                
+                return nil
+            })
+        } catch {
+            print("Error updating follower count: \(error)")
         }
     }
     
