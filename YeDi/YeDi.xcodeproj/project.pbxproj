@@ -138,6 +138,7 @@
 		DC7695CF2ADF1DC800D2FB69 /* TextFieldModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695CE2ADF1DC800D2FB69 /* TextFieldModifier.swift */; };
 		DC94ED592ADFDA540052AD6E /* TextAreaModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */; };
 		DC94ED732AE3B86A0052AD6E /* YdIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC94ED722AE3B86A0052AD6E /* YdIconView.swift */; };
+		DCD00D062AE5017400B44B89 /* DMPostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD00D052AE5017400B44B89 /* DMPostDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -267,6 +268,7 @@
 		DC7695CE2ADF1DC800D2FB69 /* TextFieldModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldModifier.swift; sourceTree = "<group>"; };
 		DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaModifier.swift; sourceTree = "<group>"; };
 		DC94ED722AE3B86A0052AD6E /* YdIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YdIconView.swift; sourceTree = "<group>"; };
+		DCD00D052AE5017400B44B89 /* DMPostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -620,6 +622,7 @@
 			children = (
 				1D9067202AC1F61D0028A660 /* DMGridView.swift */,
 				639DB6862AC11B56002692E5 /* DMPostView.swift */,
+				DCD00D052AE5017400B44B89 /* DMPostDetailView.swift */,
 				1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */,
 				1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */,
 			);
@@ -941,6 +944,7 @@
 				96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */,
 				DC7695482AD0888800D2FB69 /* LoginView.swift in Sources */,
 				3B0E1CD62AE2340700145563 /* UnReadCountCircle.swift in Sources */,
+				DCD00D062AE5017400B44B89 /* DMPostDetailView.swift in Sources */,
 				96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */,
 				3BCF2C7E2ACD4248009C18C2 /* CMSearchView.swift in Sources */,
 				3BCF2C872ACD4248009C18C2 /* CMAccountInfoEditView.swift in Sources */,
