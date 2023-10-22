@@ -29,13 +29,6 @@ struct CMRecommendPostView: View {
                     }
                 })
             }
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Text("YeDi")
-                        .font(.title)
-                        .fontWeight(.bold)
-                }
-            }
             .task {
                 await postViewModel.fetchPosts()
             }
