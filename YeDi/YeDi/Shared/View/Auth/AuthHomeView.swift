@@ -16,10 +16,7 @@ struct AuthHomeView: View {
             VStack {
                 Spacer()
                 
-                Text("YeDi")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .padding(.bottom, 40)
+                welcomeMessage
                 
                 segmentedLoginView
                 
@@ -36,6 +33,25 @@ struct AuthHomeView: View {
             hideKeyboard()
         }
     }
+    
+    private var welcomeMessage: some View {
+            HStack {
+                VStack(alignment: .leading) {
+                    YdIconView(height: 55)
+
+                    switch selectedSegment {
+                    case .client:
+                        Text("안녕하세요, 회원님!")
+                    case .designer:
+                        Text("안녕하세요, 디자이너님!")
+                    }
+                }
+                .padding(.horizontal)
+
+                Spacer()
+            }
+            .padding(.bottom, 80)
+        }
     
     private var segmentedLoginView: some View {
         VStack {
@@ -55,17 +71,7 @@ struct AuthHomeView: View {
                     }
                 }
             }
-            
-            switch selectedSegment {
-            case .client:
-                Text("안녕하세요, 회원님!")
-                    .font(.title2.bold())
-                    .padding(.vertical, 20)
-            case .designer:
-                Text("안녕하세요, 디자이너님!")
-                    .font(.title2.bold())
-                    .padding(.vertical, 20)
-            }
+            .padding([.bottom, .horizontal])
             
             LoginView(userType: selectedSegment)
         }
