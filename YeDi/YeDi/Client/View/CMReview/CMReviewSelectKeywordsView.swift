@@ -51,6 +51,7 @@ struct CMReviewSelectKeywordsView: View {
             }
             Divider()
                 .frame(width: 360)
+                .background(Color.systemFill)
                 .padding(.bottom, 10)
         }
     }
@@ -73,19 +74,19 @@ struct KeywordButton: View {
         }) {
             if displayingKeywords[index].isSelected {
                 Text("\(keywords[index].keyword)")
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.primaryLabel)
                     .padding(10)
                     .background(
                         RoundedRectangle(cornerRadius: 5)
-                            .fill(Color.mainColor)
+                            .fill(Color.gray6)
                     )
             } else {
                 Text("\(keywords[index].keyword)")
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Color.primaryLabel)
                     .padding(10)
                     .background(
                         RoundedRectangle(cornerRadius: 5)
-                            .stroke(Color(white: 0.9), lineWidth: 1)
+                            .stroke(Color.systemFill, lineWidth: 1)
                     )
             }
         }

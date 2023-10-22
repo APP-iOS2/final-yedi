@@ -10,12 +10,14 @@ import Firebase
 import UIKit
 import FirebaseStorage
 
-// 디자이너 프로필에 대한 데이터를 관리하는 ViewModel 클래스입니다.
+// MARK: - DMProfileViewModel
+/// 디자이너 프로필에 대한 데이터를 관리하는 ViewModel 클래스입니다.
 class DMProfileViewModel: ObservableObject {
     static let shared = DMProfileViewModel() // 싱글톤 인스턴스 생성
     var previousFollowerCount: Int = 0
     
-    // 디자이너 정보를 저장하는 Published 변수입니다.
+    // MARK: - Published Properties
+    /// 디자이너 정보를 저장하는 Published 변수입니다.
     @Published var designer = Designer(
         id: nil,
         name: "",
@@ -33,7 +35,7 @@ class DMProfileViewModel: ObservableObject {
         designerUID: ""
     )
     
-    // 샵 정보를 저장하는 Published 변수입니다.
+    /// 샵 정보를 저장하는 Published 변수입니다.
     @Published var shop = Shop(
         shopName: "",
         headAddress: "",
@@ -48,7 +50,8 @@ class DMProfileViewModel: ObservableObject {
         closedDays: []
     )
     
-    // Firebase Storage에서 디자이너 프로필 이미지를 업로드하는 함수입니다.
+    // MARK: - Image Uploading
+    /// Firebase Storage에서 디자이너 프로필 이미지를 업로드하는 함수입니다.
     func uploadDesignerProfileImage(userAuth: UserAuth, image: UIImage, completion: @escaping (Result<String, Error>) -> Void) {
         guard let designerId = userAuth.currentDesignerID, let imageData = image.jpegData(compressionQuality: 0.8) else {
             completion(.failure(NSError(domain: "YeDi", code: -1, userInfo: [NSLocalizedDescriptionKey: "이미지 변환 실패"])))
@@ -70,23 +73,8 @@ class DMProfileViewModel: ObservableObject {
         }
     }
     
-    // Firebase Storage에서 디자이너 프로필 이미지를 다운로드하는 함수입니다.
-    func downloadDesignerProfileImage(completion: @escaping (Result<UIImage, Error>) -> Void) {
-        guard let imageURLString = self.designer.imageURLString, let url = URL(string: imageURLString) else {
-            completion(.failure(NSError(domain: "YeDi", code: -1, userInfo: [NSLocalizedDescriptionKey: "이미지 URL 누락"])))
-            return
-        }
-        let storageRef = Storage.storage().reference(forURL: url.absoluteString)
-        storageRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
-            if let error = error {
-                completion(.failure(error))
-            } else if let data = data, let image = UIImage(data: data) {
-                completion(.success(image))
-            }
-        }
-    }
-    
-    // 디자이너 프로필을 업데이트하는 비동기 함수입니다.
+    // MARK: - Profile Updating
+    /// 디자이너 프로필을 업데이트하는 비동기 함수입니다.
     func updateDesignerProfile(userAuth: UserAuth, designer: Designer) async -> Bool {
         let designerRef = Firestore.firestore().collection("designers").document(designer.id ?? "")
         do {
@@ -114,7 +102,8 @@ class DMProfileViewModel: ObservableObject {
         }
     }
     
-    // 디자이너 프로필 정보를 Firestore에서 가져오는 비동기 함수입니다.
+    // MARK: - Data Fetching
+    /// 디자이너 프로필 정보를 Firestore에서 가져오는 비동기 함수입니다.
     func fetchDesignerProfile(userAuth: UserAuth) async {
         let db = Firestore.firestore()
         if let designerId = userAuth.currentDesignerID {
@@ -141,6 +130,22 @@ class DMProfileViewModel: ObservableObject {
                                 rank: rank,
                                 designerUID: designerData["designerUID"] as! String
                             )
+
+                            if let shopData = designerData as? [String: Any] {
+                                self.shop = Shop(
+                                    shopName: shopData["shopName"] as? String ?? "",
+                                    headAddress: shopData["headAddress"] as? String ?? "",
+                                    subAddress: shopData["subAddress"] as? String ?? "",
+                                    detailAddress: shopData["detailAddress"] as? String ?? "",
+                                    telNumber: shopData["telNumber"] as? String,
+                                    longitude: shopData["longitude"] as? Double ?? 0.0,
+                                    latitude: shopData["latitude"] as? Double ?? 0.0,
+                                    openingHour: shopData["openingHour"] as? String ?? "",
+                                    closingHour: shopData["closingHour"] as? String ?? "",
+                                    messangerLinkURL: shopData["messangerLinkURL"] as? [String: String],
+                                    closedDays: shopData["closedDays"] as? [String] ?? []
+                                )
+                            }
                         }
                     }
                 }
@@ -150,11 +155,11 @@ class DMProfileViewModel: ObservableObject {
         }
     }
     
-    // 샵 정보를 Firestore에 업데이트하는 비동기 함수입니다.
+    /// 샵 정보를 Firestore에 업데이트하는 비동기 함수입니다.
     func updateShopInfo(userAuth: UserAuth, shop: Shop) async {
         let db = Firestore.firestore()
         if let designerId = userAuth.currentDesignerID {
-            let docRef = db.collection("shops").document(designerId)
+            let docRef = db.collection("designers").document(designerId).collection("shop").document("shopInfo")
             
             let shopData: [String: Any] = [
                 "shopName": shop.shopName,
@@ -162,8 +167,8 @@ class DMProfileViewModel: ObservableObject {
                 "subAddress": shop.subAddress,
                 "detailAddress": shop.detailAddress,
                 "telNumber": shop.telNumber ?? NSNull(),
-                "longitude": shop.longitude,
-                "latitude": shop.latitude,
+                "longitude": shop.longitude ?? 0.0,
+                "latitude": shop.latitude ?? 0.0,
                 "openingHour": shop.openingHour,
                 "closingHour": shop.closingHour,
                 "messangerLinkURL": shop.messangerLinkURL ?? NSNull(),
@@ -179,38 +184,43 @@ class DMProfileViewModel: ObservableObject {
         }
     }
     
-    // 샵 정보를 Firestore에서 가져오는 비동기 함수입니다.
     func fetchShopInfo(userAuth: UserAuth) async {
         let db = Firestore.firestore()
         if let designerId = userAuth.currentDesignerID {
-            let docRef = db.collection("shops").document(designerId)
+            let shopCollectionRef = db.collection("designers").document(designerId).collection("shop")
             do {
-                let document = try await docRef.getDocument()
-                if let shopData = document.data() {
-                    shop = Shop(
-                        shopName: shopData["shopName"] as! String,
-                        headAddress: shopData["headAddress"] as! String,
-                        subAddress: shopData["subAddress"] as! String,
-                        detailAddress: shopData["detailAddress"] as! String,
-                        telNumber: shopData["telNumber"] as? String,
-                        longitude: shopData["longitude"] as! Double,
-                        latitude: shopData["latitude"] as! Double,
-                        openingHour: shopData["openingHour"] as! String,
-                        closingHour: shopData["closingHour"] as! String,
-                        messangerLinkURL: shopData["messangerLinkURL"] as? [String: String],
-                        closedDays: shopData["closedDays"] as! [String]
-                    )
+                let shopDocuments = try await shopCollectionRef.getDocuments()
+                if let firstShopDocument = shopDocuments.documents.first {
+                    let shopData = firstShopDocument.data()
+                    DispatchQueue.main.async {
+                        self.shop = Shop(
+                            shopName: shopData["shopName"] as? String ?? "",
+                            headAddress: shopData["headAddress"] as! String ,
+                            subAddress: shopData["subAddress"] as? String ?? "",
+                            detailAddress: shopData["detailAddress"] as? String ?? "",
+                            telNumber: shopData["telNumber"] as? String,
+                            longitude: shopData["longitude"] as? Double ?? 0.0,
+                            latitude: shopData["latitude"] as? Double ?? 0.0,
+                            openingHour: shopData["openingHour"] as? String ?? "",
+                            closingHour: shopData["closingHour"] as? String ?? "",
+                            messangerLinkURL: shopData["messangerLinkURL"] as? [String: String],
+                            closedDays: shopData["closedDays"] as? [String] ?? []
+                        )
+                    }
+                } else {
+                    print("Error: Document data is nil")  // 디버그 코드
                 }
-                
             } catch {
                 print("Error fetching shop data: \(error)")
             }
+        } else {
+            print("Error: designerId is nil")  // 디버그 코드
         }
     }
-    
-    // 해당 디자이너를 팔로워 갯수 가져오는 함수
+
+    // MARK: - Follower Updating
+    /// 해당 디자이너를 팔로워 갯수 가져오는 함수
     func updateFollowerCountForDesigner(designerUID: String) async {
-        // UID가 비어 있거나 nil인지 확인
         print("Received designerUID: \(designerUID)")
         guard !designerUID.isEmpty else {
             print("UID가 유효하지 않습니다.")
@@ -229,10 +239,8 @@ class DMProfileViewModel: ObservableObject {
                 
                 if followerCountFromFirebase != self.previousFollowerCount {
                     try await designerRef.updateData(["followerCount": followerCountFromFirebase])
-                    // 앱의 상태에도 최신 팔로워 수 반영
                     self.designer.followerCount = followerCountFromFirebase
                     print("팔로워 수가 \(followerCountFromFirebase)로 업데이트되었습니다.")
-                    // 현재 팔로워 수를 이전 팔로워 수로 저장
                     self.previousFollowerCount = followerCountFromFirebase
                 } else {
                     print("팔로워 수가 변경되지 않았습니다.")

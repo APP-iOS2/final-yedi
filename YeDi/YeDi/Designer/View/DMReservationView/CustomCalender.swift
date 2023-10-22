@@ -12,6 +12,7 @@ struct CustomCalender: View {
     @State var month: Date = Date()
     @State var offset: CGSize = CGSize()
     @State var clickedDates: Set<Date> = []
+    @State var showingAlert: Bool = false
     
     @ObservedObject var dayModel = ClosedDaySetting()
     
@@ -25,10 +26,9 @@ struct CustomCalender: View {
     var body: some View {
         VStack {
             HStack {
-
-                    Text("날짜를 선택하세요.")
+                Text("날짜를 선택하세요.")
                     .foregroundStyle(.black)
-
+                
                     .font(.system(size: 14))
                 VStack {
                     Divider().padding(.leading, 3)
@@ -39,19 +39,13 @@ struct CustomCalender: View {
             
             headerView
             calendarGridView
-           
+            
             Spacer().frame(height: 50)
             Divider()
             Spacer().frame(height: 50)
             
-
             Button(action: {
-                // 선택된 날짜 파이어베이스에 저장
-                dayModel.addDay("designer1", dateSetToStringArray(dateSet: clickedDates))
-                
-                clickedDates = []
-                
-                // toast messege 추후 구현
+                showingAlert.toggle()
             }, label: {
                 Text("설정하기")
                     .foregroundColor(.black)
@@ -61,6 +55,22 @@ struct CustomCalender: View {
                             .foregroundColor(.gray)
                     }
             })
+            .alert(isPresented: $showingAlert) {
+                Alert(
+                    title: Text("휴무일 설정"),
+                    message: Text("설정하시겠습니까?"),
+                    primaryButton: .destructive(Text("취소")) {
+                        print("Deleting...")
+                        showingAlert = false
+                    },
+                    secondaryButton: .default(Text("설정하기"), action: {
+                        // 선택된 날짜 파이어베이스에 저장
+                        dayModel.addDay("designer1", dateSetToStringArray(dateSet: clickedDates))
+                        
+                        clickedDates = []
+                        // toast messege 추후 구현
+                    }))
+            }
             Spacer()
         }
         .padding(.horizontal, 9)

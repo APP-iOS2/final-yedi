@@ -7,10 +7,11 @@
 
 import FirebaseFirestoreSwift  // Firestore를 사용
 import Foundation
+import SwiftUI
 
 // 샵에 대한 정보를 담는 구조체
 struct Shop: Codable {
-    var id: String = UUID().uuidString
+    @DocumentID var id: String?
     
     var shopName: String  // 샵 이름
     /// [시] 만 담고 있는 주소
@@ -22,7 +23,7 @@ struct Shop: Codable {
     /// 샵 전화번호
     var telNumber: String?
     /// 위도
-    var longitude: Double?  // 오타 수정: langitude -> longitude
+    var longitude: Double?
     /// 경도
     var latitude: Double?
     /// 시작시간
@@ -67,6 +68,8 @@ struct Designer: Codable {
     var rank: Rank
     /// 디자이너 고유 ID
     var designerUID: String
+    /// 디자이너 샵 정보
+    var shop: Shop?
 }
 
 /// 직급
@@ -133,7 +136,6 @@ struct Post: Codable {
 }
 
 // 헤어 디자인 카테고리를 정의하는 Enum
-
 enum HairCategory: String, Codable {
     case Cut = "커트"
     case Perm = "펌"
@@ -157,6 +159,20 @@ enum HairCategory: String, Codable {
             self = .Else // 기본값 설정
         }
     }
+    
+    // 각 카테고리에 대한 색상을 반환하는 메소드
+    var color: Color {
+        switch self {
+        case .Cut:
+            return Color.red
+        case .Perm:
+            return Color.blue
+        case .Dying:
+            return Color.purple
+        case .Else:
+            return Color.gray
+        }
+    }
 }
 
 /// - 휴무일 설정 구조체
@@ -169,9 +185,31 @@ struct ClosedDay: Identifiable, Codable {
     var day: [String]
 }
 
-/// - 휴식시간 설정 구조체
+/// - Recess Structure
 struct BreakTime: Codable {
     @DocumentID var id: String?
     var designerID: String
-    var breakTime: [String]
+    var selectedTime: [String]
+    var timePeriod: TimePeriod
+}
+/// - 오전, 오후
+enum TimePeriod: CaseIterable, Codable {
+    case am
+    case pm
+    
+    var displayText: String {
+        switch self {
+        case .am:
+            return "AM"
+        case .pm:
+            return "PM"
+        }
+    }
+}
+
+struct Reservation: Codable, Identifiable {
+    @DocumentID var id: String?
+    var designerID: String
+    var dmDate: Date
+    var desciption: String
 }

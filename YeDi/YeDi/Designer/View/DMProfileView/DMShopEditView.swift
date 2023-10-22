@@ -22,7 +22,7 @@ struct DMShopEditView: View {
     @State private var closingHour: Date = Date()
     
     @Environment(\.colorScheme) var colorScheme
-    
+    @EnvironmentObject var userAuth: UserAuth
     private let ranks: [Rank] = [.Owner, .Principal, .Designer, .Intern]
     
     var body: some View {
@@ -77,14 +77,20 @@ struct DMShopEditView: View {
                         
                         VStack(alignment: .leading, spacing: 5) {
                             Text("시/군/구")
-                            TextField("주소", text: $shop.headAddress)
-                                .signInTextFieldStyle(isTextFieldValid: $isNotEmptyDescription)
+                            TextField("시/군/구", text: $shop.headAddress)
+                                .textFieldModifier()
                         }
                         
                         VStack(alignment: .leading, spacing: 5) {
                             Text("도로명")
-                            TextField("주소 ", text: $shop.subAddress)
-                                .signInTextFieldStyle(isTextFieldValid: $isNotEmptyDescription)
+                            TextField("도로명", text: $shop.subAddress)
+                                .textFieldModifier()
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("상세주소")
+                            TextField("상세주소 ", text: $shop.detailAddress)
+                                .textFieldModifier()
                         }
                     }
                     .padding(.vertical, 8)

@@ -15,7 +15,7 @@ struct CMCustomTextFieldStyle: TextFieldStyle {
             .padding(10)
             .background(
                 RoundedRectangle(cornerRadius: 2)
-                    .stroke(Color(white: 0.9), lineWidth: 1)
+                    .stroke(Color.systemFill, lineWidth: 1)
             )
     }
 }
