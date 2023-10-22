@@ -49,7 +49,7 @@ struct DMGridView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(posts, id: \.id) { post in
-                        NavigationLink(destination: DMPostView(selectedPost: post)) {
+                        NavigationLink(destination: DMPostView(post: post)) {
                             PostThumbnail(post: post, imageSize: imageSize)
                         }
                     }
