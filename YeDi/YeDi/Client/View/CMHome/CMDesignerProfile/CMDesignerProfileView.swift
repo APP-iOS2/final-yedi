@@ -54,19 +54,45 @@ struct CMDesignerProfileView: View {
                     Text("팔로워 \(viewModel.isFollowing ? viewModel.formattedFollowerCount(followerCount: designer.followerCount + 1) : viewModel.formattedFollowerCount(followerCount: designer.followerCount)) · 게시물 \(viewModel.designerPosts.count)")
                         .fontWeight(.medium)
                         .padding(.vertical,10)
-                    Button {
-                        Task {
-                            await viewModel.toggleFollow(designerUid: designer.designerUID)
-                        }
-                    } label: {
-                        Text("\(viewModel.isFollowing ? "팔로잉" : "팔로우")")
-                            .foregroundStyle(viewModel.isFollowing ? Color.primaryLabel :  .white)
-                            .padding(.horizontal, 15)
-                            .padding(.vertical, 7)
-                            .background {
-                                Capsule(style: .continuous)
-                                    .fill(viewModel.isFollowing ? .gray : Color.subColor)
+                    HStack {
+                        Button {
+                            Task {
+                                await viewModel.toggleFollow(designerUid: designer.designerUID)
                             }
+                        } label: {
+                            Text("\(viewModel.isFollowing ? "팔로잉" : "팔로우")")
+                                .foregroundStyle(viewModel.isFollowing ? Color.primaryLabel :  .white)
+                                .padding(.horizontal, 15)
+                                .padding(.vertical, 7)
+                                .background {
+                                    Capsule(style: .continuous)
+                                        .fill(viewModel.isFollowing ? .gray : Color.subColor)
+                                }
+                        }
+                        Button {
+                            //
+                        } label: {
+                            Text("상담하기")
+                                .foregroundStyle(Color.primaryLabel)
+                                .padding(.horizontal, 15)
+                                .padding(.vertical, 7)
+                                .background {
+                                    Capsule(style: .continuous)
+                                        .fill(.gray)
+                                }
+                        }
+                        Button {
+                            //
+                        } label: {
+                            Text("예약하기")
+                                .foregroundStyle(Color.primaryLabel)
+                                .padding(.horizontal, 15)
+                                .padding(.vertical, 7)
+                                .background {
+                                    Capsule(style: .continuous)
+                                        .fill(.gray)
+                                }
+                        }
                     }
                 }
                 .padding(.top)
