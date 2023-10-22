@@ -11,14 +11,20 @@ import MapKit
 struct DMProfileView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var userAuth: UserAuth
+    @StateObject var locationManager = LocationManager()
     @StateObject var profileVM: DMProfileViewModel = DMProfileViewModel.shared
     
+    @State private var region = MKCoordinateRegion()
     @State private var isShowDesignerShopEditView = false
     
-    @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 37.33, longitude: 126.8),
-        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-    )
+    var location: MapMarker {
+        MapMarker(
+            coordinate: CLLocationCoordinate2D(
+                    latitude: locationManager.coordinate?.latitude ?? 30,
+                    longitude: locationManager.coordinate?.longitude ?? 30
+            )
+        )
+    }
     
     var body: some View {
         NavigationStack {
@@ -95,7 +101,22 @@ struct DMProfileView: View {
                         Text(profileVM.shop.headAddress)  // 샵 위치
                             .foregroundStyle(.gray)
                         
-                        Map(coordinateRegion: $region)
+                        switch locationManager.authorizationStatus {
+                        case .notDetermined:
+                            Map(coordinateRegion: $region, showsUserLocation: true)
+                        case .restricted:
+                            Map(coordinateRegion: $region, showsUserLocation: true)
+                        case .denied:
+                            Map(coordinateRegion: $region, showsUserLocation: true)
+                        case .authorizedAlways:
+                            Map(coordinateRegion: $region, showsUserLocation: true)
+                        case .authorizedWhenInUse:
+                            Map(coordinateRegion: $region, showsUserLocation: true)
+                        case .authorized:
+                            Map(coordinateRegion: $region, showsUserLocation: true)
+                        @unknown default:
+                            fatalError()
+                        }
                         
                         Divider()
                         
@@ -146,6 +167,16 @@ struct DMProfileView: View {
             // MARK: - Fetch Data on Appear
             .onAppear {
                 Task {
+                    locationManager.requestLocationPermission()
+                    region.center = CLLocationCoordinate2D(
+                        latitude: locationManager.coordinate?.latitude ?? 30,
+                        longitude: locationManager.coordinate?.longitude ?? 130
+                    )
+                    region.span = MKCoordinateSpan(
+                        latitudeDelta: 0.001,
+                        longitudeDelta: 0.001
+                    )
+                    
                     // 디자이너 정보가 변경되지 않았다면 로딩하지 않음
                     if profileVM.designer.id == nil {
                         await profileVM.fetchDesignerProfile(userAuth: userAuth)
