@@ -68,6 +68,7 @@ struct DMShopEditView: View {
                         VStack(alignment: .leading, spacing: 5) {
                             DatePicker("오픈 시간", selection: $openingHour, displayedComponents: .hourAndMinute)
                             DatePicker("마감 시간", selection: $closingHour, displayedComponents: .hourAndMinute)
+                                .padding(.bottom, 7)
                             VStack(alignment: .leading) {
                                 Text("휴무일")
                                 TextField("요일", text: $closedDay)

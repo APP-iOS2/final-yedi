@@ -15,9 +15,9 @@ struct DMAccountInfoEditView: View {
         VStack(alignment: .leading) {
             HStack {
                 Text("이메일")
-                    .padding(.trailing, 40)
-                TextField("이메일", text: $accountEmail)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.trailing, 55)
+                Text("\(accountEmail)")
+                Spacer()
             }
             .padding(.bottom, 15)
             
@@ -25,7 +25,7 @@ struct DMAccountInfoEditView: View {
                 Text("휴대폰 번호")
                     .padding(.trailing, 20)
                 TextField("휴대폰 번호", text: $accountPhoneNumber)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .textFieldStyle(CMCustomTextFieldStyle())
             }
             .padding(.bottom, 15)
         }
