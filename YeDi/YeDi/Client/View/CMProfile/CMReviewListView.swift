@@ -79,11 +79,11 @@ struct CMReviewCell: View {
                 ForEach(review.keywordReviews) { keywordReview in
                     Text("\(keywordReview.keyword)")
                         .font(.subheadline)
-                        .foregroundStyle(.black)
+                        .foregroundStyle(Color.primaryLabel)
                         .padding(10)
                         .background(
                             RoundedRectangle(cornerRadius: 5)
-                                .stroke(Color(white: 0.9), lineWidth: 1)
+                                .stroke(Color.systemFill, lineWidth: 1)
                         )
                 }
             }

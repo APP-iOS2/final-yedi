@@ -29,13 +29,6 @@ struct CMFollowingPostView: View {
                     }
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Text("YeDi")
-                        .font(.title)
-                        .fontWeight(.bold)
-                }
-            }
             .onAppear {
                 postViewModel.fetchPostsForFollowedDesigners(clientID: userAuth.currentClientID ?? "")
             }
