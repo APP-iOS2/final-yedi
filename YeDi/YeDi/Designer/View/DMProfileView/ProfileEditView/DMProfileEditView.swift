@@ -10,8 +10,9 @@ import PhotosUI
 import Firebase
 import FirebaseStorage
 
-// DMProfileEditView: 디자이너의 프로필 수정 뷰
+/// DMProfileEditView: 디자이너의 프로필 수정 뷰
 struct DMProfileEditView: View {
+    // MARK: Properties
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var profileViewModel: DMProfileViewModel
@@ -24,6 +25,7 @@ struct DMProfileEditView: View {
     @State private var designerRank: Rank = .Designer
     @State private var designerGender: String = ""
     @State private var designerBirthDate: String = ""
+    @State private var designerDescription: String = ""
     
     // 계정 정보
     @State private var accountEmail: String = ""
@@ -74,6 +76,7 @@ struct DMProfileEditView: View {
         }
     }
     
+    // MARK: - Body
     var body: some View {
         ScrollView {
             VStack {
@@ -86,7 +89,8 @@ struct DMProfileEditView: View {
                         designerRank: $designerRank,
                         designerGender: $designerGender,
                         designerBirthDate: $designerBirthDate,
-                        isShowingDatePicker: $isShowingDatePicker
+                        isShowingDatePicker: $isShowingDatePicker, 
+                        designerDescription: $designerDescription
                     )
                     .padding(.bottom, 40)
                 } header: {
@@ -98,6 +102,7 @@ struct DMProfileEditView: View {
                     }
                     Divider()
                         .frame(width: 360)
+                        .foregroundStyle(Color.systemFill)
                 }
                 
                 // 계정 정보 수정 섹션
@@ -115,6 +120,7 @@ struct DMProfileEditView: View {
                     }
                     Divider()
                         .frame(width: 360)
+                        .foregroundStyle(Color.systemFill)
                 }
                 
                 Spacer()
@@ -128,12 +134,12 @@ struct DMProfileEditView: View {
                             email: accountEmail,
                             imageURLString: selectedPhotoURL,
                             phoneNumber: accountPhoneNumber,
-                            description: nil,
-                            designerScore: 0,
-                            reviewCount: 0,
-                            followerCount: 0,
-                            skill: [],
-                            chatRooms: [],
+                            description: designerDescription,
+                            designerScore: profileViewModel.designer.designerScore,
+                            reviewCount: profileViewModel.designer.reviewCount,
+                            followerCount: profileViewModel.designer.followerCount,
+                            skill: profileViewModel.designer.skill,
+                            chatRooms: profileViewModel.designer.chatRooms,
                             birthDate: designerBirthDate,
                             gender: designerGender,
                             rank: designerRank,
@@ -156,19 +162,17 @@ struct DMProfileEditView: View {
                         .frame(width: 330, height: 30)
                 })
                 .buttonStyle(.borderedProminent)
-                .tint(.black)
+                .tint(.mainColor)
             }
             .navigationBarTitle("", displayMode: .inline)
             .navigationBarBackButtonHidden(true)
+            .toolbar(.hidden, for: .tabBar)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     HStack {
                         DismissButton(color: nil) {
                             
                         }
-                        Text("YeDi")
-                            .font(.title)
-                            .fontWeight(.bold)
                     }
                 }
             }
@@ -178,12 +182,14 @@ struct DMProfileEditView: View {
                     designerRank = profileViewModel.designer.rank
                     designerGender = profileViewModel.designer.gender
                     designerBirthDate = profileViewModel.designer.birthDate
+                    designerDescription = profileViewModel.designer.description ?? ""
                     accountEmail = profileViewModel.designer.email
                     accountPhoneNumber = profileViewModel.designer.phoneNumber
                     selectedPhotoURL = profileViewModel.designer.imageURLString ?? ""
                 }
+                
+                print("*** \(designerGender)")
             }
-            
             .sheet(isPresented: $isShowingPhotoPicker, content: {
                 PhotoPicker { selectedImageURL in
                     guard let selectedImage = imageFromURL(selectedImageURL) else {
