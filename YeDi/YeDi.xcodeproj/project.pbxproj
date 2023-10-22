@@ -26,6 +26,7 @@
 		2F45A1282AD2739C005018A5 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F45A1272AD2739C005018A5 /* Color.swift */; };
 		2F6363E92AD542AA00E980F8 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6363E82AD542AA00E980F8 /* PhotoPicker.swift */; };
 		2F7B60652ADFAF2B00EF1B96 /* CMCustomTextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B60642ADFAF2B00EF1B96 /* CMCustomTextArea.swift */; };
+		2F8F1B9A2AE4F652002FD403 /* DMCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F1B992AE4F652002FD403 /* DMCustomTextField.swift */; };
 		2FA36FFE2AD93C1F00E750B0 /* CMReservationInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA36FFD2AD93C1F00E750B0 /* CMReservationInfoView.swift */; };
 		2FA370002AD945A000E750B0 /* PhotoSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA36FFF2AD945A000E750B0 /* PhotoSelectionView.swift */; };
 		2FC888982AE240200096ED82 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2FC888972AE240200096ED82 /* LICENSE.txt */; };
@@ -158,6 +159,7 @@
 		2F45A1272AD2739C005018A5 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2F6363E82AD542AA00E980F8 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		2F7B60642ADFAF2B00EF1B96 /* CMCustomTextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMCustomTextArea.swift; sourceTree = "<group>"; };
+		2F8F1B992AE4F652002FD403 /* DMCustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMCustomTextField.swift; sourceTree = "<group>"; };
 		2FA36FFD2AD93C1F00E750B0 /* CMReservationInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReservationInfoView.swift; sourceTree = "<group>"; };
 		2FA36FFF2AD945A000E750B0 /* PhotoSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectionView.swift; sourceTree = "<group>"; };
 		2FC888972AE240200096ED82 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
@@ -670,6 +672,7 @@
 				965ECCED2AD93EEB00BC0D41 /* DMDesignerInfoEditView.swift */,
 				965ECCEE2AD93EEB00BC0D41 /* DMProfileEditView.swift */,
 				639DB67D2AC11AF5002692E5 /* DMProfileView.swift */,
+				2F8F1B992AE4F652002FD403 /* DMCustomTextField.swift */,
 			);
 			path = ProfileEditView;
 			sourceTree = "<group>";
@@ -912,6 +915,7 @@
 				3BCF2C732ACD4248009C18C2 /* CMUpcomingReservationView.swift in Sources */,
 				1D63595D2ACEED0A00FBD37B /* DMProfileViewModel.swift in Sources */,
 				DC7695472AD0888800D2FB69 /* AuthModifier.swift in Sources */,
+				2F8F1B9A2AE4F652002FD403 /* DMCustomTextField.swift in Sources */,
 				1D63595D2ACEED0A00FBD37B /* DMProfileViewModel.swift in Sources */,
 				09CA54B02AD661F300796113 /* CMSearchViewModel.swift in Sources */,
 				3BCF2C8A2ACD4248009C18C2 /* CMClientInfoEditView.swift in Sources */,
