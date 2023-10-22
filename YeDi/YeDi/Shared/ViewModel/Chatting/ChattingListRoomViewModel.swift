@@ -89,7 +89,6 @@ final class ChattingListRoomViewModel: ObservableObject {
         let ref = storeService.collection(bubblePath).order(by: "date", descending: true).limit(to: 1)
         
         ref.addSnapshotListener{[weak self] snapshot, error in
-            
             var bubbles: [CommonBubble] = []
             
             if let error = error {
@@ -126,7 +125,6 @@ final class ChattingListRoomViewModel: ObservableObject {
         let ref = storeService.collection(path).whereField("sender", isNotEqualTo: receive).whereField("isRead", isEqualTo: false)
         
         ref.addSnapshotListener {[weak self] snapshot, error in
-            
             if let error = error {
                 debugPrint("Error getting isRead: \(error)")
                 return
@@ -146,15 +144,14 @@ final class ChattingListRoomViewModel: ObservableObject {
         let colRef: CollectionReference
         
         // MARK: 상대방 유저정보가 필요 하므로 로그인한 계정과 반대인 Collection 탐색
-        if type == UserType.client{
+        if type == .client{
             colRef = storeService.collection("designers")
         } else {
             colRef = storeService.collection("clients")
         }
         
         for chatRoomId in id {
-            colRef.whereField("chatRooms", arrayContains: chatRoomId).getDocuments {[weak self] snapshot, error in
-                
+            colRef.whereField("chatRooms", arrayContains: chatRoomId).addSnapshotListener {[weak self] snapshot, error in
                 if let error = error {
                     debugPrint("Error getting userProfile: \(error)")
                     return
@@ -162,8 +159,15 @@ final class ChattingListRoomViewModel: ObservableObject {
                 
                 if let snapshot = snapshot, !snapshot.isEmpty {
                     for document in snapshot.documents {
-                        let userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "",
-                                                        profileImageURLString: document.data()["profileImageURLString"] as? String ?? "")
+                        var userInfo: ChatListUserInfo
+                        
+                        if type == .client {
+                            userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "",
+                                                            profileImageURLString: document.data()["profileImageURLString"] as? String ?? "")
+                        } else {
+                            userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "",
+                                                        profileImageURLString: document.data()["imageURLString"] as? String ?? "")
+                        }
                         self?.userProfile[chatRoomId] = userInfo
                     }
                 }
