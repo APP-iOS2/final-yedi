@@ -15,6 +15,7 @@ final class ChattingListRoomViewModel: ObservableObject {
     @Published var userProfile: [String: ChatListUserInfo] = [:]
     @Published var unReadCount: [String: Int] = [:]
     @Published var unReadTotalCount: Int = 0
+    @Published var isEmptyChattingList: Bool = true
     
     var getUnReadTotalCount: Int {
         get {
@@ -29,21 +30,21 @@ final class ChattingListRoomViewModel: ObservableObject {
     let storeService = Firestore.firestore()
     
     /// 채팅리스트 및 채팅방 메세지를 가지고오는 메소드
-    @discardableResult
-    func fetchChattingList(login type: UserType?) -> Bool {
+    func fetchChattingList(login type: UserType?) {
         
          guard let userId = fetchUserUID() else {
              debugPrint("로그인 정보를 찾을 수 없음")
-             return true
+             isEmptyChattingList = true
+             return
          }
         
         guard let type else {
             debugPrint("화면정보가 없음")
-            return true
+            isEmptyChattingList = true
+            return
         }
         
         fetchChattingRoomIdList(user: userId, loginType: type)
-        return false
     }
     
     /// 로그인한 User토큰으로 UserUID를 가지고오는 메소드
@@ -72,11 +73,18 @@ final class ChattingListRoomViewModel: ObservableObject {
                 
                 chatRooms = chatRooms.compactMap{ $0.trimmingCharacters(in: .whitespaces) }.filter({ !$0.isEmpty })
                 self?.fetchUserInfo(login: loginType, chatRooms: chatRooms)
-                
-                for chatRoomId in chatRooms {
-                    self?.fetchChattingBubble(chatRoom: chatRoomId)
-                    self?.fetchUnReadMessageCount(chatRoom: chatRoomId, userId: uid)
+                if chatRooms.count < 1 {
+                    self?.isEmptyChattingList = true
+                } else {
+                    self?.isEmptyChattingList = false
+                    
+                    for chatRoomId in chatRooms {
+                        self?.fetchChattingBubble(chatRoom: chatRoomId)
+                        self?.fetchUnReadMessageCount(chatRoom: chatRoomId, userId: uid)
+                    }
                 }
+            } else {
+                self?.isEmptyChattingList = true
             }
         }
     }
