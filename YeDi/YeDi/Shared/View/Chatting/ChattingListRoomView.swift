@@ -76,7 +76,12 @@ struct ChattingListRoomView: View {
                 }
                 .animation(.easeInOut, value: chattingListRoomViewModel.chattingRooms)
                 .listStyle(.plain)
-                .navigationTitle("채팅")
+                .navigationTitle("")
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        YdIconView(height: 30)
+                    }
+                }
             }
         }
         .onAppear {

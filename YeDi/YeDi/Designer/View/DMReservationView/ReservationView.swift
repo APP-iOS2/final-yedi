@@ -52,7 +52,7 @@ struct ReservationView: View {
                             .padding(.bottom)
                     }
                 }
-                .padding(.trailing, 40)
+                .padding(.trailing, 20)
             }
         }
     }
