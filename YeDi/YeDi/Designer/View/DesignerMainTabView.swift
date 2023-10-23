@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct DesignerMainTabView: View {
-    
+    // MARK: - Properties
     @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var chattingListRoomViewModel: ChattingListRoomViewModel
+    
     @State private var selectedIndex = 0
     
+    // MARK: - Body
     var body: some View {
         TabView(selection: $selectedIndex) {
             DMReviewView()
@@ -43,10 +46,13 @@ struct DesignerMainTabView: View {
         }
         .onAppear {
             chattingListRoomViewModel.fetchChattingList(login: userAuth.userType)
+            locationManager.requestLocationPermission()
         }
     }
 }
 
 #Preview {
     DesignerMainTabView()
+        .environmentObject(UserAuth())
+        .environmentObject(ChattingViewModel())
 }

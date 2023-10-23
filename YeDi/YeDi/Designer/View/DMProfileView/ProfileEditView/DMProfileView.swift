@@ -12,19 +12,13 @@ struct DMProfileView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var locationManager: LocationManager
+    
     @StateObject var profileVM: DMProfileViewModel = DMProfileViewModel.shared
     
     @State private var region = MKCoordinateRegion()
-    @State private var isShowDesignerShopEditView = false
+    @State private var markers: [Marker] = []
     
-    var location: MapMarker {
-        MapMarker(
-            coordinate: CLLocationCoordinate2D(
-                    latitude: locationManager.coordinate?.latitude ?? 30,
-                    longitude: locationManager.coordinate?.longitude ?? 30
-            )
-        )
-    }
+    @State private var isShowDesignerShopEditView = false
     
     var body: some View {
         NavigationStack {
@@ -40,8 +34,17 @@ struct DMProfileView: View {
                             Text("\(profileVM.designer.followerCount)")
                                 .font(.subheadline)
                         }
-                        Text(profileVM.designer.description ?? "자기소개가 없습니다.")  // 자기소개
-                            .font(.subheadline)
+                        if let description = profileVM.designer.description {
+                            if description.isEmpty {
+                                Text("자기소개가 없습니다.")
+                                    .font(.subheadline)
+                            }
+                            Text(description)
+                                .font(.subheadline)
+                        } else {
+                            Text("자기소개가 없습니다.")
+                                .font(.subheadline)
+                        }
                     }
                     Spacer()
                     // 디자이너 프로필 사진
@@ -63,9 +66,11 @@ struct DMProfileView: View {
                             }
                         }
                         .padding(.trailing, 20)
+                        .offset(y: -5)
                     } else {
                         defaultProfileImage()
                             .padding(.trailing, 20)
+                            .offset(y: -5)
                     }
                 }
                 .padding([.leading], 20)  // HStack의 전체 왼쪽 패딩을 조절
@@ -103,25 +108,37 @@ struct DMProfileView: View {
                         
                         switch locationManager.authorizationStatus {
                         case .notDetermined:
-                            Map(coordinateRegion: $region, showsUserLocation: true)
+                            Map(coordinateRegion: $region)
+                            Map(coordinateRegion: $region, annotationItems: markers) { marker in
+                                MapAnnotation(coordinate: marker.coordinate) {
+                                    Circle()
+                                        .stroke(.red, lineWidth: 3)
+                                        .frame(width: 44, height: 44)
+                                }
+                            }
                         case .restricted:
-                            Map(coordinateRegion: $region, showsUserLocation: true)
+                            Map(coordinateRegion: $region)
                         case .denied:
-                            Map(coordinateRegion: $region, showsUserLocation: true)
+                            Map(coordinateRegion: $region)
                         case .authorizedAlways:
-                            Map(coordinateRegion: $region, showsUserLocation: true)
+                            Map(coordinateRegion: $region)
                         case .authorizedWhenInUse:
-                            Map(coordinateRegion: $region, showsUserLocation: true)
+                            Map(coordinateRegion: $region)
                         case .authorized:
-                            Map(coordinateRegion: $region, showsUserLocation: true)
+                            Map(coordinateRegion: $region)
                         @unknown default:
                             fatalError()
                         }
                         
                         Divider()
                         
-                        Text("휴무일: \(profileVM.shop.closedDays.joined(separator: ", "))")  // 휴무일 정보
-                            .foregroundStyle(.gray)
+                        HStack {
+                            Text("휴무일 ")
+                                .fontWeight(.semibold)
+                            Text("\(profileVM.shop.closedDays.joined(separator: ", "))")
+                        }
+                        .foregroundStyle(.gray)
+                            
                     }
                     .padding()
                 }
@@ -146,8 +163,11 @@ struct DMProfileView: View {
                     userAuth: _userAuth
                 )
             })
-            .toolbar(.hidden, for: .tabBar)
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    YdIconView(height: 30)
+                }
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack {
                         NavigationLink {
@@ -158,25 +178,10 @@ struct DMProfileView: View {
                         }
                     }
                 }
-                ToolbarItem(placement: .topBarLeading) {
-                    Text("YeDi")
-                        .font(.title)
-                        .fontWeight(.bold)
-                }
             }
             // MARK: - Fetch Data on Appear
             .onAppear {
                 Task {
-                    locationManager.requestLocationPermission()
-                    region.center = CLLocationCoordinate2D(
-                        latitude: locationManager.coordinate?.latitude ?? 30,
-                        longitude: locationManager.coordinate?.longitude ?? 130
-                    )
-                    region.span = MKCoordinateSpan(
-                        latitudeDelta: 0.001,
-                        longitudeDelta: 0.001
-                    )
-                    
                     // 디자이너 정보가 변경되지 않았다면 로딩하지 않음
                     if profileVM.designer.id == nil {
                         await profileVM.fetchDesignerProfile(userAuth: userAuth)
@@ -207,6 +212,24 @@ struct DMProfileView: View {
                     } else {
                         print("디자이너 UID가 유효하지 않습니다.")
                     }
+                    
+                    region.center = CLLocationCoordinate2D(
+                        latitude: profileVM.shop.latitude ?? 37.57,
+                        longitude: profileVM.shop.longitude ?? 126.98
+                    )
+                    region.span = MKCoordinateSpan(
+                        latitudeDelta: 0.001,
+                        longitudeDelta: 0.001
+                    )
+                    
+                    markers.append(
+                        Marker(
+                            name: "\(profileVM.shop.shopName)",
+                            coordinate: CLLocationCoordinate2D(
+                                latitude: profileVM.shop.latitude ?? 37.57,
+                                longitude: profileVM.shop.longitude ?? 126.98)
+                        )
+                    )
                 }
             }
         }

@@ -22,6 +22,11 @@ struct DMReviewView: View {
             }
             .listStyle(.plain)
             .navigationTitle("내 리뷰")
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    YdIconView(height: 30)
+                }
+            }
         }
         .onAppear {
             reviewsModel.fetchReviews()
