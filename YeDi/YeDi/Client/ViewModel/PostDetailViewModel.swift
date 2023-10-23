@@ -15,6 +15,7 @@ final class PostDetailViewModel: ObservableObject {
     @Published var selectedImageID: String = ""
     @Published var isFollowing: Bool = false
     @Published var isLiked: Bool = false
+    @Published var designer: Designer?
     
     private let db = Firestore.firestore()
     private var currentUserUid: String? {
@@ -126,6 +127,17 @@ final class PostDetailViewModel: ObservableObject {
             }
         } catch {
             print("isLikedPost error: \(error)")
+        }
+    }
+    
+    @MainActor
+    func getDesignerProfile(designerUid: String) async {
+        print(designerUid)
+        do {
+            let document = try await db.collection("designers").document(designerUid).getDocument()
+            self.designer = try document.data(as: Designer.self)
+        } catch {
+            print("getDesignerProfile Error: \(error)")
         }
     }
 }

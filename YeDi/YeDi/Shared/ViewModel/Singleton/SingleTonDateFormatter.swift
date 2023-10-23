@@ -50,6 +50,15 @@ final class SingleTonDateFormatter {
         }
     }
     
+    
+    func changeStringToDate(dateString: String) -> Date {
+        if let date = dateFormatter.date(from: dateString) {
+            return date
+        } else {
+            return Date()
+        }
+    }
+    
     /// Firebase 날짜 포맷 Method
     ///  - Returns: ISO8601 형식(yyyy-MM-dd'T'HH:mm:ssZ) DateFormatter 반환
     func firebaseDateFormat() -> DateFormatter {
@@ -69,5 +78,4 @@ final class SingleTonDateFormatter {
         return dateFormatter.string(from: date)
         
     }
-    
 }
