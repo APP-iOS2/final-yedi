@@ -179,12 +179,18 @@ enum HairCategory: String, Codable {
 struct ClosedDay: Identifiable, Codable {
     /// Firestore 문서 ID
     var id: String
+    /// designerUid
+    var designerUid: String
     /// 설정한 휴무일
     var day: [String]
 }
 
 /// - Recess Structure
 struct BreakTime: Codable {
+    /// firebase 문서 ID
     var id: String
+    /// designerUid
+    var designerUid: String
+    /// 설정한 휴게 시간
     var selectedTime: [String]
 }
