@@ -19,6 +19,7 @@ struct LoginView: View {
     
     @State private var isEmailValid: Bool = true
     @State private var isPasswordValid: Bool = true
+    @State private var isShowingPassword: Bool = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -77,12 +78,26 @@ struct LoginView: View {
     private var inputPasswordTextField: some View {
         VStack(alignment: .leading, spacing: 5) {
             Text("패스워드")
-            TextField("패스워드", text: $password)
-                .keyboardType(.emailAddress)
-                .signInTextFieldStyle(isTextFieldValid: $isPasswordValid)
-                .onChange(of: email) { newValue in
-                    email = newValue.trimmingCharacters(in: .whitespaces)
+            
+            HStack {
+                if isShowingPassword {
+                    TextField("패스워드", text: $password)
+                } else {
+                    SecureField("패스워드", text: $password)
                 }
+                
+                Spacer()
+                
+                Button(action: {
+                    isShowingPassword.toggle()
+                }, label: {
+                    Image(systemName: isShowingPassword ? "eye.fill" : "eye.slash.fill")
+                })
+            }
+            .signInTextFieldStyle(isTextFieldValid: $isPasswordValid)
+            .onChange(of: password) { newValue in
+                password = newValue.trimmingCharacters(in: .whitespaces)
+            }
         }
     }
     
