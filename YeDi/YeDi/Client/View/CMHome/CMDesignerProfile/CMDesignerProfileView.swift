@@ -16,86 +16,114 @@ struct CMDesignerProfileView: View {
     var body: some View {
         ScrollView {
             VStack {
-                VStack {
-                    if let imageURLString = designer.imageURLString {
-                        AsyncImage(url: URL(string: "\(imageURLString)")) { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(maxWidth: 100, maxHeight: 100)
-                                .clipShape(Circle())
-                        } placeholder: {
+                VStack(alignment: .leading) {
+                    HStack {
+                        if let imageURLString = designer.imageURLString {
+                            AsyncImage(url: URL(string: "\(imageURLString)")) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(maxWidth: 80, maxHeight: 80)
+                                    .clipShape(Circle())
+                            } placeholder: {
+                                Text(String(designer.name.first ?? " ").capitalized)
+                                            .font(.title)
+                                            .fontWeight(.bold)
+                                            .frame(width: 80, height: 80)
+                                            .background(Circle().fill(.gray))
+                                            .foregroundColor(Color.primaryLabel)
+                            }
+                        } else {
                             Text(String(designer.name.first ?? " ").capitalized)
-                                        .font(.largeTitle)
+                                        .font(.title)
                                         .fontWeight(.bold)
-                                        .frame(width: 100, height: 100)
+                                        .frame(width: 80, height: 80)
                                         .background(Circle().fill(.gray))
                                         .foregroundColor(Color.primaryLabel)
+                            
                         }
-                    } else {
-                        Text(String(designer.name.first ?? " ").capitalized)
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                                    .frame(width: 100, height: 100)
-                                    .background(Circle().fill(.gray))
-                                    .foregroundColor(Color.primaryLabel)
                         
-                    }
-                    Text(designer.name)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .padding(.top,10)
-                    Text(designer.description ?? "")
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                        .font(.callout)
-                        .fontWeight(.light)
-                        .padding(.horizontal)
-                    Text("팔로워 \(viewModel.isFollowing ? viewModel.formattedFollowerCount(followerCount: designer.followerCount + 1) : viewModel.formattedFollowerCount(followerCount: designer.followerCount)) · 게시물 \(viewModel.designerPosts.count)")
-                        .fontWeight(.medium)
-                        .padding(.vertical,10)
-                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(designer.name)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                            Text("팔로워 \(viewModel.formattedFollowerCount(followerCount: viewModel.previousFollowerCount)) · 게시물 \(viewModel.designerPosts.count)")
+                                .font(.callout)
+                        }
+                        .padding(.leading, 4)
+                        
+                        Spacer()
+                        
                         Button {
                             Task {
                                 await viewModel.toggleFollow(designerUid: designer.designerUID)
+                                await viewModel.updateFollowerCountForDesigner(designerUID: designer.designerUID, followerCount: designer.followerCount)
                             }
                         } label: {
                             Text("\(viewModel.isFollowing ? "팔로잉" : "팔로우")")
+                                .font(.callout)
                                 .foregroundStyle(viewModel.isFollowing ? Color.primaryLabel :  .white)
                                 .padding(.horizontal, 15)
                                 .padding(.vertical, 7)
                                 .background {
                                     Capsule(style: .continuous)
-                                        .fill(viewModel.isFollowing ? .gray : Color.subColor)
+                                        .fill(viewModel.isFollowing ? Color.quaternarySystemFill : Color.subColor)
                                 }
                         }
-                        Button {
-                            //
-                        } label: {
-                            Text("상담하기")
+                        
+                    }
+                    
+                    if let description = designer.description {
+                        if description != "" {
+                            Text(description)
+                                .lineLimit(1)
+                                .font(.callout)
                                 .foregroundStyle(Color.primaryLabel)
-                                .padding(.horizontal, 15)
-                                .padding(.vertical, 7)
-                                .background {
-                                    Capsule(style: .continuous)
-                                        .fill(.gray)
-                                }
-                        }
-                        Button {
-                            //
-                        } label: {
-                            Text("예약하기")
-                                .foregroundStyle(Color.primaryLabel)
-                                .padding(.horizontal, 15)
-                                .padding(.vertical, 7)
-                                .background {
-                                    Capsule(style: .continuous)
-                                        .fill(.gray)
-                                }
+                                .padding(.top, 4)
                         }
                     }
+                    
+                    HStack {
+                        Button {
+                            //
+                        } label: {
+                            HStack {
+                                Spacer()
+                                Text("상담하기")
+                                    .font(.callout)
+                                    .foregroundStyle(Color.primaryLabel)
+                                    .padding(.horizontal, 15)
+                                    .padding(.vertical, 7)
+                                Spacer()
+                            }
+                            .background {
+                                Capsule(style: .continuous)
+                                    .fill(Color.quaternarySystemFill)
+                            }
+                        }
+                        .padding(.trailing, 1)
+                        Button {
+                            //
+                        } label: {
+                            HStack {
+                                Spacer()
+                                Text("예약하기")
+                                    .font(.callout)
+                                    .foregroundStyle(Color.primaryLabel)
+                                    .padding(.horizontal, 15)
+                                    .padding(.vertical, 7)
+                                Spacer()
+                            }
+                            .background {
+                                Capsule(style: .continuous)
+                                    .fill(Color.quaternarySystemFill)
+                            }
+                        }
+                        .padding(.leading, 1)
+                    }
+                    .padding(.top, 4)
                 }
-                .padding(.top)
+                .padding(.horizontal)
                 
                 VStack {
                     VStack(alignment: .leading) {
@@ -139,6 +167,7 @@ struct CMDesignerProfileView: View {
             viewModel.fetchDesignerPosts(designerUID: designer.designerUID)
             viewModel.fetchReview()
             viewModel.fetchKeywords()
+            viewModel.previousFollowerCount = designer.followerCount
         }
         Spacer()
     }

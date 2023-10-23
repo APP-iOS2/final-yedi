@@ -9,12 +9,14 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
+@MainActor
 class CMDesignerProfileViewModel: ObservableObject {
     @Published var designerPosts: [Post] = []
     @Published var reviews: [Review] = []
     @Published var keywords: [String] = []
     @Published var keywordCount: [(String, Int)] = []
     @Published var isFollowing: Bool = false
+    @Published var previousFollowerCount: Int = 0
     
     private let db = Firestore.firestore()
     private var currentUserUid: String? {
@@ -44,12 +46,9 @@ class CMDesignerProfileViewModel: ObservableObject {
         if isFollowing {
             isFollowing = false
             await unfollowing(designerUid: designerUid, currentUserUid: uid)
-            await updateFollowerCount(increment: false, designerUid: designerUid)
-
         } else {
             isFollowing = true
             await following(designerUid: designerUid, currentUserUid: uid)
-            await updateFollowerCount(increment: false, designerUid: designerUid)
         }
     }
     
@@ -80,40 +79,37 @@ class CMDesignerProfileViewModel: ObservableObject {
         }
     }
     
-    private func updateFollowerCount(increment: Bool, designerUid: String) async {
+    func updateFollowerCountForDesigner(designerUID: String, followerCount: Int) async {
+        print("Received designerUID: \(designerUID)")
+        guard !designerUID.isEmpty else {
+            print("UID가 유효하지 않습니다.")
+            return
+        }
+        
+        let followingCollection = Firestore.firestore().collection("following")
+        let designerRef = Firestore.firestore().collection("designers").document(designerUID)
+        
         do {
-            let designerRef = db.collection("designers").document(designerUid)
+            let followingDocuments = try await followingCollection.whereField("uids", arrayContains: designerUID).getDocuments()
             
-            try await db.runTransaction({ transaction, errorPointer in
-                let designerDocument: DocumentSnapshot
-                do {
-                    designerDocument = try transaction.getDocument(designerRef)
-                } catch let fetchError as NSError {
-                    errorPointer?.pointee = fetchError
-                    return nil
-                }
+            let validDocuments = followingDocuments.documents
+            if !validDocuments.isEmpty {
+                let followerCountFromFirebase = validDocuments.count
                 
-                guard let designerData = designerDocument.data() else {
-                    let error = NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Designer document does not exist"])
-                    errorPointer?.pointee = error
-                    return nil
-                }
-                
-                let currentFollowerCount = designerData["followerCount"] as? Int ?? 0
-                var newFollowerCount = currentFollowerCount
-                
-                if increment {
-                    newFollowerCount += 1
+                if followerCountFromFirebase != self.previousFollowerCount {
+                    try await designerRef.updateData(["followerCount": followerCountFromFirebase])
+                    _ = followerCountFromFirebase
+                    self.previousFollowerCount = followerCountFromFirebase
+                    print("팔로워 수가 \(followerCountFromFirebase)으로 업데이트되었습니다.")
+                    
                 } else {
-                    newFollowerCount = max(0, newFollowerCount - 1)
+                    print("팔로워 수가 변경되지 않았습니다.")
                 }
-                
-                transaction.updateData(["followerCount": newFollowerCount], forDocument: designerRef)
-                
-                return nil
-            })
-        } catch {
-            print("Error updating follower count: \(error)")
+            } else {
+                print("팔로우한 디자이너를 찾지 못했습니다.")
+            }
+        } catch let error {
+            print("Error updating follower count: \(error.localizedDescription)")
         }
     }
     
