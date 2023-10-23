@@ -11,13 +11,11 @@ import Firebase
 struct ChattingListRoomView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var chattingListRoomViewModel : ChattingListRoomViewModel
-    @State private var isEmptyChatRooms: Bool = false
 
     
     var body: some View {
         VStack {
-            if isEmptyChatRooms {
-                ProgressView()
+            if chattingListRoomViewModel.isEmptyChattingList {
                 Text("채팅 내역이 없습니다.")
                     .foregroundStyle(.gray)
             } else {
@@ -80,7 +78,7 @@ struct ChattingListRoomView: View {
             }
         }
         .onAppear {
-            isEmptyChatRooms = chattingListRoomViewModel.fetchChattingList(login: userAuth.userType)
+            chattingListRoomViewModel.fetchChattingList(login: userAuth.userType)
         }
     }
     
