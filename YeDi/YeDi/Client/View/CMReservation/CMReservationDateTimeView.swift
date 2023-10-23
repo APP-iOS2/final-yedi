@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CMReservationDateTimeView: View {
+    let designerID: String
+    
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var postDetailViewModel: PostDetailViewModel
     @StateObject var reservationViewModel: CMReservationViewModel = CMReservationViewModel()
@@ -90,11 +92,11 @@ struct CMReservationDateTimeView: View {
             Task {
                 await withTaskGroup(of: Void.self) { group in
                     group.addTask {
-                        await reservationViewModel.fetchCalendar(designerUID: postDetailViewModel.designer?.designerUID ?? "")
+                        await reservationViewModel.fetchCalendar(designerUID: designerID)
                     }
                     
                     group.addTask {
-                        await reservationViewModel.fetchOperatingTime(designerUID: postDetailViewModel.designer?.designerUID ?? "")
+                        await reservationViewModel.fetchOperatingTime(designerUID: designerID)
                     }
                 }
 
@@ -138,7 +140,7 @@ struct CMReservationDateTimeView: View {
                                 selectedDate = value.date
                                 print("asd\(selectedDate)")
                                 Task {
-                                    await reservationViewModel.fetchAvailableReservationTime(date: selectedDate, designerUID: postDetailViewModel.designer?.designerUID ?? "")
+                                    await reservationViewModel.fetchAvailableReservationTime(date: selectedDate, designerUID: designerID)
                                 }
                             }
                         }
@@ -374,13 +376,6 @@ extension Date {
             // 날짜의 `day` 값으로 현재 월의 첫번째 날로부터 날짜를 계산
             return calendar.date(byAdding: .day, value: day - 1, to: startDate)!
         }
-    }
-}
-
-#Preview {
-    NavigationStack {
-        CMReservationDateTimeView(isPresentedAlert: .constant(false), isPresentedNavigation: .constant(true))
-            .environmentObject(PostDetailViewModel())
     }
 }
 

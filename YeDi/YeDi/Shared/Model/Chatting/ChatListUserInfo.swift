@@ -8,6 +8,7 @@
 import Foundation
 
 struct ChatListUserInfo {
+    var uid: String
     var name: String
     var profileImageURLString: String
 }

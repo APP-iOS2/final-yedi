@@ -217,7 +217,7 @@ struct CMFeedDetailContentView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
                 .navigationDestination(isPresented: $isPresentedNavigation, destination: {
-                    CMReservationDateTimeView(isPresentedAlert: $isPresentedAlert, isPresentedNavigation: $isPresentedNavigation)
+                    CMReservationDateTimeView(designerID: postDetailViewModel.designer?.designerUID ?? "", isPresentedAlert: $isPresentedAlert, isPresentedNavigation: $isPresentedNavigation)
                         .environmentObject(postDetailViewModel)
                 })
                 .buttonStyle(.automatic)
