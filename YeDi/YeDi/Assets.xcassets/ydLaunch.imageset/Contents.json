@@ -1,17 +1,50 @@
 {
   "images" : [
     {
-      "filename" : "ydIcon_1x.png",
+      "filename" : "ydIconBlack_1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ydIcon_2x.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "ydIcon_1x 1.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "ydIconBlack_2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ydIcon_3x.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "ydIcon_2x 1.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "ydIconBlack_3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "ydIcon_3x 1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -21,6 +54,7 @@
     "version" : 1
   },
   "properties" : {
+    "preserves-vector-representation" : true,
     "template-rendering-intent" : "original"
   }
 }
