@@ -16,7 +16,7 @@ final class CMReservationViewModel: ObservableObject {
     @Published var closingTime: Int = 0
     @Published var breakTime: [Int] = []
     private let db = Firestore.firestore()
-    private var closedDay: ClosedDay = ClosedDay(id: "", day: [])
+    private var closedDay: ClosedDay = ClosedDay(id: "", designerUID: "", closedDay: [])
     private var currentUserUid: String? {
         return Auth.auth().currentUser?.uid
     }
@@ -36,12 +36,12 @@ final class CMReservationViewModel: ObservableObject {
     @MainActor
     func fetchCalendar(designerUID: String) async {
         do {
-            let querySnapshot = try await db.collection("closedDays").whereField("designerID", isEqualTo: designerUID).getDocuments()
+            let querySnapshot = try await db.collection("closedDays").whereField("designerUID", isEqualTo: designerUID).getDocuments()
             for document in querySnapshot.documents {
                 closedDay = try document.data(as: ClosedDay.self)
             }
             
-            for day in closedDay.day {
+            for day in closedDay.closedDay {
                 let date = SingleTonDateFormatter.sharedDateFommatter.changeStringToDate(dateString: day)
                 self.dates.append(date)
             }
@@ -91,7 +91,6 @@ final class CMReservationViewModel: ObservableObject {
     func fetchBreakTime(designerUID: String) async {
         
     }
-    
 
     private func extractHoursFromTimeString(_ timeString: String) -> Int? {
        let date = SingleTonDateFormatter.sharedDateFommatter.changeStringToDate(dateString: timeString)

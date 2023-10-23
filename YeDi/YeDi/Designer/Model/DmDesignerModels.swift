@@ -180,9 +180,9 @@ struct ClosedDay: Identifiable, Codable {
     /// Firestore 문서 ID
     var id: String
     /// designerUid
-    var designerUid: String
+    var designerUID: String
     /// 설정한 휴무일
-    var day: [String]
+    var closedDay: [String]
 }
 
 /// - Recess Structure
