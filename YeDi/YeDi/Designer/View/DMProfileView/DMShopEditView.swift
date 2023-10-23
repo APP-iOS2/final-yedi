@@ -96,15 +96,7 @@ struct DMShopEditView: View {
                                 .textFieldModifier()
                         }
                         
-                        if !shop.headAddress.isEmpty && !shop.subAddress.isEmpty {
-                            let address = shop.headAddress + shop.subAddress
-                            let _: () = locationManager.getCoordinate(addressString: address) { coordinate, error in
-                                guard error == nil else { return }
-                                
-                                shop.latitude = coordinate.latitude
-                                shop.longitude = coordinate.longitude
-                            }
-                        }
+                      
                     }
                     .padding(.vertical, 8)
                     
@@ -112,6 +104,10 @@ struct DMShopEditView: View {
                 }
                 .padding(.vertical, 8)
                 .padding(.horizontal)
+                .onDisappear(perform: {
+                    setCordinate()
+                    convertDateString()
+                })
                 .onAppear(perform: {
                     let dateFomatter = SingleTonDateFormatter.sharedDateFommatter.firebaseDateFormat()
                     
@@ -143,7 +139,17 @@ struct DMShopEditView: View {
             }
         }
     }
-    
+    private func setCordinate() {
+        if !shop.headAddress.isEmpty && !shop.subAddress.isEmpty {
+            let address = shop.headAddress + shop.subAddress
+            let _: () = locationManager.getCoordinate(addressString: address) { coordinate, error in
+                guard error == nil else { return }
+                
+                shop.latitude = coordinate.latitude
+                shop.longitude = coordinate.longitude
+            }
+        }
+    }
     private func convertDateString() {
         let fomatter = SingleTonDateFormatter.sharedDateFommatter
         
