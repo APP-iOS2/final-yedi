@@ -178,38 +178,13 @@ enum HairCategory: String, Codable {
 /// - 휴무일 설정 구조체
 struct ClosedDay: Identifiable, Codable {
     /// Firestore 문서 ID
-    @DocumentID var id: String?
-    /// 휴무일 설정한 계정의 디자이너 ID
-    var designerID: String
+    var id: String
     /// 설정한 휴무일
     var day: [String]
 }
 
 /// - Recess Structure
 struct BreakTime: Codable {
-    @DocumentID var id: String?
-    var designerID: String
+    var id: String
     var selectedTime: [String]
-    var timePeriod: TimePeriod
-}
-/// - 오전, 오후
-enum TimePeriod: CaseIterable, Codable {
-    case am
-    case pm
-    
-    var displayText: String {
-        switch self {
-        case .am:
-            return "AM"
-        case .pm:
-            return "PM"
-        }
-    }
-}
-
-struct Reservation: Codable, Identifiable {
-    @DocumentID var id: String?
-    var designerID: String
-    var dmDate: Date
-    var desciption: String
 }

@@ -9,16 +9,17 @@ import SwiftUI
 
 struct WkDaySettingDetail: View {
     
+    @Binding var showingRestDaySetting: Bool
+    
     var body: some View {
         VStack(alignment: .leading) {
-            CustomCalender()
+            CustomCalender(showingRestDaySetting: $showingRestDaySetting)
         }
-        .navigationTitle("휴무일 설정")
     }
 }
 
 #Preview {
     NavigationStack {
-        WkDaySettingDetail()
+        WkDaySettingDetail(showingRestDaySetting: .constant(true))
     }
 }

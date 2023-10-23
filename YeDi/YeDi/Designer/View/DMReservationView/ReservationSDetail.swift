@@ -10,6 +10,7 @@ import SwiftUI
 struct ReservationSDetail: View {
     
     @Binding var isShowing: Bool
+    @State private var tasks: [Tasks] = sampleTasks
     
     var body: some View {
         VStack {

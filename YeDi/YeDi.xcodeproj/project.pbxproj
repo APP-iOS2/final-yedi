@@ -117,11 +117,11 @@
 		965ECCF12AD93EEB00BC0D41 /* DMProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965ECCEE2AD93EEB00BC0D41 /* DMProfileEditView.swift */; };
 		965ECCF22AD93EEB00BC0D41 /* DMAccountInfoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965ECCEF2AD93EEB00BC0D41 /* DMAccountInfoEditView.swift */; };
 		9666A21B2ACDBB6D0081C711 /* TimeSettingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9666A21A2ACDBB6D0081C711 /* TimeSettingDetail.swift */; };
+		968F541B2AE2817C0015F9F4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 968F541A2AE2817C0015F9F4 /* GoogleService-Info.plist */; };
 		9691C5D02ADE549600434377 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 9691C5CF2ADE549600434377 /* FirebaseDatabase */; };
 		9691C5D22ADE552100434377 /* CustomCalender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9691C5D12ADE552100434377 /* CustomCalender.swift */; };
 		9691C5D42ADE554300434377 /* ClosedDaySettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9691C5D32ADE554300434377 /* ClosedDaySettingVM.swift */; };
 		9691C5D62ADE554A00434377 /* BreakTimeSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9691C5D52ADE554A00434377 /* BreakTimeSettingVM.swift */; };
-		96BF382B2AE01217000DC15D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96BF382A2AE01217000DC15D /* GoogleService-Info.plist */; };
 		96CBD4022AC3B0250055CC7F /* ReservationDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */; };
 		96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */; };
 		96D8753D2AE0CEED00F35226 /* DMReservationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D8753C2AE0CEED00F35226 /* DMReservationVM.swift */; };
@@ -252,10 +252,11 @@
 		965ECCEE2AD93EEB00BC0D41 /* DMProfileEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMProfileEditView.swift; sourceTree = "<group>"; };
 		965ECCEF2AD93EEB00BC0D41 /* DMAccountInfoEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMAccountInfoEditView.swift; sourceTree = "<group>"; };
 		9666A21A2ACDBB6D0081C711 /* TimeSettingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSettingDetail.swift; sourceTree = "<group>"; };
+		968F541A2AE2817C0015F9F4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		968F541C2AE2834F0015F9F4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9691C5D12ADE552100434377 /* CustomCalender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCalender.swift; sourceTree = "<group>"; };
 		9691C5D32ADE554300434377 /* ClosedDaySettingVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClosedDaySettingVM.swift; sourceTree = "<group>"; };
 		9691C5D52ADE554A00434377 /* BreakTimeSettingVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BreakTimeSettingVM.swift; sourceTree = "<group>"; };
-		96BF382A2AE01217000DC15D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		96CBD4012AC3B0250055CC7F /* ReservationDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetail.swift; sourceTree = "<group>"; };
 		96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WkDaySettingDetail.swift; sourceTree = "<group>"; };
 		96D8753C2AE0CEED00F35226 /* DMReservationVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMReservationVM.swift; sourceTree = "<group>"; };
@@ -296,7 +297,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-
 		09CDA9162AE421A5009FB75C /* CMDesignerProfile */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,7 +309,6 @@
 			path = CMDesignerProfile;
 			sourceTree = "<group>";
 		};
-
 		2F45A1262AD27388005018A5 /* Extension */ = {
 			isa = PBXGroup;
 			children = (

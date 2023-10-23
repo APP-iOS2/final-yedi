@@ -13,8 +13,9 @@ struct CustomCalender: View {
     @State var offset: CGSize = CGSize()
     @State var clickedDates: Set<Date> = []
     @State var showingAlert: Bool = false
-    
+    @Binding var showingRestDaySetting: Bool
     @ObservedObject var dayModel = ClosedDaySetting()
+    @State var isContent2: Bool = false
     
     func dateSetToStringArray(dateSet: Set<Date>) -> [String] {
         return dateSet.map { date in
@@ -24,54 +25,81 @@ struct CustomCalender: View {
     }
     
     var body: some View {
-        VStack {
-            HStack {
-                Text("날짜를 선택하세요.")
-                    .foregroundStyle(.black)
-                
-                    .font(.system(size: 14))
-                VStack {
-                    Divider().padding(.leading, 3)
-                }
-            }
-            .padding(.top)
-            .padding(.leading)
-            
-            headerView
-            calendarGridView
-            
-            Spacer().frame(height: 50)
-            Divider()
-            Spacer().frame(height: 50)
-            
-            Button(action: {
-                showingAlert.toggle()
-            }, label: {
-                Text("설정하기")
-                    .foregroundColor(.black)
-                    .background {
-                        RoundedRectangle(cornerRadius: 5)
-                            .frame(width: 100, height: 45)
-                            .foregroundColor(.gray)
+        ScrollView {
+            VStack {
+                HStack {
+                    Text("휴무일 설정")
+                        .foregroundStyle(.black)
+                        .font(.system(size: 20))
+                    Spacer().frame(width: 230).padding(.bottom)
+                    Button {
+                        showingRestDaySetting = false
+                    } label: {
+                        Image(systemName: "xmark")
                     }
-            })
-            .alert(isPresented: $showingAlert) {
-                Alert(
-                    title: Text("휴무일 설정"),
-                    message: Text("설정하시겠습니까?"),
-                    primaryButton: .destructive(Text("취소")) {
-                        print("Deleting...")
-                        showingAlert = false
-                    },
-                    secondaryButton: .default(Text("설정하기"), action: {
-                        // 선택된 날짜 파이어베이스에 저장
-                        dayModel.addDay("designer1", dateSetToStringArray(dateSet: clickedDates))
-                        
-                        clickedDates = []
-                        // toast messege 추후 구현
-                    }))
+                }
+                
+                .padding(.top)
+                .padding(.leading)
+                Divider()
+                /// 년, 월 표시 view
+                headerView
+                /// 달력 표시하는 view
+                calendarGridView
+                Spacer().frame(height: 20)
+                Divider()
+                Spacer().frame(height: 20)
+                Button(action: {
+                    showingAlert.toggle()
+                }, label: {
+                    Text("설정하기")
+                        .foregroundColor(.black)
+                        .background {
+                            RoundedRectangle(cornerRadius: 5)
+                                .frame(width: 100, height: 40)
+                                .foregroundColor(.gray4)
+                        }
+                })
+                .alert(isPresented: $showingAlert) {
+                    Alert(
+                        title: Text("휴무일 설정"),
+                        message: Text("설정하시겠습니까?"),
+                        primaryButton: .destructive(Text("취소")) {
+                            showingAlert = false
+                        },
+                        secondaryButton: .default(Text("설정하기"), action: {
+                            // 선택된 날짜 파이어베이스에 저장
+                            dayModel.addDay(dateSetToStringArray(dateSet: clickedDates))
+                            
+                            clickedDates = []
+                            // toast messege 추후 구현
+                        }))
+                }
+                ZStack {
+                    RoundedRectangle(cornerRadius: 21)
+                        .foregroundStyle(Color.gray4)
+                        .frame(width: .infinity, height: 330)
+                        .padding(.horizontal)
+                        .padding(.bottom, 30)
+                        .padding(.top, 10)
+                    
+                    ScrollView {
+                            Text("날짜를 추가하세요")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Color.gray)
+                            .padding(.top, 3)
+                            ForEach(dateSetToStringArray(dateSet: clickedDates), id: \.self) { date in
+                                Text("\(date)")
+                                    .padding(.top, 3)
+                                    .font(.system(size: 15))
+                        }
+                    }
+                    .padding(.vertical)
+                }
+                
+                Spacer()
             }
-            Spacer()
         }
         .padding(.horizontal, 9)
         .gesture(
@@ -117,7 +145,7 @@ struct CustomCalender: View {
                 ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
                     if index < firstWeekday {
                         RoundedRectangle(cornerRadius: 5)
-                            .foregroundColor(Color.clear)
+                            .foregroundColor(Color.black)
                     } else {
                         let date = getDate(for: index - firstWeekday)
                         let day = index - firstWeekday + 1
@@ -172,6 +200,7 @@ private extension CustomCalender {
     private func getDate(for day: Int) -> Date {
         return Calendar.current.date(byAdding: .day, value: day, to: startOfMonth())!
     }
+   
     /// 해당 월의 시작 날짜
     func startOfMonth() -> Date {
         let components = Calendar.current.dateComponents([.year, .month], from: month)
@@ -215,8 +244,6 @@ extension CustomCalender {
     static let weekdaySymbols = Calendar.current.shortWeekdaySymbols
 }
 
-
-
 #Preview {
-    CustomCalender()
+    CustomCalender(showingRestDaySetting: .constant(true))
 }
