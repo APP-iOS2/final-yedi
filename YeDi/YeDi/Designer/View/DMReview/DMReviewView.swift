@@ -23,14 +23,13 @@ struct DMReviewView: View {
             .listStyle(.plain)
             .navigationTitle("내 리뷰")
         }
-    }
-    
-    init() {
-        reviewsModel.getData()
+        .onAppear {
+            reviewsModel.fetchReviews()
+        }
     }
 }
 
-struct DMReviewCell: View{
+struct DMReviewCell: View {
     let review: Review
     
     var body: some View {

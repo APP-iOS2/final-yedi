@@ -82,20 +82,20 @@ private struct CMHomeCellHeaderView: View {
                                 .frame(maxWidth: 50, maxHeight: 50)
                                 .clipShape(Circle())
                         } placeholder: {
-                            Image(systemName: "person.circle")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(maxWidth: 50, maxHeight: 50)
-                                .clipShape(Circle())
-                                .foregroundStyle(Color.primaryLabel)
+                            Text(String(designer.name.first ?? " ").capitalized)
+                                        .font(.title3)
+                                        .fontWeight(.bold)
+                                        .frame(width: 50, height: 50)
+                                        .background(Circle().fill(Color.quaternarySystemFill))
+                                        .foregroundColor(Color.primaryLabel)
                         }
                     } else {
-                        Image(systemName: "person.circle")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(maxWidth: 50, maxHeight: 50)
-                            .clipShape(Circle())
-                            .foregroundStyle(Color.primaryLabel)
+                        Text(String(designer.name.first ?? " ").capitalized)
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                                    .frame(width: 50, height: 50)
+                                    .background(Circle().fill(Color.quaternarySystemFill))
+                                    .foregroundColor(Color.primaryLabel)
 
                     }
                     // 디자이너 아이디 & 디자이너 근무 지점
@@ -106,6 +106,7 @@ private struct CMHomeCellHeaderView: View {
                             .font(.callout)
                             .foregroundStyle(.gray)
                     }
+                    .padding(.leading,4)
                     Spacer()
                 }
                 .padding(.horizontal)

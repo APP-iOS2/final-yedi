@@ -21,6 +21,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct YeDiApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var userAuth = UserAuth()
+    @StateObject var locationManager = LocationManager()
     @StateObject var consultationViewModel = ConsultationViewModel()
     @StateObject var cmProfileViewModel: CMProfileViewModel = CMProfileViewModel()
     @StateObject var reviewViewModel: CMReviewViewModel = CMReviewViewModel()
@@ -31,6 +32,7 @@ struct YeDiApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(userAuth)
+                .environmentObject(locationManager)
                 .environmentObject(consultationViewModel)
                 .environmentObject(cmProfileViewModel)
                 .environmentObject(reviewViewModel)

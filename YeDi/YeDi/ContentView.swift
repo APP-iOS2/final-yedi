@@ -12,6 +12,7 @@ import FirebaseFirestore
 
 struct ContentView: View {
     @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var cmProfileViewModel: CMProfileViewModel
     @EnvironmentObject var reviewViewModel: CMReviewViewModel
     @EnvironmentObject var dmPostViewModel: DMPostViewModel
@@ -23,10 +24,12 @@ struct ContentView: View {
                 switch userAuth.userType {
                 case .client:
                     ClientMainTabView()
+                        .environmentObject(locationManager)
                         .environmentObject(cmProfileViewModel)
                         .environmentObject(reviewViewModel)
                 case .designer:
                     DesignerMainTabView()
+                        .environmentObject(locationManager)
                         .environmentObject(dmPostViewModel)
                 case .none:
                     EmptyView()
@@ -50,5 +53,6 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(UserAuth())
+        .environmentObject(LocationManager())
         .environmentObject(ChattingListRoomViewModel())
 }
