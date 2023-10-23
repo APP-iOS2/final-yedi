@@ -53,6 +53,9 @@ struct RegisterView: View {
     @State private var birthDate: String = ""
     @State private var isShowingDatePicker: Bool = false
     
+    @State private var isShowingPassword: Bool = false
+    @State private var isShowingDoubleCheckPassword: Bool = false
+    
     private let genders: [String] = ["여성", "남성"]
     private let ranks: [Rank] = [.Owner, .Principal, .Designer, .Intern]
     
@@ -134,13 +137,26 @@ struct RegisterView: View {
             
             VStack(alignment: .leading, spacing: 5) {
                 Text("패스워드 *")
-                TextField("패스워드", text: $password)
-                    .signInTextFieldStyle(isTextFieldValid: $isPasswordValid)
-                    .onChange(of: password) { newValue in
-                        if !checkPassword() {
-                            password = newValue.trimmingCharacters(in: .whitespaces)
-                        }
+                
+                HStack {
+                    if isShowingPassword {
+                        TextField("패스워드", text: $password)
+                    } else {
+                        SecureField("패스워드", text: $password)
                     }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        isShowingPassword.toggle()
+                    }, label: {
+                        Image(systemName: isShowingPassword ? "eye.fill" : "eye.slash.fill")
+                    })
+                }
+                .signInTextFieldStyle(isTextFieldValid: $isPasswordValid)
+                .onChange(of: password) { newValue in
+                    password = newValue.trimmingCharacters(in: .whitespaces)
+                }
                 
                 Text(cautionPassword)
                     .cautionTextStyle()
@@ -148,13 +164,28 @@ struct RegisterView: View {
             
             VStack(alignment: .leading, spacing: 5) {
                 Text("패스워드 체크 *")
-                TextField("패스워드 체크", text: $doubleCheckPassword)
-                    .signInTextFieldStyle(isTextFieldValid: $isDoubleCheckPasswordValid)
-                    .onChange(of: doubleCheckPassword) { newValue in
-                        if !doubleCheckPasswordValid() {
-                            doubleCheckPassword = newValue.trimmingCharacters(in: .whitespaces)
-                        }
+                
+                HStack {
+                    if isShowingDoubleCheckPassword {
+                        TextField("패스워드", text: $doubleCheckPassword)
+                    } else {
+                        SecureField("패스워드", text: $doubleCheckPassword)
                     }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        isShowingDoubleCheckPassword.toggle()
+                    }, label: {
+                        Image(systemName: isShowingDoubleCheckPassword ? "eye.fill" : "eye.slash.fill")
+                    })
+                }
+                .signInTextFieldStyle(isTextFieldValid: $isDoubleCheckPasswordValid)
+                .onChange(of: doubleCheckPassword) { newValue in
+                    if !doubleCheckPasswordValid() {
+                        doubleCheckPassword = newValue.trimmingCharacters(in: .whitespaces)
+                    }
+                }
                 
                 Text(cautionDoubleCheckPassword)
                     .cautionTextStyle()
