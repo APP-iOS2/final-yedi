@@ -163,10 +163,10 @@ final class ChattingListRoomViewModel: ObservableObject {
                         
                         if type == .client {
                             userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "",
-                                                            profileImageURLString: document.data()["profileImageURLString"] as? String ?? "")
+                                                            profileImageURLString: document.data()["imageURLString"] as? String ?? "")
                         } else {
                             userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "",
-                                                        profileImageURLString: document.data()["imageURLString"] as? String ?? "")
+                                                        profileImageURLString: document.data()["profileImageURLString"] as? String ?? "")
                         }
                         self?.userProfile[chatRoomId] = userInfo
                     }
