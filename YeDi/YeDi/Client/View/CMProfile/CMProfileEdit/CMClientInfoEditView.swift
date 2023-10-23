@@ -47,10 +47,10 @@ struct CMClientInfoEditView: View {
                                 .foregroundStyle(Color.primaryLabel)
                                 .background(
                                     RoundedRectangle(cornerRadius: 2)
-                                        .stroke(Color.systemFill, lineWidth: 1)
+                                        .stroke(Color.gray6, lineWidth: 2)
                                 )
                         })
-                        .background(selectedGender == gender ? Color.systemFill : .myColor)
+                        .background(selectedGender == gender ? Color.gray4 : Color.gray6)
                     }
                 }
                 Spacer()

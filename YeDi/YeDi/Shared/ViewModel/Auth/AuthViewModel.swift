@@ -211,14 +211,15 @@ final class UserAuth: ObservableObject {
                     .document(user.uid)
                     .setData(data, merge: true)
                 
+
                 let shopData : [String: Any] = [
                                     "shopName" : shop.shopName,
                                     "headAddress" : shop.headAddress,
                                     "subAddress" : shop.subAddress,
                                     "detailAddress" : shop.detailAddress,
 //                                    "telNumber" : "",
-//                                    "longitude" : "",
-//                                    "latitude" : "",
+                                    "longitude" : shop.longitude,
+                                    "latitude" : shop.latitude,
                                     "openingHour" : shop.openingHour,
                                     "closingHour" : shop.closingHour,
 //                                    "messangerLinkURL" : ["": ""],
@@ -226,10 +227,10 @@ final class UserAuth: ObservableObject {
                                 ]
                 
                 self.storeService.collection("designers").document(user.uid).collection("shop")
-                                  .addDocument(data: shopData, completion: { _ in
-                                      self.userSession = nil
-                                      self.isLogin = false
-                                  })
+                    .addDocument(data: self.designerShopDataSet(shop: shop), completion: { _ in
+                        self.userSession = nil
+                        self.isLogin = false
+                    })
             }
         }
     }
@@ -320,5 +321,28 @@ final class UserAuth: ObservableObject {
     
     func removeUserTypeinUserDefaults() {
         userDefaults.removeObject(forKey: "UserType")
+    }
+    
+    func designerShopDataSet(shop: Shop) -> [String: Any] {
+        let dateFomatter = SingleTonDateFormatter.sharedDateFommatter
+     
+        let changedDateFomatOpenHour = dateFomatter.changeDateString(transition: "HH", from: shop.openingHour)
+        let changedDateFomatClosingHour = dateFomatter.changeDateString(transition: "HH", from: shop.closingHour)
+        
+        let shopData : [String: Any] = [
+                            "shopName" : shop.shopName,
+                            "headAddress" : shop.headAddress,
+                            "subAddress" : shop.subAddress,
+                            "detailAddress" : shop.detailAddress,
+//                                    "telNumber" : "",
+//                                    "longitude" : "",
+//                                    "latitude" : "",
+                            "openingHour" : changedDateFomatOpenHour,
+                            "closingHour" : changedDateFomatClosingHour,
+//                                    "messangerLinkURL" : ["": ""],
+                            "closedDays" : shop.closedDays
+                        ]
+        
+        return shopData
     }
 }

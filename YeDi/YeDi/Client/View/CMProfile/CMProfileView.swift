@@ -80,16 +80,6 @@ struct CMProfileView: View {
                 clientPhoneNumber = profileViewModel.client.phoneNumber
             }
         }
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                NavigationLink {
-                    CMSettingsView()
-                } label: {
-                    Image(systemName: "gearshape")
-                        .foregroundStyle(Color.primaryLabel)
-                }
-            }
-        }
     }
 }
 

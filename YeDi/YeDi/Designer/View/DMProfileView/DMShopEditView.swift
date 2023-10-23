@@ -11,6 +11,8 @@
 import SwiftUI
 
 struct DMShopEditView: View {
+    @EnvironmentObject var locationManager: LocationManager
+    
     @Binding var shop: Shop
     @Binding var rank: Rank
     @Binding var isShowDesignerShopEditView: Bool
@@ -68,6 +70,7 @@ struct DMShopEditView: View {
                         VStack(alignment: .leading, spacing: 5) {
                             DatePicker("오픈 시간", selection: $openingHour, displayedComponents: .hourAndMinute)
                             DatePicker("마감 시간", selection: $closingHour, displayedComponents: .hourAndMinute)
+                                .padding(.bottom, 7)
                             VStack(alignment: .leading) {
                                 Text("휴무일")
                                 TextField("요일", text: $closedDay)
@@ -91,6 +94,16 @@ struct DMShopEditView: View {
                             Text("상세주소")
                             TextField("상세주소 ", text: $shop.detailAddress)
                                 .textFieldModifier()
+                        }
+                        
+                        if !shop.headAddress.isEmpty && !shop.subAddress.isEmpty {
+                            let address = shop.headAddress + shop.subAddress
+                            let _: () = locationManager.getCoordinate(addressString: address) { coordinate, error in
+                                guard error == nil else { return }
+                                
+                                shop.latitude = coordinate.latitude
+                                shop.longitude = coordinate.longitude
+                            }
                         }
                     }
                     .padding(.vertical, 8)
@@ -144,14 +157,18 @@ struct DMShopEditView: View {
 
 #Preview {
     NavigationStack {
-        DMShopEditView(shop: .constant(.init(shopName: "", 
-                                             headAddress: "",
-                                             subAddress: "",
-                                             detailAddress: "",
-                                             openingHour: "",
-                                             closingHour: "",
-                                             closedDays: [])),
-                       rank: .constant(Rank.Owner),
-                       isShowDesignerShopEditView: .constant(false))
+        DMShopEditView(
+            shop: .constant(.init(
+                shopName: "",
+                headAddress: "",
+                subAddress: "",
+                detailAddress: "",
+                openingHour: "",
+                closingHour: "",
+                closedDays: [])),
+            rank: .constant(Rank.Owner),
+            isShowDesignerShopEditView: .constant(false)
+        )
+        .environmentObject(LocationManager())
     }
 }

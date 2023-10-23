@@ -26,6 +26,8 @@
 		2F45A1282AD2739C005018A5 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F45A1272AD2739C005018A5 /* Color.swift */; };
 		2F6363E92AD542AA00E980F8 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6363E82AD542AA00E980F8 /* PhotoPicker.swift */; };
 		2F7B60652ADFAF2B00EF1B96 /* CMCustomTextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B60642ADFAF2B00EF1B96 /* CMCustomTextArea.swift */; };
+		2F8F1B9A2AE4F652002FD403 /* DMCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F1B992AE4F652002FD403 /* DMCustomTextField.swift */; };
+		2F8F1B9C2AE532B9002FD403 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F1B9B2AE532B9002FD403 /* LocationManager.swift */; };
 		2FA36FFE2AD93C1F00E750B0 /* CMReservationInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA36FFD2AD93C1F00E750B0 /* CMReservationInfoView.swift */; };
 		2FA370002AD945A000E750B0 /* PhotoSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA36FFF2AD945A000E750B0 /* PhotoSelectionView.swift */; };
 		2FC888982AE240200096ED82 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2FC888972AE240200096ED82 /* LICENSE.txt */; };
@@ -136,6 +138,7 @@
 		DC7695CF2ADF1DC800D2FB69 /* TextFieldModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695CE2ADF1DC800D2FB69 /* TextFieldModifier.swift */; };
 		DC94ED592ADFDA540052AD6E /* TextAreaModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */; };
 		DC94ED732AE3B86A0052AD6E /* YdIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC94ED722AE3B86A0052AD6E /* YdIconView.swift */; };
+		DCD00D062AE5017400B44B89 /* DMPostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD00D052AE5017400B44B89 /* DMPostDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -158,6 +161,8 @@
 		2F45A1272AD2739C005018A5 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2F6363E82AD542AA00E980F8 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		2F7B60642ADFAF2B00EF1B96 /* CMCustomTextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMCustomTextArea.swift; sourceTree = "<group>"; };
+		2F8F1B992AE4F652002FD403 /* DMCustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMCustomTextField.swift; sourceTree = "<group>"; };
+		2F8F1B9B2AE532B9002FD403 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		2FA36FFD2AD93C1F00E750B0 /* CMReservationInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReservationInfoView.swift; sourceTree = "<group>"; };
 		2FA36FFF2AD945A000E750B0 /* PhotoSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectionView.swift; sourceTree = "<group>"; };
 		2FC888972AE240200096ED82 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
@@ -263,6 +268,7 @@
 		DC7695CE2ADF1DC800D2FB69 /* TextFieldModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldModifier.swift; sourceTree = "<group>"; };
 		DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaModifier.swift; sourceTree = "<group>"; };
 		DC94ED722AE3B86A0052AD6E /* YdIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YdIconView.swift; sourceTree = "<group>"; };
+		DCD00D052AE5017400B44B89 /* DMPostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,6 +335,7 @@
 				3BCF2C062ACD3E72009C18C2 /* Chatting */,
 				3B6346D82AD8DCCB00D3D110 /* Singleton */,
 				2F6363E82AD542AA00E980F8 /* PhotoPicker.swift */,
+				2F8F1B9B2AE532B9002FD403 /* LocationManager.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -615,6 +622,7 @@
 			children = (
 				1D9067202AC1F61D0028A660 /* DMGridView.swift */,
 				639DB6862AC11B56002692E5 /* DMPostView.swift */,
+				DCD00D052AE5017400B44B89 /* DMPostDetailView.swift */,
 				1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */,
 				1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */,
 			);
@@ -670,6 +678,7 @@
 				965ECCED2AD93EEB00BC0D41 /* DMDesignerInfoEditView.swift */,
 				965ECCEE2AD93EEB00BC0D41 /* DMProfileEditView.swift */,
 				639DB67D2AC11AF5002692E5 /* DMProfileView.swift */,
+				2F8F1B992AE4F652002FD403 /* DMCustomTextField.swift */,
 			);
 			path = ProfileEditView;
 			sourceTree = "<group>";
@@ -872,6 +881,7 @@
 				3BCF2C8C2ACD4248009C18C2 /* CMFollowingListView.swift in Sources */,
 				3BCF2C862ACD4248009C18C2 /* CMLikePostListView.swift in Sources */,
 				2F0A21912ACE753F0070CA42 /* CMProfileViewModel.swift in Sources */,
+				2F8F1B9C2AE532B9002FD403 /* LocationManager.swift in Sources */,
 				3BCF2C8D2ACD4248009C18C2 /* CMReviewListView.swift in Sources */,
 				9666A21B2ACDBB6D0081C711 /* TimeSettingDetail.swift in Sources */,
 				9691C5D22ADE552100434377 /* CustomCalender.swift in Sources */,
@@ -912,6 +922,7 @@
 				3BCF2C732ACD4248009C18C2 /* CMUpcomingReservationView.swift in Sources */,
 				1D63595D2ACEED0A00FBD37B /* DMProfileViewModel.swift in Sources */,
 				DC7695472AD0888800D2FB69 /* AuthModifier.swift in Sources */,
+				2F8F1B9A2AE4F652002FD403 /* DMCustomTextField.swift in Sources */,
 				1D63595D2ACEED0A00FBD37B /* DMProfileViewModel.swift in Sources */,
 				09CA54B02AD661F300796113 /* CMSearchViewModel.swift in Sources */,
 				3BCF2C8A2ACD4248009C18C2 /* CMClientInfoEditView.swift in Sources */,
@@ -933,6 +944,7 @@
 				96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */,
 				DC7695482AD0888800D2FB69 /* LoginView.swift in Sources */,
 				3B0E1CD62AE2340700145563 /* UnReadCountCircle.swift in Sources */,
+				DCD00D062AE5017400B44B89 /* DMPostDetailView.swift in Sources */,
 				96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */,
 				3BCF2C7E2ACD4248009C18C2 /* CMSearchView.swift in Sources */,
 				3BCF2C872ACD4248009C18C2 /* CMAccountInfoEditView.swift in Sources */,
@@ -1081,10 +1093,11 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = YeDi/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "이 앱은 위치 정보를 기반으로 서비스를 제공하므로 위치 권한을 요청드립니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "이 앱은 위치 정보를 기반으로 서비스를 제공하므로 위치 권한을 요청드립니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1111,10 +1124,11 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = YeDi/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "이 앱은 위치 정보를 기반으로 서비스를 제공하므로 위치 권한을 요청드립니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "이 앱은 위치 정보를 기반으로 서비스를 제공하므로 위치 권한을 요청드립니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -39,6 +39,13 @@ struct DMReviewDetailView: View {
         }
         .listStyle(.plain)
         .navigationTitle("상세리뷰")
+        .toolbar(.hidden, for: .tabBar)
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                DismissButton(color: nil) { }
+            }
+        }
     }
     
     var averageScore: some View {
@@ -58,7 +65,7 @@ struct DMReviewDetailView: View {
                 ForEach(review.keywordReviews) { keywordReview in
                     Text("\(keywordReview.keyword)")
                         .font(.subheadline)
-                        .foregroundStyle(.black)
+                        .foregroundStyle(.primary)
                         .padding(10)
                         .background(
                             RoundedRectangle(cornerRadius: 5)
