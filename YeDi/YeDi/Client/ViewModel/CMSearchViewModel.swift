@@ -6,6 +6,7 @@ class CMSearchViewModel: ObservableObject {
     @Published var designers: [Designer] = []
     @Published var searchText: String = ""
     @Published var recentSearches: [String] = []
+    @Published var recentDesigners: [Designer] = []
     @Published var isTextFieldActive: Bool = false
 
     
@@ -25,6 +26,7 @@ class CMSearchViewModel: ObservableObject {
     
     init() {
         loadRecentSearches()
+        loadRecentDesigners()
         loadData()
     }
     
@@ -65,6 +67,35 @@ class CMSearchViewModel: ObservableObject {
         }
     }
     
+    func addRecentDesigner(_ designer: Designer) {
+        if !recentDesigners.contains(where: { $0.id == designer.id }) {
+            recentDesigners.insert(designer, at: 0)
+            if recentDesigners.count > 5 {
+                recentDesigners.removeLast()
+            }
+            UserDefaults.standard.set(recentDesigners.map { $0.name }, forKey: "RecentDesigners") // Save recent designers' names
+        }
+    }
+
+
+    // Inside the CMSearchViewModel, in the removeRecentDesigner function
+    func removeRecentDesigner(_ designer: Designer) {
+        if let index = recentDesigners.firstIndex(where: { $0.id == designer.id }) {
+            recentDesigners.remove(at: index)
+            UserDefaults.standard.set(recentDesigners.map { $0.name }, forKey: "RecentDesigners") // Update recent designers' names
+        }
+    }
+
+
+    func loadRecentDesigners() {
+        if let loadedDesigners = UserDefaults.standard.array(forKey: "RecentDesigners") as? [String] {
+            // Match the loaded designer names with the designers in the main 'designers' array
+            let matchingDesigners = designers.filter { loadedDesigners.contains($0.name) }
+            recentDesigners = matchingDesigners
+        }
+    }
+
+    
     // 디자이너 정보 불러오기
     func loadData() {
         let db = Firestore.firestore()
@@ -99,10 +130,12 @@ class CMSearchViewModel: ObservableObject {
                         }
                         
                         designersWithShops.append(designer)
+                        
                         dispatchGroup.leave() // Leave the DispatchGroup
                     }
                 }
             }
+
             
             // Wait for all tasks to complete
             dispatchGroup.notify(queue: .main) {
