@@ -32,7 +32,7 @@ struct CMDesignerProfileSegmentedView: View {
                                 .foregroundStyle(Color(UIColor.label))
                             Rectangle()
                                 .fill(selectedSegment == segment ? Color.primaryLabel : .gray6)
-                                .frame(width: imageDimension, height: 3)
+                                .frame(width: 180, height: 3)
                         }
                     })
                 }
@@ -49,6 +49,7 @@ struct CMDesignerProfileSegmentedView: View {
             
             Spacer()
         }
+        .padding(.horizontal, 5)
     }
 }
 

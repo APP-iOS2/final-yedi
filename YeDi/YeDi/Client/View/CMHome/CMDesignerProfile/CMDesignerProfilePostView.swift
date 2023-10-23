@@ -16,7 +16,7 @@ struct CMDesignerProfilePostView: View {
         .init(.flexible(), spacing: 1),
         .init(.flexible(), spacing: 1)
     ]
-    private let imageDimension: CGFloat = (UIScreen.main.bounds.width / 3) - 1
+    private let imageDimension: CGFloat = (UIScreen.main.bounds.width / 3) - 5
     
     var body: some View {
         if designerPosts.isEmpty {
