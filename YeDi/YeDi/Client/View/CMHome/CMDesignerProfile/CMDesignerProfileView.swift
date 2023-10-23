@@ -30,7 +30,7 @@ struct CMDesignerProfileView: View {
                                             .font(.title)
                                             .fontWeight(.bold)
                                             .frame(width: 80, height: 80)
-                                            .background(Circle().fill(.gray))
+                                            .background(Circle().fill(Color.quaternarySystemFill))
                                             .foregroundColor(Color.primaryLabel)
                             }
                         } else {
@@ -38,7 +38,7 @@ struct CMDesignerProfileView: View {
                                         .font(.title)
                                         .fontWeight(.bold)
                                         .frame(width: 80, height: 80)
-                                        .background(Circle().fill(.gray))
+                                        .background(Circle().fill(Color.quaternarySystemFill))
                                         .foregroundColor(Color.primaryLabel)
                             
                         }

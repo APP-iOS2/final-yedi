@@ -16,13 +16,15 @@ struct CMSearchView: View {
         NavigationStack {
             HStack {
                 ZStack(alignment: .trailing) {
-                    TextField("디자이너를 검색해보세요.", text: $viewModel.searchText, onCommit: {
-                        viewModel.saveRecentSearch()
-                    })
+                    TextField("디자이너를 검색해보세요.", text: $viewModel.searchText)
                     .textFieldModifier()
+                    .onSubmit {
+                        viewModel.saveRecentSearch()
+                    }
+                    
                     if !viewModel.searchText.isEmpty {
                         Button(action: {
-                            viewModel.saveRecentSearch()
+                            viewModel.searchText = ""
                         }) {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundColor(.gray)
@@ -45,7 +47,7 @@ struct CMSearchView: View {
                                 viewModel.removeAllRecentSearches()
                             }) {
                                 Text("전체 삭제")
-                                    .foregroundColor(Color.subColor)
+                                    .foregroundColor(Color.primaryLabel)
                             }
                         }
                     }
@@ -56,7 +58,6 @@ struct CMSearchView: View {
                         HStack {
                             Button {
                                 viewModel.searchText = search
-                                //viewModel.performSearch()
                             } label: {
                                 HStack {
                                     Image(systemName: "magnifyingglass")
@@ -94,53 +95,55 @@ struct CMSearchView: View {
                     }
                     .padding(.horizontal)
                     Divider()
-                    ForEach(viewModel.filterDesigners, id: \.id) { designer in
-                        NavigationLink(destination: CMDesignerProfileView(designer: designer)) {
-                            VStack {
-                                HStack {
-                                    if let imageURLString = designer.imageURLString {
-                                        AsyncImage(url: URL(string: "\(imageURLString)")) { image in
-                                            image
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                                .frame(maxWidth: 50, maxHeight: 50)
-                                                .clipShape(Circle())
-                                        } placeholder: {
+                    ScrollView {
+                        ForEach(viewModel.filterDesigners, id: \.id) { designer in
+                            NavigationLink(destination: CMDesignerProfileView(designer: designer)) {
+                                VStack {
+                                    HStack {
+                                        if let imageURLString = designer.imageURLString {
+                                            AsyncImage(url: URL(string: "\(imageURLString)")) { image in
+                                                image
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                                    .frame(maxWidth: 50, maxHeight: 50)
+                                                    .clipShape(Circle())
+                                            } placeholder: {
+                                                Text(String(designer.name.first ?? " ").capitalized)
+                                                            .font(.title3)
+                                                            .fontWeight(.bold)
+                                                            .frame(width: 50, height: 50)
+                                                            .background(Circle().fill(Color.quaternarySystemFill))
+                                                            .foregroundColor(Color.primaryLabel)
+                                            }
+                                        } else {
                                             Text(String(designer.name.first ?? " ").capitalized)
                                                         .font(.title3)
                                                         .fontWeight(.bold)
                                                         .frame(width: 50, height: 50)
-                                                        .background(Circle().fill(.gray))
+                                                        .background(Circle().fill(Color.quaternarySystemFill))
                                                         .foregroundColor(Color.primaryLabel)
+                                            
                                         }
-                                    } else {
-                                        Text(String(designer.name.first ?? " ").capitalized)
-                                                    .font(.title3)
-                                                    .fontWeight(.bold)
-                                                    .frame(width: 50, height: 50)
-                                                    .background(Circle().fill(.gray))
-                                                    .foregroundColor(Color.primaryLabel)
-                                        
-                                    }
-                                    VStack(alignment: .leading) {
-                                        Text(designer.name)
-                                            .foregroundStyle(Color.primaryLabel)
-                                        if let shop = designer.shop {
-                                            Text(shop.shopName)
-                                                .font(.subheadline)
-                                                .foregroundStyle(.gray)
+                                        VStack(alignment: .leading) {
+                                            Text(designer.name)
+                                                .foregroundStyle(Color.primaryLabel)
+                                            if let shop = designer.shop {
+                                                Text(shop.shopName)
+                                                    .font(.subheadline)
+                                                    .foregroundStyle(.gray)
+                                            }
+                                            
+                                            
                                         }
-                                        
-                                        
+                                        .padding(.leading,5)
+                                        Spacer()
                                     }
-                                    .padding(.leading,5)
-                                    Spacer()
                                 }
                             }
                         }
+                        .padding()
+                        .listStyle(.plain)
                     }
-                    .padding()
-                    .listStyle(.plain)
                 } else {
                     Text("검색 결과가 없습니다.")
                         .foregroundStyle(Color.primaryLabel)
@@ -148,6 +151,9 @@ struct CMSearchView: View {
             }
             
             Spacer()
+        }
+        .onTapGesture {
+            hideKeyboard()
         }
         .onAppear {
             viewModel.loadData()

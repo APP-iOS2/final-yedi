@@ -86,7 +86,7 @@ private struct CMHomeCellHeaderView: View {
                                         .font(.title3)
                                         .fontWeight(.bold)
                                         .frame(width: 50, height: 50)
-                                        .background(Circle().fill(.gray))
+                                        .background(Circle().fill(Color.quaternarySystemFill))
                                         .foregroundColor(Color.primaryLabel)
                         }
                     } else {
@@ -94,7 +94,7 @@ private struct CMHomeCellHeaderView: View {
                                     .font(.title3)
                                     .fontWeight(.bold)
                                     .frame(width: 50, height: 50)
-                                    .background(Circle().fill(.gray))
+                                    .background(Circle().fill(Color.quaternarySystemFill))
                                     .foregroundColor(Color.primaryLabel)
 
                     }
