@@ -11,13 +11,11 @@ import FirebaseFirestore
 
 struct CMSearchView: View {
     @ObservedObject var viewModel = CMSearchViewModel()
-    @State private var isDesignerProfileActive: Bool = false
-    
-    
-    
     
     var body: some View {
         NavigationStack {
+            
+            // MARK: TextFeild
             HStack {
                 ZStack(alignment: .trailing) {
                     TextField("디자이너를 검색해보세요.", text: $viewModel.searchText)
@@ -40,15 +38,16 @@ struct CMSearchView: View {
             }
             .padding()
             
+            // MARK: 최근 검색 내역
             if viewModel.searchText.isEmpty {
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("최근 검색어")
+                        Text("최근 검색")
                             .foregroundStyle(Color.primaryLabel)
                         Spacer()
                         if !viewModel.recentSearches.isEmpty || !viewModel.recentDesigners.isEmpty {
                             Button(action: {
-                                viewModel.removeAllRecentSearches()
+                                viewModel.removeAllRecentItems()
                                 viewModel.recentDesigners.removeAll()
                             }) {
                                 Text("전체 삭제")
@@ -59,31 +58,37 @@ struct CMSearchView: View {
                     .padding(.horizontal)
                     .padding(.bottom)
                     
-                    ForEach(viewModel.recentSearches + viewModel.recentDesigners.map({ $0.name }), id: \.self) { search in
+                    ForEach(viewModel.recentItems) { item in
                         HStack {
-                            Button {
-                                if viewModel.recentSearches.contains(search) {
-                                    viewModel.searchText = search
-                                } else if let designer = viewModel.recentDesigners.first(where: { $0.name == search }) {
-                                }
-                            } label: {
-                                if viewModel.recentSearches.contains(search) {
-                                    HStack {
-                                        Image(systemName: "magnifyingglass")
-                                            .resizable()
-                                            .frame(width: 20, height: 20)
-                                            .padding(15)
-                                            .overlay {
-                                                Circle().stroke(.gray, lineWidth: 1)
-                                            }
-                                        
-                                        Text(search)
-                                            .padding(.leading, 5)
-                                        
-                                        Spacer()
+                            if item.isSearch {
+                                HStack {
+                                    Button {
+                                        viewModel.searchText = item.text
+                                    } label: {
+                                        HStack {
+                                            Image(systemName: "magnifyingglass")
+                                                .resizable()
+                                                .frame(width: 20, height: 20)
+                                                .padding(15)
+                                                .overlay {
+                                                    Circle().stroke(.gray, lineWidth: 1)
+                                                }
+                                            
+                                            Text(item.text)
+                                                .padding(.leading, 5)
+                                        }
+                                        .foregroundStyle(Color.primaryLabel)
                                     }
-                                    .foregroundStyle(Color.primaryLabel)
-                                } else if let designer = viewModel.recentDesigners.first(where: { $0.name == search }) {
+                                    Spacer()
+                                    Button {
+                                        viewModel.removeRecentSearch(item.text)
+                                    } label: {
+                                        Image(systemName: "xmark")
+                                    }
+                                    .foregroundStyle(.gray)
+                                }
+                            } else if let designer = item.designer {
+                                NavigationLink(destination: CMDesignerProfileView(designer: designer)) {
                                     HStack {
                                         if let imageURLString = designer.imageURLString {
                                             AsyncImage(url: URL(string: "\(imageURLString)")) { image in
@@ -121,25 +126,16 @@ struct CMSearchView: View {
                                             
                                         }
                                         Spacer()
+                                        Button {
+                                            viewModel.removeRecentDesigner(item.designer!)
+                                        } label: {
+                                            Image(systemName: "xmark")
+                                        }
+                                        .foregroundStyle(.gray)
                                     }
                                     .foregroundStyle(Color.primaryLabel)
                                 }
-                                
                             }
-                            
-                            Button(action: {
-                                if viewModel.recentSearches.contains(search) {
-                                    viewModel.removeRecentSearch(search)
-                                } else if let index = viewModel.recentDesigners.firstIndex(where: { $0.name == search }) {
-                                    // Handle the action when a recent designer's remove button is tapped
-                                    // For example, you can remove the designer from the recentDesigners array.
-                                    
-                                    viewModel.recentDesigners.remove(at: index)
-                                }
-                            }, label: {
-                                Image(systemName: "xmark")
-                            })
-                            .foregroundStyle(.gray)
                         }
                         .padding(.horizontal, 15)
                         .padding(.vertical, 7)
@@ -151,6 +147,7 @@ struct CMSearchView: View {
                 }
             }
             
+            // MARK: 검색 결과
             if !viewModel.searchText.isEmpty {
                 if viewModel.filteredDesignerCount > 0 {
                     HStack {
@@ -197,24 +194,18 @@ struct CMSearchView: View {
                                                     .font(.subheadline)
                                                     .foregroundStyle(.gray)
                                             }
-                                            
-                                            
                                         }
                                         .padding(.leading,5)
                                         Spacer()
                                     }
                                 }
-                                
                             }
-                            
                             .simultaneousGesture(
-                                    TapGesture()
-                                        .onEnded {
-                                            // 여기에 원하는 동작을 추가합니다.
-                                            viewModel.addRecentDesigner(designer)
-                                        }
-                                )
-                            
+                                TapGesture()
+                                    .onEnded {
+                                        viewModel.addRecentDesigner(designer)
+                                    }
+                            )
                         }
                         .padding()
                         .listStyle(.plain)
@@ -224,7 +215,6 @@ struct CMSearchView: View {
                         .foregroundStyle(Color.primaryLabel)
                 }
             }
-            
             Spacer()
         }
         .onTapGesture {
@@ -233,9 +223,8 @@ struct CMSearchView: View {
         .onAppear {
             viewModel.loadData()
             viewModel.loadRecentSearches()
-            viewModel.loadRecentDesigners() 
-
-
+            viewModel.loadRecentDesigners()
+            viewModel.loadRecentItems()
         }
     }
 }
