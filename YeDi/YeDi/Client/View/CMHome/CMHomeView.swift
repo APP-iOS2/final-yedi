@@ -31,22 +31,6 @@ struct CMHomeView: View {
                 }
             }
             .padding(.top)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Text("YeDi")
-                        .font(.title)
-                        .fontWeight(.bold)
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink {
-                        CMSettingsView()
-                    } label: {
-                        Image(systemName: "gearshape")
-                            .foregroundStyle(Color.primaryLabel)
-                    }
-                }
-            }
             
             switch selectedSegment {
             case "회원님을 위한 추천":

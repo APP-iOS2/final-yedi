@@ -36,9 +36,9 @@ struct ChattingListRoomView: View {
                                 .clipShape(Circle())
                                 .frame(width: 50, height: 50)
                                 
-                            VStack(alignment: .leading, spacing: 8) {
+                            VStack(alignment: .leading, spacing: 5) {
                                 Text(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name ?? "UnKown")
-                                    .font(.title3.bold())
+                                    .font(.system(size: 17, weight: .semibold))
                                 HStack {
                                     VStack(alignment: .leading) {
                                         if let recentMessage =  chattingRoom.chattingBubles?.first {
@@ -77,11 +77,6 @@ struct ChattingListRoomView: View {
                 .animation(.easeInOut, value: chattingListRoomViewModel.chattingRooms)
                 .listStyle(.plain)
                 .navigationTitle("")
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        YdIconView(height: 30)
-                    }
-                }
             }
         }
         .onAppear {
