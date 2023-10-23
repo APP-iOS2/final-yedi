@@ -11,7 +11,7 @@ import MapKit
 struct DMProfileView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var userAuth: UserAuth
-    @StateObject var locationManager = LocationManager()
+    @EnvironmentObject var locationManager: LocationManager
     @StateObject var profileVM: DMProfileViewModel = DMProfileViewModel.shared
     
     @State private var region = MKCoordinateRegion()
@@ -233,5 +233,6 @@ struct DMProfileView: View {
     NavigationView {
         DMProfileView()
             .environmentObject(UserAuth())
+            .environmentObject(LocationManager())
     }
 }
