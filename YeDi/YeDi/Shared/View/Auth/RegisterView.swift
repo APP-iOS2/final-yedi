@@ -95,6 +95,7 @@ struct RegisterView: View {
             ScrollView {
                 inputUserInfo(.designer)
                 inputDesignerDescription
+                inputShopInfo
             }
             .onTapGesture {
                 hideKeyboard()
@@ -114,7 +115,11 @@ struct RegisterView: View {
     private func inputUserInfo(_ userType: UserType) -> some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading, spacing: 5) {
-                Text("이메일 *")
+                HStack {
+                    Text("이메일")
+                    requiredFieldMark
+                }
+                
                 TextField("이메일", text: $email)
                     .keyboardType(.emailAddress)
                     .signInTextFieldStyle(isTextFieldValid: $isEmailValid)
@@ -136,7 +141,10 @@ struct RegisterView: View {
             .padding(.top)
             
             VStack(alignment: .leading, spacing: 5) {
-                Text("패스워드 *")
+                HStack {
+                    Text("패스워드")
+                    requiredFieldMark
+                }
                 
                 HStack {
                     if isShowingPassword {
@@ -163,7 +171,10 @@ struct RegisterView: View {
             }
             
             VStack(alignment: .leading, spacing: 5) {
-                Text("패스워드 체크 *")
+                HStack {
+                    Text("패스워드 체크")
+                    requiredFieldMark
+                }
                 
                 HStack {
                     if isShowingDoubleCheckPassword {
@@ -192,7 +203,10 @@ struct RegisterView: View {
             }
             
             VStack(alignment: .leading, spacing: 5) {
-                Text("이름 *")
+                HStack {
+                    Text("이름")
+                    requiredFieldMark
+                }
                 TextField("이름", text: $name)
                     .signInTextFieldStyle(isTextFieldValid: $isNotEmptyName)
                     .onChange(of: name) { newValue in
@@ -207,7 +221,10 @@ struct RegisterView: View {
             }
             
             VStack(alignment: .leading, spacing: 5) {
-                Text("휴대폰 번호 *")
+                HStack {
+                    Text("휴대폰 번호")
+                    requiredFieldMark
+                }
                 TextField("휴대폰 번호", text: $phoneNumber)
                     .keyboardType(.numberPad)
                     .signInTextFieldStyle(isTextFieldValid: $isPhoneNumberValid)
@@ -222,7 +239,10 @@ struct RegisterView: View {
             }
             
             VStack(alignment: .leading) {
-                Text("생년월일 *")
+                HStack {
+                    Text("생년월일")
+                    requiredFieldMark
+                }
                 HStack {
                     Text(changedBirthText)
                         .foregroundStyle(changedBirthText=="생년월일" ? Color.placeholderText : Color.primaryLabel)
@@ -265,7 +285,10 @@ struct RegisterView: View {
             })
             
             HStack(alignment: .center) {
-                Text("성별 *")
+                HStack {
+                    Text("성별")
+                    requiredFieldMark
+                }
                 HStack(spacing: 0) {
                     ForEach(genders, id: \.self) { gender in
                         Button(action: {
@@ -296,31 +319,40 @@ struct RegisterView: View {
     
     private var inputDesignerDescription: some View {
         VStack(alignment: .leading) {
-            HStack {
-                Text("소개글")
-                
-                Spacer()
-                
-                VStack(alignment: .leading, spacing: 5)  {
-                    CapsuleButton(text: "샵정보 입력", isFollowed: false) {
-                        isShowDesignerShopEditView = true
-                    }
-                }
-                .padding(.vertical, 8)
-                .sheet(isPresented: $isShowDesignerShopEditView){
-                    DMShopEditView(shop: $shop,
-                                   rank: $rank,
-                                   isShowDesignerShopEditView: $isShowDesignerShopEditView)
-                    
-                    .presentationDragIndicator(.visible)
-                    .presentationDetents([.large])
-                }
-              
-            }
+            Text("소개글")
+            
             TextField("디자이너 소개글", text: $description, axis: .vertical)
                 .signInTextFieldStyle(isTextFieldValid: $isNotEmptyDescription)
         }
         .padding(.horizontal)
+    }
+    
+    private var inputShopInfo: some View {
+        VStack {
+            Divider()
+                .foregroundStyle(Color.separator)
+                .padding(.vertical)
+            
+            Button {
+                isShowDesignerShopEditView = true
+            } label: {
+                Text("샵정보 입력")
+                    .padding(12)
+                    .frame(maxWidth: .infinity)
+                    .foregroundStyle(Color.white)
+                    .background {
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color.pointColor)
+//                            .stroke(Color.pointColor, lineWidth: 2)
+                    }
+            }
+        }
+        .padding([.horizontal, .bottom])
+        .sheet(isPresented: $isShowDesignerShopEditView){
+            DMShopEditView(shop: $shop,
+                           rank: $rank,
+                           isShowDesignerShopEditView: $isShowDesignerShopEditView)
+        }
     }
     
     private func RegisterButton(_ userType: UserType) -> some View {
@@ -333,6 +365,11 @@ struct RegisterView: View {
             }
         }
         .padding([.horizontal, .bottom])
+    }
+    
+    private var requiredFieldMark: some View {
+        Text("*")
+            .foregroundStyle(Color.subColor)
     }
     
     private func pressedButtonRegister(_ userType: UserType) {
