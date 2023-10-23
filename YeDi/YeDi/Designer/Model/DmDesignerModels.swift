@@ -182,7 +182,7 @@ struct ClosedDay: Identifiable, Codable {
     /// designerUid
     var designerUid: String
     /// 설정한 휴무일
-    var day: [String]
+    var closedDay: [String]
 }
 
 /// - Recess Structure
