@@ -16,7 +16,7 @@ final class CMReservationViewModel: ObservableObject {
     @Published var closingTime: Int = 0
     @Published var breakTime: [Int] = []
     private let db = Firestore.firestore()
-    private var closedDay: ClosedDay = ClosedDay(id: "", day: [])
+    private var closedDay: ClosedDay = ClosedDay(id: "", designerUid: "", day: [])
     private var currentUserUid: String? {
         return Auth.auth().currentUser?.uid
     }

@@ -27,7 +27,7 @@ class ClosedDaySetting: ObservableObject {
         
         let myDay = closedDB.document()
         
-        myDay.setData(["id": myDay.documentID, "designerUID": currentUserUid, "closedDay": day]) { error in
+        myDay.setData(["id": myDay.documentID, "designerUid": currentUserUid, "closedDay": day]) { error in
             if let error = error {
                 print("데이터 추가 중 에러발생 \(error.localizedDescription)")
             } else {
