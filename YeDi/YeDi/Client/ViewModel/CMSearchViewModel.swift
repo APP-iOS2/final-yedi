@@ -6,6 +6,7 @@ class CMSearchViewModel: ObservableObject {
     @Published var designers: [Designer] = []
     @Published var searchText: String = ""
     @Published var recentSearches: [String] = []
+    @Published var recentDesigners: [Designer] = []
     @Published var isTextFieldActive: Bool = false
 
     
@@ -25,6 +26,7 @@ class CMSearchViewModel: ObservableObject {
     
     init() {
         loadRecentSearches()
+        loadRecentDesigners()
         loadData()
     }
     
@@ -39,7 +41,6 @@ class CMSearchViewModel: ObservableObject {
                 
                 UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
             }
-            searchText = ""
         }
     }
     
@@ -65,6 +66,35 @@ class CMSearchViewModel: ObservableObject {
             recentSearches = loadedSearches
         }
     }
+    
+    func addRecentDesigner(_ designer: Designer) {
+        if !recentDesigners.contains(where: { $0.id == designer.id }) {
+            recentDesigners.insert(designer, at: 0)
+            if recentDesigners.count > 5 {
+                recentDesigners.removeLast()
+            }
+            UserDefaults.standard.set(recentDesigners.map { $0.name }, forKey: "RecentDesigners") // Save recent designers' names
+        }
+    }
+
+
+    // Inside the CMSearchViewModel, in the removeRecentDesigner function
+    func removeRecentDesigner(_ designer: Designer) {
+        if let index = recentDesigners.firstIndex(where: { $0.id == designer.id }) {
+            recentDesigners.remove(at: index)
+            UserDefaults.standard.set(recentDesigners.map { $0.name }, forKey: "RecentDesigners") // Update recent designers' names
+        }
+    }
+
+
+    func loadRecentDesigners() {
+        if let loadedDesigners = UserDefaults.standard.array(forKey: "RecentDesigners") as? [String] {
+            // Match the loaded designer names with the designers in the main 'designers' array
+            let matchingDesigners = designers.filter { loadedDesigners.contains($0.name) }
+            recentDesigners = matchingDesigners
+        }
+    }
+
     
     // 디자이너 정보 불러오기
     func loadData() {
@@ -100,10 +130,12 @@ class CMSearchViewModel: ObservableObject {
                         }
                         
                         designersWithShops.append(designer)
+                        
                         dispatchGroup.leave() // Leave the DispatchGroup
                     }
                 }
             }
+
             
             // Wait for all tasks to complete
             dispatchGroup.notify(queue: .main) {
@@ -112,28 +144,4 @@ class CMSearchViewModel: ObservableObject {
             }
         }
     }
-
-
-    
-    func performSearch() {
-        designers = []
-
-        let query = db.collection("designers").whereField("name", isGreaterThanOrEqualTo: searchText)
-        
-        query.getDocuments { [weak self] snapshot, error in
-            if let error = error {
-                print("Error getting documents: \(error)")
-                return
-            }
-            guard let documents = snapshot?.documents else {
-                print("No documents")
-                return
-            }
-            self?.designers = documents.compactMap { document in
-                try? document.data(as: Designer.self)
-            }
-        }
-    }
-
-
 }

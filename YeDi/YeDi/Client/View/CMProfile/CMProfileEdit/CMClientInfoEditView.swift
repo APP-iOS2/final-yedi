@@ -53,6 +53,7 @@ struct CMClientInfoEditView: View {
                         .background(selectedGender == gender ? Color.gray4 : Color.gray6)
                     }
                 }
+                
                 Spacer()
             }
             .padding(.bottom, 15)
