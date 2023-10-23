@@ -23,6 +23,8 @@ struct CMNewReviewView: View {
     @State private var isShowingValidationAlert: Bool = false
     @State private var isUploading: Bool = false
     
+    var reservation: Reservation
+    
     var buttonText: String {
         return isUploading ? "업로드 중..." : "리뷰 등록"
     }
@@ -35,9 +37,9 @@ struct CMNewReviewView: View {
     // MARK: - Body
     var body: some View {
         ScrollView {
-            CMReservationInfoView()
+            CMReservationInfoView(reservation: reservation)
             
-            Spacer(minLength: 40)
+            Spacer(minLength: 20)
             
             CMReviewSelectPhotosView(selectedPhotoURLs: $selectedPhotoURLs)
             
@@ -76,6 +78,13 @@ struct CMNewReviewView: View {
             if isReadyToSave {
                 isUploading.toggle()
                 
+                guard let reservationId = reservation.id else { return }
+                
+                var styles: [String] = []
+                for hairStyle in reservation.hairStyle {
+                    styles.append(hairStyle.name)
+                }
+                
                 if let clientId = userAuth.currentClientID {
                     let newReview = Review(
                         id: UUID().uuidString,
@@ -85,9 +94,9 @@ struct CMNewReviewView: View {
                         designerScore: reviewScore,
                         content: reviewContent,
                         imageURLStrings: selectedPhotoURLs,
-                        reservationId: UUID().uuidString,
-                        style: "펌, 염색",
-                        designer: UUID().uuidString
+                        reservationId: reservationId,
+                        style: styles.joined(separator: ", "),
+                        designer: reservation.designerUID
                     )
                     
                     Task {
@@ -108,5 +117,5 @@ struct CMNewReviewView: View {
 }
 
 #Preview {
-    CMNewReviewView()
+    CMNewReviewView(reservation: Reservation(clientUID: "", designerUID: "", reservationTime: "", hairStyle: [], isFinished: true))
 }
