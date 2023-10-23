@@ -16,7 +16,7 @@ final class CMReservationViewModel: ObservableObject {
     @Published var closingTime: Int = 0
     @Published var breakTime: [Int] = []
     private let db = Firestore.firestore()
-    private var closedDay: ClosedDay = ClosedDay(designerID: "", closedDay: [])
+    private var closedDay: ClosedDay = ClosedDay(id: "", day: [])
     private var currentUserUid: String? {
         return Auth.auth().currentUser?.uid
     }
@@ -41,7 +41,7 @@ final class CMReservationViewModel: ObservableObject {
                 closedDay = try document.data(as: ClosedDay.self)
             }
             
-            for day in closedDay.closedDay {
+            for day in closedDay.day {
                 let date = SingleTonDateFormatter.sharedDateFommatter.changeStringToDate(dateString: day)
                 self.dates.append(date)
             }
@@ -106,14 +106,4 @@ final class CMReservationViewModel: ObservableObject {
         
         return nil
     }
-}
-
-/// - 휴무일 설정 구조체
-struct ClosedDay: Identifiable, Codable {
-    /// Firestore 문서 ID
-    @DocumentID var id: String?
-    /// 휴무일 설정한 계정의 디자이너 ID
-    var designerID: String
-    /// 설정한 휴무일
-    var closedDay: [String]
 }

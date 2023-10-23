@@ -129,9 +129,9 @@
 		D89971292ADFC51B00FBF031 /* CMSelectStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89971282ADFC51B00FBF031 /* CMSelectStyleView.swift */; };
 		D899712B2AE107D100FBF031 /* CMReservationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D899712A2AE107D100FBF031 /* CMReservationViewModel.swift */; };
 		D899712D2AE107FC00FBF031 /* Reservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D899712C2AE107FC00FBF031 /* Reservation.swift */; };
-		D8A09A1F2ADD3F3200F1B000 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D8A09A1E2ADD3F3200F1B000 /* GoogleService-Info.plist */; };
 		D8E87D502AE4CC7C00DC9FF4 /* CMReservationCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E87D4F2AE4CC7C00DC9FF4 /* CMReservationCheckView.swift */; };
 		D8E87D522AE5C53300DC9FF4 /* NavigationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E87D512AE5C53300DC9FF4 /* NavigationState.swift */; };
+		D8E87D542AE6A39500DC9FF4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D8E87D532AE6A39400DC9FF4 /* GoogleService-Info.plist */; };
 		DC7695462AD0888800D2FB69 /* AuthHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695422AD0888800D2FB69 /* AuthHomeView.swift */; };
 		DC7695472AD0888800D2FB69 /* AuthModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695442AD0888800D2FB69 /* AuthModifier.swift */; };
 		DC7695482AD0888800D2FB69 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695452AD0888800D2FB69 /* LoginView.swift */; };
@@ -148,7 +148,6 @@
 		DC94ED592ADFDA540052AD6E /* TextAreaModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */; };
 		DC94ED732AE3B86A0052AD6E /* YdIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC94ED722AE3B86A0052AD6E /* YdIconView.swift */; };
 		DCD00D062AE5017400B44B89 /* DMPostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD00D052AE5017400B44B89 /* DMPostDetailView.swift */; };
-		DCD00D082AE6349D00B44B89 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCD00D072AE6349D00B44B89 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -269,9 +268,9 @@
 		D89971282ADFC51B00FBF031 /* CMSelectStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSelectStyleView.swift; sourceTree = "<group>"; };
 		D899712A2AE107D100FBF031 /* CMReservationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReservationViewModel.swift; sourceTree = "<group>"; };
 		D899712C2AE107FC00FBF031 /* Reservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservation.swift; sourceTree = "<group>"; };
-		D8A09A1E2ADD3F3200F1B000 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D8E87D4F2AE4CC7C00DC9FF4 /* CMReservationCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReservationCheckView.swift; sourceTree = "<group>"; };
 		D8E87D512AE5C53300DC9FF4 /* NavigationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationState.swift; sourceTree = "<group>"; };
+		D8E87D532AE6A39400DC9FF4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DC7695422AD0888800D2FB69 /* AuthHomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthHomeView.swift; sourceTree = "<group>"; };
 		DC7695442AD0888800D2FB69 /* AuthModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthModifier.swift; sourceTree = "<group>"; };
 		DC7695452AD0888800D2FB69 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -288,7 +287,6 @@
 		DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaModifier.swift; sourceTree = "<group>"; };
 		DC94ED722AE3B86A0052AD6E /* YdIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YdIconView.swift; sourceTree = "<group>"; };
 		DCD00D052AE5017400B44B89 /* DMPostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostDetailView.swift; sourceTree = "<group>"; };
-		DCD00D072AE6349D00B44B89 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -689,7 +687,7 @@
 		63CD89AF2ABD85C300E70A56 /* YeDi */ = {
 			isa = PBXGroup;
 			children = (
-				DCD00D072AE6349D00B44B89 /* GoogleService-Info.plist */,
+				D8E87D532AE6A39400DC9FF4 /* GoogleService-Info.plist */,
 				3BCF2C032ACD3E72009C18C2 /* Shared */,
 				3BCF2C362ACD4247009C18C2 /* Client */,
 				639DB6282AC10DED002692E5 /* Designer */,
