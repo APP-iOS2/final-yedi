@@ -17,6 +17,7 @@ struct CMProfileView: View {
     @State private var clientName: String = ""
     @State private var clientGender: String = ""
     @State private var clientBirthDate: String = ""
+    @State private var clientEmail: String = ""
     @State private var clientPhoneNumber: String = ""
     
     // MARK: - Body
@@ -52,6 +53,7 @@ struct CMProfileView: View {
                         clientName: $clientName,
                         clientGender: $clientGender,
                         clientBirthDate: $clientBirthDate,
+                        clientEmail: $clientEmail,
                         clientPhoneNumber: $clientPhoneNumber
                     )
                 } label: {
@@ -77,6 +79,7 @@ struct CMProfileView: View {
                 clientName = profileViewModel.client.name
                 clientGender = profileViewModel.client.gender
                 clientBirthDate = profileViewModel.client.birthDate
+                clientEmail = profileViewModel.client.email
                 clientPhoneNumber = profileViewModel.client.phoneNumber
             }
         }
