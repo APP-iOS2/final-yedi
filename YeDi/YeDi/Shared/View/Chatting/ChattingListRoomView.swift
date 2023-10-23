@@ -74,7 +74,7 @@ struct ChattingListRoomView: View {
                         }
                     }
                 }
-                .animation(.easeIn(duration: 1), value: chattingListRoomViewModel.chattingRooms.compactMap{$0.chattingBubles})
+                .animation(.easeInOut, value: chattingListRoomViewModel.chattingRooms)
                 .listStyle(.plain)
                 .navigationTitle("채팅")
             }
