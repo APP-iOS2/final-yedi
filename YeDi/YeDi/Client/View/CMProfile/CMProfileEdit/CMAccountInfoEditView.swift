@@ -22,6 +22,8 @@ struct CMAccountInfoEditView: View {
                 Spacer()
                 Text("\(clientEmail)")
             }
+            .padding(.bottom, 15)
+            
             HStack {
                 Text("휴대폰")
                     .padding(.trailing, 30)
