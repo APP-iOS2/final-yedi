@@ -86,5 +86,11 @@ extension Color {
     static let secondarySystemGroupedBackground = Color(UIColor.secondarySystemGroupedBackground)
     /// secondarySystemGroupedBackground 위에 겹쳐진 콘텐츠 배경색
     static let tertiarySystemGroupedBackground = Color(UIColor.tertiarySystemGroupedBackground)
+    
+    static let whiteMainColor = Color("whiteTextColor")
+    static let lightGrayColor = Color(hex: "F6F6F6")
+    static let lightGrayColor2 = Color(hex: "CCCCCC")
+    static let lightGrayColor3 = Color(hex: "F9F9FB")
+    static let mediumGrayColor = Color(hex: "999999")
 }
 
