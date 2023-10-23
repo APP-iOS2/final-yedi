@@ -158,7 +158,7 @@ struct FloatingButton: View {
                 .clipShape(Circle())
                 .shadow(radius: 5)
                 .sheet(isPresented: $showingRestDaySetting, content: {
-                    WkDaySettingDetail()
+                    WkDaySettingDetail(showingRestDaySetting: $showingRestDaySetting)
                         .presentationCornerRadius(20)
                         .presentationDetents([.fraction(0.6)])
                 })
@@ -175,7 +175,7 @@ struct FloatingButton: View {
                 .clipShape(Circle())
                 .shadow(radius: 5)
                 .sheet(isPresented: $showingBreakTimeSetting, content: {
-                    TimeSettingDetail()
+                    TimeSettingDetail(showingBreakTimeSetting: $showingBreakTimeSetting)
                         .presentationCornerRadius(20)
                         .presentationDetents([.fraction(0.6)])
                 })

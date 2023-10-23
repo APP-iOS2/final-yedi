@@ -15,8 +15,11 @@ class BreakTimeSetting: ObservableObject {
     let db = Firestore.firestore().collection("breakTimes")
     
     /// - firestore에 시간 데이터를 저장한다.
-    func addTimes(_ designerID: String, _ breakTime: [String]) {
-        db.addDocument(data: ["designerID" : designerID, "breakTime": breakTime]) { error in
+    func addTimes(_ selectedTime: [String]) {
+        
+        let myTime = db.document()
+        
+        myTime.setData(["id": myTime.documentID, "selectedTime": selectedTime]) { error in
             if error == nil {
                 self.getTimes()
             } else {
@@ -34,9 +37,8 @@ class BreakTimeSetting: ObservableObject {
                     DispatchQueue.main.async {
                         self.breakTimes = snapshot.documents.map { d in
                             return BreakTime(
-                                designerID: d["designerID"] as? String ?? "[디자이너 없음]",
-                                selectedTime: d["selectedTime"] as? [String] ?? ["[시간을 설정하세요]"],
-                                timePeriod: d["timePeriod"] as? TimePeriod ?? .am
+                                id: d.documentID,
+                                selectedTime: d["selectedTime"] as? [String] ?? ["[시간을 설정하세요]"]
                             )
                         }
                     }
@@ -45,10 +47,6 @@ class BreakTimeSetting: ObservableObject {
                 // Handle the error
             }
         }
-    }
-    /// -  저장된 시간 삭제
-    func deleteTime() {
-        
     }
 }
 

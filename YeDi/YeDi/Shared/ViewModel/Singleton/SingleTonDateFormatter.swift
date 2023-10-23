@@ -69,5 +69,4 @@ final class SingleTonDateFormatter {
         return dateFormatter.string(from: date)
         
     }
-    
 }
