@@ -39,7 +39,6 @@ class CMSearchViewModel: ObservableObject {
                 
                 UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
             }
-            searchText = ""
         }
     }
     
@@ -112,28 +111,4 @@ class CMSearchViewModel: ObservableObject {
             }
         }
     }
-
-
-    
-    func performSearch() {
-        designers = []
-
-        let query = db.collection("designers").whereField("name", isGreaterThanOrEqualTo: searchText)
-        
-        query.getDocuments { [weak self] snapshot, error in
-            if let error = error {
-                print("Error getting documents: \(error)")
-                return
-            }
-            guard let documents = snapshot?.documents else {
-                print("No documents")
-                return
-            }
-            self?.designers = documents.compactMap { document in
-                try? document.data(as: Designer.self)
-            }
-        }
-    }
-
-
 }
