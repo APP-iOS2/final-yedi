@@ -14,7 +14,7 @@ struct CMHomeView: View {
     
     var body: some View {
         NavigationStack {
-            HStack {
+            HStack(spacing: 0) {
                 ForEach(segments, id: \.self) { segment in
                     Button(action: {
                         selectedSegment = segment
@@ -22,10 +22,10 @@ struct CMHomeView: View {
                         VStack {
                             Text(segment)
                                 .fontWeight(selectedSegment == segment ? .semibold : .medium)
-                                .foregroundStyle(Color.primaryLabel)
+                                .foregroundStyle(Color(UIColor.label))
                             Rectangle()
-                                .fill(selectedSegment == segment ? Color.primaryLabel : .clear)
-                                .frame(width: 180, height: 3)
+                                .fill(selectedSegment == segment ? Color.primaryLabel : .gray6)
+                                .frame(width: 200, height: 3)
                         }
                     })
                 }
@@ -42,6 +42,21 @@ struct CMHomeView: View {
             }
         }
         .padding(.bottom, 1)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                YdIconView(height: 30)
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    CMSettingsView()
+                } label: {
+                    Image(systemName: "gearshape")
+                        .foregroundStyle(Color.primaryLabel)
+                }
+
+            }
+        }
     }
 }
 
