@@ -5,9 +5,9 @@
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIColorName</key>
-		<string>systemBackground</string>
+		<string>black</string>
 		<key>UIImageName</key>
-		<string>ydIcon</string>
+		<string>ydLaunch</string>
 	</dict>
 </dict>
 </plist>
