@@ -20,6 +20,7 @@ struct CMProfileEditView: View {
     @Binding var clientName: String
     @Binding var clientGender: String
     @Binding var clientBirthDate: String
+    @Binding var clientEmail: String
     @Binding var clientPhoneNumber: String
     
     @State private var isShowingPhotoPicker: Bool = false
@@ -80,7 +81,8 @@ struct CMProfileEditView: View {
             // MARK: - 계정 정보 수정 섹션
             Section {
                 CMAccountInfoEditView(
-                    accountPhoneNumber: $clientPhoneNumber
+                    clientEmail: $clientEmail,
+                    clientPhoneNumber: $clientPhoneNumber
                 )
             } header: {
                 HStack {
@@ -146,6 +148,7 @@ struct CMProfileEditView: View {
         clientName: .constant(""),
         clientGender: .constant(""),
         clientBirthDate: .constant(""),
+        clientEmail: .constant(""),
         clientPhoneNumber: .constant("")
     )
     .environmentObject(UserAuth())
