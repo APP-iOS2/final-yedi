@@ -35,8 +35,13 @@ struct CMProfileView: View {
                     
                     // MARK: - 프로필 이미지
                     if clientPhotoURL.isEmpty {
-                        Image(systemName: "person.circle.fill")
-                            .font(.system(size: 60))
+                        Text(String(profileViewModel.client.name.first ?? " ").capitalized)
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .frame(width: 60, height: 60)
+                            .background(Circle().fill(Color.quaternarySystemFill))
+                            .foregroundColor(Color.primaryLabel)
+                            .offset(y: -5)
                     } else {
                         DMAsyncImage(url: clientPhotoURL)
                             .aspectRatio(contentMode: .fill)

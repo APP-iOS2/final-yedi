@@ -53,17 +53,22 @@ struct CMReviewCell: View {
                         Spacer()
                         RatingView(score: review.designerScore, maxScore: 5, filledColor: .yellow)
                     }
+                    .padding(.bottom, 3)
+                    
                     Text(review.content)
+                        .font(.system(size: 15))
                         .foregroundStyle(Color.primaryLabel)
                         .lineLimit(2)
                         .multilineTextAlignment(.leading)
                     Spacer()
+                    
                     Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일", from: review.date))")
                         .font(.footnote)
                         .foregroundStyle(.gray)
                 }
                 .padding(.vertical)
                 .padding(.leading)
+                
                 ZStack(alignment: .topTrailing) {
                     DMAsyncImage(url: review.imageURLStrings[0])
                         .scaledToFill()

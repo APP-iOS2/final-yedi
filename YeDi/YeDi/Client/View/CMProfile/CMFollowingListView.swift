@@ -42,25 +42,35 @@ struct CMFollowingListView: View {
     private func followingList(designer: Designer) -> some View {
         HStack(alignment: .top) {
             if let imageURLString = designer.imageURLString {
-                DMAsyncImage(url: imageURLString)
-                    .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: 50, maxHeight: 50)
-                    .clipShape(Circle())
-                    .offset(y: -5)
-                    .padding(.trailing, 4)
+                AsyncImage(url: URL(string: "\(imageURLString)")) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(maxWidth: 50, maxHeight: 50)
+                        .clipShape(Circle())
+                        .offset(y: -5)
+                } placeholder: {
+                    Text(String(designer.name.first ?? " ").capitalized)
+                                .font(.title3)
+                                .fontWeight(.bold)
+                                .frame(width: 50, height: 50)
+                                .background(Circle().fill(Color.quaternarySystemFill))
+                                .foregroundColor(Color.primaryLabel)
+                                .offset(y: -5)
+                }
             } else {
-                Image(systemName: "person.circle.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 50, maxHeight: 50)
-                    .clipShape(Circle())
-                    .offset(y: -5)
-                    .padding(.trailing, 4)
+                Text(String(designer.name.first ?? " ").capitalized)
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .frame(width: 50, height: 50)
+                            .background(Circle().fill(Color.quaternarySystemFill))
+                            .foregroundColor(Color.primaryLabel)
+                            .offset(y: -5)
             }
 
             VStack(alignment: .leading) {
                 Text("\(designer.name)")
-                Text("서울")
+                Text("\(designer.shop?.shopName ?? "프리랜서")")
                     .font(.subheadline)
             }
             

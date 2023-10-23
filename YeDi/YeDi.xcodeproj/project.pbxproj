@@ -563,12 +563,12 @@
 		639DB6622AC10F19002692E5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				639DB6602AC10F13002692E5 /* DesignerMainTabView.swift */,
 				639DB67C2AC11AE7002692E5 /* DMProfileView */,
 				639DB67F2AC11B17002692E5 /* DMChattingView */,
 				639DB6822AC11B29002692E5 /* DMReservationView */,
 				639DB6852AC11B4A002692E5 /* DMPostView */,
 				639DB67B2AC11AD5002692E5 /* DMReview */,
-				639DB6602AC10F13002692E5 /* DesignerMainTabView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
