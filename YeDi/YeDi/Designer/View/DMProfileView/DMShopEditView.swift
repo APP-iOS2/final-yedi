@@ -11,6 +11,8 @@
 import SwiftUI
 
 struct DMShopEditView: View {
+    @EnvironmentObject var locationManager: LocationManager
+    
     @Binding var shop: Shop
     @Binding var rank: Rank
     @Binding var isShowDesignerShopEditView: Bool
@@ -93,6 +95,16 @@ struct DMShopEditView: View {
                             TextField("상세주소 ", text: $shop.detailAddress)
                                 .textFieldModifier()
                         }
+                        
+                        if !shop.headAddress.isEmpty && !shop.subAddress.isEmpty {
+                            let address = shop.headAddress + shop.subAddress
+                            let _: () = locationManager.getCoordinate(addressString: address) { coordinate, error in
+                                guard error == nil else { return }
+                                
+                                shop.latitude = coordinate.latitude
+                                shop.longitude = coordinate.longitude
+                            }
+                        }
                     }
                     .padding(.vertical, 8)
                     
@@ -145,14 +157,18 @@ struct DMShopEditView: View {
 
 #Preview {
     NavigationStack {
-        DMShopEditView(shop: .constant(.init(shopName: "", 
-                                             headAddress: "",
-                                             subAddress: "",
-                                             detailAddress: "",
-                                             openingHour: "",
-                                             closingHour: "",
-                                             closedDays: [])),
-                       rank: .constant(Rank.Owner),
-                       isShowDesignerShopEditView: .constant(false))
+        DMShopEditView(
+            shop: .constant(.init(
+                shopName: "",
+                headAddress: "",
+                subAddress: "",
+                detailAddress: "",
+                openingHour: "",
+                closingHour: "",
+                closedDays: [])),
+            rank: .constant(Rank.Owner),
+            isShowDesignerShopEditView: .constant(false)
+        )
+        .environmentObject(LocationManager())
     }
 }

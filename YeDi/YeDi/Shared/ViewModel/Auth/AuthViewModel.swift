@@ -211,6 +211,21 @@ final class UserAuth: ObservableObject {
                     .document(user.uid)
                     .setData(data, merge: true)
                 
+
+                let shopData : [String: Any] = [
+                                    "shopName" : shop.shopName,
+                                    "headAddress" : shop.headAddress,
+                                    "subAddress" : shop.subAddress,
+                                    "detailAddress" : shop.detailAddress,
+//                                    "telNumber" : "",
+                                    "longitude" : shop.longitude,
+                                    "latitude" : shop.latitude,
+                                    "openingHour" : shop.openingHour,
+                                    "closingHour" : shop.closingHour,
+//                                    "messangerLinkURL" : ["": ""],
+                                    "closedDays" : shop.closedDays
+                                ]
+                
                 self.storeService.collection("designers").document(user.uid).collection("shop")
                     .addDocument(data: self.designerShopDataSet(shop: shop), completion: { _ in
                         self.userSession = nil
