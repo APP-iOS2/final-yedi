@@ -42,26 +42,26 @@ struct CMFollowingListView: View {
     private func followingList(designer: Designer) -> some View {
         HStack(alignment: .top) {
             if let imageURLString = designer.imageURLString {
-                AsyncImage(url: URL(string: "\(imageURLString)")) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(maxWidth: 50, maxHeight: 50)
-                        .clipShape(Circle())
-                } placeholder: {
-                    ProgressView()
-                }
+                DMAsyncImage(url: imageURLString)
+                    .aspectRatio(contentMode: .fill)
+                    .frame(maxWidth: 50, maxHeight: 50)
+                    .clipShape(Circle())
+                    .offset(y: -5)
+                    .padding(.trailing, 4)
             } else {
                 Image(systemName: "person.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: 50, maxHeight: 50)
                     .clipShape(Circle())
+                    .offset(y: -5)
+                    .padding(.trailing, 4)
             }
 
             VStack(alignment: .leading) {
                 Text("\(designer.name)")
                 Text("서울")
+                    .font(.subheadline)
             }
             
             Spacer()
