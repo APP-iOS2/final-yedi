@@ -195,8 +195,8 @@ struct DMShopEditView: View {
                     let firebaseDateFormat = dateFomatter.firebaseDateFormat()
                     
                     closedDay = shop.closedDays.first ?? ""
-                    openingHour = firebaseDateFormat.date(from: shop.openingHour) ?? Date()
-                    closingHour = firebaseDateFormat.date(from: shop.closingHour) ?? Date()
+                    openingHour = firebaseDateFormat.date(from: "2000-01-01T10:00:00+0900") ?? Date()
+                    closingHour = firebaseDateFormat.date(from: "2000-01-01T19:00:00+0900") ?? Date()
                 })
                 .onTapGesture(perform: {
                     hideKeyboard()
