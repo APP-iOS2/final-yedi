@@ -8,6 +8,8 @@
 		<string>systemBackground</string>
 		<key>UIImageName</key>
 		<string>ydLaunch</string>
+		<key>UIImageRespectsSafeAreaInsets</key>
+		<true/>
 	</dict>
 </dict>
 </plist>
