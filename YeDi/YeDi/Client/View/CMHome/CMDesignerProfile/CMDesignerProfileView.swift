@@ -11,7 +11,10 @@ import FirebaseFirestore
 
 struct CMDesignerProfileView: View {
     var designer: Designer
+    
     @StateObject var viewModel = CMDesignerProfileViewModel()
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var consultationViewModel: ConsultationViewModel
     
     var body: some View {
         ScrollView {
@@ -85,7 +88,7 @@ struct CMDesignerProfileView: View {
                     
                     HStack {
                         Button {
-                            //
+                            consultationViewModel.setEmptyChatRoomList(customerId: userAuth.currentClientID ?? "", designerId: designer.designerUID)
                         } label: {
                             HStack {
                                 Spacer()
