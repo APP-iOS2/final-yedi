@@ -262,10 +262,16 @@ class ChattingViewModel: ObservableObject {
             
             if let snapshot = snapshot, !snapshot.isEmpty {
                 for document in snapshot.documents {
-                    let userInfo = ChatListUserInfo(
-                        name: document.data()["name"] as? String ?? "",
-                        profileImageURLString: document.data()["profileImageURLString"] as? String ?? ""
-                    )
+                    var userInfo: ChatListUserInfo
+                    
+                    if type == .client {
+                        userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "",
+                                                        profileImageURLString: document.data()["imageURLString"] as? String ?? "")
+                    } else {
+                        userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "",
+                                                    profileImageURLString: document.data()["profileImageURLString"] as? String ?? "")
+                    }
+                    
                     self?.userProfile[id] = userInfo
                 }
             }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChatRoom: Codable {
+struct ChatRoom: Codable, Equatable {
     var id: String = UUID().uuidString
     var chattingBubles: [CommonBubble]?
     var totalUnReadCount: Int?

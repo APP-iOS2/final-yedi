@@ -35,7 +35,7 @@ struct ChattingListRoomView: View {
                                 .aspectRatio(contentMode: .fill)
                                 .clipShape(Circle())
                                 .frame(width: 50, height: 50)
-                            
+                                
                             VStack(alignment: .leading, spacing: 8) {
                                 Text(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name ?? "UnKown")
                                     .font(.title3.bold())
@@ -74,6 +74,7 @@ struct ChattingListRoomView: View {
                         }
                     }
                 }
+                .animation(.easeIn(duration: 1), value: chattingListRoomViewModel.chattingRooms.compactMap{$0.chattingBubles})
                 .listStyle(.plain)
                 .navigationTitle("채팅")
             }
