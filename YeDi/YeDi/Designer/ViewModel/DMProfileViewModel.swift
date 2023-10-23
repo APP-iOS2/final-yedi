@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import Firebase
 import UIKit
+import FirebaseFirestore
 import FirebaseStorage
 
 // MARK: - DMProfileViewModel

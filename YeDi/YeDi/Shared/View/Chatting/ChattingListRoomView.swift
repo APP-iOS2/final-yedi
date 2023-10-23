@@ -35,7 +35,7 @@ struct ChattingListRoomView: View {
                                 .aspectRatio(contentMode: .fill)
                                 .clipShape(Circle())
                                 .frame(width: 50, height: 50)
-                            
+                                
                             VStack(alignment: .leading, spacing: 8) {
                                 Text(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name ?? "UnKown")
                                     .font(.title3.bold())
@@ -74,6 +74,7 @@ struct ChattingListRoomView: View {
                         }
                     }
                 }
+                .animation(.easeInOut, value: chattingListRoomViewModel.chattingRooms)
                 .listStyle(.plain)
                 .navigationTitle("채팅")
             }
@@ -84,11 +85,31 @@ struct ChattingListRoomView: View {
     }
     
     private func changetoDateFormat(_ messageDate: String) -> String {
-        let instance = SingleTonDateFormatter.sharedDateFommatter
-        let date = instance.changeDateString(transition: "MM/dd HH:mm", from: messageDate)
-        return date
+        let dateFomatter = SingleTonDateFormatter.sharedDateFommatter.firebaseDateFormat()
+        let date = dateFomatter.date(from: messageDate) ?? Date()
+        let calendar = Calendar.current
+        
+        if calendar.isDateInToday(date) {
+            dateFomatter.dateFormat = "HH:mm"
+            return dateFomatter.string(from: date)
+        } else if calendar.isDateInYesterday(date) {
+            return "어제"
+        } else {
+            let currentYear = calendar.component(.year, from: Date())
+            let messageYear = calendar.component(.year, from: date)
+                // 올해 년도의 메세지인 경우 월/일 반환
+            if currentYear == messageYear {
+                dateFomatter.dateFormat = "MM/dd"
+                return dateFomatter.string(from: date)
+            } else {
+                // 그 외 올해가 아닌 데이터 날짜는 년.월, 일 형식의 String을 반환
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy.MM.dd"
+                return formatter.string(from: date)
+            }
+        }
     }
-    
+
 }
 
 #Preview {

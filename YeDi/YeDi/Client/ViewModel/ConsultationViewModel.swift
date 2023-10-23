@@ -54,14 +54,16 @@ class ConsultationViewModel: ChattingViewModel {
                 }
                 
                 // 채팅방 생성
-                if commonChatRooms.count > 0 {
-                    super.chatRoomId = commonChatRooms.first ?? ""
-                } else {
-                    super.chatRoomId = chatRoom.id
-                    transaction.updateData(["chatRooms": FieldValue.arrayUnion([chatRoom.id])], forDocument: customerDocument.reference)
-                    transaction.updateData(["chatRooms": FieldValue.arrayUnion([chatRoom.id])], forDocument: designerDocument.reference)
+                DispatchQueue.main.async {
+                    if commonChatRooms.count > 0 {
+                        super.chatRoomId = commonChatRooms.first ?? ""
+                    } else {
+                        super.chatRoomId = chatRoom.id
+                        transaction.updateData(["chatRooms": FieldValue.arrayUnion([chatRoom.id])], forDocument: customerDocument.reference)
+                        transaction.updateData(["chatRooms": FieldValue.arrayUnion([chatRoom.id])], forDocument: designerDocument.reference)
+                    }
+                    self.sendBoardBubble(content: "이 게시물 보고 상담하러 왔어요", imagePath: post?.photos[0].imageURL ?? "", sender: customerId)
                 }
-                self.sendBoardBubble(content: "이 게시물 보고 상담하러 왔어요", imagePath: post?.photos[0].imageURL ?? "", sender: customerId)
             } catch let fetchError as NSError {
                 debugPrint(fetchError.description)
                 errorPointer?.pointee = fetchError

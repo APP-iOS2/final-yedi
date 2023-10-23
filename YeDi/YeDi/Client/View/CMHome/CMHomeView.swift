@@ -58,6 +58,21 @@ struct CMHomeView: View {
             }
         }
         .padding(.bottom, 1)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                YdIconView(height: 30)
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    CMSettingsView()
+                } label: {
+                    Image(systemName: "gearshape")
+                        .foregroundStyle(Color.primaryLabel)
+                }
+
+            }
+        }
     }
 }
 

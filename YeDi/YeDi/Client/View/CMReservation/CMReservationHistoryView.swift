@@ -14,7 +14,7 @@ struct CMReservationHistoryView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                HStack {
+                HStack(spacing: 0) {
                     ForEach(segments, id: \.self) { segment in
                         Button(action: {
                             selectedSegment = segment
@@ -22,10 +22,10 @@ struct CMReservationHistoryView: View {
                             VStack {
                                 Text(segment)
                                     .fontWeight(selectedSegment == segment ? .semibold : .medium)
-                                    .foregroundStyle(Color.primaryLabel)
+                                    .foregroundStyle(Color(UIColor.label))
                                 Rectangle()
-                                    .fill(selectedSegment == segment ? Color.primaryLabel : .clear)
-                                    .frame(width: 180, height: 3)
+                                    .fill(selectedSegment == segment ? Color.primaryLabel : .gray6)
+                                    .frame(width: 200, height: 3)
                             }
                         })
                     }

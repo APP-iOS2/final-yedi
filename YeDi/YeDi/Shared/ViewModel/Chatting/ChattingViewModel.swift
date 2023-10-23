@@ -17,7 +17,7 @@ class ChattingViewModel: ObservableObject {
     @Published var userProfile: [String: ChatListUserInfo] = [:]
     @Published var anyMoreChats: Bool = true ///더 불러올 채팅이 있는지 없는지 판단하는 프로퍼티
     
-    let limitLength = 5 ///더 불러오기에 쓸 채팅버블 개수 제한 변수
+    let limitLength = 13 ///더 불러오기에 쓸 채팅버블 개수 제한 변수
     var storePath: String {
         return "chatRooms/\(chatRoomId)/bubbles"
     }
@@ -262,10 +262,16 @@ class ChattingViewModel: ObservableObject {
             
             if let snapshot = snapshot, !snapshot.isEmpty {
                 for document in snapshot.documents {
-                    let userInfo = ChatListUserInfo(
-                        name: document.data()["name"] as? String ?? "",
-                        profileImageURLString: document.data()["profileImageURLString"] as? String ?? ""
-                    )
+                    var userInfo: ChatListUserInfo
+                    
+                    if type == .client {
+                        userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "",
+                                                        profileImageURLString: document.data()["imageURLString"] as? String ?? "")
+                    } else {
+                        userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "",
+                                                    profileImageURLString: document.data()["profileImageURLString"] as? String ?? "")
+                    }
+                    
                     self?.userProfile[id] = userInfo
                 }
             }

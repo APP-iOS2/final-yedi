@@ -136,7 +136,6 @@ struct Post: Codable {
 }
 
 // 헤어 디자인 카테고리를 정의하는 Enum
-
 enum HairCategory: String, Codable {
     case Cut = "커트"
     case Perm = "펌"
@@ -186,9 +185,31 @@ struct ClosedDay: Identifiable, Codable {
     var day: [String]
 }
 
-/// - 휴식시간 설정 구조체
+/// - Recess Structure
 struct BreakTime: Codable {
     @DocumentID var id: String?
     var designerID: String
-    var breakTime: [String]
+    var selectedTime: [String]
+    var timePeriod: TimePeriod
+}
+/// - 오전, 오후
+enum TimePeriod: CaseIterable, Codable {
+    case am
+    case pm
+    
+    var displayText: String {
+        switch self {
+        case .am:
+            return "AM"
+        case .pm:
+            return "PM"
+        }
+    }
+}
+
+struct Reservation: Codable, Identifiable {
+    @DocumentID var id: String?
+    var designerID: String
+    var dmDate: Date
+    var desciption: String
 }
