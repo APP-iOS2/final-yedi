@@ -75,7 +75,6 @@ struct CMDesignerProfileReviewView: View {
                     ForEach(reviews) { review in
                         NavigationLink(destination: CMDesignerReviewDetailView(review: review)) {
                             HStack {
-                                
                                 VStack(alignment: .leading) {
                                     HStack {
                                         Text(review.style)

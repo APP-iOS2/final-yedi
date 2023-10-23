@@ -154,53 +154,59 @@ class CMDesignerProfileViewModel: ObservableObject {
     }
     
     // 리뷰 정보 불러오기
-    func fetchReview() {
-        db.collection("reviews").getDocuments { snapshot, error in
-            if let error = error {
-                print("Error getting documents: \(error)")
-                return
+    func fetchReview(designerUID: String) {
+        db.collection("reviews")
+            .whereField("designer", isEqualTo: designerUID) // designerUID 필드를 사용하여 해당 디자이너의 리뷰만 가져오도록 수정
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error getting documents: \(error)")
+                    return
+                }
+                guard let documents = snapshot?.documents else {
+                    print("No documents")
+                    return
+                }
+                self.reviews = documents.compactMap{ document in
+                    try? document.data(as: Review.self)
+                }
             }
-            guard let documents = snapshot?.documents else {
-                print("No documents")
-                return
-            }
-            self.reviews = documents.compactMap{ document in
-                try? document.data(as: Review.self)
-            }
-        }
     }
     
-    func fetchKeywords() {
+    
+    func fetchKeywords(designerUID: String) {
         let db = Firestore.firestore()
         
-        db.collection("reviews").getDocuments { (querySnapshot, error) in
-            if let error = error {
-                print("데이터를 가져오는 중 오류 발생: \(error)")
-                return
-            }
-            
-            if let querySnapshot = querySnapshot {
-                var keywords: [String] = []
-                var keywordCountDict: [String: Int] = [:]
+        db.collection("reviews")
+            .whereField("designer", isEqualTo: designerUID) // designerUID 필드를 사용하여 해당 디자이너의 리뷰만 가져오도록 수정
+            .getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    print("데이터를 가져오는 중 오류 발생: \(error)")
+                    return
+                }
                 
-                for document in querySnapshot.documents {
-                    if let keywordReviews = document.data()["keywordReviews"] as? [[String: Any]] {
-                        for keywordReview in keywordReviews {
-                            if let keyword = keywordReview["keyword"] as? String {
-                                keywords.append(keyword)
-                                keywordCountDict[keyword, default: 0] += 1
+                if let querySnapshot = querySnapshot {
+                    var keywords: [String] = []
+                    var keywordCountDict: [String: Int] = [:]
+                    
+                    for document in querySnapshot.documents {
+                        if let keywordReviews = document.data()["keywordReviews"] as? [[String: Any]] {
+                            for keywordReview in keywordReviews {
+                                if let keyword = keywordReview["keyword"] as? String {
+                                    keywords.append(keyword)
+                                    keywordCountDict[keyword, default: 0] += 1
+                                }
                             }
                         }
                     }
-                }
-                
-                // 키워드 데이터 업데이트
-                DispatchQueue.main.async {
-                    self.keywords = keywords
-                    self.keywordCount = keywordCountDict.map { ($0.key, $0.value) }
+                    
+                    // 키워드 데이터 업데이트
+                    DispatchQueue.main.async {
+                        self.keywords = keywords
+                        self.keywordCount = keywordCountDict.map { ($0.key, $0.value) }
+                    }
                 }
             }
-        }
     }
+    
     
 }

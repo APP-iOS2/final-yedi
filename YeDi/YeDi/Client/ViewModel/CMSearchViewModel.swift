@@ -2,13 +2,21 @@ import SwiftUI
 import Firebase
 import FirebaseFirestore
 
+struct RecentItem: Identifiable {
+    let id = UUID()
+    let isSearch: Bool // true for search, false for designer
+    let text: String
+    let designer: Designer?
+}
+
 class CMSearchViewModel: ObservableObject {
     @Published var designers: [Designer] = []
     @Published var searchText: String = ""
     @Published var recentSearches: [String] = []
     @Published var recentDesigners: [Designer] = []
+    @Published var recentItems: [RecentItem] = []
     @Published var isTextFieldActive: Bool = false
-
+    
     
     private let db = Firestore.firestore()
     
@@ -29,72 +37,6 @@ class CMSearchViewModel: ObservableObject {
         loadRecentDesigners()
         loadData()
     }
-    
-    //최근 검색어 저장
-    func saveRecentSearch() {
-        if !searchText.isEmpty {
-            if !recentSearches.contains(searchText) {
-                recentSearches.insert(searchText, at: 0)
-                if recentSearches.count > 5 {
-                    recentSearches.removeLast()
-                }
-                
-                UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
-            }
-        }
-    }
-    
-    // 최근 검색어 삭제
-    func removeRecentSearch(_ search: String) {
-        if let index = recentSearches.firstIndex(of: search) {
-            recentSearches.remove(at: index)
-            
-            UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
-        }
-    }
-    
-    // 최근 검색어 전체 삭제
-    func removeAllRecentSearches() {
-        recentSearches.removeAll()
-        
-        UserDefaults.standard.removeObject(forKey: "RecentSearches")
-    }
-
-    // 최근 검색어 불러오기
-    func loadRecentSearches() {
-        if let loadedSearches = UserDefaults.standard.array(forKey: "RecentSearches") as? [String] {
-            recentSearches = loadedSearches
-        }
-    }
-    
-    func addRecentDesigner(_ designer: Designer) {
-        if !recentDesigners.contains(where: { $0.id == designer.id }) {
-            recentDesigners.insert(designer, at: 0)
-            if recentDesigners.count > 5 {
-                recentDesigners.removeLast()
-            }
-            UserDefaults.standard.set(recentDesigners.map { $0.name }, forKey: "RecentDesigners") // Save recent designers' names
-        }
-    }
-
-
-    // Inside the CMSearchViewModel, in the removeRecentDesigner function
-    func removeRecentDesigner(_ designer: Designer) {
-        if let index = recentDesigners.firstIndex(where: { $0.id == designer.id }) {
-            recentDesigners.remove(at: index)
-            UserDefaults.standard.set(recentDesigners.map { $0.name }, forKey: "RecentDesigners") // Update recent designers' names
-        }
-    }
-
-
-    func loadRecentDesigners() {
-        if let loadedDesigners = UserDefaults.standard.array(forKey: "RecentDesigners") as? [String] {
-            // Match the loaded designer names with the designers in the main 'designers' array
-            let matchingDesigners = designers.filter { loadedDesigners.contains($0.name) }
-            recentDesigners = matchingDesigners
-        }
-    }
-
     
     // 디자이너 정보 불러오기
     func loadData() {
@@ -135,7 +77,7 @@ class CMSearchViewModel: ObservableObject {
                     }
                 }
             }
-
+            
             
             // Wait for all tasks to complete
             dispatchGroup.notify(queue: .main) {
@@ -143,5 +85,89 @@ class CMSearchViewModel: ObservableObject {
                 self.designers = designersWithShops
             }
         }
+    }
+    
+    //최근 검색어 저장
+    func saveRecentSearch() {
+        if !searchText.isEmpty {
+            if !recentItems.contains(where: { $0.isSearch && $0.text == searchText }) {
+                let newItem = RecentItem(isSearch: true, text: searchText, designer: nil)
+                recentItems.insert(newItem, at: 0)
+                
+                if recentItems.count > 5 {
+                    recentItems.removeLast()
+                }
+                
+                UserDefaults.standard.set(recentItems.map { $0.text }, forKey: "RecentItems")
+            }
+        }
+    }
+    
+    // 최근 검색어 삭제
+    func removeRecentSearch(_ search: String) {
+        if let index = recentItems.firstIndex(where: { $0.isSearch && $0.text == search }) {
+            recentItems.remove(at: index)
+            UserDefaults.standard.set(recentItems.map { $0.text }, forKey: "RecentItems")
+        }
+    }
+    
+    // 최근 검색어 불러오기
+    func loadRecentSearches() {
+        if let loadedSearches = UserDefaults.standard.array(forKey: "RecentSearches") as? [String] {
+            recentSearches = loadedSearches
+        }
+    }
+    
+    // 최근 방문 디자이너 추가
+    func addRecentDesigner(_ designer: Designer) {
+        if !recentItems.contains(where: { !$0.isSearch && $0.designer?.id == designer.id }) {
+            let newItem = RecentItem(isSearch: false, text: designer.name, designer: designer)
+            recentItems.insert(newItem, at: 0)
+            
+            if recentItems.count > 5 {
+                recentItems.removeLast()
+            }
+            
+            UserDefaults.standard.set(recentItems.map { $0.text }, forKey: "RecentItems")
+        }
+    }
+    
+    
+    // 최근 방문 디자이너 삭제
+    func removeRecentDesigner(_ designer: Designer) {
+        if let index = recentItems.firstIndex(where: { !$0.isSearch && $0.designer?.id == designer.id }) {
+            recentItems.remove(at: index)
+            UserDefaults.standard.set(recentItems.map { $0.text }, forKey: "RecentItems")
+        }
+    }
+
+    
+    // 최근 방문 디자이너 불러오기
+    func loadRecentDesigners() {
+        if let loadedDesigners = UserDefaults.standard.array(forKey: "RecentDesigners") as? [String] {
+            // Match the loaded designer names with the designers in the main 'designers' array
+            let matchingDesigners = designers.filter { loadedDesigners.contains($0.name) }
+            recentDesigners = matchingDesigners
+        }
+    }
+    
+    // 최근 검색 내역 불러오기
+    func loadRecentItems() {
+           if let loadedItems = UserDefaults.standard.array(forKey: "RecentItems") as? [String] {
+               recentItems = loadedItems.compactMap { text in
+                   if let designer = designers.first(where: { $0.name == text }) {
+                       return RecentItem(isSearch: false, text: text, designer: designer)
+                   } else {
+                       return RecentItem(isSearch: true, text: text, designer: nil)
+                   }
+               }
+           }
+       }
+    
+    // 최근 검색 내역 전체 삭제
+    func removeAllRecentItems() {
+        recentItems.removeAll()
+        
+        UserDefaults.standard.removeObject(forKey: "RecentItems")
     }
 }

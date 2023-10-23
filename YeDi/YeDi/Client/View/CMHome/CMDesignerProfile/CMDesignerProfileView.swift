@@ -165,8 +165,8 @@ struct CMDesignerProfileView: View {
                 await viewModel.isFollowed(designerUid: designer.designerUID)
             }
             viewModel.fetchDesignerPosts(designerUID: designer.designerUID)
-            viewModel.fetchReview()
-            viewModel.fetchKeywords()
+            viewModel.fetchReview(designerUID: designer.designerUID)
+            viewModel.fetchKeywords(designerUID: designer.designerUID)
             viewModel.previousFollowerCount = designer.followerCount
         }
         Spacer()
