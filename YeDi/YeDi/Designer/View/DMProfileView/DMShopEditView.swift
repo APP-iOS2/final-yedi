@@ -31,6 +31,17 @@ struct DMShopEditView: View {
     @State private var openingHour: Date = Date()
     @State private var closingHour: Date = Date()
     
+    var initOpeningDate: Date {
+        let stringDate = "2000-01-01T10:00:00+0900"
+        guard let date = dateFomatter.firebaseDateFormat().date(from: stringDate) else { return Date() }
+        return date
+    }
+    var initClosingDate: Date {
+        let stringDate = "2000-01-01T19:00:00+0900"
+        guard let date = dateFomatter.firebaseDateFormat().date(from: stringDate) else { return Date() }
+        return date
+    }
+    
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var userAuth: UserAuth
     private let ranks: [Rank] = [.Owner, .Principal, .Designer, .Intern]
@@ -195,8 +206,8 @@ struct DMShopEditView: View {
                     let firebaseDateFormat = dateFomatter.firebaseDateFormat()
                     
                     closedDay = shop.closedDays.first ?? ""
-                    openingHour = firebaseDateFormat.date(from: shop.openingHour) ?? Date()
-                    closingHour = firebaseDateFormat.date(from: shop.closingHour) ?? Date()
+                    openingHour = firebaseDateFormat.date(from: shop.openingHour) ?? initOpeningDate
+                    closingHour = firebaseDateFormat.date(from: shop.closingHour) ?? initClosingDate
                 })
                 .onTapGesture(perform: {
                     hideKeyboard()
