@@ -172,6 +172,7 @@ struct DMProfileView: View {
                     HStack {
                         NavigationLink {
                             CMSettingsView()
+                                .toolbar(.hidden, for: .tabBar)
                         } label: {
                             Image(systemName: "gearshape")
                                 .foregroundStyle(Color.primaryLabel)
@@ -253,7 +254,7 @@ struct DMProfileView: View {
 }
 
 #Preview {
-    NavigationView {
+    NavigationStack {
         DMProfileView()
             .environmentObject(UserAuth())
             .environmentObject(LocationManager())

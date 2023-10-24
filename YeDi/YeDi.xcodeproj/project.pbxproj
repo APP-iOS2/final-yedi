@@ -22,6 +22,7 @@
 		1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067182AC151A80028A660 /* DMAsyncImage.swift */; };
 		1D90671D2AC176020028A660 /* DMPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90671C2AC176020028A660 /* DMPostViewModel.swift */; };
 		1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9067202AC1F61D0028A660 /* DMGridView.swift */; };
+		1D9109B92AE75E5100099667 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D9109B82AE75E5100099667 /* GoogleService-Info.plist */; };
 		1DA52F562AC2CB69002E0D75 /* DMNewPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */; };
 		1DD969A12ACFFD9A000AD7D2 /* AddDesignerDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD969A02ACFFD9A000AD7D2 /* AddDesignerDataView.swift */; };
 		2F0A21912ACE753F0070CA42 /* CMProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */; };
@@ -29,7 +30,6 @@
 		2F0A21952ACFD8950070CA42 /* CMReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */; };
 		2F45A1282AD2739C005018A5 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F45A1272AD2739C005018A5 /* Color.swift */; };
 		2F6363E92AD542AA00E980F8 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6363E82AD542AA00E980F8 /* PhotoPicker.swift */; };
-		2F65BB9C2AE6CBCA00D84D37 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2F65BB9B2AE6CBCA00D84D37 /* GoogleService-Info.plist */; };
 		2F65BB9E2AE6CBE400D84D37 /* CMHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F65BB9D2AE6CBE400D84D37 /* CMHistoryViewModel.swift */; };
 		2F65BBA02AE6CE8000D84D37 /* CMHistoryCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F65BB9F2AE6CE8000D84D37 /* CMHistoryCellView.swift */; };
 		2F7B60652ADFAF2B00EF1B96 /* CMCustomTextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B60642ADFAF2B00EF1B96 /* CMCustomTextArea.swift */; };
@@ -150,7 +150,6 @@
 		DC94ED592ADFDA540052AD6E /* TextAreaModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */; };
 		DC94ED732AE3B86A0052AD6E /* YdIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC94ED722AE3B86A0052AD6E /* YdIconView.swift */; };
 		DCD00D062AE5017400B44B89 /* DMPostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD00D052AE5017400B44B89 /* DMPostDetailView.swift */; };
-		DCD00D0E2AE6D71B00B44B89 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCD00D0D2AE6D71B00B44B89 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -169,6 +168,7 @@
 		1D9067182AC151A80028A660 /* DMAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMAsyncImage.swift; sourceTree = "<group>"; };
 		1D90671C2AC176020028A660 /* DMPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostViewModel.swift; sourceTree = "<group>"; };
 		1D9067202AC1F61D0028A660 /* DMGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMGridView.swift; sourceTree = "<group>"; };
+		1D9109B82AE75E5100099667 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1DA52F552AC2CB69002E0D75 /* DMNewPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMNewPostView.swift; sourceTree = "<group>"; };
 		1DD969A02ACFFD9A000AD7D2 /* AddDesignerDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDesignerDataView.swift; sourceTree = "<group>"; };
 		2F0A21902ACE753F0070CA42 /* CMProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMProfileViewModel.swift; sourceTree = "<group>"; };
@@ -176,7 +176,6 @@
 		2F0A21942ACFD8950070CA42 /* CMReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReviewViewModel.swift; sourceTree = "<group>"; };
 		2F45A1272AD2739C005018A5 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2F6363E82AD542AA00E980F8 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
-		2F65BB9B2AE6CBCA00D84D37 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2F65BB9D2AE6CBE400D84D37 /* CMHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHistoryViewModel.swift; sourceTree = "<group>"; };
 		2F65BB9F2AE6CE8000D84D37 /* CMHistoryCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHistoryCellView.swift; sourceTree = "<group>"; };
 		2F7B60642ADFAF2B00EF1B96 /* CMCustomTextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMCustomTextArea.swift; sourceTree = "<group>"; };
@@ -292,7 +291,6 @@
 		DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaModifier.swift; sourceTree = "<group>"; };
 		DC94ED722AE3B86A0052AD6E /* YdIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YdIconView.swift; sourceTree = "<group>"; };
 		DCD00D052AE5017400B44B89 /* DMPostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostDetailView.swift; sourceTree = "<group>"; };
-		DCD00D0D2AE6D71B00B44B89 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -703,7 +701,7 @@
 		63CD89AF2ABD85C300E70A56 /* YeDi */ = {
 			isa = PBXGroup;
 			children = (
-				2F65BB9B2AE6CBCA00D84D37 /* GoogleService-Info.plist */,
+				1D9109B82AE75E5100099667 /* GoogleService-Info.plist */,
 				3BCF2C032ACD3E72009C18C2 /* Shared */,
 				3BCF2C362ACD4247009C18C2 /* Client */,
 				639DB6282AC10DED002692E5 /* Designer */,
@@ -869,8 +867,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D9109B92AE75E5100099667 /* GoogleService-Info.plist in Resources */,
 				2FC888982AE240200096ED82 /* LICENSE.txt in Resources */,
-				2F65BB9C2AE6CBCA00D84D37 /* GoogleService-Info.plist in Resources */,
 				63CD89B82ABD85C500E70A56 /* Preview Assets.xcassets in Resources */,
 				63CD89B52ABD85C500E70A56 /* Assets.xcassets in Resources */,
 			);
