@@ -150,6 +150,7 @@
 		DC94ED592ADFDA540052AD6E /* TextAreaModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */; };
 		DC94ED732AE3B86A0052AD6E /* YdIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC94ED722AE3B86A0052AD6E /* YdIconView.swift */; };
 		DCD00D062AE5017400B44B89 /* DMPostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD00D052AE5017400B44B89 /* DMPostDetailView.swift */; };
+		DCD00D0E2AE6D71B00B44B89 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCD00D0D2AE6D71B00B44B89 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -291,6 +292,7 @@
 		DC94ED582ADFDA540052AD6E /* TextAreaModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaModifier.swift; sourceTree = "<group>"; };
 		DC94ED722AE3B86A0052AD6E /* YdIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YdIconView.swift; sourceTree = "<group>"; };
 		DCD00D052AE5017400B44B89 /* DMPostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPostDetailView.swift; sourceTree = "<group>"; };
+		DCD00D0D2AE6D71B00B44B89 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

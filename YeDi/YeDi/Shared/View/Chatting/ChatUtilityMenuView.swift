@@ -9,10 +9,15 @@ import SwiftUI
 import PhotosUI
 
 struct ChatUtilityMenuView: View {
-    @State private var selectedItem: PhotosPickerItem?
-    
     var chattingVM : ChattingViewModel
     var userID: String
+    var designerID: String
+    
+    @StateObject var postDetailViewModel: PostDetailViewModel = PostDetailViewModel()
+    
+    @State private var selectedItem: PhotosPickerItem?
+    @State private var isPresentedAlert: Bool = false
+    @State private var isPresentedNavigation: Bool = false
     
     var body: some View {
         HStack {
@@ -47,7 +52,10 @@ struct ChatUtilityMenuView: View {
             
             Spacer()
             
-            Button(action: {}, label: {
+            Button(action: {
+                isPresentedNavigation.toggle()
+                isPresentedAlert.toggle()
+            }, label: {
                 VStack {
                     VStack{
                         Image(systemName: "clock.fill")
@@ -65,6 +73,11 @@ struct ChatUtilityMenuView: View {
                         .font(.caption)
                 }
             })
+            .navigationDestination(isPresented: $isPresentedNavigation, destination: {
+                CMReservationDateTimeView(designerID: designerID, isPresentedAlert: $isPresentedAlert, isPresentedNavigation: $isPresentedNavigation)
+                    .environmentObject(postDetailViewModel)
+            })
+            .buttonStyle(.automatic)
             
             Spacer()
         }
@@ -74,9 +87,4 @@ struct ChatUtilityMenuView: View {
         .foregroundStyle(.primary)
         .frame(minWidth: 0, maxWidth: .infinity)
     }
-}
-
-#Preview {
-    ChatUtilityMenuView(chattingVM: ChattingViewModel(), userID: "customerUser1")
-        .scaledToFit()
 }

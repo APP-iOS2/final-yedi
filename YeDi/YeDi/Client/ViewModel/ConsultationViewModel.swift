@@ -81,4 +81,55 @@ class ConsultationViewModel: ChattingViewModel {
         }
         
     }
+    
+    final func setEmptyChatRoomList(customerId: String, designerId: String) {
+        let chatRoom: ChatRoom = ChatRoom()
+        
+        let clientColRef = storeService.collection("clients")
+        let designerColRef = storeService.collection("designers")
+        
+        Firestore.firestore().runTransaction({ (transaction, errorPointer) -> Any? in
+            do {
+                let customerDocument = try transaction.getDocument(clientColRef.document(customerId))
+                let designerDocument = try transaction.getDocument(designerColRef.document(designerId))
+                
+                // 채팅방 생성 전 기존 채팅내역이 있는지 확인
+                let customerChatRooms = customerDocument.get("chatRooms") as? [String] ?? []
+                let designerChatRooms = designerDocument.get("chatRooms") as? [String] ?? []
+                
+                guard customerDocument.exists && designerDocument.exists else {
+                    throw ChattingRommCRUD.documentNotFounded
+                }
+                
+                let commonChatRooms = customerChatRooms.compactMap { $0.trimmingCharacters(in: .whitespaces) }.filter {
+                    !$0.isEmpty && designerChatRooms.contains($0)
+                }
+                
+                // 채팅방 생성
+                DispatchQueue.main.async {
+                    if commonChatRooms.count > 0 {
+                        super.chatRoomId = commonChatRooms.first ?? ""
+                    } else {
+                        super.chatRoomId = chatRoom.id
+                        transaction.updateData(["chatRooms": FieldValue.arrayUnion([chatRoom.id])], forDocument: customerDocument.reference)
+                        transaction.updateData(["chatRooms": FieldValue.arrayUnion([chatRoom.id])], forDocument: designerDocument.reference)
+                    }
+                }
+            } catch let fetchError as NSError {
+                debugPrint(fetchError.description)
+                errorPointer?.pointee = fetchError
+            }
+            return
+        })
+        { (object, error) in
+            if let error = error {
+                debugPrint("Transaction failed: \(error)")
+                self.showChattingRoom = false
+            } else {
+                debugPrint("Transaction successfully committed!")
+                self.showChattingRoom = true
+            }
+        }
+        
+    }
 }
