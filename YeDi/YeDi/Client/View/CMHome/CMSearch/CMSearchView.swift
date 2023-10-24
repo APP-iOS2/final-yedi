@@ -45,7 +45,7 @@ struct CMSearchView: View {
                         Text("최근 검색")
                             .foregroundStyle(Color.primaryLabel)
                         Spacer()
-                        if !viewModel.recentSearches.isEmpty || !viewModel.recentDesigners.isEmpty {
+                        if !viewModel.recentItems.isEmpty {
                             Button(action: {
                                 viewModel.removeAllRecentItems()
                                 viewModel.recentDesigners.removeAll()
