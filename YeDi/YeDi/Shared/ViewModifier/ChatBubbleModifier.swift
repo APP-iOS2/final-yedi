@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ChatBubbleModifier: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+    
     var isMyChat: Bool
     
     func body(content: Content) -> some View {
@@ -16,8 +18,13 @@ struct ChatBubbleModifier: ViewModifier {
             .padding(.vertical, 11)
             .foregroundColor(isMyChat ? .white : .primaryLabel)
             .background {
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(isMyChat ? .mainColor : Color.gray5)
+                if colorScheme == .light {
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(isMyChat ? .mainColor : Color.gray5)
+                } else {
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(isMyChat ? .myColor : Color.gray5)
+                }
             }
     }
 }
