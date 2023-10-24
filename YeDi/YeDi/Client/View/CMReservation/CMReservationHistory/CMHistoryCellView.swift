@@ -13,34 +13,70 @@ struct CMHistoryCellView: View {
     // MARK: - Properties
     @EnvironmentObject var cmHistoryViewModel: CMHistoryViewModel
     
-    @State private var designerName: String = ""
-    @State private var designerShop: String = ""
+    @State private var designer: Designer = Designer(
+        name: "",
+        email: "",
+        phoneNumber: "",
+        designerScore: 0,
+        reviewCount: 0,
+        followerCount: 0,
+        skill: [],
+        chatRooms: [],
+        birthDate: "",
+        gender: "",
+        rank: Rank.Designer,
+        designerUID: ""
+    )
+    @State private var shop: Shop = Shop(
+        shopName: "",
+        headAddress: "",
+        subAddress: "",
+        detailAddress: "",
+        openingHour: "",
+        closingHour: "",
+        closedDays: []
+    )
+    @State private var review: Review = Review(
+        reviewer: "",
+        date: "",
+        keywordReviews: [],
+        designerScore: 0,
+        content: "",
+        imageURLStrings: [],
+        reservationId: "",
+        style: "",
+        designer: ""
+    )
     @State private var reservationDate: String = ""
+    
     
     var reservation: Reservation
     
     /// 디데이 텍스트
     var dDayText: String {
+        let currentDateString = SingleTonDateFormatter.sharedDateFommatter.firebaseDate(from: Date())
+        let currentDate = SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "MM-dd", from: currentDateString)
+        let reservationDate = SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "MM-dd", from: reservation.reservationTime)
+        
+        let startDate = SingleTonDateFormatter.sharedDateFommatter.changeStringToDate(dateString: currentDate)
+        let endDate = SingleTonDateFormatter.sharedDateFommatter.changeStringToDate(dateString: reservationDate)
         let offsetComps = Calendar.current.dateComponents(
-            [.year,.month,.day], from: SingleTonDateFormatter.sharedDateFommatter.changeStringToDate(dateString: reservation.reservationTime), to: Date()
+            [.year, .month, .day], from: startDate, to: endDate
         )
         
         let dDay = offsetComps.day ?? 0
         
-        if dDay == 0 {
-            return "D-Day"
-        } else {
-            return "D-\(dDay)"
-        }
+        return dDay == 0 ? "D-Day" : "D-\(dDay)"
+    }
+    
+    /// 리뷰 작성 여부를 나타내는 Bool타입 변수
+    var isReviewExist: Bool {
+        return review.reviewer.isEmpty ? false : true
     }
     
     /// 리뷰 작성 여부에 따른 텍스트
     var reviewStatusText: String {
-        if cmHistoryViewModel.review == nil {
-            return "리뷰 작성 전"
-        } else {
-            return "리뷰 작성 완료"
-        }
+        return isReviewExist ? "리뷰 작성 완료" : "리뷰 작성 전"
     }
     
     // MARK: - Body
@@ -52,21 +88,21 @@ struct CMHistoryCellView: View {
                 if reservation.isFinished {
                     Text("\(reviewStatusText)")
                         .font(.subheadline)
-                        .foregroundStyle(Color.gray6)
+                        .foregroundStyle(.white)
                         .padding(EdgeInsets(top: 5, leading: 15, bottom: 5, trailing: 15))
                         .background(
                             RoundedRectangle(cornerRadius: 8)
-                                .fill(cmHistoryViewModel.review == nil ? .sub : Color.primaryLabel)
+                                .fill(isReviewExist ? Color.gray3 : .sub)
                         )
                         .padding([.top, .trailing], 10)
                 } else {
                     Text("\(dDayText)")
                         .font(.subheadline)
-                        .foregroundStyle(Color.gray6)
+                        .foregroundStyle(.white)
                         .padding(EdgeInsets(top: 5, leading: 15, bottom: 5, trailing: 15))
                         .background(
                             RoundedRectangle(cornerRadius: 8)
-                                .fill(dDayText == "D-Day" ? .sub : Color.primaryLabel)
+                                .fill(dDayText == "D-Day" ? .sub : .black)
                         )
                         .padding([.top, .trailing], 10)
                 }
@@ -83,7 +119,7 @@ struct CMHistoryCellView: View {
                     
                     Spacer()
                     
-                    Text("\(designerName)")
+                    Text("\(designer.name)")
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .foregroundStyle(Color.primaryLabel)
@@ -98,7 +134,7 @@ struct CMHistoryCellView: View {
                     
                     Spacer()
                     
-                    Text("\(designerShop)")
+                    Text("\(shop.shopName)")
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .foregroundStyle(Color.primaryLabel)
@@ -149,15 +185,49 @@ struct CMHistoryCellView: View {
             }
             .onAppear {
                 Task {
+                    let dCollectionRef = Firestore.firestore().collection("designers")
+                    let rvCollectionRef = Firestore.firestore().collection("reviews")
+                    
                     guard let reservationId = reservation.id else { return }
-                    await cmHistoryViewModel.fetchDesigner(designerId: reservation.designerUID)
-                    await cmHistoryViewModel.fetchReview(clientId: reservation.clientUID, reservationId: reservationId)
                     
-                    let designer = cmHistoryViewModel.designer
-                    let shop = cmHistoryViewModel.designer.shop
+                    // MARK: - 디자이너 및 샵 정보 패치
+                    do {
+                        let docRef = dCollectionRef.document(reservation.designerUID)
+                        let document = try await docRef.getDocument()
+                        if let _ = document.data() {
+                            
+                            self.designer = try document.data(as: Designer.self)
+                            
+                            let shopRef = docRef.collection("shop")
+                            let shopSnapshot = try await shopRef.getDocuments()
+                            let shopData = shopSnapshot.documents.compactMap { document in
+                                return try? document.data(as: Shop.self)
+                            }
+                            
+                            if let shop = shopData.first {
+                                self.shop = shop
+                            }
+                        }
+                    } catch {
+                        print("Error fetching designer info: \(error)")
+                    }
                     
-                    designerName = designer.name
-                    designerShop = shop?.shopName ?? "프리랜서"
+                    // MARK: - 예약건에 해당하는 리뷰 패치
+                    do {
+                        let docSnapshot = try await rvCollectionRef
+                            .whereField("reviewer", isEqualTo: reservation.clientUID)
+                            .whereField("reservationId", isEqualTo: reservationId)
+                            .getDocuments()
+                        
+                        for doc in docSnapshot.documents {
+                            if let review = try? doc.data(as: Review.self) {
+                                self.review = review
+                            }
+                        }
+                    } catch {
+                        print("Error fetching reservation list: \(error)")
+                    }
+                    
                     reservationDate = SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "MM월 dd일 HH시 mm분", from: reservation.reservationTime)
                 }
             }

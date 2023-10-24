@@ -30,6 +30,7 @@ struct CMReservationHistoryDetailView: View {
     
     var reservation: Reservation
     
+    /// 예약 상태를 나타내는 Bool타입 변수
     var isUpcomingReservation: Bool {
         return reservation.isFinished ? true : false
     }
@@ -145,7 +146,7 @@ struct CMReservationHistoryDetailView: View {
             .padding()
             
             HStack {
-                if isUpcomingReservation {
+                if isUpcomingReservation && cmHistoryViewModel.review == nil {
                     NavigationLink {
                         CMNewReviewView(reservation: reservation)
                     } label: {
@@ -175,12 +176,13 @@ struct CMReservationHistoryDetailView: View {
             Task {
                 styles = []
                 
+                guard let reservationId = reservation.id else { return }
+                
                 await cmHistoryViewModel.fetchDesigner(designerId: reservation.designerUID)
+                await cmHistoryViewModel.fetchReview(clientId: reservation.clientUID, reservationId: reservationId)
                 
                 let designer = cmHistoryViewModel.designer
                 guard let shop = cmHistoryViewModel.designer.shop else { return }
-                
-                print("%%% \(designer)")
                 
                 designerName = designer.name
                 designerRank = designer.rank.rawValue
