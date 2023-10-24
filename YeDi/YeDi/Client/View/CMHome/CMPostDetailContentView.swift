@@ -31,7 +31,13 @@ struct CMFeedDetailContentView: View {
                     imageTabView
                     feedInfoView
                     divider
-                    designerProfileView
+                    if let designer = postDetailViewModel.designer {
+                        NavigationLink {
+                            CMDesignerProfileView(designer: designer)
+                        } label: {
+                            designerProfileView
+                        }
+                    }
                 }
             }
             footerView
