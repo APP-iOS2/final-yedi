@@ -30,17 +30,19 @@ struct ChattingListRoomView: View {
                             .background()
                             
                             if let imageURLString = chattingListRoomViewModel.userProfile[chattingRoom.id]?.profileImageURLString {
-                                DMAsyncImage(url: imageURLString)
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 50, height: 50)
-                                    .clipShape(Circle())
-                            } else {
-                                Text(String(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name.first ?? " ").capitalized)
-                                    .font(.title3)
-                                    .fontWeight(.bold)
-                                    .frame(width: 50, height: 50)
-                                    .background(Circle().fill(Color.quaternarySystemFill))
-                                    .foregroundColor(Color.primaryLabel)
+                                if imageURLString.isEmpty {
+                                    Text(String(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name.first ?? " ").capitalized)
+                                        .font(.title3)
+                                        .fontWeight(.bold)
+                                        .frame(width: 50, height: 50)
+                                        .background(Circle().fill(Color.quaternarySystemFill))
+                                        .foregroundColor(Color.primaryLabel)
+                                } else {
+                                    DMAsyncImage(url: imageURLString)
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 50, height: 50)
+                                        .clipShape(Circle())
+                                }
                             }
                                 
                             VStack(alignment: .leading, spacing: 5) {
