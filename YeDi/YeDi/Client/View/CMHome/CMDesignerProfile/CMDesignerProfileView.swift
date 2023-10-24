@@ -13,8 +13,11 @@ struct CMDesignerProfileView: View {
     var designer: Designer
     
     @StateObject var viewModel = CMDesignerProfileViewModel()
+    @StateObject var postDetailViewModel = PostDetailViewModel()
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var consultationViewModel: ConsultationViewModel
+    @State private var isPresentedNavigation: Bool = false
+    @State private var isPresentedAlert: Bool = false
     
     var body: some View {
         ScrollView {
@@ -105,6 +108,24 @@ struct CMDesignerProfileView: View {
                             }
                         }
                         .padding(.trailing, 1)
+                        
+                        Button {
+                            isPresentedNavigation.toggle()
+                            isPresentedAlert.toggle()
+                        } label: {
+                            Text("바로예약")
+                                .foregroundStyle(.white)
+                                .fontWeight(.bold)
+                                .padding(.vertical, 15)
+                                .frame(maxWidth: .infinity)
+                                .background(Color.subColor)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                        }
+                        .navigationDestination(isPresented: $isPresentedNavigation, destination: {
+                            CMReservationDateTimeView(designerID: designer.designerUID, isPresentedAlert: $isPresentedAlert, isPresentedNavigation: $isPresentedNavigation)
+                                .environmentObject(postDetailViewModel)
+                        })
+                        
                         Button {
                             //
                         } label: {
@@ -165,7 +186,15 @@ struct CMDesignerProfileView: View {
         }
         .onAppear {
             Task {
-                await viewModel.isFollowed(designerUid: designer.designerUID)
+                await withTaskGroup(of: Void.self) { group in
+                    group.addTask {
+                        await viewModel.isFollowed(designerUid: designer.designerUID)
+                    }
+                    
+                    group.addTask {
+                        await postDetailViewModel.getDesignerProfile(designerUid: designer.designerUID)
+                    }
+                }
             }
             viewModel.fetchDesignerPosts(designerUID: designer.designerUID)
             viewModel.fetchReview(designerUID: designer.designerUID)
