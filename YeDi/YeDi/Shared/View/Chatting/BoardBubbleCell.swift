@@ -13,14 +13,9 @@ struct BoardBubbleCell: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            AsyncImage(url: URL(string: boardBubble.imagePath ?? "")) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 220)
-            } placeholder: {
-                ProgressView()
-            }
+            DMAsyncImage(url: boardBubble.imagePath ?? "")
+                .aspectRatio(contentMode: .fit)
+                .frame(maxWidth: 220)
             
             Text(boardBubble.content ?? "")
         }

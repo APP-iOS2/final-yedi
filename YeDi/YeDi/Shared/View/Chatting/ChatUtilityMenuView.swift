@@ -9,10 +9,10 @@ import SwiftUI
 import PhotosUI
 
 struct ChatUtilityMenuView: View {
-    var chattingVM : ChattingViewModel
     var userID: String
     var designerID: String
     
+    @StateObject var chattingVM = ChattingViewModel()
     @StateObject var postDetailViewModel: PostDetailViewModel = PostDetailViewModel()
     
     @State private var selectedItem: PhotosPickerItem?
