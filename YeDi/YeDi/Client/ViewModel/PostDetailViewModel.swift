@@ -132,10 +132,15 @@ final class PostDetailViewModel: ObservableObject {
     
     @MainActor
     func getDesignerProfile(designerUid: String) async {
-        print(designerUid)
         do {
             let document = try await db.collection("designers").document(designerUid).getDocument()
             self.designer = try document.data(as: Designer.self)
+            
+            let querySnapshot = try await db.collection("designers").document(designerUid).collection("shop").getDocuments()
+            let shop = querySnapshot.documents.compactMap { document in
+                return try? document.data(as: Shop.self)
+            }
+            self.designer?.shop = shop.first
         } catch {
             print("getDesignerProfile Error: \(error)")
         }

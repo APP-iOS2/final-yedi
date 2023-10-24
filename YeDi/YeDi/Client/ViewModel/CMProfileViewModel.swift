@@ -15,6 +15,7 @@ final class CMProfileViewModel: ObservableObject {
     // MARK: - Properties
     @Published var client: Client = Client(id: "", name: "", email: "", profileImageURLString: "", phoneNumber: "", gender: "", birthDate: "", favoriteStyle: "", chatRooms: [])
     @Published var followedDesigner: [Designer] = []
+    @Published var isFollowedDesignerArray: [Bool] = []
     
     /// clients 컬렉션 참조 변수
     let collectionRef = Firestore.firestore().collection("clients")
