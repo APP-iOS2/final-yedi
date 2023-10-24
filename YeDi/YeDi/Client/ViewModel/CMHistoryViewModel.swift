@@ -86,6 +86,8 @@ class CMHistoryViewModel: ObservableObject {
     /// - 해당 예약에 작성된 리뷰가 있는지 판단하기 위한 메서드
     @MainActor
     func fetchReview(clientId: String, reservationId: String) async {
+        self.review = nil
+        
         do {
             let docSnapshot = try await rvCollectionRef
                 .whereField("reviewer", isEqualTo: clientId)
