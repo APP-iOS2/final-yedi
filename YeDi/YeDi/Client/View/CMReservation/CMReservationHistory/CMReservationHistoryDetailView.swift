@@ -25,9 +25,10 @@ struct CMReservationHistoryDetailView: View {
     @State private var price: Int = 0
     
     @State private var region = MKCoordinateRegion()
+    @State private var markers: [MapMarker] = []
     
     @State private var isShowingCopyAlert: Bool = false
-    
+        
     var reservation: Reservation
     
     /// 예약 상태를 나타내는 Bool타입 변수
@@ -117,8 +118,14 @@ struct CMReservationHistoryDetailView: View {
                         }
                 }
                 
-                Map(coordinateRegion: $region)
-                    .frame(minHeight: 200)
+                Map(coordinateRegion: $region, interactionModes: .all, showsUserLocation: false, userTrackingMode: nil, annotationItems: markers) { marker in
+                    MapAnnotation(coordinate: marker.coordinate) {
+                        Image(systemName: "scissors.circle.fill")
+                            .font(.largeTitle)
+                            .foregroundStyle(.sub)
+                    }
+                }
+                .frame(minHeight: 210)
             }
             .padding([.leading, .trailing])
             
@@ -208,6 +215,16 @@ struct CMReservationHistoryDetailView: View {
                 )
                 
                 region.span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                
+                markers.append(
+                    MapMarker(
+                        name: "\(shop.shopName)",
+                        coordinate:  CLLocationCoordinate2D(
+                            latitude: cmHistoryViewModel.designer.shop?.latitude ?? 0,
+                            longitude: cmHistoryViewModel.designer.shop?.longitude ?? 0
+                        )
+                    )
+                )
             }
         }
     }

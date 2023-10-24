@@ -209,6 +209,8 @@ struct DMProfileView: View {
             }
             // MARK: - Fetch Data on Appear
             .onAppear {
+                markers = []
+                
                 Task {
                     // 디자이너 정보가 변경되지 않았다면 로딩하지 않음
                     if profileVM.designer.id == nil {
