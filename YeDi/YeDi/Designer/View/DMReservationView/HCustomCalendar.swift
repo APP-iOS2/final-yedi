@@ -9,9 +9,8 @@ import SwiftUI
 
 struct HCustomCalendar: View {
     
-    @State private var selectedDate = Date()
+    @Binding var selectedDate: Date
     private let calendar = Calendar.current
-    let singleDateF: SingleTonDateFormatter
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
@@ -24,7 +23,6 @@ struct HCustomCalendar: View {
             .frame(height: 30)
         }
     }
-    
     // MARK: - 월 표시 뷰
     private var monthView: some View {
         HStack(spacing: 30) {
@@ -154,7 +152,7 @@ struct HCustomCalendar: View {
 }
 
 #Preview {
-        HCustomCalendar(singleDateF: .sharedDateFommatter)
+    HCustomCalendar(selectedDate: .constant(Date()))
 }
 
 /// Theme structure
