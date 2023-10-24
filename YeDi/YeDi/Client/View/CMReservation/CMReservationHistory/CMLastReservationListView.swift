@@ -48,7 +48,7 @@ struct CMLastReservationListView: View {
                 // 지난 예약만 가져오도록 필터링
                 lastReservations = cmHistoryViewModel.reservations.filter({ $0.isFinished == true })
                 // 지난 예약 > 예약 일시가 먼 순으로 정렬
-                lastReservations = lastReservations.sorted { $0.reservationTime < $1.reservationTime }
+                lastReservations = lastReservations.sorted { $0.reservationTime > $1.reservationTime }
             }
         })
     }

@@ -25,7 +25,7 @@ struct CMHistoryCellView: View {
             [.year,.month,.day], from: SingleTonDateFormatter.sharedDateFommatter.changeStringToDate(dateString: reservation.reservationTime), to: Date()
         )
         
-        var dDay = offsetComps.day ?? 0
+        let dDay = offsetComps.day ?? 0
         
         if dDay == 0 {
             return "D-Day"
@@ -36,7 +36,11 @@ struct CMHistoryCellView: View {
     
     /// 리뷰 작성 여부에 따른 텍스트
     var reviewStatusText: String {
-        return "리뷰 작성 완료"
+        if cmHistoryViewModel.review == nil {
+            return "리뷰 작성 전"
+        } else {
+            return "리뷰 작성 완료"
+        }
     }
     
     // MARK: - Body
@@ -52,7 +56,7 @@ struct CMHistoryCellView: View {
                         .padding(EdgeInsets(top: 5, leading: 15, bottom: 5, trailing: 15))
                         .background(
                             RoundedRectangle(cornerRadius: 8)
-                                .fill(.sub)
+                                .fill(cmHistoryViewModel.review == nil ? .sub : Color.primaryLabel)
                         )
                         .padding([.top, .trailing], 10)
                 } else {
@@ -62,7 +66,7 @@ struct CMHistoryCellView: View {
                         .padding(EdgeInsets(top: 5, leading: 15, bottom: 5, trailing: 15))
                         .background(
                             RoundedRectangle(cornerRadius: 8)
-                                .fill(.sub)
+                                .fill(dDayText == "D-Day" ? .sub : Color.primaryLabel)
                         )
                         .padding([.top, .trailing], 10)
                 }
@@ -145,10 +149,15 @@ struct CMHistoryCellView: View {
             }
             .onAppear {
                 Task {
+                    guard let reservationId = reservation.id else { return }
                     await cmHistoryViewModel.fetchDesigner(designerId: reservation.designerUID)
+                    await cmHistoryViewModel.fetchReview(clientId: reservation.clientUID, reservationId: reservationId)
                     
-                    designerName = cmHistoryViewModel.designer.name
-                    designerShop = cmHistoryViewModel.designer.shop?.shopName ?? "프리랜서"
+                    let designer = cmHistoryViewModel.designer
+                    let shop = cmHistoryViewModel.designer.shop
+                    
+                    designerName = designer.name
+                    designerShop = shop?.shopName ?? "프리랜서"
                     reservationDate = SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "MM월 dd일 HH시 mm분", from: reservation.reservationTime)
                 }
             }

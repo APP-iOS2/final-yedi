@@ -28,11 +28,15 @@ class CMHistoryViewModel: ObservableObject {
         rank: Rank.Owner,
         designerUID: ""
     )
+    /// 리뷰 변수
+    @Published var review: Review?
     
     /// reservations 컬렉션 참조 변수
     let rCollectionRef = Firestore.firestore().collection("reservations")
     /// designers 컬렉션 참조 변수
     let dCollectionRef = Firestore.firestore().collection("designers")
+    /// reviews 컬렉션 참조 변수
+    let rvCollectionRef = Firestore.firestore().collection("reviews")
     
     // MARK: - Method
     /// 예약 패치 메서드
@@ -61,7 +65,7 @@ class CMHistoryViewModel: ObservableObject {
         let docRef = dCollectionRef.document(designerId)
         do {
             let document = try await docRef.getDocument()
-            if let designerData = document.data() {
+            if let _ = document.data() {
                 
                 designer = try document.data(as: Designer.self)
                 
@@ -75,6 +79,26 @@ class CMHistoryViewModel: ObservableObject {
             }
         } catch {
             print("Error fetching designer info: \(error)")
+        }
+    }
+    
+    /// 리뷰 패치 메서드
+    /// - 해당 예약에 작성된 리뷰가 있는지 판단하기 위한 메서드
+    @MainActor
+    func fetchReview(clientId: String, reservationId: String) async {
+        do {
+            let docSnapshot = try await rvCollectionRef
+                .whereField("reviewer", isEqualTo: clientId)
+                .whereField("reservationId", isEqualTo: reservationId)
+                .getDocuments()
+            
+            for doc in docSnapshot.documents {
+                if let review = try? doc.data(as: Review.self) {
+                    self.review = review
+                }
+            }
+        } catch {
+            print("Error fetching reservation list: \(error)")
         }
     }
 }

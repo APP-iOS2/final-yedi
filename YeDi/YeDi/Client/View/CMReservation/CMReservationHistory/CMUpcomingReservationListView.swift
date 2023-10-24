@@ -47,7 +47,7 @@ struct CMUpcomingReservationListView: View {
                 // 다가오는 예약만 가져오도록 필터링
                 upcomingReservations = cmHistoryViewModel.reservations.filter({ $0.isFinished == false })
                 // 다가오는 예약 > 예약 일시가 가까운 순으로 정렬
-                upcomingReservations = upcomingReservations.sorted { $0.reservationTime > $1.reservationTime }
+                upcomingReservations = upcomingReservations.sorted { $0.reservationTime < $1.reservationTime }
             }
         })
     }

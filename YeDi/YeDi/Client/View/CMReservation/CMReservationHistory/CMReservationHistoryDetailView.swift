@@ -39,18 +39,6 @@ struct CMReservationHistoryDetailView: View {
         return reservation.isFinished ? "지난 예약" : "다가오는 예약"
     }
     
-    var scheduleOrReview: () -> Void {
-        return isUpcomingReservation ?
-        { /* 다가오는 예약일 때의 액션 */ } :
-        { /* 지난 예약일 때의 액션 */ }
-    }
-    
-    var cancelOrReservation: () -> Void {
-        return isUpcomingReservation ?
-        { isShowingCancelSheet = true } :
-        { /* 지난 예약일 때의 액션 */ }
-    }
-    
     // MARK: - Body
     var body: some View {
         NavigationStack {

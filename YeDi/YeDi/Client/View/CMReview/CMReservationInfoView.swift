@@ -51,7 +51,7 @@ struct CMReservationInfoView: View {
                 .shadow(color: Color.gray3, radius: 5, x: 0, y: 5)
                 .opacity(0.2)
         )
-        .offset(y: -80)
+        .offset(y: -70)
         .onAppear {
             Task {
                 await cmHistoryViewModel.fetchDesigner(designerId: reservation.designerUID)
