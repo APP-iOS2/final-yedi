@@ -7,23 +7,33 @@
 
 import SwiftUI
 import Firebase
+import FirebaseAuth
 
 class BreakTimeSetting: ObservableObject {
     
     @Published var breakTimes = [BreakTime]()
+    private var currentUserUid: String? {
+        return Auth.auth().currentUser?.uid
+    }
     
     let db = Firestore.firestore().collection("breakTimes")
-    
-    /// - firestore에 시간 데이터를 저장한다.
-    func addTimes(_ designerID: String, _ breakTime: [String]) {
-        db.addDocument(data: ["designerID" : designerID, "breakTime": breakTime]) { error in
-            if error == nil {
-                self.getTimes()
-            } else {
-                // Handle the error
-            }
-        }
-    }
+       
+       func addTimes(_ selectedTime: [String]) {
+           guard let currentUserUid = currentUserUid else {
+               print("사용자가 로그인되지 않았습니다")
+               return
+           }
+           
+           let myTime = db.document()
+           
+           myTime.setData(["id": myTime.documentID, "designerUid": currentUserUid, "selectedTime": selectedTime]) { error in
+               if let error = error {
+                   print("데이터 추가 중 에러발생 \(error.localizedDescription)")
+               } else {
+                   self.getTimes()
+               }
+           }
+       }
     
     /// - firestore 에서 시간을 들고온다
     func getTimes() {
@@ -34,9 +44,9 @@ class BreakTimeSetting: ObservableObject {
                     DispatchQueue.main.async {
                         self.breakTimes = snapshot.documents.map { d in
                             return BreakTime(
-                                designerID: d["designerID"] as? String ?? "[디자이너 없음]",
-                                selectedTime: d["selectedTime"] as? [String] ?? ["[시간을 설정하세요]"],
-                                timePeriod: d["timePeriod"] as? TimePeriod ?? .am
+                                id: d.documentID,
+                                designerUid: d["designerUid"] as? String ?? "유저 id",
+                                selectedTime: d["selectedTime"] as? [String] ?? ["[시간을 설정하세요]"]
                             )
                         }
                     }
@@ -45,10 +55,6 @@ class BreakTimeSetting: ObservableObject {
                 // Handle the error
             }
         }
-    }
-    /// -  저장된 시간 삭제
-    func deleteTime() {
-        
     }
 }
 

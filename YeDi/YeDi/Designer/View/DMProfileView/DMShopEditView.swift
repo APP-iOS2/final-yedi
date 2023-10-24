@@ -13,15 +13,34 @@ import SwiftUI
 struct DMShopEditView: View {
     @EnvironmentObject var locationManager: LocationManager
     
+    let dateFomatter = SingleTonDateFormatter.sharedDateFommatter
+    
     @Binding var shop: Shop
     @Binding var rank: Rank
     @Binding var isShowDesignerShopEditView: Bool
     
     @State private var isNotEmptyDescription: Bool = true
     @State private var isPhoneNumberValid: Bool = false
+    
     @State private var closedDay: String = ""
+    
+    @State private var isShowingOpeningHourDatePicker: Bool = false
+    @State private var isShowingClosingHourDatePicker: Bool = false
+    @State private var previewTextOpeningHour: String = "10:00 오전"
+    @State private var previewTextClosingHour: String = "19:00 오후"
     @State private var openingHour: Date = Date()
     @State private var closingHour: Date = Date()
+    
+    var initOpeningDate: Date {
+        let stringDate = "2000-01-01T10:00:00+0900"
+        guard let date = dateFomatter.firebaseDateFormat().date(from: stringDate) else { return Date() }
+        return date
+    }
+    var initClosingDate: Date {
+        let stringDate = "2000-01-01T19:00:00+0900"
+        guard let date = dateFomatter.firebaseDateFormat().date(from: stringDate) else { return Date() }
+        return date
+    }
     
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var userAuth: UserAuth
@@ -32,7 +51,10 @@ struct DMShopEditView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 5){
                     HStack(alignment: .center) {
-                        Text("직급 *")
+                        HStack {
+                            Text("직급")
+                            requiredFieldMark
+                        }
                         
                         Spacer()
                         
@@ -67,15 +89,87 @@ struct DMShopEditView: View {
                                 .signInTextFieldStyle(isTextFieldValid: $isNotEmptyDescription)
                         }
                         
-                        VStack(alignment: .leading, spacing: 5) {
-                            DatePicker("오픈 시간", selection: $openingHour, displayedComponents: .hourAndMinute)
-                            DatePicker("마감 시간", selection: $closingHour, displayedComponents: .hourAndMinute)
-                                .padding(.bottom, 7)
-                            VStack(alignment: .leading) {
-                                Text("휴무일")
-                                TextField("요일", text: $closedDay)
-                                    .signInTextFieldStyle(isTextFieldValid: $isNotEmptyDescription)
+                        HStack {
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text("오픈 시간")
+                                Button {
+                                    isShowingOpeningHourDatePicker.toggle()
+                                } label: {
+                                    Text(previewTextOpeningHour)
+                                        .padding(12)
+                                        .frame(maxWidth: .infinity)
+                                        .foregroundStyle(Color.primaryLabel)
+                                        .background {
+                                            RoundedRectangle(cornerRadius: 4)
+                                                .fill(Color.quaternarySystemFill)
+                                        }
+                                }
                             }
+                            
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text("마감 시간")
+                                Button {
+                                    isShowingClosingHourDatePicker.toggle()
+                                } label: {
+                                    Text(previewTextClosingHour)
+                                        .foregroundStyle(Color.primaryLabel)
+                                        .padding(12)
+                                        .frame(maxWidth: .infinity)
+                                        .background {
+                                            RoundedRectangle(cornerRadius: 4)
+                                                .fill(Color.quaternarySystemFill)
+                                        }
+                                }
+                            }
+                        }
+                        .padding(.bottom, 7)
+                        .sheet(isPresented: $isShowingOpeningHourDatePicker) {
+                            VStack {
+                                DatePicker("오픈 시간", selection: $openingHour, displayedComponents: .hourAndMinute)
+                                    .datePickerStyle(.wheel)
+                                    .labelsHidden()
+                                
+                                Button {
+                                    let stringHour = dateFomatter.firebaseDate(from: openingHour)
+                                    let hour = dateFomatter.changeDateString(transition: "HH:mm a", from: stringHour)
+                                    previewTextOpeningHour = hour
+                                    
+                                    isShowingOpeningHourDatePicker.toggle()
+                                } label: {
+                                    Text("선택 완료")
+                                        .frame(width: 330, height: 30)
+                                }
+                                .buttonStyle(.borderedProminent)
+                                .tint(.black)
+                            }
+                            .presentationDetents([.fraction(0.4)])
+                        }
+                        .sheet(isPresented: $isShowingClosingHourDatePicker) {
+                            VStack {
+                                DatePicker("마감 시간", selection: $closingHour, displayedComponents: .hourAndMinute)
+                                    .datePickerStyle(.wheel)
+                                    .labelsHidden()
+                                
+                                Button {
+                                    let stringHour = dateFomatter.firebaseDate(from: closingHour)
+                                    let hour = dateFomatter.changeDateString(transition: "HH:mm a", from: stringHour)
+                                    previewTextClosingHour = hour
+                                    
+                                    isShowingClosingHourDatePicker.toggle()
+                                } label: {
+                                    Text("선택 완료")
+                                        .frame(width: 330, height: 30)
+                                }
+                                .buttonStyle(.borderedProminent)
+                                .tint(.black)
+                            }
+                            .presentationDetents([.fraction(0.4)])
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("휴무일")
+                            TextField("요일", text: $closedDay)
+                                .signInTextFieldStyle(isTextFieldValid: $isNotEmptyDescription)
                         }
                         
                         VStack(alignment: .leading, spacing: 5) {
@@ -96,15 +190,7 @@ struct DMShopEditView: View {
                                 .textFieldModifier()
                         }
                         
-                        if !shop.headAddress.isEmpty && !shop.subAddress.isEmpty {
-                            let address = shop.headAddress + shop.subAddress
-                            let _: () = locationManager.getCoordinate(addressString: address) { coordinate, error in
-                                guard error == nil else { return }
-                                
-                                shop.latitude = coordinate.latitude
-                                shop.longitude = coordinate.longitude
-                            }
-                        }
+                      
                     }
                     .padding(.vertical, 8)
                     
@@ -112,12 +198,16 @@ struct DMShopEditView: View {
                 }
                 .padding(.vertical, 8)
                 .padding(.horizontal)
+                .onDisappear(perform: {
+                    setCordinate()
+                    convertDateString()
+                })
                 .onAppear(perform: {
-                    let dateFomatter = SingleTonDateFormatter.sharedDateFommatter.firebaseDateFormat()
+                    let firebaseDateFormat = dateFomatter.firebaseDateFormat()
                     
                     closedDay = shop.closedDays.first ?? ""
-                    openingHour = dateFomatter.date(from: shop.openingHour) ?? Date()
-                    closingHour = dateFomatter.date(from: shop.closingHour) ?? Date()
+                    openingHour = firebaseDateFormat.date(from: shop.openingHour) ?? initOpeningDate
+                    closingHour = firebaseDateFormat.date(from: shop.closingHour) ?? initClosingDate
                 })
                 .onTapGesture(perform: {
                     hideKeyboard()
@@ -127,7 +217,7 @@ struct DMShopEditView: View {
                         Button(role: .cancel, action: {
                             convertDateString()
                         }, label: {
-                            Image(systemName: "xmark")
+                            Text("닫기")
                                 .foregroundStyle(colorScheme == .light ? .black : .white)
                         })
                     }
@@ -142,6 +232,23 @@ struct DMShopEditView: View {
                 })
             }
         }
+    }
+    
+    private func setCordinate() {
+        if !shop.headAddress.isEmpty && !shop.subAddress.isEmpty {
+            let address = shop.headAddress + shop.subAddress
+            let _: () = locationManager.getCoordinate(addressString: address) { coordinate, error in
+                guard error == nil else { return }
+                
+                shop.latitude = coordinate.latitude
+                shop.longitude = coordinate.longitude
+            }
+        }
+    }
+    
+    private var requiredFieldMark: some View {
+        Text("*")
+            .foregroundStyle(Color.subColor)
     }
     
     private func convertDateString() {

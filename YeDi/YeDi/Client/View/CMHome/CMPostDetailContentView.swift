@@ -13,19 +13,19 @@ struct CMFeedDetailContentView: View {
     @EnvironmentObject var userAuth: UserAuth
     @ObservedObject var consultationViewModel: ConsultationViewModel = ConsultationViewModel()
     
-    @StateObject var postViewModel: PostDetailViewModel = PostDetailViewModel()
+    @StateObject var postDetailViewModel: PostDetailViewModel = PostDetailViewModel()
 
     @State private var showChattingRoom: Bool = false
+    @State private var isPresentedAlert: Bool = false
+    @State private var isPresentedNavigation: Bool = false
     
     let post: Post
-    private let images: [String] = ["https://images.pexels.com/photos/18005100/pexels-photo-18005100/free-photo-of-fa1-vsco.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/17410647/pexels-photo-17410647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"]
     let safeArea: EdgeInsets
     let size: CGSize
     
     var body: some View {
         VStack(spacing: 0) {
             toolbarView
-            
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(alignment: .leading, spacing: 0) {
                     imageTabView
@@ -44,15 +44,26 @@ struct CMFeedDetailContentView: View {
         }
         .overlay(
             ZStack {
-                if !postViewModel.selectedImages.isEmpty {
+                if !postDetailViewModel.selectedImages.isEmpty {
                     imageDetailView
                 }
             }
         )
         .onAppear {
             Task {
-                await postViewModel.isFollowed(designerUid: post.designerID)
-                await postViewModel.isLikedPost(post: post)
+                await withTaskGroup(of: Void.self) { group in
+                    group.addTask {
+                        await postDetailViewModel.isFollowed(designerUid: post.designerID)
+                    }
+                    
+                    group.addTask {
+                        await postDetailViewModel.isLikedPost(post: post)
+                    }
+                    
+                    group.addTask {
+                        await postDetailViewModel.getDesignerProfile(designerUid: post.designerID)
+                    }
+                }
             }
         }
         .toolbarBackground(Color.white, for: .navigationBar)
@@ -70,12 +81,12 @@ struct CMFeedDetailContentView: View {
             
             Spacer()
             
-            Image(systemName: postViewModel.isLiked ? "heart.fill" : "heart")
+            Image(systemName: postDetailViewModel.isLiked ? "heart.fill" : "heart")
                 .font(.title2)
-                .foregroundStyle(postViewModel.isLiked ? Color.subColor : Color.mainColor)
+                .foregroundStyle(postDetailViewModel.isLiked ? Color.subColor : Color.mainColor)
                 .onTapGesture {
                     Task {
-                        await postViewModel.toggleLike(post: post)
+                        await postDetailViewModel.toggleLike(post: post)
                     }
                 }
         }
@@ -91,13 +102,13 @@ struct CMFeedDetailContentView: View {
                 AsyncImage(url: URL(string: "\(photo.imageURL)")){ image in
                     image
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: size.width, height: size.height * 1.4)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: size.width)
                         .clipped()
                         .onTapGesture {
                             withAnimation(.easeInOut) {
-                                postViewModel.selectedImages = post.photos.map { $0.imageURL }
-                                postViewModel.selectedImageID = photo.imageURL
+                                postDetailViewModel.selectedImages = post.photos.map { $0.imageURL }
+                                postDetailViewModel.selectedImageID = photo.imageURL
                             }
                         }
                 } placeholder: {
@@ -114,42 +125,35 @@ struct CMFeedDetailContentView: View {
         VStack(alignment: .leading) {
             Text("\(post.description ?? "")")
                 .padding([.horizontal, .top])
-            
-            HStack {
-                ForEach(0...1, id: \.self) { _ in
-                    Text("#레이어드")
-                        .font(.caption)
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 5)
-                        .clipShape(RoundedRectangle(cornerRadius: 30))
-                        .foregroundStyle(Color.mainColor)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 30)
-                                .stroke(Color.subColor, lineWidth: 1)
-                        )
-                }
-            }
-            .padding([.leading])
         }
     }
 
     private var divider: some View {
         Divider()
             .frame(minHeight: 7)
-            .overlay(Color.brightGrayColor)
+            .overlay(Color.lightGrayColor)
             .padding(.top)
     }
     
     private var designerProfileView: some View {
         HStack(alignment: .center) {
-            DMAsyncImage(url: images[0])
-                .aspectRatio(contentMode: .fit)
-                .frame(maxWidth: 45)
-                .clipShape(Circle())
+            AsyncImage(url: URL(string: "https://firebasestorage.googleapis.com:443/v0/b/yedi-b7f5a.appspot.com/o/clients%2Fprofiles%2FdAWO8ofNhPU2UuHeWG7u9OYncnk1?alt=media&token=c2b8bdfe-4aa7-44de-a0d0-aa3a5a252a7e")) { image in
+                image
+                    .resizable()
+                    .frame(maxWidth: 45, maxHeight: 45)
+                    .aspectRatio(contentMode: .fit)
+                    .clipShape(Circle())
+            } placeholder: {
+                Image(systemName: "person.circle")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 45)
+                    .clipShape(Circle())
+                    .foregroundStyle(.gray)
+            }
             
             VStack(alignment: .leading, spacing: 0) {
-                Text("\(post.designerID)")
+                Text("\(postDetailViewModel.designer?.name ?? "디자이너 이름")")
                     .font(.system(size: 16, design: .serif))
                 
                 Group {
@@ -163,23 +167,24 @@ struct CMFeedDetailContentView: View {
             
             Button {
                 Task {
-                    await postViewModel.toggleFollow(designerUid: post.designerID)
+                    await postDetailViewModel.toggleFollow(designerUid: post.designerID)
                 }
             } label: {
-                Text("\(postViewModel.isFollowing ? "팔로잉" : "팔로우")")
+                Text("\(postDetailViewModel.isFollowing ? "팔로잉" : "팔로우")")
                     .font(.caption)
-                    .foregroundStyle(postViewModel.isFollowing ? .black : .white)
+                    .foregroundStyle(postDetailViewModel.isFollowing ? .black : .white)
                     .padding(.horizontal, 15)
                     .padding(.vertical, 7)
-                    .background(postViewModel.isFollowing ? .white : .black)
+                    .background(postDetailViewModel.isFollowing ? .white : .black)
                     .clipShape(Capsule())
                     .overlay(
                         Capsule()
-                            .stroke(postViewModel.isFollowing ? .black : .clear, lineWidth: 1)
+                            .stroke(postDetailViewModel.isFollowing ? .black : .clear, lineWidth: 1)
                     )
             }
         }
         .padding(.horizontal)
+        .padding(.vertical, 10)
     }
     
     private var footerView: some View {
@@ -199,8 +204,9 @@ struct CMFeedDetailContentView: View {
                 .background(Color.mainColor)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 
-                NavigationLink {
-                    CMReservationDateTimeView()
+                Button {
+                    isPresentedNavigation.toggle()
+                    isPresentedAlert.toggle()
                 } label: {
                     Text("바로예약")
                         .foregroundStyle(.white)
@@ -210,6 +216,10 @@ struct CMFeedDetailContentView: View {
                         .background(Color.subColor)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
+                .navigationDestination(isPresented: $isPresentedNavigation, destination: {
+                    CMReservationDateTimeView(designerID: postDetailViewModel.designer?.designerUID ?? "", isPresentedAlert: $isPresentedAlert, isPresentedNavigation: $isPresentedNavigation)
+                        .environmentObject(postDetailViewModel)
+                })
                 .buttonStyle(.automatic)
             }
             .padding(.horizontal)
@@ -223,8 +233,8 @@ struct CMFeedDetailContentView: View {
             Color.black
                 .ignoresSafeArea()
             
-            TabView(selection: $postViewModel.selectedImageID) {
-                ForEach(postViewModel.selectedImages, id: \.self) { imageString in
+            TabView(selection: $postDetailViewModel.selectedImageID) {
+                ForEach(postDetailViewModel.selectedImages, id: \.self) { imageString in
                     DMAsyncImage(url:imageString)
                         .aspectRatio(contentMode: .fit)
                 }
@@ -233,7 +243,7 @@ struct CMFeedDetailContentView: View {
             .overlay(
                 Button {
                     withAnimation(.default) {
-                        postViewModel.selectedImages.removeAll()
+                        postDetailViewModel.selectedImages.removeAll()
                     }
                 } label: {
                     Image(systemName: "xmark")

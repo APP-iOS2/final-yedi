@@ -7,7 +7,9 @@
 		<key>UIColorName</key>
 		<string>systemBackground</string>
 		<key>UIImageName</key>
-		<string>ydIcon</string>
+		<string>ydLaunch</string>
+		<key>UIImageRespectsSafeAreaInsets</key>
+		<true/>
 	</dict>
 </dict>
 </plist>

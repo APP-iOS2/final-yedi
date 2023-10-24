@@ -17,6 +17,7 @@ struct CMProfileView: View {
     @State private var clientName: String = ""
     @State private var clientGender: String = ""
     @State private var clientBirthDate: String = ""
+    @State private var clientEmail: String = ""
     @State private var clientPhoneNumber: String = ""
     
     // MARK: - Body
@@ -34,8 +35,13 @@ struct CMProfileView: View {
                     
                     // MARK: - 프로필 이미지
                     if clientPhotoURL.isEmpty {
-                        Image(systemName: "person.circle.fill")
-                            .font(.system(size: 60))
+                        Text(String(profileViewModel.client.name.first ?? " ").capitalized)
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .frame(width: 60, height: 60)
+                            .background(Circle().fill(Color.quaternarySystemFill))
+                            .foregroundColor(Color.primaryLabel)
+                            .offset(y: -5)
                     } else {
                         DMAsyncImage(url: clientPhotoURL)
                             .aspectRatio(contentMode: .fill)
@@ -52,6 +58,7 @@ struct CMProfileView: View {
                         clientName: $clientName,
                         clientGender: $clientGender,
                         clientBirthDate: $clientBirthDate,
+                        clientEmail: $clientEmail,
                         clientPhoneNumber: $clientPhoneNumber
                     )
                 } label: {
@@ -77,6 +84,7 @@ struct CMProfileView: View {
                 clientName = profileViewModel.client.name
                 clientGender = profileViewModel.client.gender
                 clientBirthDate = profileViewModel.client.birthDate
+                clientEmail = profileViewModel.client.email
                 clientPhoneNumber = profileViewModel.client.phoneNumber
             }
         }

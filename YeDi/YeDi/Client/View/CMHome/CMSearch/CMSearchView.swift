@@ -14,15 +14,19 @@ struct CMSearchView: View {
     
     var body: some View {
         NavigationStack {
+            
+            // MARK: TextFeild
             HStack {
                 ZStack(alignment: .trailing) {
-                    TextField("디자이너를 검색해보세요.", text: $viewModel.searchText, onCommit: {
-                        viewModel.saveRecentSearch()
-                    })
-                    .textFieldModifier()
+                    TextField("디자이너를 검색해보세요.", text: $viewModel.searchText)
+                        .textFieldModifier()
+                        .onSubmit {
+                            viewModel.saveRecentSearch()
+                        }
+                    
                     if !viewModel.searchText.isEmpty {
                         Button(action: {
-                            viewModel.saveRecentSearch()
+                            viewModel.searchText = ""
                         }) {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundColor(.gray)
@@ -34,57 +38,116 @@ struct CMSearchView: View {
             }
             .padding()
             
+            // MARK: 최근 검색 내역
             if viewModel.searchText.isEmpty {
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("최근 검색어")
+                        Text("최근 검색")
                             .foregroundStyle(Color.primaryLabel)
                         Spacer()
-                        if !viewModel.recentSearches.isEmpty {
+                        if !viewModel.recentSearches.isEmpty || !viewModel.recentDesigners.isEmpty {
                             Button(action: {
-                                viewModel.removeAllRecentSearches()
+                                viewModel.removeAllRecentItems()
+                                viewModel.recentDesigners.removeAll()
                             }) {
                                 Text("전체 삭제")
-                                    .foregroundColor(Color.subColor)
+                                    .foregroundColor(Color.primaryLabel)
                             }
                         }
                     }
                     .padding(.horizontal)
                     .padding(.bottom)
                     
-                    ForEach(viewModel.recentSearches, id: \.self) { search in
+                    ForEach(viewModel.recentItems) { item in
                         HStack {
-                            Button {
-                                viewModel.searchText = search
-                                //viewModel.performSearch()
-                            } label: {
+                            if item.isSearch {
                                 HStack {
-                                    Image(systemName: "magnifyingglass")
-                                        .resizable()
-                                        .frame(width: 20, height: 20)
-                                        .padding(15)
-                                        .overlay {
-                                            Circle().stroke(.gray, lineWidth: 1)
+                                    Button {
+                                        viewModel.searchText = item.text
+                                    } label: {
+                                        HStack {
+                                            Image(systemName: "magnifyingglass")
+                                                .resizable()
+                                                .frame(width: 20, height: 20)
+                                                .padding(15)
+                                                .overlay {
+                                                    Circle().stroke(.gray, lineWidth: 1)
+                                                }
+                                            
+                                            Text(item.text)
+                                                .padding(.leading, 5)
                                         }
-                                    Text(search)
-                                        .padding(.leading,5)
+                                        .foregroundStyle(Color.primaryLabel)
+                                    }
                                     Spacer()
+                                    Button {
+                                        viewModel.removeRecentSearch(item.text)
+                                    } label: {
+                                        Image(systemName: "xmark")
+                                    }
+                                    .foregroundStyle(.gray)
                                 }
-                                .foregroundStyle(Color.primaryLabel)
+                            } else if let designer = item.designer {
+                                NavigationLink(destination: CMDesignerProfileView(designer: designer)) {
+                                    HStack {
+                                        if let imageURLString = designer.imageURLString {
+                                            AsyncImage(url: URL(string: "\(imageURLString)")) { image in
+                                                image
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                                    .frame(maxWidth: 50, maxHeight: 50)
+                                                    .clipShape(Circle())
+                                            } placeholder: {
+                                                Text(String(designer.name.first ?? " ").capitalized)
+                                                    .font(.title3)
+                                                    .fontWeight(.bold)
+                                                    .frame(width: 50, height: 50)
+                                                    .background(Circle().fill(Color.quaternarySystemFill))
+                                                    .foregroundColor(Color.primaryLabel)
+                                            }
+                                        } else {
+                                            Text(String(designer.name.first ?? " ").capitalized)
+                                                .font(.title3)
+                                                .fontWeight(.bold)
+                                                .frame(width: 50, height: 50)
+                                                .background(Circle().fill(Color.quaternarySystemFill))
+                                                .foregroundColor(Color.primaryLabel)
+                                            
+                                        }
+                                        VStack(alignment: .leading) {
+                                            Text(designer.name)
+                                                .foregroundStyle(Color.primaryLabel)
+                                            if let shop = designer.shop {
+                                                Text(shop.shopName)
+                                                    .font(.subheadline)
+                                                    .foregroundStyle(.gray)
+                                            }
+                                            
+                                            
+                                        }
+                                        Spacer()
+                                        Button {
+                                            viewModel.removeRecentDesigner(item.designer!)
+                                        } label: {
+                                            Image(systemName: "xmark")
+                                        }
+                                        .foregroundStyle(.gray)
+                                    }
+                                    .foregroundStyle(Color.primaryLabel)
+                                }
                             }
-                            Button(action: {viewModel.removeRecentSearch(search)}, label: {
-                                Image(systemName: "xmark")
-                            })
-                            .foregroundStyle(.gray)
                         }
                         .padding(.horizontal, 15)
                         .padding(.vertical, 7)
+                        
                     }
+                    
                     Spacer()
                         .listStyle(.plain)
                 }
             }
             
+            // MARK: 검색 결과
             if !viewModel.searchText.isEmpty {
                 if viewModel.filteredDesignerCount > 0 {
                     HStack {
@@ -94,64 +157,74 @@ struct CMSearchView: View {
                     }
                     .padding(.horizontal)
                     Divider()
-                    ForEach(viewModel.filterDesigners, id: \.id) { designer in
-                        NavigationLink(destination: CMDesignerProfileView(designer: designer)) {
-                            VStack {
-                                HStack {
-                                    if let imageURLString = designer.imageURLString {
-                                        AsyncImage(url: URL(string: "\(imageURLString)")) { image in
-                                            image
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                                .frame(maxWidth: 50, maxHeight: 50)
-                                                .clipShape(Circle())
-                                        } placeholder: {
-                                            Image(systemName: "person.circle")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                                .frame(maxWidth: 50, maxHeight: 50)
-                                                .clipShape(Circle())
+                    ScrollView {
+                        ForEach(viewModel.filterDesigners, id: \.id) { designer in
+                            NavigationLink(destination: CMDesignerProfileView(designer: designer)) {
+                                VStack {
+                                    HStack {
+                                        if let imageURLString = designer.imageURLString {
+                                            AsyncImage(url: URL(string: "\(imageURLString)")) { image in
+                                                image
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                                    .frame(maxWidth: 50, maxHeight: 50)
+                                                    .clipShape(Circle())
+                                            } placeholder: {
+                                                Text(String(designer.name.first ?? " ").capitalized)
+                                                    .font(.title3)
+                                                    .fontWeight(.bold)
+                                                    .frame(width: 50, height: 50)
+                                                    .background(Circle().fill(Color.quaternarySystemFill))
+                                                    .foregroundColor(Color.primaryLabel)
+                                            }
+                                        } else {
+                                            Text(String(designer.name.first ?? " ").capitalized)
+                                                .font(.title3)
+                                                .fontWeight(.bold)
+                                                .frame(width: 50, height: 50)
+                                                .background(Circle().fill(Color.quaternarySystemFill))
+                                                .foregroundColor(Color.primaryLabel)
+                                            
+                                        }
+                                        VStack(alignment: .leading) {
+                                            Text(designer.name)
                                                 .foregroundStyle(Color.primaryLabel)
+                                            if let shop = designer.shop {
+                                                Text(shop.shopName)
+                                                    .font(.subheadline)
+                                                    .foregroundStyle(.gray)
+                                            }
                                         }
-                                    } else {
-                                        Image(systemName: "person.circle")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(maxWidth: 50, maxHeight: 50)
-                                            .clipShape(Circle())
-                                            .foregroundStyle(Color.primaryLabel)
-                                        
+                                        .padding(.leading,5)
+                                        Spacer()
                                     }
-                                    VStack(alignment: .leading) {
-                                        Text(designer.name)
-                                            .foregroundStyle(Color.primaryLabel)
-                                        if let shop = designer.shop {
-                                            Text(shop.shopName)
-                                                .font(.subheadline)
-                                                .foregroundStyle(.gray)
-                                        }
-                                        
-                                        
-                                    }
-                                    .padding(.leading,5)
-                                    Spacer()
                                 }
                             }
+                            .simultaneousGesture(
+                                TapGesture()
+                                    .onEnded {
+                                        viewModel.addRecentDesigner(designer)
+                                    }
+                            )
                         }
+                        .padding()
+                        .listStyle(.plain)
                     }
-                    .padding()
-                    .listStyle(.plain)
                 } else {
                     Text("검색 결과가 없습니다.")
                         .foregroundStyle(Color.primaryLabel)
                 }
             }
-            
             Spacer()
+        }
+        .onTapGesture {
+            hideKeyboard()
         }
         .onAppear {
             viewModel.loadData()
             viewModel.loadRecentSearches()
+            viewModel.loadRecentDesigners()
+            viewModel.loadRecentItems()
         }
     }
 }

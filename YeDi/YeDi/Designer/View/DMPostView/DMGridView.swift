@@ -31,9 +31,7 @@ struct DMGridView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        Text("YeDi")
-                            .font(.title)
-                            .fontWeight(.bold)
+                        YdIconView(height: 30)
                     }
                 }
         }

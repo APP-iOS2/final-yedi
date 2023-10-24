@@ -18,39 +18,43 @@ struct ReservationView: View {
     
     // MARK: - Reservation List View
     var body: some View {
-        HCustomCalendar(singleDateF: .sharedDateFommatter)
-            .padding(.bottom)
-            .padding(.horizontal)
-            .scrollIndicators(.hidden)
-        HStack {
-            VStack {
-                Divider()
-            }
-            Text("예약현황")
-                .font(.caption)
-                .foregroundStyle(.gray)
-            VStack {
-                Divider()
-            }
-        }
-        .padding(.horizontal)
-        ZStack {
-            ScrollView {
-                TimeLineView()
-            }
-            .padding(.horizontal, 10)
+        VStack {
+            HCustomCalendar(singleDateF: .sharedDateFommatter)
+                .padding(.bottom)
+                .padding(.horizontal)
+                .scrollIndicators(.hidden)
+            
             HStack {
-                Spacer()
                 VStack {
-                    Spacer()
-                    FloatingButton(show: $show, showingRestDaySetting: $showingRestDaySetting, showingBreakTimeSetting: $showingBreakTimeSetting)
-                        .padding(.top)
-                        .padding(.bottom)
+                    Divider()
+                }
+                Text("예약현황")
+                    .font(.caption)
+                    .foregroundStyle(.gray)
+                VStack {
+                    Divider()
                 }
             }
-            .padding(.trailing, 40)
+            .padding(.horizontal)
+            
+            ZStack {
+                ScrollView {
+                    TimeLineView()
+                }
+                .padding(.horizontal, 10)
+                HStack {
+                    Spacer()
+                    VStack {
+                        Spacer()
+                        
+                        FloatingButton(show: $show, showingRestDaySetting: $showingRestDaySetting, showingBreakTimeSetting: $showingBreakTimeSetting)
+                            .padding(.top)
+                            .padding(.bottom)
+                    }
+                }
+                .padding(.trailing, 20)
+            }
         }
-        
     }
     /// - Timeline Main View
     @ViewBuilder
@@ -134,7 +138,6 @@ struct ReservationView: View {
 
 // MARK: - Custom FloatingButton
 struct FloatingButton: View {
-    
     @Binding var show: Bool
     @State var angle: Double = 180
     @Binding var showingRestDaySetting: Bool
@@ -155,7 +158,7 @@ struct FloatingButton: View {
                 .clipShape(Circle())
                 .shadow(radius: 5)
                 .sheet(isPresented: $showingRestDaySetting, content: {
-                    WkDaySettingDetail()
+                    WkDaySettingDetail(showingRestDaySetting: $showingRestDaySetting)
                         .presentationCornerRadius(20)
                         .presentationDetents([.fraction(0.6)])
                 })
@@ -172,7 +175,7 @@ struct FloatingButton: View {
                 .clipShape(Circle())
                 .shadow(radius: 5)
                 .sheet(isPresented: $showingBreakTimeSetting, content: {
-                    TimeSettingDetail()
+                    TimeSettingDetail(showingBreakTimeSetting: $showingBreakTimeSetting)
                         .presentationCornerRadius(20)
                         .presentationDetents([.fraction(0.6)])
                 })
@@ -193,10 +196,6 @@ struct FloatingButton: View {
         }
         .animation(.spring, value: angle)
     }
-}
-
-#Preview {
-    ReservationView()
 }
 
 // MARK: - Extension
@@ -240,4 +239,8 @@ extension Date {
         formatter.dateFormat = format
         return formatter.string(from: self)
     }
+}
+
+#Preview {
+    ReservationView()
 }

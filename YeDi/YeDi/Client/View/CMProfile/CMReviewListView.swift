@@ -39,54 +39,54 @@ struct CMReviewListView: View {
 struct CMReviewCell: View {
     // MARK: - Properties
     let review: Review
+    private let imageDimension: CGFloat = (UIScreen.main.bounds.width / 3) - 1
     
     // MARK: - Body
     var body: some View {
         VStack(spacing: 10) {
-            // MARK: - 리뷰 별점 및 작성일
             HStack {
-                ForEach(1...5, id: \.self) { index in
-                    Image(systemName: index <= review.designerScore ? "star.fill" : "star")
-                        .foregroundStyle(index <= review.designerScore ? .yellow : Color(white: 0.9))
-                        .font(.title3)
-               }
-                Spacer()
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(review.style)
+                            .fontWeight(.bold)
+                            .foregroundStyle(Color.primaryLabel)
+                        Spacer()
+                        RatingView(score: review.designerScore, maxScore: 5, filledColor: .yellow)
+                    }
+                    .padding(.bottom, 3)
+                    
+                    Text(review.content)
+                        .font(.system(size: 15))
+                        .foregroundStyle(Color.primaryLabel)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                    
+                    Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일", from: review.date))")
+                        .font(.footnote)
+                        .foregroundStyle(.gray)
+                }
+                .padding(.vertical)
+                .padding(.leading)
                 
-                Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yyyy.MM.dd.", from: review.date)) 작성")
-            }
-            
-            // MARK: - 리뷰 사진 스크롤 뷰
-            ScrollView(.horizontal) {
-                HStack {
-                    ForEach(0..<review.imageURLStrings.count, id: \.self) { index in
-                        DMAsyncImage(url: review.imageURLStrings[index])
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 100, height: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                ZStack(alignment: .topTrailing) {
+                    DMAsyncImage(url: review.imageURLStrings[0])
+                        .scaledToFill()
+                        .frame(width: imageDimension, height: imageDimension)
+                        .clipped()
+                        .cornerRadius(8)
+                    
+                    if review.imageURLStrings.count > 1 { // 이미지가 여러 장인 경우에만 아이콘 표시
+                        Image(systemName: "square.on.square.fill")
+                            .foregroundColor(.white)
+                            .padding(10)
                     }
                 }
             }
-            .scrollIndicators(.never)
-            
-            // MARK: - 리뷰 내용
-            HStack {
-                Text(review.content)
-                Spacer()
-            }
-            
-            // MARK: - 키워드 리뷰
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 180))], alignment: .leading) {
-                ForEach(review.keywordReviews) { keywordReview in
-                    Text("\(keywordReview.keyword)")
-                        .font(.subheadline)
-                        .foregroundStyle(Color.primaryLabel)
-                        .padding(10)
-                        .background(
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke(Color.systemFill, lineWidth: 1)
-                        )
-                }
-            }
+        }
+        .background {
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.quaternarySystemFill)
         }
         .padding()
     }

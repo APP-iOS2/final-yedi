@@ -35,7 +35,7 @@ struct ChatRoomView: View {
         if let profile = chattingVM.userProfile[chatRoomId] {
             return profile
         }
-        return ChatListUserInfo(name: "닉네임 오류", profileImageURLString: "")
+        return ChatListUserInfo(uid: "", name: "닉네임 오류", profileImageURLString: "")
     }
     
     private var isInputTextEmpty: Bool {
@@ -47,7 +47,7 @@ struct ChatRoomView: View {
             chatScroll
             inputchatTextField
             if isShowingUtilityMenu {
-                ChatUtilityMenuView(chattingVM: chattingVM, userID: userId)
+                ChatUtilityMenuView(chattingVM: chattingVM, userID: userId, designerID: userProfile.uid)
                     .transition(.move(edge: .bottom))
             }
         }

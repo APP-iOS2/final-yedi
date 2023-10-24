@@ -50,47 +50,6 @@ final class UserAuth: ObservableObject {
         }
     }
     
-//    func checkIfUserExistsInFirestore(user: User, completion: @escaping (Bool) -> Void) {
-//        let clientCollection = storeService.collection("clients")
-//        let designerCollection = storeService.collection("designers")
-//        
-//        // clients collection에서 사용자 데이터를 확인할 함수
-//        func checkClientCollection(completion: @escaping (Bool) -> Void) {
-//            clientCollection.document(user.uid).getDocument { document, error in
-//                if let document = document, document.exists {
-//                    // 사용자 데이터가 clients collection에 존재
-//                    completion(true)
-//                } else {
-//                    completion(false)
-//                }
-//            }
-//        }
-//        
-//        // designers collection에서 사용자 데이터를 확인할 함수
-//        func checkDesignerCollection(completion: @escaping (Bool) -> Void) {
-//            designerCollection.document(user.uid).getDocument { document, error in
-//                if let document = document, document.exists {
-//                    // 사용자 데이터가 designers collection에 존재
-//                    completion(true)
-//                } else {
-//                    completion(false)
-//                }
-//            }
-//        }
-//        
-//        // 두 컬렉션에서 사용자 데이터 확인
-//        checkClientCollection { existsInClientCollection in
-//            checkDesignerCollection { existsInDesignerCollection in
-//                // 두 컬렉션 모두 사용자 데이터가 존재하면 completion(true) 호출
-//                if existsInClientCollection && existsInDesignerCollection {
-//                    completion(true)
-//                } else {
-//                    completion(false)
-//                }
-//            }
-//        }
-//    }
-    
     func signIn(_ email: String, _ password: String, _ type: UserType, _ completion: @escaping (Bool) -> Void) {
         auth.signIn(withEmail: email, password: password) { result, error in
             if let error = error {
@@ -211,21 +170,6 @@ final class UserAuth: ObservableObject {
                     .document(user.uid)
                     .setData(data, merge: true)
                 
-
-                let shopData : [String: Any] = [
-                                    "shopName" : shop.shopName,
-                                    "headAddress" : shop.headAddress,
-                                    "subAddress" : shop.subAddress,
-                                    "detailAddress" : shop.detailAddress,
-//                                    "telNumber" : "",
-                                    "longitude" : shop.longitude,
-                                    "latitude" : shop.latitude,
-                                    "openingHour" : shop.openingHour,
-                                    "closingHour" : shop.closingHour,
-//                                    "messangerLinkURL" : ["": ""],
-                                    "closedDays" : shop.closedDays
-                                ]
-                
                 self.storeService.collection("designers").document(user.uid).collection("shop")
                     .addDocument(data: self.designerShopDataSet(shop: shop), completion: { _ in
                         self.userSession = nil
@@ -329,19 +273,17 @@ final class UserAuth: ObservableObject {
         let changedDateFomatOpenHour = dateFomatter.changeDateString(transition: "HH", from: shop.openingHour)
         let changedDateFomatClosingHour = dateFomatter.changeDateString(transition: "HH", from: shop.closingHour)
         
-        let shopData : [String: Any] = [
-                            "shopName" : shop.shopName,
-                            "headAddress" : shop.headAddress,
-                            "subAddress" : shop.subAddress,
-                            "detailAddress" : shop.detailAddress,
-//                                    "telNumber" : "",
-//                                    "longitude" : "",
-//                                    "latitude" : "",
-                            "openingHour" : changedDateFomatOpenHour,
-                            "closingHour" : changedDateFomatClosingHour,
-//                                    "messangerLinkURL" : ["": ""],
-                            "closedDays" : shop.closedDays
-                        ]
+        let shopData : [String: Any] = [ "shopName" : shop.shopName,
+                                         "headAddress" : shop.headAddress,
+                                         "subAddress" : shop.subAddress,
+                                         "detailAddress" : shop.detailAddress,
+                                         // "telNumber" : "",
+                                         "longitude" : shop.longitude,
+                                         "latitude" : shop.latitude,
+                                         "openingHour" : changedDateFomatOpenHour,
+                                         "closingHour" : changedDateFomatClosingHour,
+                                         // "messangerLinkURL" : ["": ""],
+                                         "closedDays" : shop.closedDays]
         
         return shopData
     }

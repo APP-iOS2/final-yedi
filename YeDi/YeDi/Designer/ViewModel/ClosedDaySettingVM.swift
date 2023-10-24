@@ -7,29 +7,36 @@
 
 import Foundation
 import Firebase
+import FirebaseAuth
 
 class ClosedDaySetting: ObservableObject {
     /// - 설정된 휴무일 구조체 만들어야 함
     @Published var days = [ClosedDay]()
+    private var currentUserUid: String? {
+        return Auth.auth().currentUser?.uid
+    }
     // Get a reference to rhe database
     let closedDB = Firestore.firestore().collection("closedDays")
-    /// - Firestore에 저장된 데이터를 불러온다.
-    func addDay(_ designerID: String, _ day: [String]) {
-        // Add a documnet to a collection
-        closedDB.addDocument(data: [
-            "designerID" : designerID,
-            "closedDay": day]) { error in
-            // Check for errors
-                if error == nil {
-                    // No errors
-                    // Call get data to retrieve latest data
-                    self.getDay()
-                } else {
-                    // Handle the error
-                }
+    
+    /// - Fetch data
+    func addDay(_ day: [String]) {
+        guard let currentUserUid = currentUserUid else {
+            print("사용자가 로그인되지 않았습니다")
+            return
+        }
+        
+        let myDay = closedDB.document()
+        
+        myDay.setData(["id": myDay.documentID, "designerUid": currentUserUid, "closedDay": day]) { error in
+            if let error = error {
+                print("데이터 추가 중 에러발생 \(error.localizedDescription)")
+            } else {
+                self.getDay()
+            }
         }
     }
     
+    /// - Firestore에 저장된 데이터를 불러온다.
     func getDay() {
         closedDB.getDocuments { snapshot, error in
             if error == nil {
@@ -39,9 +46,9 @@ class ClosedDaySetting: ObservableObject {
                     DispatchQueue.main.async {
                         self.days = snapshot.documents.map { d in
                             return ClosedDay(
-                                id: d.documentID,
-                                designerID: d["designerID"] as? String ?? "[디자이너 없음]",
-                                day: d["day"] as? [String] ?? ["[날짜를 추가하세요]"]
+                                id: d.documentID, 
+                                designerUid: d["designerUid"] as? String ?? "Don`t have userId",
+                                closedDay: d["day"] as? [String] ?? ["[날짜를 추가하세요]"]
                             )
                         }
                     }
@@ -52,15 +59,6 @@ class ClosedDaySetting: ObservableObject {
         }
     }
     
-    func deleteDay(selectedDay: ClosedDay) {
-        guard let closedDayID = selectedDay.id else { return }
-        
-        closedDB.document(closedDayID).delete() { error in
-            if let error = error {
-                print("error removing closedDay \(error)")
-            } else {
-                print("ClosedDay successfully removed!")
-            }
-        }
-    }
+    
 }
+
