@@ -85,7 +85,7 @@ struct ChatRoomView: View {
                     Text(String(userProfile.name.first ?? " ").capitalized)
                         .font(.title3)
                         .fontWeight(.bold)
-                        .frame(width: 50, height: 50)
+                        .frame(width: 30, height: 30)
                         .background(Circle().fill(Color.quaternarySystemFill))
                         .foregroundColor(Color.primaryLabel)
                         .offset(y: -5)
@@ -131,7 +131,7 @@ struct ChatRoomView: View {
                     .padding(.vertical)
                 }
                 
-                ForEach(Array(Set(chattingVM.chattings))) { chat in
+                ForEach(chattingVM.chattings) { chat in
                     var isMyBubble: Bool {
                         chat.sender == userId ? true : false
                     }
