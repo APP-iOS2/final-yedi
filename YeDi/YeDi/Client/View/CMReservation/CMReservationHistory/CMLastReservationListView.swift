@@ -1,27 +1,32 @@
 //
-//  CMUpcomingReservationView.swift
+//  CMLastReservationListView.swift
 //  YeDi
 //
 //  Created by Jaehui Yu on 2023/09/26.
 //
 
 import SwiftUI
+import FirebaseFirestore
 
-struct CMUpcomingReservationView: View {
+/// 지난 예약 목록 뷰
+struct CMLastReservationListView: View {
+    // MARK: - Properties
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var cmHistoryViewModel: CMHistoryViewModel
     
-    @State private var upcomingReservations: [Reservation] = []
+    /// 지난 예약 목록 변수
+    @State private var lastReservations: [Reservation] = []
     
+    // MARK: - Body
     var body: some View {
         VStack {
-            if upcomingReservations.isEmpty {
+            if lastReservations.isEmpty {
                 Spacer()
-                Text("예정된 예약이 없습니다")
+                Text("지난 예약이 없습니다")
                     .fontWeight(.bold)
             } else {
                 ScrollView {
-                    ForEach(upcomingReservations) { reservation in
+                    ForEach(lastReservations) { reservation in
                         NavigationLink {
                             CMReservationHistoryDetailView(reservation: reservation)
                         } label: {
@@ -39,14 +44,16 @@ struct CMUpcomingReservationView: View {
         .onAppear(perform: {
             Task {
                 await cmHistoryViewModel.fetchReservation(userAuth: userAuth)
-                upcomingReservations = cmHistoryViewModel.reservations.filter({ $0.isFinished == false })
+                
+                // 지난 예약만 가져오도록 필터링
+                lastReservations = cmHistoryViewModel.reservations.filter({ $0.isFinished == true })
+                // 지난 예약 > 예약 일시가 먼 순으로 정렬
+                lastReservations = lastReservations.sorted { $0.reservationTime < $1.reservationTime }
             }
         })
     }
 }
 
 #Preview {
-    CMUpcomingReservationView()
-        .environmentObject(UserAuth())
-        .environmentObject(CMHistoryViewModel())
+    CMLastReservationListView()
 }

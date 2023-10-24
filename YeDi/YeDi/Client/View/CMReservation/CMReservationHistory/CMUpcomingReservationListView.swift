@@ -1,28 +1,31 @@
 //
-//  CMLastReservationView.swift
+//  CMUpcomingReservationListView.swift
 //  YeDi
 //
 //  Created by Jaehui Yu on 2023/09/26.
 //
 
 import SwiftUI
-import FirebaseFirestore
 
-struct CMLastReservationView: View {
+/// 다가오는 예약 목록 뷰
+struct CMUpcomingReservationListView: View {
+    // MARK: - Properties
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var cmHistoryViewModel: CMHistoryViewModel
     
-    @State private var lastReservations: [Reservation] = []
+    /// 다가오는 예약 목록 변수
+    @State private var upcomingReservations: [Reservation] = []
     
+    // MARK: - Body
     var body: some View {
         VStack {
-            if lastReservations.isEmpty {
+            if upcomingReservations.isEmpty {
                 Spacer()
-                Text("지난 예약이 없습니다")
+                Text("예정된 예약이 없습니다")
                     .fontWeight(.bold)
             } else {
                 ScrollView {
-                    ForEach(lastReservations) { reservation in
+                    ForEach(upcomingReservations) { reservation in
                         NavigationLink {
                             CMReservationHistoryDetailView(reservation: reservation)
                         } label: {
@@ -40,12 +43,18 @@ struct CMLastReservationView: View {
         .onAppear(perform: {
             Task {
                 await cmHistoryViewModel.fetchReservation(userAuth: userAuth)
-                lastReservations = cmHistoryViewModel.reservations.filter({ $0.isFinished == true })
+                
+                // 다가오는 예약만 가져오도록 필터링
+                upcomingReservations = cmHistoryViewModel.reservations.filter({ $0.isFinished == false })
+                // 다가오는 예약 > 예약 일시가 가까운 순으로 정렬
+                upcomingReservations = upcomingReservations.sorted { $0.reservationTime > $1.reservationTime }
             }
         })
     }
 }
 
 #Preview {
-    CMLastReservationView()
+    CMUpcomingReservationListView()
+        .environmentObject(UserAuth())
+        .environmentObject(CMHistoryViewModel())
 }

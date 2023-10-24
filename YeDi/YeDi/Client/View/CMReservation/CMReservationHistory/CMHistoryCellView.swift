@@ -11,10 +11,33 @@ import FirebaseFirestore
 /// 예약 내역 셀 뷰
 struct CMHistoryCellView: View {
     // MARK: - Properties
+    @EnvironmentObject var cmHistoryViewModel: CMHistoryViewModel
+    
     @State private var designerName: String = ""
     @State private var designerShop: String = ""
+    @State private var reservationDate: String = ""
     
     var reservation: Reservation
+    
+    /// 디데이 텍스트
+    var dDayText: String {
+        let offsetComps = Calendar.current.dateComponents(
+            [.year,.month,.day], from: SingleTonDateFormatter.sharedDateFommatter.changeStringToDate(dateString: reservation.reservationTime), to: Date()
+        )
+        
+        var dDay = offsetComps.day ?? 0
+        
+        if dDay == 0 {
+            return "D-Day"
+        } else {
+            return "D-\(dDay)"
+        }
+    }
+    
+    /// 리뷰 작성 여부에 따른 텍스트
+    var reviewStatusText: String {
+        return "리뷰 작성 완료"
+    }
     
     // MARK: - Body
     var body: some View {
@@ -22,9 +45,8 @@ struct CMHistoryCellView: View {
             // MARK: - 뱃지 섹션
             HStack {
                 Spacer()
-                
                 if reservation.isFinished {
-                    Text("리뷰 작성 완료")
+                    Text("\(reviewStatusText)")
                         .font(.subheadline)
                         .foregroundStyle(Color.gray6)
                         .padding(EdgeInsets(top: 5, leading: 15, bottom: 5, trailing: 15))
@@ -34,7 +56,7 @@ struct CMHistoryCellView: View {
                         )
                         .padding([.top, .trailing], 10)
                 } else {
-                    Text("D-1")
+                    Text("\(dDayText)")
                         .font(.subheadline)
                         .foregroundStyle(Color.gray6)
                         .padding(EdgeInsets(top: 5, leading: 15, bottom: 5, trailing: 15))
@@ -85,7 +107,7 @@ struct CMHistoryCellView: View {
                         .font(.subheadline)
                         .foregroundStyle(.gray)
                     Spacer()
-                    Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "MM월 dd일 HH시 mm분", from: reservation.reservationTime)) 예약")
+                    Text("\(reservationDate) 예약")
                         .fontWeight(.bold)
                         .font(.subheadline)
                         .foregroundStyle(Color.primaryLabel)
@@ -123,22 +145,11 @@ struct CMHistoryCellView: View {
             }
             .onAppear {
                 Task {
-                    let collectionRef = Firestore.firestore().collection("designers")
+                    await cmHistoryViewModel.fetchDesigner(designerId: reservation.designerUID)
                     
-                    do {
-                        let docSnapshot = try await collectionRef
-                            .whereField("designerUID", isEqualTo: reservation.designerUID)
-                            .getDocuments()
-                        
-                        for doc in docSnapshot.documents {
-                            if let designer = try? doc.data(as: Designer.self) {
-                                designerName = designer.name
-                                designerShop = designer.shop?.shopName ?? "프리랜서"
-                            }
-                        }
-                    } catch {
-                        print("Error fetching client reviews: \(error)")
-                    }
+                    designerName = cmHistoryViewModel.designer.name
+                    designerShop = cmHistoryViewModel.designer.shop?.shopName ?? "프리랜서"
+                    reservationDate = SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "MM월 dd일 HH시 mm분", from: reservation.reservationTime)
                 }
             }
         }
@@ -146,14 +157,5 @@ struct CMHistoryCellView: View {
 }
 
 #Preview {
-    CMHistoryCellView(
-        reservation:
-            Reservation(
-                clientUID: "",
-                designerUID: "",
-                reservationTime: "",
-                hairStyle: [],
-                isFinished: false
-            )
-        )
+    CMHistoryCellView(reservation: Reservation(clientUID: "", designerUID: "", reservationTime: "", hairStyle: [], isFinished: false))
 }
