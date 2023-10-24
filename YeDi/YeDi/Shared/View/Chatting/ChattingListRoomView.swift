@@ -89,6 +89,11 @@ struct ChattingListRoomView: View {
         .onAppear {
             chattingListRoomViewModel.fetchChattingList(login: userAuth.userType)
         }
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                YdIconView(height: 32)
+            }
+        }
     }
     
     private func changetoDateFormat(_ messageDate: String) -> String {

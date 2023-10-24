@@ -46,7 +46,7 @@ struct CMHomeView: View {
         .padding(.bottom, 1)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                YdIconView(height: 30)
+                YdIconView(height: 33)
             }
             
             ToolbarItem(placement: .topBarTrailing) {
