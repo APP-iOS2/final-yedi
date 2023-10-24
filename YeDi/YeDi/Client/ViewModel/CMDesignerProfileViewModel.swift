@@ -113,6 +113,22 @@ class CMDesignerProfileViewModel: ObservableObject {
         }
     }
     
+    func formattedFollowerCount(followerCount: Int) -> String {
+        if followerCount < 10_000 {
+            return "\(followerCount)"
+        } else if followerCount < 1_000_000 {
+            let followers = Double(followerCount) / 10_000.0
+            if followers.truncatingRemainder(dividingBy: 1) == 0 {
+                return "\(Int(followers))만"
+            } else {
+                return "\(followers)만"
+            }
+        } else {
+            let millions = followerCount / 10_000
+            return "\(millions)만"
+        }
+    }
+    
     // Firestore에서 디자이너의 게시물 데이터를 가져오는 함수
     func fetchDesignerPosts(designerUID: String) {
         db.collection("posts")
@@ -135,22 +151,6 @@ class CMDesignerProfileViewModel: ObservableObject {
                     }
                 }
             }
-    }
-    
-    func formattedFollowerCount(followerCount: Int) -> String {
-        if followerCount < 10_000 {
-            return "\(followerCount)"
-        } else if followerCount < 1_000_000 {
-            let followers = Double(followerCount) / 10_000.0
-            if followers.truncatingRemainder(dividingBy: 1) == 0 {
-                return "\(Int(followers))만"
-            } else {
-                return "\(followers)만"
-            }
-        } else {
-            let millions = followerCount / 10_000
-            return "\(millions)만"
-        }
     }
     
     // 리뷰 정보 불러오기

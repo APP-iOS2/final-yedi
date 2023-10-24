@@ -32,7 +32,7 @@ struct CMFollowingListView: View {
         }
         .onAppear {
             Task {
-                await profileViewModel.fetchFollowedDesigner()
+                await profileViewModel.fetchFollowedDesignerWithShopInfo()
             }
         }
     }

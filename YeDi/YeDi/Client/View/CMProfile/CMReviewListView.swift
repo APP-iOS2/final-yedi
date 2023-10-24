@@ -38,8 +38,11 @@ struct CMReviewListView: View {
 /// 리뷰 셀 뷰
 struct CMReviewCell: View {
     // MARK: - Properties
-    let review: Review
+    @State private var isShowingReviewDetailSheet: Bool = false
+    
     private let imageDimension: CGFloat = (UIScreen.main.bounds.width / 3) - 1
+    
+    let review: Review
     
     // MARK: - Body
     var body: some View {
@@ -89,6 +92,12 @@ struct CMReviewCell: View {
                 .fill(Color.quaternarySystemFill)
         }
         .padding()
+        .onTapGesture {
+            isShowingReviewDetailSheet.toggle()
+        }
+        .sheet(isPresented: $isShowingReviewDetailSheet, content: {
+            CMReviewDetailView(review: review)
+        })
     }
 }
 

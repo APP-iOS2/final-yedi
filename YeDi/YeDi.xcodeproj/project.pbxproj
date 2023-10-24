@@ -32,6 +32,8 @@
 		2F6363E92AD542AA00E980F8 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6363E82AD542AA00E980F8 /* PhotoPicker.swift */; };
 		2F65BB9E2AE6CBE400D84D37 /* CMHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F65BB9D2AE6CBE400D84D37 /* CMHistoryViewModel.swift */; };
 		2F65BBA02AE6CE8000D84D37 /* CMHistoryCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F65BB9F2AE6CE8000D84D37 /* CMHistoryCellView.swift */; };
+		2F65BBA52AE7E25A00D84D37 /* CMReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F65BBA42AE7E25A00D84D37 /* CMReviewDetailView.swift */; };
+		2F65BBA72AE7F6FE00D84D37 /* MapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F65BBA62AE7F6FE00D84D37 /* MapMarker.swift */; };
 		2F7B60652ADFAF2B00EF1B96 /* CMCustomTextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B60642ADFAF2B00EF1B96 /* CMCustomTextArea.swift */; };
 		2F8F1B9A2AE4F652002FD403 /* DMCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F1B992AE4F652002FD403 /* DMCustomTextField.swift */; };
 		2F8F1B9C2AE532B9002FD403 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F1B9B2AE532B9002FD403 /* LocationManager.swift */; };
@@ -179,6 +181,8 @@
 		2F6363E82AD542AA00E980F8 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		2F65BB9D2AE6CBE400D84D37 /* CMHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHistoryViewModel.swift; sourceTree = "<group>"; };
 		2F65BB9F2AE6CE8000D84D37 /* CMHistoryCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMHistoryCellView.swift; sourceTree = "<group>"; };
+		2F65BBA42AE7E25A00D84D37 /* CMReviewDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReviewDetailView.swift; sourceTree = "<group>"; };
+		2F65BBA62AE7F6FE00D84D37 /* MapMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarker.swift; sourceTree = "<group>"; };
 		2F7B60642ADFAF2B00EF1B96 /* CMCustomTextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMCustomTextArea.swift; sourceTree = "<group>"; };
 		2F8F1B992AE4F652002FD403 /* DMCustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMCustomTextField.swift; sourceTree = "<group>"; };
 		2F8F1B9B2AE532B9002FD403 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -402,6 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				3BCF2C0B2ACD3E72009C18C2 /* Chatting */,
+				2F65BBA62AE7F6FE00D84D37 /* MapMarker.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -563,6 +568,7 @@
 				3BCF2C5D2ACD4248009C18C2 /* CMLikePostListView.swift */,
 				3BCF2C642ACD4248009C18C2 /* CMFollowingListView.swift */,
 				3BCF2C652ACD4248009C18C2 /* CMReviewListView.swift */,
+				2F65BBA42AE7E25A00D84D37 /* CMReviewDetailView.swift */,
 				3BCF2C672ACD4248009C18C2 /* CMSettingsView.swift */,
 				3BCF2C5E2ACD4248009C18C2 /* CMProfileEdit */,
 				D88AB09E2AE7A0C50059D10F /* CMFollowingListButtonView.swift */,
@@ -932,6 +938,7 @@
 				3BCF2C6D2ACD4248009C18C2 /* CMReviewSelectPhotosView.swift in Sources */,
 				3BCF2C742ACD4248009C18C2 /* CMLastReservationListView.swift in Sources */,
 				3BCF2C2F2ACD3E73009C18C2 /* ImageBubbleCell.swift in Sources */,
+				2F65BBA72AE7F6FE00D84D37 /* MapMarker.swift in Sources */,
 				2F0A21952ACFD8950070CA42 /* CMReviewViewModel.swift in Sources */,
 				1D9067212AC1F61D0028A660 /* DMGridView.swift in Sources */,
 				3BCF2C8C2ACD4248009C18C2 /* CMFollowingListView.swift in Sources */,
@@ -1016,6 +1023,7 @@
 				63A888282ADF9A5A00790EBA /* DateDeviderCell.swift in Sources */,
 				3BCF2C832ACD4248009C18C2 /* CMFilterView.swift in Sources */,
 				1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */,
+				2F65BBA52AE7E25A00D84D37 /* CMReviewDetailView.swift in Sources */,
 				DC94ED592ADFDA540052AD6E /* TextAreaModifier.swift in Sources */,
 				1DD969A12ACFFD9A000AD7D2 /* AddDesignerDataView.swift in Sources */,
 				09CDA90F2AE412A2009FB75C /* CMDesignerProfileSegmentedView.swift in Sources */,

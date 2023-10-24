@@ -29,6 +29,8 @@ struct CMFollowingPostView: View {
                     }
                 }
             }
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 postViewModel.fetchPostsForFollowedDesigners(clientID: userAuth.currentClientID ?? "")
             }

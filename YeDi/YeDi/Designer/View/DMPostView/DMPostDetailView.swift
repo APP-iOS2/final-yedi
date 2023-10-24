@@ -161,24 +161,23 @@ struct DMPostDetailView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text("카테고리")
-                    .foregroundColor(Color.secondaryLabel)
+                    .fontWeight(.semibold)
                 Spacer()
                 Text(selectedPost.hairCategory.rawValue)
+                    .foregroundColor(Color.secondaryLabel)
             }
-            
-            Divider()
-                .foregroundStyle(Color.separator)
             
             HStack {
                 Text("가격")
-                    .foregroundColor(Color.secondaryLabel)
+                    .fontWeight(.semibold)
                 Spacer()
                 Text("\(selectedPost.price)")
+                    .foregroundColor(Color.secondaryLabel)
             }
         }
         .padding()
         .background {
-            RoundedRectangle(cornerRadius: 2)
+            RoundedRectangle(cornerRadius: 8)
                 .fill(Color.secondarySystemBackground)
         }
         .padding(.vertical)

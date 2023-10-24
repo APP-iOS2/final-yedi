@@ -29,6 +29,8 @@ struct CMRecommendPostView: View {
                     }
                 })
             }
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
             .task {
                 await postViewModel.fetchPosts()
             }
