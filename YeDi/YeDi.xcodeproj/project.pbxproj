@@ -82,7 +82,6 @@
 		3BCF2C7C2ACD4248009C18C2 /* CMPostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C502ACD4247009C18C2 /* CMPostDetailView.swift */; };
 		3BCF2C7D2ACD4248009C18C2 /* CMHomeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C512ACD4247009C18C2 /* CMHomeCellView.swift */; };
 		3BCF2C7E2ACD4248009C18C2 /* CMSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C522ACD4247009C18C2 /* CMSearchView.swift */; };
-		3BCF2C7F2ACD4248009C18C2 /* CMPostDetailContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C532ACD4247009C18C2 /* CMPostDetailContentView.swift */; };
 		3BCF2C802ACD4248009C18C2 /* CMHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C542ACD4247009C18C2 /* CMHomeView.swift */; };
 		3BCF2C812ACD4248009C18C2 /* CMFollowingPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C552ACD4248009C18C2 /* CMFollowingPostView.swift */; };
 		3BCF2C822ACD4248009C18C2 /* CMRecommendPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C562ACD4248009C18C2 /* CMRecommendPostView.swift */; };
@@ -129,6 +128,8 @@
 		96CBD4062AC40AF50055CC7F /* WkDaySettingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */; };
 		96D8753D2AE0CEED00F35226 /* DMReservationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D8753C2AE0CEED00F35226 /* DMReservationVM.swift */; };
 		96F637DB2AC2AA1200EF74FF /* ReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F637DA2AC2AA1200EF74FF /* ReservationView.swift */; };
+		D88AB09F2AE7A0C50059D10F /* CMFollowingListButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88AB09E2AE7A0C50059D10F /* CMFollowingListButtonView.swift */; };
+		D88AB0A02AE7A3360059D10F /* CMPostDetailContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C532ACD4247009C18C2 /* CMPostDetailContentView.swift */; };
 		D89971292ADFC51B00FBF031 /* CMSelectStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89971282ADFC51B00FBF031 /* CMSelectStyleView.swift */; };
 		D899712B2AE107D100FBF031 /* CMReservationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D899712A2AE107D100FBF031 /* CMReservationViewModel.swift */; };
 		D899712D2AE107FC00FBF031 /* Reservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D899712C2AE107FC00FBF031 /* Reservation.swift */; };
@@ -270,6 +271,7 @@
 		96CBD4052AC40AF50055CC7F /* WkDaySettingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WkDaySettingDetail.swift; sourceTree = "<group>"; };
 		96D8753C2AE0CEED00F35226 /* DMReservationVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMReservationVM.swift; sourceTree = "<group>"; };
 		96F637DA2AC2AA1200EF74FF /* ReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationView.swift; sourceTree = "<group>"; };
+		D88AB09E2AE7A0C50059D10F /* CMFollowingListButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFollowingListButtonView.swift; sourceTree = "<group>"; };
 		D89971282ADFC51B00FBF031 /* CMSelectStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSelectStyleView.swift; sourceTree = "<group>"; };
 		D899712A2AE107D100FBF031 /* CMReservationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMReservationViewModel.swift; sourceTree = "<group>"; };
 		D899712C2AE107FC00FBF031 /* Reservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservation.swift; sourceTree = "<group>"; };
@@ -563,6 +565,7 @@
 				3BCF2C652ACD4248009C18C2 /* CMReviewListView.swift */,
 				3BCF2C672ACD4248009C18C2 /* CMSettingsView.swift */,
 				3BCF2C5E2ACD4248009C18C2 /* CMProfileEdit */,
+				D88AB09E2AE7A0C50059D10F /* CMFollowingListButtonView.swift */,
 			);
 			path = CMProfile;
 			sourceTree = "<group>";
@@ -881,6 +884,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D88AB0A02AE7A3360059D10F /* CMPostDetailContentView.swift in Sources */,
 				3BCF2C2C2ACD3E73009C18C2 /* BubbleCell.swift in Sources */,
 				2F45A1282AD2739C005018A5 /* Color.swift in Sources */,
 				097D4BCC2AD90C0300D532F6 /* CMDesignerProfileView.swift in Sources */,
@@ -918,6 +922,7 @@
 				3BCF2C292ACD3E73009C18C2 /* BoardBubbleCell.swift in Sources */,
 				965ECCF02AD93EEB00BC0D41 /* DMDesignerInfoEditView.swift in Sources */,
 				3BCF2C852ACD4248009C18C2 /* ClientMainTabView.swift in Sources */,
+				D88AB09F2AE7A0C50059D10F /* CMFollowingListButtonView.swift in Sources */,
 				2F6363E92AD542AA00E980F8 /* PhotoPicker.swift in Sources */,
 				3BCF2C762ACD4248009C18C2 /* CMReservationDateTimeView.swift in Sources */,
 				9615C78E2AD6A30A00DD4F37 /* DMReviewDetailView.swift in Sources */,
@@ -984,7 +989,6 @@
 				DC7695B52ADC148300D2FB69 /* UpdatePasswordView.swift in Sources */,
 				3BCF2C692ACD4248009C18C2 /* PostDetailViewModel.swift in Sources */,
 				9691C5D62ADE554A00434377 /* BreakTimeSettingVM.swift in Sources */,
-				3BCF2C7F2ACD4248009C18C2 /* CMPostDetailContentView.swift in Sources */,
 				9615C78A2AD6A1D600DD4F37 /* HCustomCalendar.swift in Sources */,
 				3BCF2C7F2ACD4248009C18C2 /* CMPostDetailContentView.swift in Sources */,
 				2F65BB9E2AE6CBE400D84D37 /* CMHistoryViewModel.swift in Sources */,

@@ -25,7 +25,7 @@ struct CMReservationCheckView: View {
         VStack(spacing: 0) {
             toolbarView
             
-//            informationView
+            informationView
             
             HStack {
                 Image(systemName: "checkmark.circle.fill")
@@ -33,14 +33,13 @@ struct CMReservationCheckView: View {
                 Text("예약 정보")
                     .font(.headline)
                     .fontWeight(.bold)
-                    .foregroundStyle(Color.mainColor)
+                    .foregroundStyle(Color.primaryLabel)
                         
                 Spacer()
             }
             .padding([.horizontal, .top])
             
             designerView
-                .background(Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .padding([.horizontal, .bottom])
                 .padding(.top, 10)
@@ -48,7 +47,7 @@ struct CMReservationCheckView: View {
             
             completionButtonView
         }
-        .background(Color.lightGrayColor)
+        .background(Color.divider)
         .navigationBarBackButtonHidden(true)
     }
     
@@ -72,30 +71,30 @@ struct CMReservationCheckView: View {
     // MARK: - 툴바 뷰
     private var toolbarView: some View {
         HStack(alignment: .center) {
-            Button {
-                dismiss()
-            } label: {
-                HStack {
-                    Image(systemName: "chevron.left")
-                        .font(.title)
-                        .foregroundStyle(Color.mainColor)
-                }
-            }
+            DismissButton(color: Color.primary) { }
             Spacer()
         }
-        .padding([.horizontal, .bottom])
+        .padding()
         .background(Color.whiteMainColor)
     }
     
     private var designerView: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                DMAsyncImage(url: postDetailViewModel.designer?.imageURLString ?? "")
-                        .aspectRatio(contentMode: .fill)
-                        .frame(maxWidth: 60, maxHeight: 60)
-                        .clipShape(Circle())
-                
-                
+                if postDetailViewModel.designer?.imageURLString != "" {
+                    DMAsyncImage(url: postDetailViewModel.designer?.imageURLString ?? "")
+                            .aspectRatio(contentMode: .fill)
+                            .frame(maxWidth: 60, maxHeight: 60)
+                            .clipShape(Circle())
+                } else {
+                    Text(String(postDetailViewModel.designer?.name.first ?? " ").capitalized)
+                                .font(.title3)
+                                .fontWeight(.bold)
+                                .frame(width: 60, height: 60)
+                                .background(Circle().fill(Color.quaternarySystemFill))
+                                .foregroundColor(Color.primaryLabel)
+                }
+
                 VStack(alignment: .leading) {
                     Text("\(postDetailViewModel.designer?.name ?? "디자이너")")
                         .font(.headline)
@@ -119,7 +118,7 @@ struct CMReservationCheckView: View {
                     Spacer()
                     
                     Text("루디헤어 연신내점")
-                        .font(.subheadline)
+                        .font(.headline)
                         .fontWeight(.bold)
                 }
                 .padding([.top, .horizontal])
@@ -130,8 +129,8 @@ struct CMReservationCheckView: View {
                         .foregroundStyle(.gray)
                     Spacer()
                     Text("\(stringFormattedDate)")
+                        .font(.headline)
                         .fontWeight(.bold)
-                        .font(.subheadline)
                 }
                 .padding([.top, .horizontal])
                 
@@ -141,8 +140,8 @@ struct CMReservationCheckView: View {
                         .foregroundStyle(.gray)
                     Spacer()
                     Text("\(formatTime(stringFormattedTime))")
+                        .font(.headline)
                         .fontWeight(.bold)
-                        .font(.subheadline)
                 }
                 .padding([.top, .horizontal])
                 
@@ -158,7 +157,7 @@ struct CMReservationCheckView: View {
                             ForEach(reservation.hairStyle) { hairStyle in
                                 VStack(alignment: .trailing) {
                                     Text("\(hairStyle.name)")
-                                        .font(.subheadline)
+                                        .font(.headline)
                                         .fontWeight(.bold)
                                     
                                     Text("\(hairStyle.price)원")
@@ -177,7 +176,7 @@ struct CMReservationCheckView: View {
 
                 HStack(spacing: 0) {
                     Text("총 금액")
-                        .foregroundStyle(Color.mainColor)
+                        .foregroundStyle(Color.primaryLabel)
                         .font(.headline)
                         .fontWeight(.bold)
                     
@@ -185,6 +184,7 @@ struct CMReservationCheckView: View {
                     
                     Text("\(totalPrice())")
                         .fontWeight(.bold)
+                        .font(.title3)
                         .foregroundStyle(Color.subColor)
                     Text("원")
                 }

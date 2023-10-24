@@ -18,7 +18,6 @@ struct CMSelectStyleView: View {
     @State private var isSelectedStyle: Bool = false
     @State private var animationRange: [Int] = []
     @State private var value: Int = 0
-    @State private var isPresentedAlert: Bool = false
     var stringFormattedDate: String {
         SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일 (EE)", from: selectedStringDate)
     }
@@ -47,16 +46,8 @@ struct CMSelectStyleView: View {
             Divider()
             checkButtonView
         }
+        .background(Color.whiteMainColor)
         .navigationBarBackButtonHidden(true)
-        .alert(
-            "알림",
-            isPresented: $isPresentedAlert
-        ) {
-            Button("확인") {
-            }
-        } message: {
-            Text("카테고리 당 하나의 스타일만 선택할 수 있습니다.")
-        }
         .onAppear {
             animationRange = Array(repeating: 0, count: "\(value)".count)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.06) {
@@ -99,18 +90,10 @@ struct CMSelectStyleView: View {
     // MARK: - 툴바 뷰
     private var toolbarView: some View {
         HStack(alignment: .center) {
-            Button {
-                dismiss()
-            } label: {
-                HStack {
-                    Image(systemName: "chevron.left")
-                        .font(.title)
-                        .foregroundStyle(Color.mainColor)
-                }
-            }
+            DismissButton(color: Color.primary) { }
             Spacer()
         }
-        .padding([.horizontal])
+        .padding()
     }
     
     // MARK: - FooterView
@@ -119,7 +102,7 @@ struct CMSelectStyleView: View {
             VStack(spacing: 0) {
                 Text("총 결제금액")
                     .font(.subheadline)
-                    .foregroundStyle(Color.mainColor)
+                    .foregroundStyle(Color.primaryLabel)
                 HStack(spacing: 0) {
                     ForEach(0..<animationRange.count, id: \.self) { index in
                         Text("0")
@@ -148,7 +131,7 @@ struct CMSelectStyleView: View {
                     Text("원")
                         .font(.subheadline)
                         .padding(.leading, 5)
-                        .foregroundStyle(Color.mainColor)
+                        .foregroundStyle(Color.primaryLabel)
                 }
                 
             }
@@ -165,7 +148,7 @@ struct CMSelectStyleView: View {
                     .fontWeight(.bold)
                     .padding(.vertical, 15)
                     .frame(maxWidth: .infinity)
-                    .background(isSelectedStyle ? Color.subColor : Color.lightGrayColor2)
+                    .background(isSelectedStyle ? Color.subColor : Color.gray4)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             .padding([.bottom, .horizontal])
@@ -237,7 +220,7 @@ struct CMSelectStyleView: View {
                     
                     Image(systemName: "checkmark.circle.fill")
                         .font(.title2)
-                        .foregroundColor(selectedHairStyles.contains(hair) ? Color.subColor : Color.lightGrayColor2) // Checkmark 색 변경
+                        .foregroundColor(selectedHairStyles.contains(hair) ? Color.subColor : Color.gray4) // Checkmark 색 변경
                 }
                 .onTapGesture {
                     toggleSelection(for: hair)
@@ -289,8 +272,8 @@ struct CMSelectStyleView: View {
 
 private var divider: some View {
     Divider()
-        .frame(minHeight: 15)
-        .overlay(Color.lightGrayColor)
+        .frame(minHeight: 10)
+        .overlay(Color.divider)
 }
 
 #Preview {
