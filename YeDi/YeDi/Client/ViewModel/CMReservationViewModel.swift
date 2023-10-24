@@ -14,7 +14,7 @@ final class CMReservationViewModel: ObservableObject {
     @Published var dates: [Date] = []
     @Published var openingTime: Int = 0
     @Published var closingTime: Int = 0
-    @Published var breakTime: [Int] = []
+    @Published var impossibleTime: Set<Int> = []
     private let db = Firestore.firestore()
     private var closedDay: ClosedDay = ClosedDay(id: "", designerUid: "", closedDay: [])
     private var currentUserUid: String? {
@@ -75,12 +75,13 @@ final class CMReservationViewModel: ObservableObject {
             let endDate = Calendar.current.date(byAdding: .day, value: 1, to: date)!
             let endDateString = SingleTonDateFormatter.sharedDateFommatter.firebaseDate(from: endDate)
             let querySnapShot = try await db.collection("reservations").whereField("designerUID", isEqualTo: designerUID).whereField("reservationTime", isGreaterThanOrEqualTo: startDateString).whereField("reservationTime", isLessThan: endDateString).getDocuments()
-            self.breakTime = []
+            self.impossibleTime = []
             for document in querySnapShot.documents {
                 let reservationTime = try document.data(as: Reservation.self).reservationTime
                 guard let hour = extractHoursFromTimeString(reservationTime) else { return }
-                self.breakTime.append(hour)
+                self.impossibleTime.insert(hour)
             }
+            await fetchBreakTime(designerUID: designerUID)
         } catch {
             
         }
@@ -88,8 +89,27 @@ final class CMReservationViewModel: ObservableObject {
     
     // TODO: -
     @MainActor
-    func fetchBreakTime(designerUID: String) async {
-        
+    private func fetchBreakTime(designerUID: String) async {
+        do {
+            let querySnapshot = try await db.collection("breakTimes").whereField("designerUID", isEqualTo: designerUID).getDocuments()
+            print("쿼리 \(querySnapshot)")
+            for document in querySnapshot.documents {
+                print("문서 \(document)")
+                if let breakTimes = document.data()["selectedTime"] as? [String] {
+                    let timeInts = breakTimes.compactMap { timeString in
+                        let components = timeString.components(separatedBy: ":")
+                        if let hour = Int(components.first ?? "") {
+                            return hour
+                        } else {
+                            return nil
+                        }
+                    }
+                    self.impossibleTime.formUnion(Set(timeInts))
+                }
+            }
+        } catch {
+            // 오류 처리
+        }
     }
 
     private func extractHoursFromTimeString(_ timeString: String) -> Int? {
@@ -98,7 +118,6 @@ final class CMReservationViewModel: ObservableObject {
             let calendar = Calendar.current
             let components = calendar.dateComponents([.hour], from: date)
             
-            // 시간 구성 요소에서 시간 값을 추출
             if let hour = components.hour {
                 return hour
             }

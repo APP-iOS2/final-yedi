@@ -15,6 +15,7 @@ struct CMReservationDateTimeView: View {
     @State private var currentDate: Date = Date()
     @State private var selectedDate: Date = Date()
     @State private var selectedTime: Int = 0
+    @State private var isLoaded: Bool = false
     @Binding var isPresentedAlert: Bool
     @Binding var isPresentedNavigation: Bool
     private var isDateTimeSelected: Bool {
@@ -38,7 +39,7 @@ struct CMReservationDateTimeView: View {
             
             HStack {
                 Text("날짜선택")
-                    .foregroundStyle(Color.mainColor)
+                    .foregroundStyle(Color.primaryLabel)
                     .font(.title3)
                     .fontWeight(.bold)
                 Spacer()
@@ -67,28 +68,30 @@ struct CMReservationDateTimeView: View {
             calendarView
             divider
             reservationTimeView
+
             Spacer()
+            NavigationLink {
+                CMSelectStyleView(isPresentedNavigation: $isPresentedNavigation, selectedStringDate: SingleTonDateFormatter.sharedDateFommatter.firebaseDate(from: selectedDate), selectedTime: selectedTime)
+                    .environmentObject(postDetailViewModel)
+                    .environmentObject(reservationViewModel)
+            } label: {
+                Text("\(isDateTimeSelected ? "스타일 선택하기" : "날짜 / 시간을 선택해주세요")")
+                    .foregroundStyle(isDateTimeSelected ? Color.whiteMainColor : Color.whiteMainColor)
+                    .fontWeight(.bold)
+                    .padding(.vertical, 15)
+                    .frame(maxWidth: .infinity)
+                    .background(isDateTimeSelected ? Color.subColor : Color.gray4)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+            }
+            .padding([.horizontal, .bottom])
+            .disabled(!isDateTimeSelected)
         }
-        
-        NavigationLink {
-            CMSelectStyleView(isPresentedNavigation: $isPresentedNavigation, selectedStringDate: SingleTonDateFormatter.sharedDateFommatter.firebaseDate(from: selectedDate), selectedTime: selectedTime)
-                .environmentObject(postDetailViewModel)
-                .environmentObject(reservationViewModel)
-        } label: {
-            Text("\(isDateTimeSelected ? "스타일 선택하기" : "날짜 / 시간을 선택해주세요")")
-                .foregroundStyle(isDateTimeSelected ? Color.whiteMainColor : Color.whiteMainColor)
-                .fontWeight(.bold)
-                .padding(.vertical, 15)
-                .frame(maxWidth: .infinity)
-                .background(isDateTimeSelected ? Color.subColor : Color.lightGrayColor2)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-        }
-        .padding([.horizontal, .bottom])
-        .disabled(!isDateTimeSelected)
+        .background(Color.whiteMainColor)
         .navigationBarBackButtonHidden(true)
         .onAppear {
             Task {
                 await withTaskGroup(of: Void.self) { group in
+                    
                     group.addTask {
                         await reservationViewModel.fetchCalendar(designerUID: postDetailViewModel.designer?.designerUID ?? "")
                     }
@@ -96,8 +99,13 @@ struct CMReservationDateTimeView: View {
                     group.addTask {
                         await reservationViewModel.fetchOperatingTime(designerUID: postDetailViewModel.designer?.designerUID ?? "")
                     }
+                    
+                    group.addTask {
+                        await reservationViewModel.fetchAvailableReservationTime(date: selectedDate, designerUID: postDetailViewModel.designer?.designerUID ?? "")
+                    }
+                    
                 }
-
+                isLoaded.toggle()
             }
         }
         .onChange(of: currentMonth) { newValue in
@@ -118,8 +126,8 @@ struct CMReservationDateTimeView: View {
 
     private var divider: some View {
         Divider()
-            .frame(minHeight: 15)
-            .overlay(Color.lightGrayColor)
+            .frame(minHeight: 10)
+            .overlay(Color.divider)
             .padding(.top)
     }
     
@@ -136,9 +144,11 @@ struct CMReservationDateTimeView: View {
                         if !value.isClosed {
                             if !value.isPast {
                                 selectedDate = value.date
-                                print("asd\(selectedDate)")
+                                selectedTime = 0
                                 Task {
+                                    isLoaded.toggle()
                                     await reservationViewModel.fetchAvailableReservationTime(date: selectedDate, designerUID: postDetailViewModel.designer?.designerUID ?? "")
+                                    isLoaded.toggle()
                                 }
                             }
                         }
@@ -151,17 +161,11 @@ struct CMReservationDateTimeView: View {
     // MARK: - 툴바 뷰
     private var toolbarView: some View {
         HStack(alignment: .center) {
-            Button {
-                dismiss()
-            } label: {
-                Image(systemName: "chevron.left")
-                    .font(.title)
-                    .foregroundStyle(Color.mainColor)
-            }
+            DismissButton(color: Color.primaryLabel) { }
             
             Spacer()
         }
-        .padding([.horizontal])
+        .padding([.horizontal, .top])
     }
     
     // MARK: - 달력 뷰
@@ -222,7 +226,7 @@ struct CMReservationDateTimeView: View {
         VStack(spacing: 0) {
             HStack {
                 Text("시간선택")
-                    .foregroundStyle(Color.mainColor)
+                    .foregroundStyle(Color.primaryLabel)
                     .font(.title3)
                     .fontWeight(.bold)
                 Spacer()
@@ -231,44 +235,47 @@ struct CMReservationDateTimeView: View {
 
             Divider()
                 .padding([.horizontal, .bottom])
-            
-            ScrollView(.horizontal) {
-                LazyHGrid(rows: [GridItem(.flexible(minimum: 50), spacing: 20)]) {
-                    ForEach(startTime..<(endTime + 1), id: \.self) { hour in
-                        let timeString = String(format: "%02d:00", hour)
-                        
-                        let isSelectable = !reservationViewModel.breakTime.contains(hour)
-                        
-                        Text(timeString)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                            .foregroundStyle(isSelectable ? (selectedTime == hour ? .white : Color.mainColor) : .gray)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 10)
-                            .background(
-                                Capsule()
-                                    .foregroundStyle(selectedTime == hour ? Color.subColor: Color.lightGrayColor)
-                            )
-                            .onTapGesture {
-                                if isSelectable {
-                                    if selectedTime == hour {
-                                        selectedTime = 0
-                                    } else {
-                                        selectedTime = hour
-                                            // 원하는 시간으로 변경
-                                        let calendar = Calendar.current
-                                        let newDate = calendar.date(bySettingHour: hour, minute: 0, second: 0, of: selectedDate)!
-                                        selectedDate = newDate
+            if isLoaded {
+                ScrollView(.horizontal) {
+                    LazyHGrid(rows: [GridItem(.flexible(minimum: 50), spacing: 20)]) {
+                        ForEach(startTime..<(endTime + 1), id: \.self) { hour in
+                            let timeString = String(format: "%02d:00", hour)
+                            
+                            let isSelectable = !reservationViewModel.impossibleTime.contains(hour)
+                            
+                            Text(timeString)
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                                .foregroundStyle(isSelectable ? (selectedTime == hour ? .white : Color.primaryLabel) : Color.gray)
+                                .padding(.vertical, 13)
+                                .padding(.horizontal, 15)
+                                .background(
+                                    Capsule()
+                                        .foregroundStyle(isSelectable ? (selectedTime == hour ? Color.subColor : Color.tertiarySystemGroupedBackground) : Color.gray4)
+                                )
+                                .onTapGesture {
+                                    if isSelectable {
+                                        if selectedTime == hour {
+                                            selectedTime = 0
+                                        } else {
+                                            selectedTime = hour
+                                                // 원하는 시간으로 변경
+                                            let calendar = Calendar.current
+                                            let newDate = calendar.date(bySettingHour: hour, minute: 0, second: 0, of: selectedDate)!
+                                            selectedDate = newDate
+                                        }
                                     }
                                 }
-                            }
 
+                        }
                     }
+                    .padding(.leading)
                 }
-                .padding(.leading)
+                .scrollIndicators(.hidden)
+            } else {
+                ProgressView()
             }
-            .scrollIndicators(.hidden)
         }
     }
 }
