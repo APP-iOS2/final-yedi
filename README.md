@@ -7,16 +7,12 @@ gitGraph
 commit
 branch dev
 commit
-branch hotfix
-commit
 branch designer
 commit
 branch client
 commit
 branch chatting
 commit
-checkout hotfix
-commit tag:"bugfix"
 checkout designer
 commit tag:"designer fix/feature/refactor/design"
 checkout client
@@ -28,6 +24,12 @@ merge designer
 merge client
 merge chatting
 checkout main
-merge hotfix
 merge dev type: REVERSE tag: "v1.0.0"
+branch hotfix
+checkout hotfix
+commit tag:"bug hotfix"
+checkout main
+merge hotfix type: REVERSE tag: "v1.0.1"
+
+
 ```
