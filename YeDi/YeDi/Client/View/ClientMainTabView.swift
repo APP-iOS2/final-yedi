@@ -29,7 +29,7 @@ struct ClientMainTabView: View {
                 
                 CMReservationHistoryView()
                 .tabItem {
-                    Label("예약", systemImage: "calendar")
+                    Label("예약내역", systemImage: "calendar")
                 }.tag(2)
                 
                 CMMainChattingView()

@@ -7,21 +7,30 @@
 
 import SwiftUI
 import MapKit
+import FirebaseFirestore
 
 struct CMReservationHistoryDetailView: View {
     @State private var isShowingCancelSheet = false
     @State private var myDate = Date()
+    
+    @State private var designerName: String = ""
+    @State private var designerShop: String = ""
+    @State private var designerShopAddress: String = ""
+    @State private var styles: [String] = []
+    
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780),
         span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     )
     
+    var reservation: Reservation
+    
     var isUpcomingReservation: Bool {
-        return myDate > Date()
+        return reservation.isFinished ? true : false
     }
     
     var reservationStatusText: String {
-        return isUpcomingReservation ? "다가오는 예약" : "지난 예약"
+        return reservation.isFinished ? "지난 예약" : "다가오는 예약"
     }
     
     var scheduleOrReview: () -> Void {
@@ -41,10 +50,12 @@ struct CMReservationHistoryDetailView: View {
             VStack(alignment: .leading, spacing: 30) {
                 Group {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("유매리 디자이너")
+                        Text("\(designerName) 디자이너")
                             .font(.title3)
-                        Text("디자인 컷")
-                            .font(.title)
+                        ForEach(styles, id: \.self) { style in
+                            Text("\(style)")
+                                .font(.title)
+                        }
                     }
                     .fontWeight(.semibold)
                     
@@ -73,9 +84,9 @@ struct CMReservationHistoryDetailView: View {
                     .shadow(color: .gray, radius: 5, x: 0, y: 5)
                     .opacity(0.3)
             )
-            .offset(y: -10)
+            .offset(y: -50)
             
-            Spacer(minLength: 50)
+            Spacer(minLength: 30)
             
             VStack(alignment: .leading) {
                 Text("샵 정보")
@@ -99,6 +110,7 @@ struct CMReservationHistoryDetailView: View {
                     Spacer()
                     Text("무통장 입금")
                 }
+                .padding(.top)
                 
                 HStack {
                     Text("결제금액")
@@ -107,6 +119,7 @@ struct CMReservationHistoryDetailView: View {
                     Spacer()
                     Text("33,000원")
                 }
+                .padding(.top)
             }
             .padding()
             
@@ -114,14 +127,19 @@ struct CMReservationHistoryDetailView: View {
                 Button(action: {
                     scheduleOrReview()
                 },label: {
-                    HStack {
-                        Spacer()
-                        Text(isUpcomingReservation ? "일정 변경" : "리뷰 작성")
-                        Spacer()
+                    NavigationLink {
+                        CMNewReviewView(reservation: reservation)
+                    } label: {
+                        HStack {
+                            Spacer()
+                            Text(isUpcomingReservation ? "일정 변경" : "리뷰 작성")
+                            Spacer()
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.black)
                     }
                 })
-                .buttonStyle(.borderedProminent)
-                .tint(.black)
+                
                 Button(action: {
                     cancelOrReservation()
                 },label: {
@@ -138,10 +156,42 @@ struct CMReservationHistoryDetailView: View {
             
             Spacer()
         }
-        .sheet(isPresented: $isShowingCancelSheet, content: {
-            CMReservationCancelView(isShowingCancelSheet: $isShowingCancelSheet)
-                .presentationDetents([.medium])
-        })
+        .navigationTitle("")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
+        .toolbar(.hidden, for: .tabBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                DismissButton(color: nil, action: {})
+            }
+        }
+        .onAppear {
+            Task {
+                let collectionRef = Firestore.firestore().collection("designers")
+                
+                do {
+                    let docSnapshot = try await collectionRef
+                        .whereField("designerUID", isEqualTo: reservation.designerUID)
+                        .getDocuments()
+                    
+                    for doc in docSnapshot.documents {
+                        if let designer = try? doc.data(as: Designer.self) {
+                            designerName = designer.name
+                            designerShop = designer.shop?.shopName ?? "프리랜서"
+                            
+                            region.center.latitude = designer.shop?.latitude ?? 0
+                            region.center.longitude = designer.shop?.longitude ?? 0
+                        }
+                    }
+                } catch {
+                    print("Error fetching client reviews: \(error)")
+                }
+                
+                for hairStyle in reservation.hairStyle {
+                    styles.append(hairStyle.name)
+                }
+            }
+        }
     }
     
     func formatDate(date: Date) -> String {
@@ -164,5 +214,5 @@ struct CMReservationHistoryDetailView: View {
 }
 
 #Preview {
-    CMReservationHistoryDetailView()
+    CMReservationHistoryDetailView(reservation: Reservation(clientUID: "", designerUID: "", reservationTime: "", hairStyle: [], isFinished: true))
 }
