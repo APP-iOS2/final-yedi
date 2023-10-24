@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CMReservationHistoryView: View {
+    @EnvironmentObject var historyViewModel: CMHistoryViewModel
     @State var selectedSegment: String = "다가오는 예약"
     let segments: [String] = ["다가오는 예약", "지난 예약"]
     
@@ -48,5 +49,6 @@ struct CMReservationHistoryView: View {
 
 #Preview {
     CMReservationHistoryView()
+        .environmentObject(CMHistoryViewModel())
 }
 
