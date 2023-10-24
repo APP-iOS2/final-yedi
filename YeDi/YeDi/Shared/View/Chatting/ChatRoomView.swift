@@ -88,7 +88,6 @@ struct ChatRoomView: View {
                         .frame(width: 30, height: 30)
                         .background(Circle().fill(Color.quaternarySystemFill))
                         .foregroundColor(Color.primaryLabel)
-                        .offset(y: -5)
                 } else {
                     DMAsyncImage(url: userProfile.profileImageURLString)
                         .aspectRatio(contentMode: .fill)
