@@ -17,22 +17,22 @@ struct DMGridView: View {
     var body: some View {
         NavigationStack {
             GridContentView(posts: postViewModel.posts, columns: columns, imageSize: imageSize)
-                .background(Color.gray.opacity(0.1))
                 .navigationTitle("내 게시물")
-                .navigationBarItems(trailing:
-                    NavigationLink(destination: DMNewPostView()) {
-                        Image(systemName: "plus")
-                            .resizable()
-                            .foregroundStyle(Color(UIColor.label))
-                    }
-                )
-                .onAppear() {
-                    postViewModel.fetchPostsFromFirestore(userAuth: userAuth)
-                }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        YdIconView(height: 30)
+                        YdIconView(height: 32)
                     }
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        NavigationLink(destination: DMNewPostView()) {
+                            Image(systemName: "plus")
+                                .resizable()
+                                .foregroundStyle(Color(UIColor.label))
+                        }
+                    }
+                }
+                .onAppear() {
+                    postViewModel.fetchPostsFromFirestore(userAuth: userAuth)
                 }
         }
     }
@@ -44,15 +44,21 @@ struct DMGridView: View {
         let imageSize: CGFloat
         
         var body: some View {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(posts, id: \.id) { post in
-                        NavigationLink(destination: DMPostView(post: post)) {
-                            PostThumbnail(post: post, imageSize: imageSize)
+            VStack {
+                if posts.isEmpty {
+                    Text("등록된 게시물이 없습니다.")
+                } else {
+                    ScrollView {
+                        LazyVGrid(columns: columns, spacing: 16) {
+                            ForEach(posts, id: \.id) { post in
+                                NavigationLink(destination: DMPostView(post: post)) {
+                                    PostThumbnail(post: post, imageSize: imageSize)
+                                }
+                            }
                         }
+                        .padding()
                     }
                 }
-                .padding()
             }
         }
     }
@@ -69,18 +75,18 @@ struct DMGridView: View {
                         DMAsyncImage(url: urlString)
                             .scaledToFill()
                             .frame(width: imageSize, height: imageSize)
-                            .cornerRadius(12)
+                            .cornerRadius(5)
                             .clipped()
                     } else {
                         Rectangle()
                             .fill(Color.gray)
                             .frame(width: imageSize, height: imageSize)
-                            .cornerRadius(12)
+                            .cornerRadius(5)
                     }
                 }
                 .background(Color.white)
-                .cornerRadius(16)
-                .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 5)
+                .cornerRadius(5)
+                .shadow(color: .gray3, radius: 5, x: 0, y: 3)
                 
                 Text(post.title)
                     .font(.caption)

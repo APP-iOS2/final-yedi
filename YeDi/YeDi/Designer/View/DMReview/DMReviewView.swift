@@ -13,18 +13,28 @@ struct DMReviewView: View {
     
     var body: some View {
         NavigationStack {
-            List(reviewsModel.reviews) { review in
-                NavigationLink {
-                    DMReviewDetailView(review: review)
-                } label: {
-                   DMReviewCell(review: review)
+            if reviewsModel.reviews.isEmpty {
+                Text("등록된 리뷰가 없습니다.")
+                    .navigationTitle("내 리뷰")
+                    .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            YdIconView(height: 32)
+                        }
+                    }
+            } else {
+                List(reviewsModel.reviews) { review in
+                    NavigationLink {
+                        DMReviewDetailView(review: review)
+                    } label: {
+                        DMReviewCell(review: review)
+                    }
                 }
-            }
-            .listStyle(.plain)
-            .navigationTitle("내 리뷰")
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    YdIconView(height: 30)
+                .listStyle(.plain)
+                .navigationTitle("내 리뷰")
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        YdIconView(height: 32)
+                    }
                 }
             }
         }
