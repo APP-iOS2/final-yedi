@@ -7,14 +7,20 @@
 
 import SwiftUI
 
+/// 예약 내역 뷰
 struct CMReservationHistoryView: View {
+    // MARK: - Properties
     @EnvironmentObject var historyViewModel: CMHistoryViewModel
+    
     @State var selectedSegment: String = "다가오는 예약"
+    
     let segments: [String] = ["다가오는 예약", "지난 예약"]
     
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack {
+                // MARK: - 세그먼티트 컨트롤 섹션
                 HStack(spacing: 0) {
                     ForEach(segments, id: \.self) { segment in
                         Button(action: {
@@ -32,11 +38,12 @@ struct CMReservationHistoryView: View {
                     }
                 }
                 
+                // MARK: - 예약 내역 섹션
                 switch selectedSegment {
                 case "다가오는 예약":
-                    CMUpcomingReservationView()
+                    CMUpcomingReservationListView()
                 case "지난 예약":
-                    CMLastReservationView()
+                    CMLastReservationListView()
                 default:
                     Text("")
                 }

@@ -10,10 +10,13 @@ import FirebaseFirestore
 
 struct CMReservationInfoView: View {
     // MARK: - Properties
+    @EnvironmentObject var cmHistoryViewModel: CMHistoryViewModel
+    
     @State private var designerName: String = ""
+    @State private var designerRank: String = ""
     @State private var designerShop: String = ""
-    @State private var styles: [String] = []
     @State private var reservationDate: String = ""
+    @State private var styles: [String] = []
     
     var reservation: Reservation
     
@@ -22,7 +25,7 @@ struct CMReservationInfoView: View {
         VStack(alignment: .leading, spacing: 30) {
             Group {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text(designerName)
+                    Text("\(designerRank) \(designerName)")
                         .font(.title3)
                     ForEach(styles, id: \.self) { style in
                         Text("\(style)")
@@ -44,35 +47,22 @@ struct CMReservationInfoView: View {
         .background(
             RoundedRectangle(cornerRadius: 50)
                 .frame(height: 300)
-                .foregroundColor(.systemBackground)
-                .shadow(color: Color.systemFill, radius: 5, x: 0, y: 5)
+                .foregroundColor(.white)
+                .shadow(color: Color.gray3, radius: 5, x: 0, y: 5)
                 .opacity(0.2)
         )
-        .offset(y: -80)
+        .offset(y: -70)
         .onAppear {
             Task {
-                let collectionRef = Firestore.firestore().collection("designers")
+                await cmHistoryViewModel.fetchDesigner(designerId: reservation.designerUID)
                 
-                do {
-                    let docSnapshot = try await collectionRef
-                        .whereField("designerUID", isEqualTo: reservation.designerUID)
-                        .getDocuments()
-                    
-                    for doc in docSnapshot.documents {
-                        if let designer = try? doc.data(as: Designer.self) {
-                            designerName = designer.name
-                            designerShop = designer.shop?.shopName ?? "프리랜서"
-                        }
-                    }
-                } catch {
-                    print("Error fetching client reviews: \(error)")
-                }
-                
+                designerName = cmHistoryViewModel.designer.name
+                designerRank = cmHistoryViewModel.designer.rank.rawValue
+                designerShop = cmHistoryViewModel.designer.shop?.shopName ?? "프리랜서"
+                reservationDate = SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "MM월 dd일 HH시 mm분", from: reservation.reservationTime)
                 for hairStyle in reservation.hairStyle {
                     styles.append(hairStyle.name)
                 }
-                
-                reservationDate = "\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "MM월 dd일 HH시 mm분", from: reservation.reservationTime)) 예약"
             }
         }
     }

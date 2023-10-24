@@ -1,5 +1,5 @@
 //
-//  CMUpcomingReservationView.swift
+//  CMUpcomingReservationListView.swift
 //  YeDi
 //
 //  Created by Jaehui Yu on 2023/09/26.
@@ -7,12 +7,16 @@
 
 import SwiftUI
 
-struct CMUpcomingReservationView: View {
+/// 다가오는 예약 목록 뷰
+struct CMUpcomingReservationListView: View {
+    // MARK: - Properties
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var cmHistoryViewModel: CMHistoryViewModel
     
+    /// 다가오는 예약 목록 변수
     @State private var upcomingReservations: [Reservation] = []
     
+    // MARK: - Body
     var body: some View {
         VStack {
             if upcomingReservations.isEmpty {
@@ -39,14 +43,18 @@ struct CMUpcomingReservationView: View {
         .onAppear(perform: {
             Task {
                 await cmHistoryViewModel.fetchReservation(userAuth: userAuth)
+                
+                // 다가오는 예약만 가져오도록 필터링
                 upcomingReservations = cmHistoryViewModel.reservations.filter({ $0.isFinished == false })
+                // 다가오는 예약 > 예약 일시가 가까운 순으로 정렬
+                upcomingReservations = upcomingReservations.sorted { $0.reservationTime < $1.reservationTime }
             }
         })
     }
 }
 
 #Preview {
-    CMUpcomingReservationView()
+    CMUpcomingReservationListView()
         .environmentObject(UserAuth())
         .environmentObject(CMHistoryViewModel())
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 import PhotosUI
 
+/// 리뷰 작성 뷰
 struct CMNewReviewView: View {
     // MARK: - Properties
     @Environment(\.dismiss) var dismiss
@@ -25,6 +26,7 @@ struct CMNewReviewView: View {
     
     var reservation: Reservation
     
+    /// 업로드 상태에 따른 버튼 텍스트
     var buttonText: String {
         return isUploading ? "업로드 중..." : "리뷰 등록"
     }
@@ -39,7 +41,7 @@ struct CMNewReviewView: View {
         ScrollView {
             CMReservationInfoView(reservation: reservation)
             
-            Spacer(minLength: 20)
+            Spacer(minLength: 10)
             
             CMReviewSelectPhotosView(selectedPhotoURLs: $selectedPhotoURLs)
             
@@ -85,6 +87,7 @@ struct CMNewReviewView: View {
                     styles.append(hairStyle.name)
                 }
                 
+                // MARK: - 리뷰 저장 로직
                 if let clientId = userAuth.currentClientID {
                     let newReview = Review(
                         id: UUID().uuidString,
