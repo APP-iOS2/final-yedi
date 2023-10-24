@@ -1,5 +1,5 @@
 # YeDi
-![Frame 2](https://github.com/APPSCHOOL3-iOS/final-yedi/assets/68881093/3d34e58e-b7d2-4635-ba2b-de6787b47cc1)
+![Frame 3](https://github.com/APPSCHOOL3-iOS/final-yedi/assets/68881093/ab057b7d-2601-4049-8c1c-065c8cf2798c)
 
 # 프로젝트 소개
 Yedi는 헤어 디자이너와 소비자를 연결해 소통을 원활하게 해주고 홍보, 예약, 결제 시스템을 갖춘 앱입니다.
