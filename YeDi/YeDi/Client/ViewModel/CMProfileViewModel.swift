@@ -87,7 +87,7 @@ final class CMProfileViewModel: ObservableObject {
     
     /// 팔로우하는 디자이너 리스트 패치 메서드
     @MainActor
-    func fetchFollowedDesigner() async {
+    func fetchFollowedDesignerWithShopInfo() async {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         guard let followingDocument = try? await Firestore.firestore().collection("following").document(uid).getDocument(),
@@ -104,13 +104,31 @@ final class CMProfileViewModel: ObservableObject {
                 .whereField("designerUID", in: uids)
                 .getDocuments()
             
-            self.followedDesigner = designerQuerySnapshot.documents.compactMap { document in
-                try? document.data(as: Designer.self)
+            var designersWithShopInfo: [Designer] = []
+            
+            for document in designerQuerySnapshot.documents {
+                if var designer = try? document.data(as: Designer.self) {
+                    // "shop" 하위 컬렉션을 가져오기
+                    let shopCollectionRef = document.reference.collection("shop")
+                    let shopSnapshot = try await shopCollectionRef.getDocuments()
+                    let shopData = shopSnapshot.documents.compactMap { shopDocument in
+                        return try? shopDocument.data(as: Shop.self)
+                    }
+                    
+                    // "shop" 정보를 디자이너 모델에 할당
+                    designer.shop = shopData.first
+                    
+                    designersWithShopInfo.append(designer)
+                }
             }
             
+            self.followedDesigner = designersWithShopInfo
             print(followedDesigner)
         } catch {
             print("Fetch Followed Designer Error: \(error)")
         }
     }
+
+    
+    
 }
