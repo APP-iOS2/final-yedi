@@ -196,7 +196,7 @@ struct FloatingButton: View {
                 } label: {
                     Text("휴무")
                         .font(.system(size: 15))
-                        .fontWeight(.semibold)
+                        .fontWeight(.bold)
                         .foregroundStyle(Color.gray3)
                         .frame(width: 30, height: 30).padding(7)
                 }
@@ -215,7 +215,7 @@ struct FloatingButton: View {
                 } label: {
                     Text("휴게")
                         .font(.system(size: 15))
-                        .fontWeight(.semibold)
+                        .fontWeight(.bold)
                         .foregroundStyle(Color.gray3)
                         .frame(width: 30, height: 30).padding(7)
                 }
