@@ -16,7 +16,7 @@ struct DMNewPostView: View {
     
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var postViewModel: DMPostViewModel
-    
+
     @StateObject private var profileViewModel = DMProfileViewModel.shared
     
     @State private var title = ""
@@ -34,108 +34,93 @@ struct DMNewPostView: View {
         HairCategory.Perm,
         HairCategory.Else
     ]
-
-    // 폼 유효성 검사
+    
     private var isFormValid: Bool {
         return !title.isEmpty && !description.isEmpty && !imageUrls.isEmpty
     }
     
     // MARK: - Body
     var body: some View {
-        NavigationStack {
-            ZStack {
-                ScrollView {
-                    contentForm
+        VStack {
+            contentForm
+            
+            Spacer()
+            
+            VStack {
+                // MARK: - 게시물 생성 버튼
+                Button {
+                    createPost()
+                } label: {
+                    Text("확인")
                 }
-                .navigationTitle("새 게시물")
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarBackButtonHidden(true)
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        HStack {
-                            DismissButton(color: nil) {
-                                
-                            }
-                        }
-                    }
-                }
-                postButton
+                .buttonModifier(.main)
+                .padding([.leading, .trailing, .bottom])
             }
         }
-        .sheet(isPresented: $isShowingPhotoPicker) {
-            PhotoPicker { imageURL in
-                imageUrls.append(imageURL.absoluteString)
-            }
+        .navigationTitle("새 게시물")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
+        .onAppear {
+            self.title = ""
+            self.description = ""
+            self.imageUrls = []
+            self.hairCategory = .Else
+            self.price = ""
         }
-
         .alert(isPresented: $isShowingAlert) {
             Alert(
-                title: Text("성공"),
+                title: Text("생성 완료"),
                 message: Text("게시물이 생성되었습니다."),
                 dismissButton: .default(Text("확인")) {
                     self.presentationMode.wrappedValue.dismiss()
                 }
             )
         }
+        .toolbar(.hidden, for: .tabBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                DismissButton(color: nil, action: {})
+            }
+        }
     }
     
     // MARK: - Custom Views
-    /// 게시물 폼 레이아웃
+    /// 컨텐츠 폼
     private var contentForm: some View {
         VStack(alignment: .leading) {
-            navigationLinkToTextEditor(title: "시술명", text: $title, placeholder: "시술명을 입력해주세요.")
-                .foregroundStyle(.black)
-            navigationLinkToTextEditor(title: "내용", text: $description, placeholder: "내용을 입력해주세요.")
-                .foregroundStyle(.black)
-            categoryPickerView
-            inputPrice
-            imageUrlsSection
-            Spacer()
-        }
-        .padding([.leading, .trailing], 20)
-    }
-    
-    /// 텍스트 편집기로 이동하는 네비게이션 링크
-    private func navigationLinkToTextEditor(title: String, text: Binding<String>, placeholder: String) -> some View {
-        NavigationLink(destination: TextEditorView(editingField: title, text: text, placeholder: placeholder)) {
-            InputField(title: title, text: text, placeholder: placeholder)
-        }
-    }
-    
-    private var inputPrice: some View {
-        VStack(alignment: .leading) {
-            Text("가격")
-                .font(.headline)
-            TextField("가격을 입력해주세요", text: $price)
-                .textFieldModifier()
-        }
-    }
-    
-    private var categoryPickerView: some View {
-        HStack{
-            Text("스타일 종류를 선택하세요")
-                .font(.headline)
-            Spacer()
-            Picker("", selection: $hairCategory) {
-                ForEach(hairCategoryArray, id: \.self) { style in
-                    Text("\(style.rawValue)")
-                }
-            }
-        }
-        .padding([.bottom], 5)
-    }
-    
-    /// 이미지 URL 섹션
-    private var imageUrlsSection: some View {
-        VStack(alignment: .leading) {
-            Text("이미지 URL")
-                .font(.headline)
-            ForEach(imageUrls, id: \.self) { imageUrl in
-                Text(imageUrl)
-            }           
+            // MARK: - 시술 사진 수정 섹션
             PhotoSelectionView(selectedPhotoURLs: $imageUrls, isShowingPhotoPicker: $isShowingPhotoPicker)
+                .sheet(isPresented: $isShowingPhotoPicker) {
+                    PhotoPicker { imageURL in
+                        imageUrls.append(imageURL.absoluteString)
+                    }
+                }
+            
+            Group {
+                // MARK: - 카테고리 섹션
+                categoryPickerView
+                
+                // MARK: - 시술명 섹션
+                Text("제목")
+                    .fontWeight(.semibold)
+                TextField("시술명", text: $title)
+                    .textFieldModifier()
+                    .padding(.bottom)
+                
+                // MARK: - 내용 섹션
+                Text("내용")
+                    .fontWeight(.semibold)
+                TextField("내용", text: $description, axis: .vertical)
+                    .textAreaModifier(200)
+                    .padding(.bottom)
+                
+                Text("가격")
+                    .fontWeight(.semibold)
+                TextField("가격", text:$price)
+                    .textFieldModifier()
+            }
+            .padding([.leading, .trailing], 20)
         }
-        .padding(.bottom, 20)
     }
     
     /// 게시물 생성 버튼
@@ -145,14 +130,29 @@ struct DMNewPostView: View {
             Button("게시물 생성") {
                 createPost()
             }
-//            .padding()
-//            .frame(maxWidth: .infinity)
-//            .background(isFormValid ? Color.black : Color.gray)
-//            .foregroundStyle(.white)
+            //            .padding()
+            //            .frame(maxWidth: .infinity)
+            //            .background(isFormValid ? Color.black : Color.gray)
+            //            .foregroundStyle(.white)
             .buttonModifier(.mainColor)
             .cornerRadius(10)
             .padding([.horizontal, .bottom])
             .disabled(!isFormValid)
+        }
+    }
+    
+    /// 시술 카테고리 피커 뷰
+    private var categoryPickerView: some View {
+        HStack{
+            Text("시술 카테고리")
+                .fontWeight(.semibold)
+            Spacer()
+            Picker("", selection: $hairCategory) {
+                ForEach(hairCategoryArray, id: \.self) { style in
+                    Text("\(style.rawValue)")
+                }
+            }
+            .tint(.main)
         }
     }
     
@@ -276,7 +276,7 @@ struct TextEditorView: View {
             // 확인 버튼
             VStack {
                 Spacer()
-                Button("확인") {
+                Button("게시물 생성") {
                     presentationMode.wrappedValue.dismiss()
                 }
                 .frame(maxWidth: .infinity)

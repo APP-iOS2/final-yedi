@@ -53,8 +53,16 @@ class ChattingViewModel: ObservableObject {
                         let bubble = try diff.document.data(as: CommonBubble.self)
                         
                         if (diff.type == .added) {
+                            let isDuplicate = self?.chattings.contains { exist in
+                                return exist.id == bubble.id
+                            }
+                            
                             ///채팅에 새로운 버블 추가
-                            self?.chattings.append(bubble)
+                            if let isDuplicate = isDuplicate {
+                                if !isDuplicate {
+                                    self?.chattings.append(bubble)
+                                }
+                            }
                         }
                         
                         if (diff.type == .modified) {
@@ -265,10 +273,12 @@ class ChattingViewModel: ObservableObject {
                     var userInfo: ChatListUserInfo
                     
                     if type == .client {
-                        userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "",
+                        userInfo = ChatListUserInfo(uid: document.documentID,
+                                                    name: document.data()["name"] as? String ?? "",
                                                         profileImageURLString: document.data()["imageURLString"] as? String ?? "")
                     } else {
-                        userInfo = ChatListUserInfo(name: document.data()["name"] as? String ?? "",
+                        userInfo = ChatListUserInfo(uid: document.documentID,
+                                                    name: document.data()["name"] as? String ?? "",
                                                     profileImageURLString: document.data()["profileImageURLString"] as? String ?? "")
                     }
                     

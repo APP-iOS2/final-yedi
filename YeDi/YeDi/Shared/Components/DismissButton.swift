@@ -23,6 +23,7 @@ struct DismissButton: View {
             dismiss()
         } label: {
             Image(systemName: "chevron.left")
+                .font(.title3)
                 .foregroundStyle(color ?? .primary)
         }
     }

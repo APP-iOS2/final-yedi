@@ -35,7 +35,7 @@ struct ChatRoomView: View {
         if let profile = chattingVM.userProfile[chatRoomId] {
             return profile
         }
-        return ChatListUserInfo(name: "닉네임 오류", profileImageURLString: "")
+        return ChatListUserInfo(uid: "", name: "닉네임 오류", profileImageURLString: "")
     }
     
     private var isInputTextEmpty: Bool {
@@ -47,7 +47,7 @@ struct ChatRoomView: View {
             chatScroll
             inputchatTextField
             if isShowingUtilityMenu {
-                ChatUtilityMenuView(chattingVM: chattingVM, userID: userId)
+                ChatUtilityMenuView(userID: userId, designerID: userProfile.uid)
                     .transition(.move(edge: .bottom))
             }
         }
@@ -81,10 +81,19 @@ struct ChatRoomView: View {
                 chattingVM.removeListener()
             }
             HStack(alignment: .center) {
-                DMAsyncImage(url: userProfile.profileImageURLString)
-                    .aspectRatio(contentMode: .fill)
-                    .clipShape(Circle())
-                    .frame(width: 30, height: 30)
+                if userProfile.profileImageURLString.isEmpty {
+                    Text(String(userProfile.name.first ?? " ").capitalized)
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .frame(width: 30, height: 30)
+                        .background(Circle().fill(Color.quaternarySystemFill))
+                        .foregroundColor(Color.primaryLabel)
+                } else {
+                    DMAsyncImage(url: userProfile.profileImageURLString)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 30, height: 30)
+                        .clipShape(Circle())
+                }
                 
                 Text(userProfile.name)
                     .lineLimit(1)

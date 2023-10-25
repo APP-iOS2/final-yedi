@@ -29,10 +29,21 @@ struct ChattingListRoomView: View {
                             .frame(width: 0, height: 0)
                             .background()
                             
-                            DMAsyncImage(url: chattingListRoomViewModel.userProfile[chattingRoom.id]?.profileImageURLString ?? "")
-                                .aspectRatio(contentMode: .fill)
-                                .clipShape(Circle())
-                                .frame(width: 50, height: 50)
+                            if let imageURLString = chattingListRoomViewModel.userProfile[chattingRoom.id]?.profileImageURLString {
+                                if imageURLString.isEmpty {
+                                    Text(String(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name.first ?? " ").capitalized)
+                                        .font(.title3)
+                                        .fontWeight(.bold)
+                                        .frame(width: 50, height: 50)
+                                        .background(Circle().fill(Color.quaternarySystemFill))
+                                        .foregroundColor(Color.primaryLabel)
+                                } else {
+                                    DMAsyncImage(url: imageURLString)
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 50, height: 50)
+                                        .clipShape(Circle())
+                                }
+                            }
                                 
                             VStack(alignment: .leading, spacing: 5) {
                                 Text(chattingListRoomViewModel.userProfile[chattingRoom.id]?.name ?? "UnKown")
@@ -79,6 +90,11 @@ struct ChattingListRoomView: View {
         }
         .onAppear {
             chattingListRoomViewModel.fetchChattingList(login: userAuth.userType)
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                YdIconView(height: 32)
+            }
         }
     }
     

@@ -48,7 +48,7 @@ class ClosedDaySetting: ObservableObject {
                             return ClosedDay(
                                 id: d.documentID, 
                                 designerUid: d["designerUid"] as? String ?? "Don`t have userId",
-                                day: d["day"] as? [String] ?? ["[날짜를 추가하세요]"]
+                                closedDay: d["day"] as? [String] ?? ["[날짜를 추가하세요]"]
                             )
                         }
                     }

@@ -31,11 +31,18 @@ struct CMFeedDetailContentView: View {
                     imageTabView
                     feedInfoView
                     divider
-                    designerProfileView
+                    if let designer = postDetailViewModel.designer {
+                        NavigationLink {
+                            CMDesignerProfileView(designer: designer)
+                        } label: {
+                            designerProfileView
+                        }
+                    }
                 }
             }
             footerView
         }
+        .background(Color.whiteMainColor)
         .onChange(of: consultationViewModel.showChattingRoom, perform: { value in
             showChattingRoom = consultationViewModel.showChattingRoom
         })
@@ -71,26 +78,21 @@ struct CMFeedDetailContentView: View {
     
     private var toolbarView: some View {
         HStack {
-            Button {
-                presentationMode.wrappedValue.dismiss()
-            } label: {
-                Image(systemName: "chevron.left")
-                    .font(.title)
-                    .foregroundStyle(Color.mainColor)
-            }
+            DismissButton(color: Color.primary) { }
             
             Spacer()
             
             Image(systemName: postDetailViewModel.isLiked ? "heart.fill" : "heart")
                 .font(.title2)
-                .foregroundStyle(postDetailViewModel.isLiked ? Color.subColor : Color.mainColor)
+                .foregroundStyle(postDetailViewModel.isLiked ? Color.subColor : Color.primaryLabel)
                 .onTapGesture {
                     Task {
                         await postDetailViewModel.toggleLike(post: post)
                     }
+                    postDetailViewModel.isLiked.toggle()
                 }
         }
-        .padding([.horizontal, .bottom])
+        .padding()
         .padding(.top, safeArea.top)
     }
     
@@ -130,34 +132,43 @@ struct CMFeedDetailContentView: View {
 
     private var divider: some View {
         Divider()
-            .frame(minHeight: 7)
-            .overlay(Color.lightGrayColor)
+            .frame(minHeight: 10)
+            .overlay(Color.divider)
             .padding(.top)
     }
     
     private var designerProfileView: some View {
         HStack(alignment: .center) {
-            AsyncImage(url: URL(string: "https://firebasestorage.googleapis.com:443/v0/b/yedi-b7f5a.appspot.com/o/clients%2Fprofiles%2FdAWO8ofNhPU2UuHeWG7u9OYncnk1?alt=media&token=c2b8bdfe-4aa7-44de-a0d0-aa3a5a252a7e")) { image in
-                image
-                    .resizable()
-                    .frame(maxWidth: 45, maxHeight: 45)
-                    .aspectRatio(contentMode: .fit)
-                    .clipShape(Circle())
-            } placeholder: {
-                Image(systemName: "person.circle")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 45)
-                    .clipShape(Circle())
-                    .foregroundStyle(.gray)
+            if postDetailViewModel.designer?.imageURLString != "" {
+                AsyncImage(url: URL(string: postDetailViewModel.designer?.imageURLString ?? "")) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(maxWidth: 50, maxHeight: 50)
+                        .clipShape(Circle())
+                } placeholder: {
+                    Text(String(postDetailViewModel.designer?.name.first ?? " ").capitalized)
+                                .font(.title3)
+                                .fontWeight(.bold)
+                                .frame(width: 50, height: 50)
+                                .background(Circle().fill(Color.quaternarySystemFill))
+                                .foregroundColor(Color.primaryLabel)
+                }
+            } else {
+                Text(String(postDetailViewModel.designer?.name.first ?? " ").capitalized)
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .frame(width: 50, height: 50)
+                            .background(Circle().fill(Color.quaternarySystemFill))
+                            .foregroundColor(Color.primaryLabel)
             }
-            
+
             VStack(alignment: .leading, spacing: 0) {
                 Text("\(postDetailViewModel.designer?.name ?? "디자이너 이름")")
                     .font(.system(size: 16, design: .serif))
                 
                 Group {
-                    Text("서울/합정")
+                    Text("\(postDetailViewModel.designer?.shop?.shopName ?? "")")
                 }
                 .font(.caption)
                 .foregroundStyle(.gray)
@@ -171,15 +182,16 @@ struct CMFeedDetailContentView: View {
                 }
             } label: {
                 Text("\(postDetailViewModel.isFollowing ? "팔로잉" : "팔로우")")
-                    .font(.caption)
-                    .foregroundStyle(postDetailViewModel.isFollowing ? .black : .white)
-                    .padding(.horizontal, 15)
-                    .padding(.vertical, 7)
-                    .background(postDetailViewModel.isFollowing ? .white : .black)
+                    .font(.footnote)
+                    .fontWeight(.bold)
+                    .foregroundStyle(postDetailViewModel.isFollowing ? Color.primaryLabel : Color.whiteMainColor)
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 10)
+                    .background(postDetailViewModel.isFollowing ? Color.whiteMainColor : Color.primaryLabel)
                     .clipShape(Capsule())
                     .overlay(
                         Capsule()
-                            .stroke(postDetailViewModel.isFollowing ? .black : .clear, lineWidth: 1)
+                            .stroke(postDetailViewModel.isFollowing ? Color.secondarySystemFill : .clear, lineWidth: 1)
                     )
             }
         }
@@ -190,18 +202,19 @@ struct CMFeedDetailContentView: View {
     private var footerView: some View {
         VStack(spacing: 0) {
             Divider()
+                .background(Color.divider)
             
             HStack(alignment: .center) {
                 Button {
                     consultationViewModel.proccessConsulation(designerId: post.designerID, post: post)
                 } label: {
                     Text("상담하기")
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.whiteMainColor)
                         .fontWeight(.bold)
                 }
                 .padding(.vertical, 15)
                 .frame(maxWidth: .infinity)
-                .background(Color.mainColor)
+                .background(Color.primaryLabel)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 
                 Button {
@@ -217,7 +230,7 @@ struct CMFeedDetailContentView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
                 .navigationDestination(isPresented: $isPresentedNavigation, destination: {
-                    CMReservationDateTimeView(isPresentedAlert: $isPresentedAlert, isPresentedNavigation: $isPresentedNavigation)
+                    CMReservationDateTimeView(designerID: postDetailViewModel.designer?.designerUID ?? "", isPresentedAlert: $isPresentedAlert, isPresentedNavigation: $isPresentedNavigation)
                         .environmentObject(postDetailViewModel)
                 })
                 .buttonStyle(.automatic)
@@ -261,5 +274,6 @@ struct CMFeedDetailContentView: View {
     NavigationStack {
         CMFeedDetailView(post: Post(id: "1", designerID: "원장루디", location: "예디샵 홍대지점", title: "물결 펌", description: "This is post 1", photos: [Photo(id: "p1", imageURL: "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MThfNTUg%2FMDAxNjYwNzkyNTY0NjM4.7AB8JmZVjAbAT2o2ACDRIPMLwdm63rC8OM2dCz6huTEg.1e6s7_D9ihi7VxTP-nNfLE1FzEP4kgXCuGy2TNDukuYg.JPEG.hjjyy1209%2FIMG_9195.jpg&type=sc960_832"),Photo(id: "p2", imageURL: "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjZfMjU2%2FMDAxNjYxNTE4MjkzMzYw.ztWMtqeoDOGfIPGTtQ9H_o0Kkinyuud5nNgy-izSgEog.g0f0NGZbBTM8zcS8B8i4EtwU5n8-XdLJqPZxzehQXKEg.JPEG.yongminjoe%2FIMG_7361.JPG&type=sc960_832")], comments: 5, timestamp: "1시간 전", hairCategory: .Cut, price: 15000))
             .environmentObject(ConsultationViewModel())
+            .environmentObject(UserAuth())
     }
 }

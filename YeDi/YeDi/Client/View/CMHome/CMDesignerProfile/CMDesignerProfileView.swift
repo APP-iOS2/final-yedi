@@ -8,14 +8,25 @@
 import SwiftUI
 import Firebase
 import FirebaseFirestore
+import MapKit
 
 struct CMDesignerProfileView: View {
     var designer: Designer
+    
     @StateObject var viewModel = CMDesignerProfileViewModel()
+    @StateObject var postDetailViewModel = PostDetailViewModel()
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var consultationViewModel: ConsultationViewModel
+    @State private var isPresentedNavigation: Bool = false
+    @State private var isPresentedAlert: Bool = false
+    @State private var region = MKCoordinateRegion()
+    @State private var markers: [MapMarker] = []
+    @State private var isShowingMap = false
     
     var body: some View {
         ScrollView {
             VStack {
+                // MARK: Designer Info & Button
                 VStack(alignment: .leading) {
                     HStack {
                         if let imageURLString = designer.imageURLString {
@@ -27,19 +38,19 @@ struct CMDesignerProfileView: View {
                                     .clipShape(Circle())
                             } placeholder: {
                                 Text(String(designer.name.first ?? " ").capitalized)
-                                            .font(.title)
-                                            .fontWeight(.bold)
-                                            .frame(width: 80, height: 80)
-                                            .background(Circle().fill(Color.quaternarySystemFill))
-                                            .foregroundColor(Color.primaryLabel)
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .frame(width: 80, height: 80)
+                                    .background(Circle().fill(Color.quaternarySystemFill))
+                                    .foregroundColor(Color.primaryLabel)
                             }
                         } else {
                             Text(String(designer.name.first ?? " ").capitalized)
-                                        .font(.title)
-                                        .fontWeight(.bold)
-                                        .frame(width: 80, height: 80)
-                                        .background(Circle().fill(Color.quaternarySystemFill))
-                                        .foregroundColor(Color.primaryLabel)
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .frame(width: 80, height: 80)
+                                .background(Circle().fill(Color.quaternarySystemFill))
+                                .foregroundColor(Color.primaryLabel)
                             
                         }
                         
@@ -85,7 +96,7 @@ struct CMDesignerProfileView: View {
                     
                     HStack {
                         Button {
-                            //
+                            consultationViewModel.setEmptyChatRoomList(customerId: userAuth.currentClientID ?? "", designerId: designer.designerUID)
                         } label: {
                             HStack {
                                 Spacer()
@@ -102,8 +113,11 @@ struct CMDesignerProfileView: View {
                             }
                         }
                         .padding(.trailing, 1)
+                        
                         Button {
-                            //
+                            
+                            isPresentedNavigation.toggle()
+                            isPresentedAlert.toggle()
                         } label: {
                             HStack {
                                 Spacer()
@@ -119,20 +133,47 @@ struct CMDesignerProfileView: View {
                                     .fill(Color.quaternarySystemFill)
                             }
                         }
+                        
+                        .navigationDestination(isPresented: $isPresentedNavigation, destination: {
+                            CMReservationDateTimeView(designerID: designer.designerUID, isPresentedAlert: $isPresentedAlert, isPresentedNavigation: $isPresentedNavigation)
+                                .environmentObject(postDetailViewModel)
+                        })
                         .padding(.leading, 1)
                     }
                     .padding(.top, 4)
                 }
                 .padding(.horizontal)
                 
+                // MARK: Shop Info
                 VStack {
                     VStack(alignment: .leading) {
                         Text(designer.shop?.shopName ?? "Shop 이름")
                             .font(.title3)
                             .fontWeight(.semibold)
                             .foregroundStyle(Color.primaryLabel)
-                        Text(designer.shop?.headAddress ?? "Shop 주소")
-                            .foregroundStyle(.gray)
+                        HStack {
+                            Text("\(designer.shop?.headAddress ?? "") \(designer.shop?.subAddress ?? "") \(designer.shop?.detailAddress ?? "")")
+                                .foregroundStyle(.gray)
+                            Spacer()
+                                Button {
+                                    isShowingMap.toggle()
+                                } label: {
+                                    Image(systemName: isShowingMap ? "chevron.up" : "chevron.down")
+                                        .foregroundStyle(.gray)
+                                }
+
+                            
+                        }
+                        if isShowingMap {
+                            Map(coordinateRegion: $region, annotationItems: markers) { marker in
+                                MapAnnotation(coordinate: marker.coordinate) {
+                                    Image(systemName: "scissors.circle.fill")
+                                        .font(.largeTitle)
+                                        .foregroundStyle(.sub)
+                                }
+                            }
+                            .frame(minHeight: 200)
+                        }
                         Divider()
                         if let closedDays = designer.shop?.closedDays {
                             Text("휴무일 : \(closedDays.joined(separator: ", "))")
@@ -150,9 +191,12 @@ struct CMDesignerProfileView: View {
                 }
                 .padding()
                 
+                // MARK: Post & Review
                 CMDesignerProfileSegmentedView(designer: designer, designerPosts: viewModel.designerPosts, reviews: viewModel.reviews, keywords: viewModel.keywords, keywordCount: viewModel.keywordCount)
             }
         }
+        .navigationTitle("")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .tabBar)
         .toolbar {
@@ -162,12 +206,34 @@ struct CMDesignerProfileView: View {
         }
         .onAppear {
             Task {
-                await viewModel.isFollowed(designerUid: designer.designerUID)
+                await withTaskGroup(of: Void.self) { group in
+                    group.addTask {
+                        await viewModel.isFollowed(designerUid: designer.designerUID)
+                    }
+                    
+                    group.addTask {
+                        await postDetailViewModel.getDesignerProfile(designerUid: designer.designerUID)
+                    }
+                }
             }
             viewModel.fetchDesignerPosts(designerUID: designer.designerUID)
             viewModel.fetchReview(designerUID: designer.designerUID)
             viewModel.fetchKeywords(designerUID: designer.designerUID)
             viewModel.previousFollowerCount = designer.followerCount
+            
+            region.center = CLLocationCoordinate2D(
+                latitude: designer.shop?.latitude ?? 0,
+                longitude: designer.shop?.longitude ?? 0
+            )
+            region.span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            markers.append(
+                MapMarker(
+                    name: designer.shop?.shopName ?? "",
+                    coordinate: CLLocationCoordinate2D(
+                        latitude: designer.shop?.latitude ?? 37.57,
+                        longitude: designer.shop?.longitude ?? 126.98)
+                )
+            )
         }
         Spacer()
     }

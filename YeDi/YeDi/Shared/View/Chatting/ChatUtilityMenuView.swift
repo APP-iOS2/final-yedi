@@ -9,10 +9,16 @@ import SwiftUI
 import PhotosUI
 
 struct ChatUtilityMenuView: View {
-    @State private var selectedItem: PhotosPickerItem?
-    
-    var chattingVM : ChattingViewModel
     var userID: String
+    var designerID: String
+    
+    @EnvironmentObject var userAuth: UserAuth
+    @StateObject var chattingVM = ChattingViewModel()
+    @StateObject var postDetailViewModel: PostDetailViewModel = PostDetailViewModel()
+    
+    @State private var selectedItem: PhotosPickerItem?
+    @State private var isPresentedAlert: Bool = false
+    @State private var isPresentedNavigation: Bool = false
     
     var body: some View {
         HStack {
@@ -45,26 +51,36 @@ struct ChatUtilityMenuView: View {
                 }
             }
             
-            Spacer()
-            
-            Button(action: {}, label: {
-                VStack {
-                    VStack{
-                        Image(systemName: "clock.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25)
-                            .foregroundStyle(Color.white)
+            if userID != userAuth.currentDesignerID {
+                Spacer()
+                
+                Button(action: {
+                    isPresentedNavigation.toggle()
+                    isPresentedAlert.toggle()
+                }, label: {
+                    VStack {
+                        VStack{
+                            Image(systemName: "clock.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25)
+                                .foregroundStyle(Color.white)
+                        }
+                        .padding(13)
+                        .background {
+                            Circle()
+                                .fill(Color.indigo)
+                        }
+                        Text("바로예약")
+                            .font(.caption)
                     }
-                    .padding(13)
-                    .background {
-                        Circle()
-                            .fill(Color.indigo)
-                    }
-                    Text("바로예약")
-                        .font(.caption)
-                }
-            })
+                })
+                .navigationDestination(isPresented: $isPresentedNavigation, destination: {
+                    CMReservationDateTimeView(designerID: designerID, isPresentedAlert: $isPresentedAlert, isPresentedNavigation: $isPresentedNavigation)
+                        .environmentObject(postDetailViewModel)
+                })
+                .buttonStyle(.automatic)
+            }
             
             Spacer()
         }
@@ -74,9 +90,4 @@ struct ChatUtilityMenuView: View {
         .foregroundStyle(.primary)
         .frame(minWidth: 0, maxWidth: .infinity)
     }
-}
-
-#Preview {
-    ChatUtilityMenuView(chattingVM: ChattingViewModel(), userID: "customerUser1")
-        .scaledToFit()
 }

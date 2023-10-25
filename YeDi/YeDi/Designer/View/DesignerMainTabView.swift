@@ -20,18 +20,18 @@ struct DesignerMainTabView: View {
         TabView(selection: $selectedIndex) {
             DMReviewView()
                 .tabItem {
-                    Label("리뷰", systemImage: "star.fill")
+                    Label("내 리뷰", systemImage: "star.fill")
                 }.tag(0)
             
             DMGridView()
                 .tabItem {
-                    Label("게시물", systemImage: "photo.fill")
+                    Label("내 게시물", systemImage: "photo.fill")
                 }
                 .tag(1)
             
             ReservationView()
                 .tabItem {
-                    Label("예약", systemImage: "calendar")
+                    Label("예약현황", systemImage: "calendar")
                 }.tag(2)
             
             DMMainChattingView()

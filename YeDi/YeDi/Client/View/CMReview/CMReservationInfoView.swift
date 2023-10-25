@@ -6,22 +6,31 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 struct CMReservationInfoView: View {
     // MARK: - Properties
-    @State private var designerName: String = "박채영 디자이너"
-    @State private var style: String = "디자인 컷"
-    @State private var reservationDate: String = "2023년 7월 11일 12:30"
+    @EnvironmentObject var cmHistoryViewModel: CMHistoryViewModel
+    
+    @State private var designerName: String = ""
+    @State private var designerRank: String = ""
+    @State private var designerShop: String = ""
+    @State private var reservationDate: String = ""
+    @State private var styles: [String] = []
+    
+    var reservation: Reservation
     
     // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
             Group {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text(designerName)
+                    Text("\(designerRank) \(designerName)")
                         .font(.title3)
-                    Text(style)
-                        .font(.title)
+                    ForEach(styles, id: \.self) { style in
+                        Text("\(style)")
+                            .font(.title)
+                    }
                 }
                 .fontWeight(.semibold)
                 
@@ -38,14 +47,27 @@ struct CMReservationInfoView: View {
         .background(
             RoundedRectangle(cornerRadius: 50)
                 .frame(height: 300)
-                .foregroundColor(.systemBackground)
-                .shadow(color: Color.systemFill, radius: 5, x: 0, y: 5)
+                .foregroundColor(.white)
+                .shadow(color: Color.gray3, radius: 5, x: 0, y: 5)
                 .opacity(0.2)
         )
-        .offset(y: -50)
+        .offset(y: -70)
+        .onAppear {
+            Task {
+                await cmHistoryViewModel.fetchDesigner(designerId: reservation.designerUID)
+                
+                designerName = cmHistoryViewModel.designer.name
+                designerRank = cmHistoryViewModel.designer.rank.rawValue
+                designerShop = cmHistoryViewModel.designer.shop?.shopName ?? "프리랜서"
+                reservationDate = SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "MM월 dd일 HH시 mm분", from: reservation.reservationTime)
+                for hairStyle in reservation.hairStyle {
+                    styles.append(hairStyle.name)
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    CMReservationInfoView()
+    CMReservationInfoView(reservation: Reservation(clientUID: "", designerUID: "", reservationTime: "", hairStyle: [], isFinished: true))
 }

@@ -14,6 +14,7 @@ struct ContentView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var cmProfileViewModel: CMProfileViewModel
+    @EnvironmentObject var cmHistoryViewModel: CMHistoryViewModel
     @EnvironmentObject var reviewViewModel: CMReviewViewModel
     @EnvironmentObject var dmPostViewModel: DMPostViewModel
     @EnvironmentObject var chattingListRoomViewModel: ChattingListRoomViewModel
@@ -26,6 +27,7 @@ struct ContentView: View {
                     ClientMainTabView()
                         .environmentObject(locationManager)
                         .environmentObject(cmProfileViewModel)
+                        .environmentObject(cmHistoryViewModel)
                         .environmentObject(reviewViewModel)
                 case .designer:
                     DesignerMainTabView()

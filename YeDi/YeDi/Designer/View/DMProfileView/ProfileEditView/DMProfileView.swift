@@ -16,7 +16,7 @@ struct DMProfileView: View {
     @StateObject var profileVM: DMProfileViewModel = DMProfileViewModel.shared
     
     @State private var region = MKCoordinateRegion()
-    @State private var markers: [Marker] = []
+    @State private var markers: [MapMarker] = []
     
     @State private var isShowDesignerShopEditView = false
     
@@ -55,7 +55,7 @@ struct DMProfileView: View {
                                 image
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
-                                    .frame(width: 70, height: 70)
+                                    .frame(width: 60, height: 60)
                                     .clipShape(Circle())
                             case .failure(_):
                                 defaultProfileImage()
@@ -66,11 +66,9 @@ struct DMProfileView: View {
                             }
                         }
                         .padding(.trailing, 20)
-                        .offset(y: -5)
                     } else {
                         defaultProfileImage()
                             .padding(.trailing, 20)
-                            .offset(y: -5)
                     }
                 }
                 .padding([.leading], 20)  // HStack의 전체 왼쪽 패딩을 조절
@@ -103,29 +101,58 @@ struct DMProfileView: View {
                                     isShowDesignerShopEditView.toggle()
                                 }
                         }
-                        Text(profileVM.shop.headAddress)  // 샵 위치
+                        Text("\(profileVM.shop.headAddress) \(profileVM.shop.subAddress) \(profileVM.shop.detailAddress)")  // 샵 위치
                             .foregroundStyle(.gray)
                         
                         switch locationManager.authorizationStatus {
                         case .notDetermined:
-                            Map(coordinateRegion: $region)
-                            Map(coordinateRegion: $region, annotationItems: markers) { marker in
+                            Map(coordinateRegion: $region, interactionModes: .all, showsUserLocation: false, userTrackingMode: nil, annotationItems: markers) { marker in
                                 MapAnnotation(coordinate: marker.coordinate) {
-                                    Circle()
-                                        .stroke(.red, lineWidth: 3)
-                                        .frame(width: 44, height: 44)
+                                    Image(systemName: "scissors.circle.fill")
+                                        .font(.largeTitle)
+                                        .foregroundStyle(.sub)
                                 }
                             }
                         case .restricted:
-                            Map(coordinateRegion: $region)
+                            Map(coordinateRegion: $region, interactionModes: .all, showsUserLocation: false, userTrackingMode: nil, annotationItems: markers) { marker in
+                                MapAnnotation(coordinate: marker.coordinate) {
+                                    Image(systemName: "scissors.circle.fill")
+                                        .font(.largeTitle)
+                                        .foregroundStyle(.sub)
+                                }
+                            }
                         case .denied:
-                            Map(coordinateRegion: $region)
+                            Map(coordinateRegion: $region, interactionModes: .all, showsUserLocation: false, userTrackingMode: nil, annotationItems: markers) { marker in
+                                MapAnnotation(coordinate: marker.coordinate) {
+                                    Image(systemName: "scissors.circle.fill")
+                                        .font(.largeTitle)
+                                        .foregroundStyle(.sub)
+                                }
+                            }
                         case .authorizedAlways:
-                            Map(coordinateRegion: $region)
+                            Map(coordinateRegion: $region, interactionModes: .all, showsUserLocation: false, userTrackingMode: nil, annotationItems: markers) { marker in
+                                MapAnnotation(coordinate: marker.coordinate) {
+                                    Image(systemName: "scissors.circle.fill")
+                                        .font(.largeTitle)
+                                        .foregroundStyle(.sub)
+                                }
+                            }
                         case .authorizedWhenInUse:
-                            Map(coordinateRegion: $region)
+                            Map(coordinateRegion: $region, interactionModes: .all, showsUserLocation: false, userTrackingMode: nil, annotationItems: markers) { marker in
+                                MapAnnotation(coordinate: marker.coordinate) {
+                                    Image(systemName: "scissors.circle.fill")
+                                        .font(.largeTitle)
+                                        .foregroundStyle(.sub)
+                                }
+                            }
                         case .authorized:
-                            Map(coordinateRegion: $region)
+                            Map(coordinateRegion: $region, interactionModes: .all, showsUserLocation: false, userTrackingMode: nil, annotationItems: markers) { marker in
+                                MapAnnotation(coordinate: marker.coordinate) {
+                                    Image(systemName: "scissors.circle.fill")
+                                        .font(.largeTitle)
+                                        .foregroundStyle(.sub)
+                                }
+                            }
                         @unknown default:
                             fatalError()
                         }
@@ -165,13 +192,14 @@ struct DMProfileView: View {
             })
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    YdIconView(height: 30)
+                    YdIconView(height: 32)
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack {
                         NavigationLink {
                             CMSettingsView()
+                                .toolbar(.hidden, for: .tabBar)
                         } label: {
                             Image(systemName: "gearshape")
                                 .foregroundStyle(Color.primaryLabel)
@@ -223,7 +251,7 @@ struct DMProfileView: View {
                     )
                     
                     markers.append(
-                        Marker(
+                        MapMarker(
                             name: "\(profileVM.shop.shopName)",
                             coordinate: CLLocationCoordinate2D(
                                 latitude: profileVM.shop.latitude ?? 37.57,
@@ -238,22 +266,24 @@ struct DMProfileView: View {
     // 스켈레톤 뷰를 반환하는 함수
     func skeletonView() -> some View {
         return Circle()
-            .frame(width: 70, height: 70)
+            .frame(width: 60, height: 60)
             .foregroundColor(Color.gray.opacity(0.5))
     }
     
     // 기본 프로필 이미지를 반환하는 함수
     func defaultProfileImage() -> some View {
-        return Image(systemName: "person.circle.fill")
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(width: 70, height: 70)
-            .clipShape(Circle())
+        return Text(String(profileVM.designer.name.first ?? " ").capitalized)
+            .font(.title3)
+            .fontWeight(.bold)
+            .frame(width: 60, height: 60)
+            .background(Circle().fill(Color.quaternarySystemFill))
+            .foregroundColor(Color.primaryLabel)
+            .offset(y: -5)
     }
 }
 
 #Preview {
-    NavigationView {
+    NavigationStack {
         DMProfileView()
             .environmentObject(UserAuth())
             .environmentObject(LocationManager())
