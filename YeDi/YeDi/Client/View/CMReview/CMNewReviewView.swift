@@ -38,21 +38,22 @@ struct CMNewReviewView: View {
     
     // MARK: - Body
     var body: some View {
-        ScrollView {
-            CMReservationInfoView(reservation: reservation)
-            
-            Spacer(minLength: 10)
-            
-            CMReviewSelectPhotosView(selectedPhotoURLs: $selectedPhotoURLs)
-            
-            CMReviewSelectKeywordsView(selectedKeywords: $selectedKeywords)
-            
-            CMReviewGiveScoreView(reviewScore: $reviewScore)
-            
-            CMReviewWriteContentView(reviewContent: $reviewContent)
-            
-            Spacer()
-            
+        VStack {
+            ScrollView {
+                CMReservationInfoView(reservation: reservation)
+                
+                Spacer(minLength: 10)
+                
+                CMReviewSelectPhotosView(selectedPhotoURLs: $selectedPhotoURLs)
+                
+                CMReviewSelectKeywordsView(selectedKeywords: $selectedKeywords)
+                
+                CMReviewGiveScoreView(reviewScore: $reviewScore)
+                
+                CMReviewWriteContentView(reviewContent: $reviewContent)
+                
+                Spacer()
+            }
             saveButton
         }
         .onDisappear {
@@ -112,7 +113,6 @@ struct CMNewReviewView: View {
             }
         }, label: {
             Text(buttonText)
-                .frame(width: 330, height: 30)
         })
         .buttonModifier(.mainColor)
         .padding()
