@@ -53,9 +53,25 @@ class CMHistoryViewModel: ObservableObject {
                         self.reservations.append(reservation)
                     }
                 }
+                
+                checkReservationStatus()
             }
         } catch {
             print("Error fetching reservation list: \(error)")
+        }
+    }
+    
+    /// 예약 내역 상태 확인 메서드
+    /// - 예약 일시가 현재 시각보다 이전인 예약건의 isFinished 프로퍼티를 true로 바꾸기 위함
+    func checkReservationStatus() {
+        for reservation in reservations {
+            let singleTonDF = SingleTonDateFormatter.sharedDateFommatter
+            var reservationTime = singleTonDF.changeDateString(transition: "MM-dd HH:mm", from: reservation.reservationTime)
+            var currentTime = singleTonDF.changeDateString(transition: "MM-dd HH:mm", from: singleTonDF.firebaseDate(from: Date()))
+            
+            if reservationTime < currentTime {
+                reservation.isFinished.toggle()
+            }
         }
     }
     
