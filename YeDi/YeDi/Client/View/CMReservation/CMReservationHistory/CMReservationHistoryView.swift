@@ -10,7 +10,8 @@ import SwiftUI
 /// 예약 내역 뷰
 struct CMReservationHistoryView: View {
     // MARK: - Properties
-    @EnvironmentObject var historyViewModel: CMHistoryViewModel
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var cmHistoryViewModel: CMHistoryViewModel
     
     @State var selectedSegment: String = "다가오는 예약"
     

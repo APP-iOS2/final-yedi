@@ -42,16 +42,23 @@ struct CMReservationHistoryDetailView: View {
     
     // MARK: - Body
     var body: some View {
-        NavigationStack {
+        ScrollView {
             VStack(alignment: .leading, spacing: 30) {
                 Group {
                     // MARK: - 디자이너 정보 섹션
                     VStack(alignment: .leading, spacing: 10) {
                         Text("\(designerRank) \(designerName)")
                             .font(.title3)
-                        ForEach(styles, id: \.self) { style in
-                            Text("\(style)")
-                                .font(.title)
+                        HStack {
+                            ForEach(styles, id: \.self) { style in
+                                if styles.last == style {
+                                    Text("\(style)")
+                                        .font(.title)
+                                } else {
+                                    Text("\(style),")
+                                        .font(.title)
+                                }
+                            }
                         }
                     }
                     .fontWeight(.semibold)
