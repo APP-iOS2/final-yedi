@@ -64,13 +64,13 @@ class CMHistoryViewModel: ObservableObject {
     /// 예약 내역 상태 확인 메서드
     /// - 예약 일시가 현재 시각보다 이전인 예약건의 isFinished 프로퍼티를 true로 바꾸기 위함
     func checkReservationStatus() {
-        for reservation in reservations {
+        for index in 0..<reservations.count {
             let singleTonDF = SingleTonDateFormatter.sharedDateFommatter
-            var reservationTime = singleTonDF.changeDateString(transition: "MM-dd HH:mm", from: reservation.reservationTime)
+            var reservationTime = singleTonDF.changeDateString(transition: "MM-dd HH:mm", from: reservations[index].reservationTime)
             var currentTime = singleTonDF.changeDateString(transition: "MM-dd HH:mm", from: singleTonDF.firebaseDate(from: Date()))
             
             if reservationTime < currentTime {
-                reservation.isFinished.toggle()
+                reservations[index].isFinished = true
             }
         }
     }
