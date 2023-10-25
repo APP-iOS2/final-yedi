@@ -37,7 +37,6 @@ class ChattingViewModel: ObservableObject {
     
     @MainActor
     func fetchFirstChattingBubbles() {
-        
         self.sotreListener = storeService.collection(storePath) //채팅방의 위치
             .limit(toLast: limitLength)
             .order(by: "date")
@@ -149,7 +148,7 @@ class ChattingViewModel: ObservableObject {
         
         let bubble = CommonBubble( content: content, date: "\(instance.firebaseDate(from: Date()))", sender: sender, isRead: false)
         
-        sendBubble(bubble: bubble)
+        sendBubble(bubble: bubble, chatRoomId: chatRoomId)
     }
     
     ///게시물 버블을 보내는 메소드
@@ -160,11 +159,11 @@ class ChattingViewModel: ObservableObject {
                                   
         )
         
-        sendBubble(bubble: bubble)
+        sendBubble(bubble: bubble, chatRoomId: chatRoomId)
     }
     
     ///이미지 버블을 보내는 메소드
-    func sendImageBubble(imageData: Data, sender: String) {
+    func sendImageBubble(imageData: Data, sender: String, chatRoomId id: String) {
         
         let bubble: CommonBubble = CommonBubble(imagePath: "", date: "", sender: "", isRead: false)
         let instance = SingleTonDateFormatter.sharedDateFommatter
@@ -191,8 +190,7 @@ class ChattingViewModel: ObservableObject {
                 
                 let updatedBubble = CommonBubble(imagePath: "\(imageURL)", date: "\(instance.firebaseDate(from: Date()))", sender: sender, isRead: false)
                 
-                
-                self?.sendBubble(bubble: updatedBubble)
+                self?.sendBubble(bubble: updatedBubble, chatRoomId: id)
                 
             }
         }
@@ -289,7 +287,7 @@ class ChattingViewModel: ObservableObject {
     }
     
     ///버블을 보내는 메소드
-    private func sendBubble(bubble: CommonBubble) {
+    private func sendBubble(bubble: CommonBubble, chatRoomId id: String) {
         let data: [String: Any] = [
             "id": bubble.id,
             "content": bubble.content ?? "",
@@ -300,7 +298,7 @@ class ChattingViewModel: ObservableObject {
             "isRead": bubble.isRead
         ]
         
-        storeService.collection(storePath).addDocument(data: data) { error in
+        storeService.collection("chatRooms/\(id)/bubbles").addDocument(data: data) { error in
             if error != nil {
                 print("Error adding document: sendBubble()")
             } else {

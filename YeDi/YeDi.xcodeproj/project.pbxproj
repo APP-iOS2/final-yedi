@@ -61,7 +61,6 @@
 		3BCF2C2A2ACD3E73009C18C2 /* ChatRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C172ACD3E72009C18C2 /* ChatRoomView.swift */; };
 		3BCF2C2B2ACD3E73009C18C2 /* ChattingListRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C182ACD3E72009C18C2 /* ChattingListRoomView.swift */; };
 		3BCF2C2C2ACD3E73009C18C2 /* BubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C192ACD3E72009C18C2 /* BubbleCell.swift */; };
-		3BCF2C2D2ACD3E73009C18C2 /* TempPhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C1A2ACD3E72009C18C2 /* TempPhotoPickerView.swift */; };
 		3BCF2C2E2ACD3E73009C18C2 /* ChatUtilityMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C1B2ACD3E72009C18C2 /* ChatUtilityMenuView.swift */; };
 		3BCF2C2F2ACD3E73009C18C2 /* ImageBubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C1C2ACD3E72009C18C2 /* ImageBubbleCell.swift */; };
 		3BCF2C332ACD3F6A009C18C2 /* ChattingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C322ACD3F69009C18C2 /* ChattingViewModel.swift */; };
@@ -87,7 +86,6 @@
 		3BCF2C802ACD4248009C18C2 /* CMHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C542ACD4247009C18C2 /* CMHomeView.swift */; };
 		3BCF2C812ACD4248009C18C2 /* CMFollowingPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C552ACD4248009C18C2 /* CMFollowingPostView.swift */; };
 		3BCF2C822ACD4248009C18C2 /* CMRecommendPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C562ACD4248009C18C2 /* CMRecommendPostView.swift */; };
-		3BCF2C832ACD4248009C18C2 /* CMFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C582ACD4248009C18C2 /* CMFilterView.swift */; };
 		3BCF2C842ACD4248009C18C2 /* CMMainChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C5A2ACD4248009C18C2 /* CMMainChattingView.swift */; };
 		3BCF2C852ACD4248009C18C2 /* ClientMainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C5B2ACD4248009C18C2 /* ClientMainTabView.swift */; };
 		3BCF2C862ACD4248009C18C2 /* CMLikePostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF2C5D2ACD4248009C18C2 /* CMLikePostListView.swift */; };
@@ -210,7 +208,6 @@
 		3BCF2C172ACD3E72009C18C2 /* ChatRoomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomView.swift; sourceTree = "<group>"; };
 		3BCF2C182ACD3E72009C18C2 /* ChattingListRoomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingListRoomView.swift; sourceTree = "<group>"; };
 		3BCF2C192ACD3E72009C18C2 /* BubbleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleCell.swift; sourceTree = "<group>"; };
-		3BCF2C1A2ACD3E72009C18C2 /* TempPhotoPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempPhotoPickerView.swift; sourceTree = "<group>"; };
 		3BCF2C1B2ACD3E72009C18C2 /* ChatUtilityMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUtilityMenuView.swift; sourceTree = "<group>"; };
 		3BCF2C1C2ACD3E72009C18C2 /* ImageBubbleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageBubbleCell.swift; sourceTree = "<group>"; };
 		3BCF2C322ACD3F69009C18C2 /* ChattingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingViewModel.swift; sourceTree = "<group>"; };
@@ -237,7 +234,6 @@
 		3BCF2C542ACD4247009C18C2 /* CMHomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMHomeView.swift; sourceTree = "<group>"; };
 		3BCF2C552ACD4248009C18C2 /* CMFollowingPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMFollowingPostView.swift; sourceTree = "<group>"; };
 		3BCF2C562ACD4248009C18C2 /* CMRecommendPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMRecommendPostView.swift; sourceTree = "<group>"; };
-		3BCF2C582ACD4248009C18C2 /* CMFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMFilterView.swift; sourceTree = "<group>"; };
 		3BCF2C5A2ACD4248009C18C2 /* CMMainChattingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMMainChattingView.swift; sourceTree = "<group>"; };
 		3BCF2C5B2ACD4248009C18C2 /* ClientMainTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientMainTabView.swift; sourceTree = "<group>"; };
 		3BCF2C5D2ACD4248009C18C2 /* CMLikePostListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMLikePostListView.swift; sourceTree = "<group>"; };
@@ -442,7 +438,6 @@
 				3BCF2C172ACD3E72009C18C2 /* ChatRoomView.swift */,
 				3BCF2C182ACD3E72009C18C2 /* ChattingListRoomView.swift */,
 				3BCF2C192ACD3E72009C18C2 /* BubbleCell.swift */,
-				3BCF2C1A2ACD3E72009C18C2 /* TempPhotoPickerView.swift */,
 				3BCF2C1B2ACD3E72009C18C2 /* ChatUtilityMenuView.swift */,
 				3BCF2C1C2ACD3E72009C18C2 /* ImageBubbleCell.swift */,
 				63A888272ADF9A5A00790EBA /* DateDeviderCell.swift */,
@@ -494,7 +489,6 @@
 			children = (
 				3BCF2C5B2ACD4248009C18C2 /* ClientMainTabView.swift */,
 				3BCF2C4D2ACD4247009C18C2 /* CMHome */,
-				3BCF2C572ACD4248009C18C2 /* CMFilter */,
 				3BCF2C452ACD4247009C18C2 /* CMReservation */,
 				3BCF2C592ACD4248009C18C2 /* CMChatting */,
 				3BCF2C5C2ACD4248009C18C2 /* CMProfile */,
@@ -542,14 +536,6 @@
 				09CDA9162AE421A5009FB75C /* CMDesignerProfile */,
 			);
 			path = CMHome;
-			sourceTree = "<group>";
-		};
-		3BCF2C572ACD4248009C18C2 /* CMFilter */ = {
-			isa = PBXGroup;
-			children = (
-				3BCF2C582ACD4248009C18C2 /* CMFilterView.swift */,
-			);
-			path = CMFilter;
 			sourceTree = "<group>";
 		};
 		3BCF2C592ACD4248009C18C2 /* CMChatting */ = {
@@ -895,7 +881,6 @@
 				2F45A1282AD2739C005018A5 /* Color.swift in Sources */,
 				097D4BCC2AD90C0300D532F6 /* CMDesignerProfileView.swift in Sources */,
 				3BCF2C812ACD4248009C18C2 /* CMFollowingPostView.swift in Sources */,
-				3BCF2C2D2ACD3E73009C18C2 /* TempPhotoPickerView.swift in Sources */,
 				D899712B2AE107D100FBF031 /* CMReservationViewModel.swift in Sources */,
 				3BCF2C2E2ACD3E73009C18C2 /* ChatUtilityMenuView.swift in Sources */,
 				3BCF2C702ACD4248009C18C2 /* CMReviewGiveScoreView.swift in Sources */,
@@ -997,7 +982,6 @@
 				3BCF2C692ACD4248009C18C2 /* PostDetailViewModel.swift in Sources */,
 				9691C5D62ADE554A00434377 /* BreakTimeSettingVM.swift in Sources */,
 				9615C78A2AD6A1D600DD4F37 /* HCustomCalendar.swift in Sources */,
-				3BCF2C7F2ACD4248009C18C2 /* CMPostDetailContentView.swift in Sources */,
 				2F65BB9E2AE6CBE400D84D37 /* CMHistoryViewModel.swift in Sources */,
 				D89971292ADFC51B00FBF031 /* CMSelectStyleView.swift in Sources */,
 				DC7695BD2ADCF1CA00D2FB69 /* View.swift in Sources */,
@@ -1021,7 +1005,6 @@
 				DC7695C92ADD119D00D2FB69 /* ButtonModifier.swift in Sources */,
 				3BCF2C6B2ACD4248009C18C2 /* Client.swift in Sources */,
 				63A888282ADF9A5A00790EBA /* DateDeviderCell.swift in Sources */,
-				3BCF2C832ACD4248009C18C2 /* CMFilterView.swift in Sources */,
 				1D9067192AC151A80028A660 /* DMAsyncImage.swift in Sources */,
 				2F65BBA52AE7E25A00D84D37 /* CMReviewDetailView.swift in Sources */,
 				DC94ED592ADFDA540052AD6E /* TextAreaModifier.swift in Sources */,
