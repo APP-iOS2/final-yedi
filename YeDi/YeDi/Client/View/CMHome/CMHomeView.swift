@@ -44,21 +44,6 @@ struct CMHomeView: View {
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .padding(.bottom, 1)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                YdIconView(height: 33)
-            }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                NavigationLink {
-                    CMSettingsView()
-                } label: {
-                    Image(systemName: "gearshape")
-                        .foregroundStyle(Color.primaryLabel)
-                }
-
-            }
-        }
     }
 }
 

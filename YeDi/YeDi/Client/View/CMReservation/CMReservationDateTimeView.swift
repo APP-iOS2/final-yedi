@@ -92,6 +92,7 @@ struct CMReservationDateTimeView: View {
         .navigationBarBackButtonHidden(true)
         .onAppear {
             Task {
+                isLoaded = false
                 await withTaskGroup(of: Void.self) { group in
                     
                     group.addTask {
@@ -107,7 +108,7 @@ struct CMReservationDateTimeView: View {
                     }
                     
                 }
-                isLoaded.toggle()
+                isLoaded = true
             }
         }
         .onChange(of: currentMonth) { newValue in
@@ -148,9 +149,9 @@ struct CMReservationDateTimeView: View {
                                 selectedDate = value.date
                                 selectedTime = 0
                                 Task {
-                                    isLoaded.toggle()
+                                    isLoaded = false
                                     await reservationViewModel.fetchAvailableReservationTime(date: selectedDate, designerUID: postDetailViewModel.designer?.designerUID ?? "")
-                                    isLoaded.toggle()
+                                    isLoaded = true
                                 }
                             }
                         }

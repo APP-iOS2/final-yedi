@@ -18,31 +18,45 @@ struct ClientMainTabView: View {
         NavigationStack {
             TabView(selection: $selectedIndex) {
                 CMHomeView()
-                .tabItem {
-                    Label("홈", systemImage: "house")
-                }.tag(0)
+                    .tabItem {
+                        Label("홈", systemImage: "house")
+                    }.tag(0)
                 
                 CMSearchView()
-                .tabItem {
-                    Label("검색", systemImage: "magnifyingglass")
-                }.tag(1)
+                    .tabItem {
+                        Label("검색", systemImage: "magnifyingglass")
+                    }.tag(1)
                 
                 CMReservationHistoryView()
-                .tabItem {
-                    Label("예약내역", systemImage: "calendar")
-                }.tag(2)
+                    .tabItem {
+                        Label("예약내역", systemImage: "calendar")
+                    }.tag(2)
                 
                 CMMainChattingView()
                     .environmentObject(chattingListRoomViewModel)
-                .tabItem {
-                    Label("채팅", systemImage: "bubble.left.fill")
+                    .tabItem {
+                        Label("채팅", systemImage: "bubble.left.fill")
                         
-                }.tag(3).badge(chattingListRoomViewModel.getUnReadTotalCount)
+                    }.tag(3).badge(chattingListRoomViewModel.getUnReadTotalCount)
                 
                 CMProfileView()
-                .tabItem {
-                    Label("프로필", systemImage: "person.fill")
-                }.tag(4)
+                    .tabItem {
+                        Label("프로필", systemImage: "person.fill")
+                    }.tag(4)
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    YdIconView(height: 32)
+                }
+            
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        CMSettingsView()
+                    } label: {
+                        Image(systemName: "gearshape")
+                            .foregroundStyle(Color.primaryLabel)
+                    }
+                }
             }
         }
         .onAppear {
