@@ -14,7 +14,7 @@ struct Reservation: Codable, Identifiable {
     let designerUID: String
     let reservationTime: String
     let hairStyle: [HairStyle]
-    let isFinished: Bool
+    var isFinished: Bool
     
     enum CodingKeys: CodingKey {
         case clientUID
