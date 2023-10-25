@@ -56,6 +56,9 @@ struct ReservationView: View {
                 .padding(.trailing, 20)
             }
         }
+        .onAppear {
+            reservationVM.getReservation()
+        }
         .refreshable {
             reservationVM.getReservation()
         }
