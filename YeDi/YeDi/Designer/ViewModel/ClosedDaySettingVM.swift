@@ -58,7 +58,5 @@ class ClosedDaySetting: ObservableObject {
             }
         }
     }
-    
-    
 }
 

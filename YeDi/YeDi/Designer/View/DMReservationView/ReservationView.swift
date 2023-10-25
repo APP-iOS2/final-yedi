@@ -8,22 +8,24 @@
 import SwiftUI
 
 struct ReservationView: View {
-    @State var show: Bool = false
+    // Properties
+    @State private var show: Bool = false
     @State private var isClicked: Bool = false
     @State private var isShowing: Bool = false
-    @State private var tasks: [Tasks] = sampleTasks // 예약내역 받아오는 걸로 바꿔야 함
     @State private var currentDay: Date = .init()
     @State var showingRestDaySetting: Bool = false
     @State var showingBreakTimeSetting: Bool = false
+    @State var selectedDate: Date = Date()
+    @ObservedObject var reservationVM = ReservationVM()
+    
     
     // MARK: - Reservation List View
     var body: some View {
         VStack {
-            HCustomCalendar(singleDateF: .sharedDateFommatter)
+            HCustomCalendar(selectedDate: $selectedDate)
                 .padding(.bottom)
                 .padding(.horizontal)
                 .scrollIndicators(.hidden)
-            
             HStack {
                 VStack {
                     Divider()
@@ -46,7 +48,6 @@ struct ReservationView: View {
                     Spacer()
                     VStack {
                         Spacer()
-                        
                         FloatingButton(show: $show, showingRestDaySetting: $showingRestDaySetting, showingBreakTimeSetting: $showingBreakTimeSetting)
                             .padding(.top)
                             .padding(.bottom)
@@ -55,7 +56,14 @@ struct ReservationView: View {
                 .padding(.trailing, 20)
             }
         }
+        .onAppear {
+            reservationVM.getReservation()
+        }
+        .refreshable {
+            reservationVM.getReservation()
+        }
     }
+    
     /// - Timeline Main View
     @ViewBuilder
     func TimeLineView() -> some View {
@@ -74,7 +82,7 @@ struct ReservationView: View {
         }
     }
     
-    /// - Timeline View Row
+    //MARK: - Timeline View Row
     @ViewBuilder
     func TimelineViewRow(_ date: Date) -> some View {
         HStack(alignment: .top) {
@@ -82,61 +90,98 @@ struct ReservationView: View {
                 .font(.body)
                 .frame(width: 50, alignment: .leading)
             
-            /// - Filtering Tasks
-            let calendar = Calendar.current
-            let filteredTasks = tasks.filter {
-                if let hour = calendar.dateComponents([.hour], from: date).hour,
-                   let taskHour = calendar.dateComponents([.hour], from: $0.dateAdded).hour,
-                   hour == taskHour && calendar.isDate($0.dateAdded, inSameDayAs: currentDay) {
-                    return true
+            /// - Filter Reservations by time
+            let filteredReservations = reservationVM.reservations.filter { reservation in
+                if let reservationTime = stringToDate(reservation.reservationTime, format: "yyyy-MM-dd'T'HH:mm:ssZZZZZ") {
+                    return Calendar.current.isDate(reservationTime, inSameDayAs: selectedDate) && Calendar.current.component(.hour, from: reservationTime) == Calendar.current.component(.hour, from: date)
                 }
                 return false
+                // 필터링된 예약 데이터를 사용하여 뷰에 업데이트
+                // filteredReservations를 사용하여 뷰를 업데이트
             }
             
-            if filteredTasks.isEmpty {
+            // 예약이 비어있으면 셀에 표시를 안해주고 예약 내용이 있을 시 셀에 내용을 보여줍니다.
+            if filteredReservations.isEmpty {
                 Rectangle()
                     .stroke(.gray.opacity(0.3), style: StrokeStyle(lineWidth: 0.5, lineCap: .butt, lineJoin: .bevel))
                     .frame(height: 0.5)
                     .offset(y: 10)
             } else {
-                /// - Task View
+                /// - Reservation View
                 VStack(spacing: 10) {
-                    ForEach(filteredTasks) { task in
-                        TaskRow(task)
+                    ForEach(filteredReservations) { reservation in
+                        reservationRow(reservation)
+                        // 다른 예약 정보 필드를 표시할 수 있습니다.
                     }
                 }
             }
         }
-        .hAlign(.leading)
+        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading) // Expand HStack to full width
         .padding(.vertical, 15)
     }
     
-    /// - Reservation History Row
+    
+    //MARK: - Reservation History Row
     @ViewBuilder
-    func TaskRow(_ task: Tasks) -> some View {
+    func reservationRow(_ reservation: Reservation) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(task.reservationName.uppercased())
+            Text(reservation.clientUID)
+                .font(.headline)
                 .fontWeight(.bold)
-                .foregroundColor(.gray)
             
-            if task.reservationDC != "" {
-                Text(task.reservationDC)
-                    .foregroundColor(.red.opacity(0.8))
+            ForEach(reservation.hairStyle) { style in
+                HStack {
+                    Text("\(style.name)")
+                        .font(.system(size: 15))
+                    Spacer()
+                    Text("\(style.type.rawValue)")
+                        .font(.system(size: 15))
+                }
+                .padding(.horizontal, 10)
+                
+                Text("\(style.price)원")
+                    .font(.system(size: 15))
+                    .padding(.leading, 10)
             }
+            HStack {
+                Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yy.MM.dd. HH:mm", from: reservation.reservationTime))")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                Spacer()
+                Text("\(reservation.isFinished ? "예약완료" : "시술완료")")
+                    .font(.system(size: 15))
+                    .padding(3)
+                    .foregroundStyle(Color.whiteMainColor)
+                    .background {
+                        RoundedRectangle(cornerRadius: 5)
+                            .foregroundColor(reservation.isFinished ? Color.mainColor : Color.accentColor)
+                    }
+            }
+            .padding(.leading, 10)
         }
         .hAlign(.leading)
         .padding(12)
         .background {
             ZStack(alignment: .leading) {
                 Rectangle()
+                    .fill(Color.gray3)
+                    .frame(width: 310)
+                Rectangle()
                     .fill(.gray)
                     .frame(width: 4)
+                
             }
         }
     }
+    
+    func stringToDate(_ dateString: String, format: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.date(from: dateString)
+    }
 }
 
-// MARK: - Custom FloatingButton
+// MARK: - Custom FloatingButton [완성]
 struct FloatingButton: View {
     @Binding var show: Bool
     @State var angle: Double = 180
@@ -149,9 +194,11 @@ struct FloatingButton: View {
                 Button {
                     showingRestDaySetting.toggle()
                 } label: {
-                    Image(systemName: "bed.double")
-                        .resizable()
-                        .frame(width: 25, height: 25).padding(7)
+                    Text("휴무")
+                        .font(.system(size: 15))
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color.gray3)
+                        .frame(width: 30, height: 30).padding(7)
                 }
                 .background(Color.white)
                 .foregroundColor(Color.gray4)
@@ -166,9 +213,11 @@ struct FloatingButton: View {
                 Button {
                     showingBreakTimeSetting.toggle()
                 } label: {
-                    Image(systemName: "calendar.badge.clock")
-                        .resizable()
-                        .frame(width: 25, height: 25).padding(7)
+                    Text("휴게")
+                        .font(.system(size: 15))
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color.gray3)
+                        .frame(width: 30, height: 30).padding(7)
                 }
                 .background(Color.white)
                 .foregroundColor(Color.gray4)
