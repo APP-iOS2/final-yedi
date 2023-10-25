@@ -73,6 +73,11 @@ struct DMEditPostView: View {
                 .padding([.leading, .trailing, .bottom])
             }
         }
+        .sheet(isPresented: $isShowingPhotoPicker) {
+            PhotoPicker { imageURL in
+                imageUrls.append(imageURL.absoluteString)
+            }
+        }
         .navigationTitle("게시물 수정")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
