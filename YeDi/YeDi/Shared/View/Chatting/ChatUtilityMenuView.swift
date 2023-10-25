@@ -11,6 +11,7 @@ import PhotosUI
 struct ChatUtilityMenuView: View {
     var userID: String
     var designerID: String
+    var chatRoomId: String
     
     @EnvironmentObject var userAuth: UserAuth
     @StateObject var chattingVM = ChattingViewModel()
@@ -21,6 +22,8 @@ struct ChatUtilityMenuView: View {
     @State private var isPresentedNavigation: Bool = false
     
     var body: some View {
+        
+        let _ = print("======================== menu : \(chatRoomId)")
         HStack {
             Spacer()
             
@@ -46,7 +49,7 @@ struct ChatUtilityMenuView: View {
                 Task {
                     if let data = try? await newItem?.loadTransferable(type: Data.self) {
                         ///형변환이 완료 되면 바로 사진 보내기
-                        chattingVM.sendImageBubble(imageData: data, sender: userID)
+                        chattingVM.sendImageBubble(imageData: data, sender: userID, chatRoomId: chatRoomId)
                     }
                 }
             }

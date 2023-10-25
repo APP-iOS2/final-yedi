@@ -43,11 +43,12 @@ struct ChatRoomView: View {
     }
     
     var body: some View {
+        let _ = print("============= chat room : \(chatRoomId)")
         VStack(spacing: 0) {
             chatScroll
             inputchatTextField
             if isShowingUtilityMenu {
-                ChatUtilityMenuView(userID: userId, designerID: userProfile.uid)
+                ChatUtilityMenuView(userID: userId, designerID: userProfile.uid, chatRoomId: chatRoomId)
                     .transition(.move(edge: .bottom))
             }
         }
