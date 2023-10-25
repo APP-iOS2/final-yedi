@@ -18,7 +18,7 @@ struct ReservationView: View {
     @State var selectedDate: Date = Date()
     @ObservedObject var reservationVM = ReservationVM()
     
-        
+    
     // MARK: - Reservation List View
     var body: some View {
         VStack {
@@ -30,7 +30,7 @@ struct ReservationView: View {
                 VStack {
                     Divider()
                 }
-                Text("예약현황 \(SingleTonDateFormatter.sharedDateFommatter.firebaseDate(from: selectedDate))")
+                Text("예약현황")
                     .font(.caption)
                     .foregroundStyle(.gray)
                 VStack {
@@ -55,9 +55,6 @@ struct ReservationView: View {
                 }
                 .padding(.trailing, 20)
             }
-        }
-        .onAppear {
-            reservationVM.getReservation()
         }
         .refreshable {
             reservationVM.getReservation()
@@ -92,8 +89,8 @@ struct ReservationView: View {
             
             /// - Filter Reservations by time
             let filteredReservations = reservationVM.reservations.filter { reservation in
-                if let reservationTime = stringToDate(reservation.reservationTime, format: "yy.MM.dd") {
-                    return Calendar.current.isDate(reservationTime, inSameDayAs: selectedDate)
+                if let reservationTime = stringToDate(reservation.reservationTime, format: "yyyy-MM-dd'T'HH:mm:ssZZZZZ") {
+                    return Calendar.current.isDate(reservationTime, inSameDayAs: selectedDate) && Calendar.current.component(.hour, from: reservationTime) == Calendar.current.component(.hour, from: date)
                 }
                 return false
                 // 필터링된 예약 데이터를 사용하여 뷰에 업데이트
@@ -109,7 +106,7 @@ struct ReservationView: View {
             } else {
                 /// - Reservation View
                 VStack(spacing: 10) {
-                    ForEach(reservationVM.reservations) { reservation in
+                    ForEach(filteredReservations) { reservation in
                         reservationRow(reservation)
                         // 다른 예약 정보 필드를 표시할 수 있습니다.
                     }
@@ -119,7 +116,7 @@ struct ReservationView: View {
         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading) // Expand HStack to full width
         .padding(.vertical, 15)
     }
-        
+    
     
     //MARK: - Reservation History Row
     @ViewBuilder
@@ -128,9 +125,36 @@ struct ReservationView: View {
             Text(reservation.clientUID)
                 .font(.headline)
                 .fontWeight(.bold)
-            Text(reservation.reservationTime)
-                .font(.subheadline)
-                .fontWeight(.semibold)
+            
+            ForEach(reservation.hairStyle) { style in
+                HStack {
+                    Text("\(style.name)")
+                        .font(.system(size: 15))
+                    Spacer()
+                    Text("\(style.type.rawValue)")
+                        .font(.system(size: 15))
+                }
+                .padding(.horizontal, 10)
+                
+                Text("\(style.price)원")
+                    .font(.system(size: 15))
+                    .padding(.leading, 10)
+            }
+            HStack {
+                Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yy.MM.dd. HH:mm", from: reservation.reservationTime))")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                Spacer()
+                Text("\(reservation.isFinished ? "예약완료" : "시술완료")")
+                    .font(.system(size: 15))
+                    .padding(3)
+                    .foregroundStyle(Color.whiteMainColor)
+                    .background {
+                        RoundedRectangle(cornerRadius: 5)
+                            .foregroundColor(reservation.isFinished ? Color.mainColor : Color.accentColor)
+                    }
+            }
+            .padding(.leading, 10)
         }
         .hAlign(.leading)
         .padding(12)
@@ -138,7 +162,7 @@ struct ReservationView: View {
             ZStack(alignment: .leading) {
                 Rectangle()
                     .fill(Color.gray3)
-                    .frame(width: 100)
+                    .frame(width: 310)
                 Rectangle()
                     .fill(.gray)
                     .frame(width: 4)
