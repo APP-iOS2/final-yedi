@@ -15,7 +15,7 @@ class ChattingViewModel: ObservableObject {
     @Published var chattings: [CommonBubble] = []
     @Published var receivedBubbleId: [String] = []
     @Published var userProfile: [String: ChatListUserInfo] = [:]
-    @Published var anyMoreChats: Bool = true ///더 불러올 채팅이 있는지 없는지 판단하는 프로퍼티
+    @Published var anyMoreChats: Bool = false ///더 불러올 채팅이 있는지 없는지 판단하는 프로퍼티
     
     let limitLength = 13 ///더 불러오기에 쓸 채팅버블 개수 제한 변수
     var storePath: String {
@@ -28,7 +28,7 @@ class ChattingViewModel: ObservableObject {
     var isFirstListening: Bool = true ///현재 채팅을 불러오는 것이 처음 인지를 체크하기 위한 변수
     
     deinit { ///deinit 확인용 메서드
-        print("deinit ChattingViewModel()")
+        //print("deinit ChattingViewModel()")
     }
     
     final func removeListener() { ///리스너 제거 함수
@@ -45,7 +45,6 @@ class ChattingViewModel: ObservableObject {
                     print("Error fetching documents: fetchFirstChattingBubbles()")
                     return
                 }
-                
                 
                 querySnapshot.documentChanges.forEach { diff in
                     do {
@@ -65,7 +64,7 @@ class ChattingViewModel: ObservableObject {
                         }
                         
                         if (diff.type == .modified) {
-                            ///채팅에 업데이트 된 내용으로
+                            ///기존 채팅 버블 중 업데이트된 내용 반영
                             self?.chattings = self?.updateChatting(chattings: self?.chattings ?? [], diff: bubble) ?? []
                         }
                     } catch {
@@ -74,7 +73,7 @@ class ChattingViewModel: ObservableObject {
                 }
                 
                 if ((self?.isFirstListening) != nil) { ///첫 Listener 호출
-                    self?.anyMoreChats = self?.chattings.count ?? 0 >= (self!.limitLength) ? true : false
+                    self?.anyMoreChat() /// 더 불러올 채팅이 없는지 검사
                     self!.isFirstListening = false
                 }
                 
@@ -84,16 +83,14 @@ class ChattingViewModel: ObservableObject {
     @MainActor
     func fetchMoreChattingBubble() {
         guard !self.chattings.isEmpty else { ///빈 채팅방에서 더 보기를 눌러도 에러 X
+            self.anyMoreChats = false /// 빈 채팅방 이므로 더 보기를 비활성화
             print("No more messages to fetch : fetchMoreChattingBubble()")
             return
         }
         
-        ///0번째 인덱스의 채팅 버블이 가장 오래된 버블이므로
-        ///해당 버블의 date보다 작은 값의 채팅을 N개 불러오고
-        ///해당 배열을 앞에 붙여주면 된다.
         storeService.collection(storePath)   ///채팅방의 위치
             .whereField("date", isLessThan: self.chattings[0].date) ///최근 메시지보다 더 오래된 메시지를 불러온다.
-            .limit(toLast: limitLength + 1) ///limitLength값에 맞게 길이 제한
+            .limit(toLast: limitLength) ///limitLength값에 맞게 길이 제한
             .order(by: "date")          ///채팅의 순서 date 기준
             .getDocuments { [weak self] querySnapshot, error in
                 guard let documents = querySnapshot?.documents else {
@@ -101,16 +98,33 @@ class ChattingViewModel: ObservableObject {
                     return
                 }
                 var moreBubbles = documents.compactMap { try? $0.data(as: CommonBubble.self) }
-                ///현재 불러올 채팅이  더 있는지 검사하는 코드
-                self?.anyMoreChats = moreBubbles.count >= (self!.limitLength + 1) ? true : false
-                
-                
-                if self!.anyMoreChats { ///불러올게 더 있으면 가장 늦은 채팅을 잘라 준다.
-                    moreBubbles.removeFirst()
-                    
-                }
-                
                 self?.chattings = moreBubbles + (self?.chattings ?? [])
+            }
+        /// 더 불러올 채팅이 없는지 검사
+        self.anyMoreChat()
+    }
+    
+    /// 더 불러올 채팅 버블이 있는지 검사하는 코드
+    func anyMoreChat() {
+        guard !self.chattings.isEmpty else { ///빈 채팅방에서 더 보기를 눌러도 에러 X
+            print("No more messages to fetch : fetchMoreChattingBubble()")
+            return
+        }
+        
+        storeService.collection(storePath)
+            .whereField("date", isLessThan: self.chattings[0].date)
+            .limit(toLast: 1)
+            .order(by: "date") ///채팅의 순서 date 기준
+            .getDocuments { [weak self] querySnapshot, error in
+                guard let documents = querySnapshot?.documents else {
+                    print("Error fetching documents: fetchMoreChattingBubble()")
+                    return
+                }
+                if let moreBubble = documents.first {
+                    self?.anyMoreChats = true
+                } else {
+                    self?.anyMoreChats = false
+                }
             }
     }
     
@@ -302,7 +316,7 @@ class ChattingViewModel: ObservableObject {
             if error != nil {
                 print("Error adding document: sendBubble()")
             } else {
-                print("Document added successfully.")
+                //print("Document added successfully.")
             }
         }
     }
