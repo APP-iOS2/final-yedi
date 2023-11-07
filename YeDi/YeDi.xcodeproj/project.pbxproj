@@ -601,7 +601,6 @@
 				3BAB00F02ACD948B009053A4 /* DMExpandableText.swift */,
 				3BAB00EA2ACD92D5009053A4 /* DMAccount.swift */,
 				1D63595C2ACEED0A00FBD37B /* DMProfileViewModel.swift */,
-				1D9067182AC151A80028A660 /* AsnycCacheImage.swift */,
 				1D90671C2AC176020028A660 /* DMPostViewModel.swift */,
 				1DD969A02ACFFD9A000AD7D2 /* AddDesignerDataView.swift */,
 				9615C78F2AD6A31D00DD4F37 /* DMReviewViewModel.swift */,
@@ -748,6 +747,7 @@
 		DC7695B72ADCD52200D2FB69 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				1D9067182AC151A80028A660 /* AsnycCacheImage.swift */,
 				3BA51B6A2AD53212009D7902 /* FirebaseDateFomatManager.swift */,
 				3B6346DB2AD8DDD300D3D110 /* NSCacheManager.swift */,
 				DC7695B82ADCD56A00D2FB69 /* AuthRegex.swift */,

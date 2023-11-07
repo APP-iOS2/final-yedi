@@ -29,7 +29,6 @@ final class NSCacheManager {
 }
 
 class CacheDelegate: NSObject, NSCacheDelegate {
-    
     func cache(_ cache: NSCache<AnyObject, AnyObject>, willEvictObject obj: Any) {
         print("An object was evicted from the cache:", obj)
     }
