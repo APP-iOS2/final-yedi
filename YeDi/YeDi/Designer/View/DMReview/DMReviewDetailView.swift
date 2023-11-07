@@ -54,7 +54,7 @@ struct DMReviewDetailView: View {
             
             Spacer()
             
-            Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yyyy.MM.dd.", from: review.date)) 작성")
+            Text("\(FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "yyyy.MM.dd.", from: review.date)) 작성")
         }
     }
     
@@ -80,7 +80,7 @@ struct DMReviewDetailView: View {
         ScrollView(.horizontal) {
             HStack{
                 ForEach(review.imageURLStrings, id: \.self) { urlString in
-                    DMAsyncImage(url: urlString)
+                    AsnycCacheImage(url: urlString)
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 100, height: 100)
                         .clipShape(RoundedRectangle(cornerRadius: 5))

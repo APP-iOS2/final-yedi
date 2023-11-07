@@ -268,7 +268,7 @@ final class UserAuth: ObservableObject {
     }
     
     func designerShopDataSet(shop: Shop) -> [String: Any] {
-        let dateFomatter = SingleTonDateFormatter.sharedDateFommatter
+        let dateFomatter = FirebaseDateFomatManager.sharedDateFommatter
      
         let changedDateFomatOpenHour = dateFomatter.changeDateString(transition: "HH", from: shop.openingHour)
         let changedDateFomatClosingHour = dateFomatter.changeDateString(transition: "HH", from: shop.closingHour)

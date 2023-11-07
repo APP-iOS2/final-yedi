@@ -54,12 +54,12 @@ struct CMHistoryCellView: View {
     
     /// 디데이 텍스트
     var dDayText: String {
-        let currentDateString = SingleTonDateFormatter.sharedDateFommatter.firebaseDate(from: Date())
-        let currentDate = SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "MM-dd", from: currentDateString)
-        let reservationDate = SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "MM-dd", from: reservation.reservationTime)
+        let currentDateString = FirebaseDateFomatManager.sharedDateFommatter.firebaseDate(from: Date())
+        let currentDate = FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "MM-dd", from: currentDateString)
+        let reservationDate = FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "MM-dd", from: reservation.reservationTime)
         
-        let startDate = SingleTonDateFormatter.sharedDateFommatter.changeStringToDate(dateString: currentDate)
-        let endDate = SingleTonDateFormatter.sharedDateFommatter.changeStringToDate(dateString: reservationDate)
+        let startDate = FirebaseDateFomatManager.sharedDateFommatter.changeStringToDate(dateString: currentDate)
+        let endDate = FirebaseDateFomatManager.sharedDateFommatter.changeStringToDate(dateString: reservationDate)
         let offsetComps = Calendar.current.dateComponents(
             [.year, .month, .day], from: startDate, to: endDate
         )
@@ -228,7 +228,7 @@ struct CMHistoryCellView: View {
                         print("Error fetching reservation list: \(error)")
                     }
                     
-                    reservationDate = SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "MM월 dd일 HH시 mm분", from: reservation.reservationTime)
+                    reservationDate = FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "MM월 dd일 HH시 mm분", from: reservation.reservationTime)
                 }
             }
         }

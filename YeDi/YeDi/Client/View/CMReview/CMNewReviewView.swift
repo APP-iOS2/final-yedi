@@ -93,7 +93,7 @@ struct CMNewReviewView: View {
                     let newReview = Review(
                         id: UUID().uuidString,
                         reviewer: clientId,
-                        date: SingleTonDateFormatter.sharedDateFommatter.firebaseDate(from: Date()),
+                        date: FirebaseDateFomatManager.sharedDateFommatter.firebaseDate(from: Date()),
                         keywordReviews: selectedKeywords,
                         designerScore: reviewScore,
                         content: reviewContent,

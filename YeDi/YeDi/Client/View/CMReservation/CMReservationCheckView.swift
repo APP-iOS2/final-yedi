@@ -16,10 +16,10 @@ struct CMReservationCheckView: View {
     @State private var scale = 0.5
     let reservation: Reservation
     var stringFormattedDate: String {
-        SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일 (EE)", from: reservation.reservationTime)
+        FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일 (EE)", from: reservation.reservationTime)
     }
     var stringFormattedTime: String {
-        SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "HH:mm", from: reservation.reservationTime)
+        FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "HH:mm", from: reservation.reservationTime)
     }
     var body: some View {
         VStack(spacing: 0) {
@@ -82,7 +82,7 @@ struct CMReservationCheckView: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
                 if postDetailViewModel.designer?.imageURLString != "" {
-                    DMAsyncImage(url: postDetailViewModel.designer?.imageURLString ?? "")
+                    AsnycCacheImage(url: postDetailViewModel.designer?.imageURLString ?? "")
                             .aspectRatio(contentMode: .fill)
                             .frame(maxWidth: 60, maxHeight: 60)
                             .clipShape(Circle())

@@ -65,7 +65,7 @@ struct CMReviewCell: View {
                         .multilineTextAlignment(.leading)
                     Spacer()
                     
-                    Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일", from: review.date))")
+                    Text("\(FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일", from: review.date))")
                         .font(.footnote)
                         .foregroundStyle(.gray)
                 }
@@ -73,7 +73,7 @@ struct CMReviewCell: View {
                 .padding(.leading)
                 
                 ZStack(alignment: .topTrailing) {
-                    DMAsyncImage(url: review.imageURLStrings[0])
+                    AsnycCacheImage(url: review.imageURLStrings[0])
                         .scaledToFill()
                         .frame(width: imageDimension, height: imageDimension)
                         .clipped()

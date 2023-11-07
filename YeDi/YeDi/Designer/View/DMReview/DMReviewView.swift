@@ -49,7 +49,7 @@ struct DMReviewCell: View {
     
     var body: some View {
         HStack {
-            DMAsyncImage(url: review.imageURLStrings[0])
+            AsnycCacheImage(url: review.imageURLStrings[0])
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 70, height: 70)
                 .clipShape(RoundedRectangle(cornerRadius: 5))

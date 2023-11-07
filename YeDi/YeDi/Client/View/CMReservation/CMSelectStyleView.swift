@@ -19,10 +19,10 @@ struct CMSelectStyleView: View {
     @State private var animationRange: [Int] = []
     @State private var value: Int = 0
     var stringFormattedDate: String {
-        SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일 (EE)", from: selectedStringDate)
+        FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일 (EE)", from: selectedStringDate)
     }
     var stringFormattedTime: String {
-        SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "HH:mm", from: selectedStringDate)
+        FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "HH:mm", from: selectedStringDate)
     }
     let selectedStringDate: String
     let selectedTime: Int

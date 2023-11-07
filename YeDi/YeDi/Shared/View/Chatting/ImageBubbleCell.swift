@@ -11,7 +11,7 @@ struct ImageBubbleCell: View {
     var imagePath: String
     
     var body: some View {
-        DMAsyncImage(url: imagePath)
+        AsnycCacheImage(url: imagePath)
             .aspectRatio(contentMode: .fit)
             .frame(maxWidth: 220)
     }

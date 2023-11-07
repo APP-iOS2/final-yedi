@@ -88,14 +88,14 @@ struct CMDesignerProfileReviewView: View {
                                         .lineLimit(2)
                                         .multilineTextAlignment(.leading)
                                     Spacer()
-                                    Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일", from: review.date))")
+                                    Text("\(FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일", from: review.date))")
                                         .font(.footnote)
                                         .foregroundStyle(.gray)
                                 }
                                 .padding(.vertical)
                                 .padding(.leading)
                                 ZStack(alignment: .topTrailing) {
-                                    DMAsyncImage(url: review.imageURLStrings[0])
+                                    AsnycCacheImage(url: review.imageURLStrings[0])
                                         .scaledToFill()
                                         .frame(width: imageDimension, height: imageDimension)
                                         .clipped()
@@ -134,7 +134,7 @@ struct CMDesignerProfileReviewView: View {
                                         .lineLimit(2)
                                         .multilineTextAlignment(.leading)
                                     Spacer()
-                                    Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일", from: review.date))")
+                                    Text("\(FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일", from: review.date))")
                                         .font(.footnote)
                                         .foregroundStyle(.gray)
                                 }
@@ -142,7 +142,7 @@ struct CMDesignerProfileReviewView: View {
                                 .padding(.leading)
                                 NavigationLink(destination: CMDesignerReviewDetailView(review: review)) {
                                     ZStack(alignment: .topTrailing) {
-                                        DMAsyncImage(url: review.imageURLStrings[0])
+                                        AsnycCacheImage(url: review.imageURLStrings[0])
                                             .scaledToFill()
                                             .frame(width: imageDimension, height: imageDimension)
                                             .clipped()

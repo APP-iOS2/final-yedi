@@ -14,7 +14,7 @@ struct DateDeviderCell: View {
     @Binding var devideDate: String
     
     private var chatDate: String {
-        let instance = SingleTonDateFormatter.sharedDateFommatter
+        let instance = FirebaseDateFomatManager.sharedDateFommatter
         let date = instance.changeDateString(transition: "yyyy-MM-dd", from: chat.date)
         return date
     }

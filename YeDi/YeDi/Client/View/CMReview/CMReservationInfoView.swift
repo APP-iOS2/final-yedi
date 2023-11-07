@@ -66,7 +66,7 @@ struct CMReservationInfoView: View {
                 designerName = cmHistoryViewModel.designer.name
                 designerRank = cmHistoryViewModel.designer.rank.rawValue
                 designerShop = cmHistoryViewModel.designer.shop?.shopName ?? "프리랜서"
-                reservationDate = SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "MM월 dd일 HH시 mm분", from: reservation.reservationTime)
+                reservationDate = FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "MM월 dd일 HH시 mm분", from: reservation.reservationTime)
                 for hairStyle in reservation.hairStyle {
                     styles.append(hairStyle.name)
                 }

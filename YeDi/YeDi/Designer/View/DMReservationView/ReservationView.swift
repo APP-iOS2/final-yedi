@@ -144,7 +144,7 @@ struct ReservationView: View {
                     .padding(.leading, 10)
             }
             HStack {
-                Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yy.MM.dd. HH:mm", from: reservation.reservationTime))")
+                Text("\(FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "yy.MM.dd. HH:mm", from: reservation.reservationTime))")
                     .font(.subheadline)
                     .fontWeight(.semibold)
                 Spacer()

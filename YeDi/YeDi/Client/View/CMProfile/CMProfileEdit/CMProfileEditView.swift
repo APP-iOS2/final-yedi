@@ -35,7 +35,7 @@ struct CMProfileEditView: View {
                         .font(.system(size: 80))
                         .padding([.top, .bottom])
                 } else {
-                    DMAsyncImage(url: clientPhotoURL)
+                    AsnycCacheImage(url: clientPhotoURL)
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 80, height: 80)
                         .clipShape(Circle())

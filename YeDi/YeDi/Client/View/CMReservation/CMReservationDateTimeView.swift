@@ -73,7 +73,7 @@ struct CMReservationDateTimeView: View {
 
             Spacer()
             NavigationLink {
-                CMSelectStyleView(isPresentedNavigation: $isPresentedNavigation, selectedStringDate: SingleTonDateFormatter.sharedDateFommatter.firebaseDate(from: selectedDate), selectedTime: selectedTime)
+                CMSelectStyleView(isPresentedNavigation: $isPresentedNavigation, selectedStringDate: FirebaseDateFomatManager.sharedDateFommatter.firebaseDate(from: selectedDate), selectedTime: selectedTime)
                     .environmentObject(postDetailViewModel)
                     .environmentObject(reservationViewModel)
             } label: {
@@ -320,8 +320,8 @@ private extension CMReservationDateTimeView {
     // MARK: - 선택 된 현재 년, 월을 문자열 배열로 반환
     /// 예시 : `["2023", "10"]`
     private func extraData() -> [String] {
-        let dateString = SingleTonDateFormatter.sharedDateFommatter.firebaseDate(from: currentDate)
-        let date = SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "YYYY MM", from: dateString)
+        let dateString = FirebaseDateFomatManager.sharedDateFommatter.firebaseDate(from: currentDate)
+        let date = FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "YYYY MM", from: dateString)
         return date.components(separatedBy: " ")
     }
     

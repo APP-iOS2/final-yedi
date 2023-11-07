@@ -17,6 +17,8 @@ final class ChattingListRoomViewModel: ObservableObject {
     @Published var unReadTotalCount: Int = 0
     @Published var isEmptyChattingList: Bool = true
     
+    let storeService = Firestore.firestore()
+    
     var getUnReadTotalCount: Int {
         get {
             var totalCount = 0
@@ -27,11 +29,8 @@ final class ChattingListRoomViewModel: ObservableObject {
         }
     }
     
-    let storeService = Firestore.firestore()
-    
     /// 채팅리스트 및 채팅방 메세지를 가지고오는 메소드
     func fetchChattingList(login type: UserType?) {
-        
          guard let userId = fetchUserUID() else {
              debugPrint("로그인 정보를 찾을 수 없음")
              isEmptyChattingList = true
@@ -49,17 +48,16 @@ final class ChattingListRoomViewModel: ObservableObject {
     
     /// 로그인한 User토큰으로 UserUID를 가지고오는 메소드
     /// - returns: userUID
-    final func fetchUserUID() -> String? {
+    private final func fetchUserUID() -> String? {
         return  Auth.auth().currentUser?.uid
     }
     
     /// 전달된 user UUID 값으로 채팅방 UUID리스트를 추출
     /// - 유저 Document의 이벤트 리스너가 채팅방 리스트가 추가 될 때마다 채팅방 정보를 갱신
     private final func fetchChattingRoomIdList(user uid: String, loginType: UserType) {
-        
         let docRef: DocumentReference
         
-        if loginType == UserType.client{
+        if loginType == .client {
             docRef = storeService.collection("clients").document(uid)
         } else {
             docRef = storeService.collection("designers").document(uid)
@@ -91,8 +89,7 @@ final class ChattingListRoomViewModel: ObservableObject {
     
     /// 채팅방의 메세지 내역을 가지고오는 메소드
     /// - 채팅방에서 가장 최근 메세지 한 개만 조회
-    final func fetchChattingBubble(chatRoom id: String) {
-        
+    private final func fetchChattingBubble(chatRoom id: String) {
         let bubblePath = "chatRooms/\(id)/bubbles"
         let ref = storeService.collection(bubblePath).order(by: "date", descending: true).limit(to: 1)
         
@@ -126,8 +123,7 @@ final class ChattingListRoomViewModel: ObservableObject {
     }
     
     /// 읽은 메세지 갯수를 가지고오는 메소드
-    private final func fetchUnReadMessageCount(chatRoom id: String, userId receive: String)  {
-        
+    private final func fetchUnReadMessageCount(chatRoom id: String, userId receive: String) {
         let path = "chatRooms/\(id)/bubbles"
         //내가 안 읽은 메세지 버블 갯수를 새야하니까, sender는 상대방이 보낸거, isRead는 false인거
         let ref = storeService.collection(path).whereField("sender", isNotEqualTo: receive).whereField("isRead", isEqualTo: false)
@@ -147,8 +143,7 @@ final class ChattingListRoomViewModel: ObservableObject {
     }
     
     /// 채팅방마다 유저 닉네임, url사진을 userProfile variable에 저장하는 메소드
-    final func fetchUserInfo(login type: UserType, chatRooms id: [String]) {
-        
+   private final func fetchUserInfo(login type: UserType, chatRooms id: [String]) {
         let colRef: CollectionReference
         
         // MARK: 상대방 유저정보가 필요 하므로 로그인한 계정과 반대인 Collection 탐색
@@ -164,11 +159,9 @@ final class ChattingListRoomViewModel: ObservableObject {
                     debugPrint("Error getting userProfile: \(error)")
                     return
                 }
-                
                 if let snapshot = snapshot, !snapshot.isEmpty {
                     for document in snapshot.documents {
                         var userInfo: ChatListUserInfo
-                        
                         if type == .client {
                             userInfo = ChatListUserInfo(uid: document.documentID,
                                                         name: document.data()["name"] as? String ?? "",

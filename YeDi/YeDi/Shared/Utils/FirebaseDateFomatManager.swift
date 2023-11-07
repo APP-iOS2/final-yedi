@@ -7,11 +7,11 @@
 
 import Foundation
 
-final class SingleTonDateFormatter {
+final class FirebaseDateFomatManager {
    
-    static var sharedDateFommatter: SingleTonDateFormatter = {
+    static var sharedDateFommatter: FirebaseDateFomatManager = {
         
-        let instance = SingleTonDateFormatter()
+        let instance = FirebaseDateFomatManager()
         
         return instance
         

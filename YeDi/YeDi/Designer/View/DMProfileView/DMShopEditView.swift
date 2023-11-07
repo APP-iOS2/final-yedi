@@ -13,7 +13,7 @@ import SwiftUI
 struct DMShopEditView: View {
     @EnvironmentObject var locationManager: LocationManager
     
-    let dateFomatter = SingleTonDateFormatter.sharedDateFommatter
+    let dateFomatter = FirebaseDateFomatManager.sharedDateFommatter
     
     @Binding var shop: Shop
     @Binding var rank: Rank
@@ -252,7 +252,7 @@ struct DMShopEditView: View {
     }
     
     private func convertDateString() {
-        let fomatter = SingleTonDateFormatter.sharedDateFommatter
+        let fomatter = FirebaseDateFomatManager.sharedDateFommatter
         
         shop.openingHour = fomatter.firebaseDate(from: openingHour)
         shop.closingHour = fomatter.firebaseDate(from: closingHour)
