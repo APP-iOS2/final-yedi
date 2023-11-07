@@ -93,6 +93,7 @@ struct ChattingListRoomView: View {
         }
     }
     
+    /// 채팅방 리스트 최근 메세지 날짜 표출형식 커스텀 메소드
     private func changetoDateFormat(_ messageDate: String) -> String {
         let dateFomatter = FirebaseDateFomatManager.sharedDateFommatter.firebaseDateFormat()
         let date = dateFomatter.date(from: messageDate) ?? Date()
@@ -106,7 +107,7 @@ struct ChattingListRoomView: View {
         } else {
             let currentYear = calendar.component(.year, from: Date())
             let messageYear = calendar.component(.year, from: date)
-                // 올해 년도의 메세지인 경우 월/일 반환
+            // 올해 년도의 메세지인 경우 월/일 반환
             if currentYear == messageYear {
                 dateFomatter.dateFormat = "MM/dd"
                 return dateFomatter.string(from: date)
