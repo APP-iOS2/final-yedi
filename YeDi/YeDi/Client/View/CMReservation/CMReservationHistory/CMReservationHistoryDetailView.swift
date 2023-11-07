@@ -197,7 +197,7 @@ struct CMReservationHistoryDetailView: View {
                 designerRank = designer.rank.rawValue
                 designerShop = shop.shopName
                 designerShopAddress = "\(shop.headAddress) \(shop.subAddress) \(shop.detailAddress)"
-                reservationDate = SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "MM월 dd일 HH시 mm분", from: reservation.reservationTime)
+                reservationDate = FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "MM월 dd일 HH시 mm분", from: reservation.reservationTime)
                 
                 for hairStyle in reservation.hairStyle {
                     styles.append(hairStyle.name)

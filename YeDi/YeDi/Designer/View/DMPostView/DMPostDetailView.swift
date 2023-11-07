@@ -15,7 +15,7 @@ struct DMPostDetailView: View {
     @EnvironmentObject var postViewModel: DMPostViewModel
     @StateObject var designerProfileViewModel = DMProfileViewModel.shared
     
-    let instance = SingleTonDateFormatter.sharedDateFommatter
+    let instance = FirebaseDateFomatManager.sharedDateFommatter
     
     @State var selectedPost: Post
     let safeArea: EdgeInsets

@@ -24,7 +24,7 @@ struct CMDesignerReviewDetailView: View {
                     Spacer()
                     VStack(alignment: .trailing) {
                         RatingView(score: review.designerScore, maxScore: 5, filledColor: .yellow)
-                        Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yy.MM.dd", from: review.date))")
+                        Text("\(FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "yy.MM.dd", from: review.date))")
                             .font(.footnote)
                             .foregroundStyle(.gray)
                     }

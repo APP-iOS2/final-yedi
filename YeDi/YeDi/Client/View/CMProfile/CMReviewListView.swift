@@ -65,7 +65,7 @@ struct CMReviewCell: View {
                         .multilineTextAlignment(.leading)
                     Spacer()
                     
-                    Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일", from: review.date))")
+                    Text("\(FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "yyyy년 MM월 dd일", from: review.date))")
                         .font(.footnote)
                         .foregroundStyle(.gray)
                 }

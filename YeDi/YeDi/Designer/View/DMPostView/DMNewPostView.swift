@@ -168,7 +168,7 @@ struct DMNewPostView: View {
             description: description,
             photos: photos,
             comments: 0,
-            timestamp: SingleTonDateFormatter.sharedDateFommatter.firebaseDate(from: Date()),
+            timestamp: FirebaseDateFomatManager.sharedDateFommatter.firebaseDate(from: Date()),
             hairCategory: hairCategory,
             price: Int(price) ?? 0
         )

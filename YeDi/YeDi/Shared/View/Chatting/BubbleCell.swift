@@ -12,7 +12,7 @@ struct BubbleCell: View {
     var isMyBubble: Bool
     
     private var chatTime: String {
-        let instance = SingleTonDateFormatter.sharedDateFommatter
+        let instance = FirebaseDateFomatManager.sharedDateFommatter
         let date = instance.changeDateString(transition: "MM/dd HH:mm", from: chat.date)
         return date
     }

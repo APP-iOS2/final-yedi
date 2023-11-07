@@ -94,7 +94,7 @@ struct ChattingListRoomView: View {
     }
     
     private func changetoDateFormat(_ messageDate: String) -> String {
-        let dateFomatter = SingleTonDateFormatter.sharedDateFommatter.firebaseDateFormat()
+        let dateFomatter = FirebaseDateFomatManager.sharedDateFommatter.firebaseDateFormat()
         let date = dateFomatter.date(from: messageDate) ?? Date()
         let calendar = Calendar.current
         

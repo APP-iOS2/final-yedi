@@ -54,7 +54,7 @@ struct DMReviewDetailView: View {
             
             Spacer()
             
-            Text("\(SingleTonDateFormatter.sharedDateFommatter.changeDateString(transition: "yyyy.MM.dd.", from: review.date)) 작성")
+            Text("\(FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "yyyy.MM.dd.", from: review.date)) 작성")
         }
     }
     
