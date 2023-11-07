@@ -47,37 +47,28 @@ class ChattingViewModel: ObservableObject {
                 }
                 
                 querySnapshot.documentChanges.forEach { diff in
-                    do {
-                        let bubble = try diff.document.data(as: CommonBubble.self)
-                        
-                        if (diff.type == .added) {
-                            let isDuplicate = self?.chattings.contains { exist in
-                                return exist.id == bubble.id
-                            }
-                            
-                            ///채팅에 새로운 버블 추가
-                            if let isDuplicate = isDuplicate {
-                                if !isDuplicate {
-                                    self?.chattings.append(bubble)
-                                }
-                            }
-                        }
-                        
-                        if (diff.type == .modified) {
-                            ///기존 채팅 버블 중 업데이트된 내용 반영
-                            self?.chattings = self?.updateChatting(chattings: self?.chattings ?? [], diff: bubble) ?? []
-                        }
-                    } catch {
+                    guard let bubble = try? diff.document.data(as: CommonBubble.self) else {
                         print("Error decoding bubble data : fetchFirstChattingBubbles()")
+                        return
+                    }
+                    
+                    switch diff.type {
+                    case .added:
+                        if !(self?.chattings.contains { $0.id == bubble.id } ?? false) {
+                            self?.chattings.append(bubble)
+                        }
+                    case .modified:
+                        self?.chattings = self?.updateChatting(chattings: self?.chattings ?? [], diff: bubble) ?? []
+                    default:
+                        break
                     }
                 }
                 
                 if ((self?.isFirstListening) != nil) { ///첫 Listener 호출
-                    self?.anyMoreChat() /// 더 불러올 채팅이 없는지 검사
                     self!.isFirstListening = false
                 }
-                
             }
+        self.anyMoreChat() /// 더 불러올 채팅이 없는지 검사
     }
     
     @MainActor
@@ -97,7 +88,7 @@ class ChattingViewModel: ObservableObject {
                     print("Error fetching documents: fetchMoreChattingBubble()")
                     return
                 }
-                var moreBubbles = documents.compactMap { try? $0.data(as: CommonBubble.self) }
+                let moreBubbles = documents.compactMap { try? $0.data(as: CommonBubble.self) }
                 self?.chattings = moreBubbles + (self?.chattings ?? [])
             }
         /// 더 불러올 채팅이 없는지 검사
@@ -120,7 +111,7 @@ class ChattingViewModel: ObservableObject {
                     print("Error fetching documents: fetchMoreChattingBubble()")
                     return
                 }
-                if let moreBubble = documents.first {
+                if documents.first != nil {
                     self?.anyMoreChats = true
                 } else {
                     self?.anyMoreChats = false
