@@ -11,9 +11,8 @@ import FirebaseFirestore
 
 @MainActor
 class CMHomeCellViewModel: ObservableObject {
-    @Published var isLiked: Bool = false
     @Published var designer: Designer?
-    
+    @Published var isLiked: Bool = false
     @Published var showHeartImage: Bool = false
     @Published var selectedImageIndex: Int = 0
     @Published var shouldShowMoreText: Bool = false
@@ -25,7 +24,6 @@ class CMHomeCellViewModel: ObservableObject {
         
         do {
             let document = try await designerRef.getDocument()
-            if let designerData = document.data() {
                 // Initialize the designer model using Codable
                 designer = try? document.data(as: Designer.self)
                 
@@ -38,7 +36,7 @@ class CMHomeCellViewModel: ObservableObject {
                 
                 // "shop" 정보를 디자이너 모델에 할당
                 designer?.shop = shopData.first
-            }
+            
         } catch {
             print("Error fetching designer document: \(error)")
         }
@@ -46,32 +44,27 @@ class CMHomeCellViewModel: ObservableObject {
 
     
     // 게시물의 찜 여부 확인
-    func checkIfLiked(forClientID clientID: String, post: Post) {
+    func checkIfLiked(forClientID clientID: String, post: Post) async {
         let db = Firestore.firestore()
-        
-        db.collection("likedPosts")
-            .whereField("clientID", isEqualTo: clientID)
-            .whereField("postID", isEqualTo: post.id ?? "")
-            .getDocuments { [weak self] snapshot, error in
-                guard let self = self else { return }
-                
-                if let error = error {
-                    print("Error checking liked post: \(error)")
-                } else {
-                    if (snapshot?.documents.first) != nil {
-                        // Firestore에서 해당 게시물을 찜되어 있는 경우
-                        DispatchQueue.main.async {
-                            self.isLiked = true
-                        }
-                    } else {
-                        // Firestore에서 해당 게시물을 찜되어 있지 않은 경우
-                        DispatchQueue.main.async {
-                            self.isLiked = false
-                        }
-                    }
-                }
+
+        do {
+            let querySnapshot = try await db.collection("likedPosts")
+                .whereField("clientID", isEqualTo: clientID)
+                .whereField("postID", isEqualTo: post.id ?? "")
+                .getDocuments()
+
+            if !querySnapshot.isEmpty {
+                // Firestore에서 해당 게시물을 찜되어 있는 경우
+                self.isLiked = true
+            } else {
+                // Firestore에서 해당 게시물을 찜되어 있지 않은 경우
+                self.isLiked = false
             }
+        } catch {
+            print("Error checking liked post: \(error)")
+        }
     }
+
     
     // 게시물 찜 관리
     func likePost(forClientID clientID: String, post: Post) {
@@ -88,7 +81,7 @@ class CMHomeCellViewModel: ObservableObject {
                     print("Error checking liked post: \(error)")
                 } else {
                     if (snapshot?.documents.first) != nil {
-                        // 이미 찜한 게시물이므로 아무 작업도 수행하지 않습니다.
+                        // 이미 찜한 게시물이므로 아무 작업도 수행하지 않음
                         // 여기에서 찜 상태를 변경하지 않고 함수 종료
                         return
                     }

@@ -52,7 +52,3 @@ struct CMDesignerProfileSegmentedView: View {
         .padding(.horizontal, 5)
     }
 }
-
-//#Preview {
-//    CMDesignerProfileSegmentedView()
-//}

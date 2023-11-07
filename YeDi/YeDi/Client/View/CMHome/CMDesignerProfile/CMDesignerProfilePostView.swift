@@ -51,7 +51,3 @@ struct CMDesignerProfilePostView: View {
         }
     }
 }
-
-//#Preview {
-//    CMDesignerProfilePostView()
-//}

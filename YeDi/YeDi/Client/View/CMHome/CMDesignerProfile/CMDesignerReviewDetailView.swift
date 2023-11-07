@@ -9,9 +9,7 @@ import SwiftUI
 
 struct CMDesignerReviewDetailView: View {
     var review: Review
-    
     private let imageDimension: CGFloat = (UIScreen.main.bounds.width) - 10
-    
     @State private var selectedImageIndex: Int = 0
     
     var body: some View {
@@ -79,12 +77,5 @@ struct CMDesignerReviewDetailView: View {
                 DismissButton(color: nil, action: {})
             }
         }
-        
-        
-        
     }
-}
-
-#Preview {
-    CMDesignerReviewDetailView(review: Review(reviewer: "", date: "", keywordReviews: [], designerScore: 0, content: "", imageURLStrings: [], reservationId: "", style: "", designer: ""))
 }

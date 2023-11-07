@@ -44,15 +44,15 @@ struct CMHomeCellView: View {
         })
         .fullScreenCover(isPresented: $showChattingRoom) {
             ChatRoomSheetView(chatRoomId: consultationViewModel.chatRoomId)
-                .onAppear {
+                .task {
                     if let currentClientID = userAuth.currentClientID {
-                        viewModel.checkIfLiked(forClientID: currentClientID, post: post)
+                        await viewModel.checkIfLiked(forClientID: currentClientID, post: post)
                     }
                 }
         }
         .task {
             await viewModel.fetchDesignerInfo(post: post)
-            viewModel.checkIfLiked(forClientID: userAuth.currentClientID ?? "", post: post)
+            await viewModel.checkIfLiked(forClientID: userAuth.currentClientID ?? "", post: post)
         }
     }
 }
@@ -270,9 +270,4 @@ private struct CMHomeCellPostDescriptionView: View {
         }
         .padding(.horizontal)
     }
-}
-
-#Preview {
-    CMHomeCellView(post: Post(id: "1", designerID: "디자이너 이름", location: "디자이너 근무 지점", title: "게시물 제목", description: "게시물 설명", photos: [Photo(id: "1", imageURL: "https://example.com/image1.jpg"), Photo(id: "2", imageURL: "https://example.com/image2.jpg")], comments: 0, timestamp: "타임스탬프", hairCategory: .Cut, price: 15000))
-        .environmentObject(ConsultationViewModel())
 }

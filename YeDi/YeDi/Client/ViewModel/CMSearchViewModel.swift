@@ -4,7 +4,7 @@ import FirebaseFirestore
 
 struct RecentItem: Identifiable {
     let id = UUID()
-    let isSearch: Bool // true for search, false for designer
+    let isSearch: Bool
     let text: String
     let designer: Designer?
 }
@@ -33,8 +33,6 @@ class CMSearchViewModel: ObservableObject {
     }
     
     init() {
-        loadRecentSearches()
-        loadRecentDesigners()
         loadData()
     }
     
@@ -111,14 +109,7 @@ class CMSearchViewModel: ObservableObject {
         }
     }
     
-    // 최근 검색어 불러오기
-    func loadRecentSearches() {
-        if let loadedSearches = UserDefaults.standard.array(forKey: "RecentSearches") as? [String] {
-            recentSearches = loadedSearches
-        }
-    }
-    
-    // 최근 방문 디자이너 추가
+    // 최근 방문 디자이너 저장
     func addRecentDesigner(_ designer: Designer) {
         if !recentItems.contains(where: { !$0.isSearch && $0.designer?.id == designer.id }) {
             let newItem = RecentItem(isSearch: false, text: designer.name, designer: designer)
@@ -138,16 +129,6 @@ class CMSearchViewModel: ObservableObject {
         if let index = recentItems.firstIndex(where: { !$0.isSearch && $0.designer?.id == designer.id }) {
             recentItems.remove(at: index)
             UserDefaults.standard.set(recentItems.map { $0.text }, forKey: "RecentItems")
-        }
-    }
-
-    
-    // 최근 방문 디자이너 불러오기
-    func loadRecentDesigners() {
-        if let loadedDesigners = UserDefaults.standard.array(forKey: "RecentDesigners") as? [String] {
-            // Match the loaded designer names with the designers in the main 'designers' array
-            let matchingDesigners = designers.filter { loadedDesigners.contains($0.name) }
-            recentDesigners = matchingDesigners
         }
     }
     
