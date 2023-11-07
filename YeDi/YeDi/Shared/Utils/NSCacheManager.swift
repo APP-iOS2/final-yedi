@@ -18,10 +18,12 @@ final class NSCacheManager {
     let memoryCache: NSCache<NSString, UIImage> = {
         
         let cache = NSCache<NSString, UIImage>()
-        let limitSize = 50 * 1048576 // 50MB
-        
-        cache.totalCostLimit = limitSize
-        
+        #if DEBUG
+        let limitCount = 200
+        #else
+        let limitCount = 50
+        #endif
+        cache.countLimit = limitCount
         return cache
     }()
 }
