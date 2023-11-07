@@ -33,7 +33,7 @@ struct CMReviewDetailView: View {
                 
                 
                 if review.imageURLStrings.count == 1 {
-                    DMAsyncImage(url: review.imageURLStrings[0])
+                    AsnycCacheImage(url: review.imageURLStrings[0])
                         .scaledToFill()
                         .frame(width: imageDimension, height: imageDimension)
                         .clipped()
@@ -41,7 +41,7 @@ struct CMReviewDetailView: View {
                 } else {
                     TabView(selection: $selectedImageIndex) {
                         ForEach(0..<review.imageURLStrings.count, id: \.self) { index in
-                            DMAsyncImage(url: review.imageURLStrings[index])
+                            AsnycCacheImage(url: review.imageURLStrings[index])
                                 .scaledToFill()
                                 .frame(width: imageDimension, height: imageDimension)
                                 .clipped()

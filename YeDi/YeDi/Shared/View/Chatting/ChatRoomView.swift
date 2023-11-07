@@ -90,7 +90,7 @@ struct ChatRoomView: View {
                         .background(Circle().fill(Color.quaternarySystemFill))
                         .foregroundColor(Color.primaryLabel)
                 } else {
-                    DMAsyncImage(url: userProfile.profileImageURLString)
+                    AsnycCacheImage(url: userProfile.profileImageURLString)
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 30, height: 30)
                         .clipShape(Circle())

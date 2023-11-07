@@ -95,7 +95,7 @@ struct CMDesignerProfileReviewView: View {
                                 .padding(.vertical)
                                 .padding(.leading)
                                 ZStack(alignment: .topTrailing) {
-                                    DMAsyncImage(url: review.imageURLStrings[0])
+                                    AsnycCacheImage(url: review.imageURLStrings[0])
                                         .scaledToFill()
                                         .frame(width: imageDimension, height: imageDimension)
                                         .clipped()
@@ -142,7 +142,7 @@ struct CMDesignerProfileReviewView: View {
                                 .padding(.leading)
                                 NavigationLink(destination: CMDesignerReviewDetailView(review: review)) {
                                     ZStack(alignment: .topTrailing) {
-                                        DMAsyncImage(url: review.imageURLStrings[0])
+                                        AsnycCacheImage(url: review.imageURLStrings[0])
                                             .scaledToFill()
                                             .frame(width: imageDimension, height: imageDimension)
                                             .clipped()

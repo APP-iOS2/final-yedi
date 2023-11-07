@@ -248,7 +248,7 @@ struct CMFeedDetailContentView: View {
             
             TabView(selection: $postDetailViewModel.selectedImageID) {
                 ForEach(postDetailViewModel.selectedImages, id: \.self) { imageString in
-                    DMAsyncImage(url:imageString)
+                    AsnycCacheImage(url:imageString)
                         .aspectRatio(contentMode: .fit)
                 }
             }

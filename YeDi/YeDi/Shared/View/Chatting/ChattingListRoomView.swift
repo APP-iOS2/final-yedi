@@ -38,7 +38,7 @@ struct ChattingListRoomView: View {
                                         .background(Circle().fill(Color.quaternarySystemFill))
                                         .foregroundColor(Color.primaryLabel)
                                 } else {
-                                    DMAsyncImage(url: imageURLString)
+                                    AsnycCacheImage(url: imageURLString)
                                         .aspectRatio(contentMode: .fill)
                                         .frame(width: 50, height: 50)
                                         .clipShape(Circle())

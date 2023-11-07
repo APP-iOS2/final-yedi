@@ -32,7 +32,7 @@ struct CMDesignerProfilePostView: View {
                     ForEach(designerPosts.prefix(6), id: \.id) { post in
                         NavigationLink(destination: CMFeedDetailView(post: post)) {
                             ZStack(alignment: .topTrailing) {
-                                DMAsyncImage(url: post.photos[0].imageURL)
+                                AsnycCacheImage(url: post.photos[0].imageURL)
                                     .scaledToFill()
                                     .frame(width: imageDimension, height: imageDimension)
                                     .clipped()

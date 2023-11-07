@@ -73,7 +73,7 @@ struct CMReviewCell: View {
                 .padding(.leading)
                 
                 ZStack(alignment: .topTrailing) {
-                    DMAsyncImage(url: review.imageURLStrings[0])
+                    AsnycCacheImage(url: review.imageURLStrings[0])
                         .scaledToFill()
                         .frame(width: imageDimension, height: imageDimension)
                         .clipped()

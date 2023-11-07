@@ -43,7 +43,7 @@ struct CMProfileView: View {
                             .foregroundColor(Color.primaryLabel)
                             .offset(y: -5)
                     } else {
-                        DMAsyncImage(url: clientPhotoURL)
+                        AsnycCacheImage(url: clientPhotoURL)
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 60, height: 60)
                             .clipShape(Circle())

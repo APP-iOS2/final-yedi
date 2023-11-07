@@ -118,7 +118,7 @@ struct DMPostDetailView: View {
         
         TabView(selection: $selectedTab) {
             ForEach(Array(selectedPost.photos.enumerated()), id: \.element.id) { index, photo in
-                DMAsyncImage(url: photo.imageURL)
+                AsnycCacheImage(url: photo.imageURL)
                     .aspectRatio(contentMode: .fill)
                     .frame(width: size.width, height: size.height * 0.6)
                     .clipped()

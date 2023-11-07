@@ -33,7 +33,7 @@ struct PhotoSelectionView: View {
 
                 ForEach(selectedPhotoURLs, id: \.self) { photoURL in
                     ZStack {
-                        DMAsyncImage(url: photoURL)
+                        AsnycCacheImage(url: photoURL)
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 100, height: 100)
                             .clipShape(RoundedRectangle(cornerRadius: 5))

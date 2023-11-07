@@ -135,7 +135,7 @@ private struct CMHomeCellPostImageView: View {
         // 1장 이상일 경우에는 TabView를 이용하여 사진을 넘길 수 있음
         if post.photos.count == 1 {
             NavigationLink(destination: CMFeedDetailView(post: post)) {
-                DMAsyncImage(url: post.photos[0].imageURL)
+                AsnycCacheImage(url: post.photos[0].imageURL)
                     .scaledToFill()
                     .frame(width: imageDimension, height: imageDimension)
                     .clipped()
@@ -152,7 +152,7 @@ private struct CMHomeCellPostImageView: View {
             TabView(selection: $viewModel.selectedImageIndex) {
                 ForEach(0..<post.photos.count, id: \.self) { index in
                     NavigationLink(destination: CMFeedDetailView(post: post)) {
-                        DMAsyncImage(url: post.photos[index].imageURL)
+                        AsnycCacheImage(url: post.photos[index].imageURL)
                             .scaledToFill()
                             .frame(width: imageDimension, height: imageDimension)
                             .clipped()

@@ -13,7 +13,7 @@ struct BoardBubbleCell: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            DMAsyncImage(url: boardBubble.imagePath ?? "")
+            AsnycCacheImage(url: boardBubble.imagePath ?? "")
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: 220)
             

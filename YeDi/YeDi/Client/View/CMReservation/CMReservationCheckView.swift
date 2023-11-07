@@ -82,7 +82,7 @@ struct CMReservationCheckView: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
                 if postDetailViewModel.designer?.imageURLString != "" {
-                    DMAsyncImage(url: postDetailViewModel.designer?.imageURLString ?? "")
+                    AsnycCacheImage(url: postDetailViewModel.designer?.imageURLString ?? "")
                             .aspectRatio(contentMode: .fill)
                             .frame(maxWidth: 60, maxHeight: 60)
                             .clipShape(Circle())
