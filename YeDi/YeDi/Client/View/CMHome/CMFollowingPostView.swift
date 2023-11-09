@@ -13,7 +13,6 @@ struct CMFollowingPostView: View {
     
     var body: some View {
         NavigationStack {
-            // MARK: Post
             VStack {
                 if postViewModel.posts.isEmpty {
                     Spacer()
