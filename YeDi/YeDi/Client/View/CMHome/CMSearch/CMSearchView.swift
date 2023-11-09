@@ -222,8 +222,6 @@ struct CMSearchView: View {
         }
         .onAppear {
             viewModel.loadData()
-            viewModel.loadRecentSearches()
-            viewModel.loadRecentDesigners()
             viewModel.loadRecentItems()
         }
     }

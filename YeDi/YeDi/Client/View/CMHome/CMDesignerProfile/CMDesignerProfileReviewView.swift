@@ -12,9 +12,7 @@ struct CMDesignerProfileReviewView: View {
     var reviews: [Review]
     var keywords: [String]
     var keywordCount: [(String, Int)]
-    
     private let imageDimension: CGFloat = (UIScreen.main.bounds.width / 3) - 1
-    
     @State private var showAllReviews = false
     @State private var showAllKeywords = false
     
@@ -178,7 +176,3 @@ struct CMDesignerProfileReviewView: View {
         }
     }
 }
-
-//#Preview {
-//    CMDesignerProfileReviewView()
-//}

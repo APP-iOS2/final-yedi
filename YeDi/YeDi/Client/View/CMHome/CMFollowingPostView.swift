@@ -31,8 +31,8 @@ struct CMFollowingPostView: View {
             }
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                postViewModel.fetchPostsForFollowedDesigners(clientID: userAuth.currentClientID ?? "")
+            .task {
+                await postViewModel.fetchPostsForFollowedDesigners(clientID: userAuth.currentClientID ?? "")
             }
         }
     }
