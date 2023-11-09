@@ -59,7 +59,6 @@ struct CMHomeCellView: View {
 
 // MARK: - Post Header
 private struct CMHomeCellHeaderView: View {
-    
     @ObservedObject private var viewModel: CMHomeCellViewModel
     private(set) var post: Post
     
@@ -117,7 +116,6 @@ private struct CMHomeCellHeaderView: View {
 
 // MARK: - Post Image
 private struct CMHomeCellPostImageView: View {
-    
     @EnvironmentObject var userAuth: UserAuth
     @ObservedObject private var viewModel: CMHomeCellViewModel
     private(set) var post: Post
@@ -190,7 +188,6 @@ private struct CMHomeCellPostImageView: View {
 
 // MARK: - Post Button
 private struct CMHomeCellPostButtonView: View {
-    
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var consultationViewModel: ConsultationViewModel
     @ObservedObject private var viewModel: CMHomeCellViewModel
@@ -236,7 +233,6 @@ private struct CMHomeCellPostButtonView: View {
 
 // MARK: - Post Description
 private struct CMHomeCellPostDescriptionView: View {
-    
     @ObservedObject private var viewModel: CMHomeCellViewModel
     private(set) var post: Post
     

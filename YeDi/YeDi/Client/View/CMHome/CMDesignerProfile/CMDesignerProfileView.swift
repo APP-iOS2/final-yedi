@@ -23,6 +23,8 @@ struct CMDesignerProfileView: View {
     @State private var markers: [MapMarker] = []
     @State private var isShowingMap = false
     
+    @State private var selectedSegment: String = "게시물"
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -65,6 +67,7 @@ struct CMDesignerProfileView: View {
                         
                         Spacer()
                         
+                        // 팔로우 버튼
                         Button {
                             Task {
                                 await viewModel.toggleFollow(designerUid: designer.designerUID)
@@ -95,6 +98,7 @@ struct CMDesignerProfileView: View {
                     }
                     
                     HStack {
+                        // 상담하기 버튼
                         Button {
                             consultationViewModel.setEmptyChatRoomList(customerId: userAuth.currentClientID ?? "", designerId: designer.designerUID)
                         } label: {
@@ -114,8 +118,8 @@ struct CMDesignerProfileView: View {
                         }
                         .padding(.trailing, 1)
                         
+                        // 예약하기 버튼
                         Button {
-                            
                             isPresentedNavigation.toggle()
                             isPresentedAlert.toggle()
                         } label: {
@@ -192,7 +196,23 @@ struct CMDesignerProfileView: View {
                 .padding()
                 
                 // MARK: Post & Review
-                CMDesignerProfileSegmentedView(designer: designer, designerPosts: viewModel.designerPosts, reviews: viewModel.reviews, keywords: viewModel.keywords, keywordCount: viewModel.keywordCount)
+                LazyVStack(pinnedViews: .sectionHeaders) {
+                    Section(header: HeaderView(selectedSegment: $selectedSegment)) {
+                        VStack {
+                            switch selectedSegment {
+                            case "게시물":
+                                CMDesignerProfilePostView(designer: designer, designerPosts: viewModel.designerPosts)
+                            case "리뷰":
+                                CMDesignerProfileReviewView(designer: designer, reviews: viewModel.reviews, keywords: viewModel.keywords, keywordCount: viewModel.keywordCount)
+                            default:
+                                Text("")
+                            }
+                            
+                            Spacer()
+                        }
+                    }
+                }
+                .padding(.horizontal, 5)
             }
         }
         .navigationTitle("")
@@ -236,6 +256,31 @@ struct CMDesignerProfileView: View {
             )
         }
         Spacer()
+    }
+}
+
+struct HeaderView: View {
+    @Binding var selectedSegment: String
+
+    var body: some View {
+        HStack(spacing: 0) {
+            ForEach(["게시물", "리뷰"], id: \.self) { segment in
+                Button(action: {
+                    selectedSegment = segment
+                }, label: {
+                    VStack {
+                        Text(segment)
+                            .fontWeight(selectedSegment == segment ? .semibold : .medium)
+                            .foregroundColor(Color(UIColor.label))
+                        Rectangle()
+                            .fill(selectedSegment == segment ? Color.primaryLabel : .gray6)
+                            .frame(width: 180, height: 3)
+                    }
+                })
+            }
+        }
+        .padding(.top)
+        .background(Rectangle().foregroundColor(Color.systemBackground))
     }
 }
 

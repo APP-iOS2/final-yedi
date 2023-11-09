@@ -13,7 +13,6 @@
 		0990A4332AE4DEC6006B4DC2 /* CMDesignerReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0990A4322AE4DEC6006B4DC2 /* CMDesignerReviewDetailView.swift */; };
 		09CA54B02AD661F300796113 /* CMSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CA54AF2AD661F300796113 /* CMSearchViewModel.swift */; };
 		09CDA90D2AE3CB25009FB75C /* CMDesignerProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDA90C2AE3CB25009FB75C /* CMDesignerProfileViewModel.swift */; };
-		09CDA90F2AE412A2009FB75C /* CMDesignerProfileSegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDA90E2AE412A2009FB75C /* CMDesignerProfileSegmentedView.swift */; };
 		09CDA9112AE41328009FB75C /* CMDesignerProfilePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDA9102AE41327009FB75C /* CMDesignerProfilePostView.swift */; };
 		09CDA9132AE4133A009FB75C /* CMDesignerProfileReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDA9122AE4133A009FB75C /* CMDesignerProfileReviewView.swift */; };
 		1D12F9A32AC5569F001219E8 /* DMEditPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */; };
@@ -161,7 +160,6 @@
 		0990A4322AE4DEC6006B4DC2 /* CMDesignerReviewDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMDesignerReviewDetailView.swift; sourceTree = "<group>"; };
 		09CA54AF2AD661F300796113 /* CMSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSearchViewModel.swift; sourceTree = "<group>"; };
 		09CDA90C2AE3CB25009FB75C /* CMDesignerProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMDesignerProfileViewModel.swift; sourceTree = "<group>"; };
-		09CDA90E2AE412A2009FB75C /* CMDesignerProfileSegmentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMDesignerProfileSegmentedView.swift; sourceTree = "<group>"; };
 		09CDA9102AE41327009FB75C /* CMDesignerProfilePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMDesignerProfilePostView.swift; sourceTree = "<group>"; };
 		09CDA9122AE4133A009FB75C /* CMDesignerProfileReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMDesignerProfileReviewView.swift; sourceTree = "<group>"; };
 		1D12F9A22AC5569F001219E8 /* DMEditPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMEditPostView.swift; sourceTree = "<group>"; };
@@ -318,7 +316,6 @@
 			isa = PBXGroup;
 			children = (
 				097D4BCB2AD90C0200D532F6 /* CMDesignerProfileView.swift */,
-				09CDA90E2AE412A2009FB75C /* CMDesignerProfileSegmentedView.swift */,
 				09CDA9102AE41327009FB75C /* CMDesignerProfilePostView.swift */,
 				09CDA9122AE4133A009FB75C /* CMDesignerProfileReviewView.swift */,
 				0990A4322AE4DEC6006B4DC2 /* CMDesignerReviewDetailView.swift */,
@@ -1027,7 +1024,6 @@
 				2F65BBA52AE7E25A00D84D37 /* CMReviewDetailView.swift in Sources */,
 				DC94ED592ADFDA540052AD6E /* TextAreaModifier.swift in Sources */,
 				1DD969A12ACFFD9A000AD7D2 /* AddDesignerDataView.swift in Sources */,
-				09CDA90F2AE412A2009FB75C /* CMDesignerProfileSegmentedView.swift in Sources */,
 				9615C78C2AD6A2FE00DD4F37 /* DMReviewView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

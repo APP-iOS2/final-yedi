@@ -12,7 +12,6 @@ struct CMRecommendPostView: View {
     
     var body: some View {
         NavigationStack {
-            // MARK: Post
             ScrollView {
                 LazyVStack(content: {
                     ForEach(postViewModel.posts, id: \.id) { post in
