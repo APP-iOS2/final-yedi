@@ -10,9 +10,8 @@ import Firebase
 
 struct ChattingListRoomView: View {
     @EnvironmentObject var userAuth: UserAuth
-    @EnvironmentObject var chattingListRoomViewModel : ChattingListRoomViewModel
+    @EnvironmentObject var chattingListRoomViewModel: ChattingListRoomViewModel
 
-    
     var body: some View {
         VStack {
             if chattingListRoomViewModel.isEmptyChattingList {

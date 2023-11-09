@@ -41,7 +41,7 @@ class ConsultationViewModel: ChattingViewModel {
                 let customerDocument = try transaction.getDocument(clientColRef.document(customerId))
                 let designerDocument = try transaction.getDocument(designerColRef.document(designerId))
                 
-                // 채팅방 생성 전 기존 채팅내역이 있는지 확인
+                    // 채팅방 생성 전 기존 채팅내역이 있는지 확인
                 let customerChatRooms = customerDocument.get("chatRooms") as? [String] ?? []
                 let designerChatRooms = designerDocument.get("chatRooms") as? [String] ?? []
                 
@@ -53,7 +53,7 @@ class ConsultationViewModel: ChattingViewModel {
                     !$0.isEmpty && designerChatRooms.contains($0)
                 }
                 
-                // 채팅방 생성
+                    // 채팅방 생성
                 DispatchQueue.main.async {
                     if commonChatRooms.count > 0 {
                         super.chatRoomId = commonChatRooms.first ?? ""
@@ -69,8 +69,7 @@ class ConsultationViewModel: ChattingViewModel {
                 errorPointer?.pointee = fetchError
             }
             return
-        })
-        { (object, error) in
+        }, completion: { _, error in
             if let error = error {
                 debugPrint("Transaction failed: \(error)")
                 self.showChattingRoom = false
@@ -78,8 +77,7 @@ class ConsultationViewModel: ChattingViewModel {
                 debugPrint("Transaction successfully committed!")
                 self.showChattingRoom = true
             }
-        }
-        
+        })
     }
     
     final func setEmptyChatRoomList(customerId: String, designerId: String) {
@@ -120,8 +118,7 @@ class ConsultationViewModel: ChattingViewModel {
                 errorPointer?.pointee = fetchError
             }
             return
-        })
-        { (object, error) in
+        }, completion:  { (object, error) in
             if let error = error {
                 debugPrint("Transaction failed: \(error)")
                 self.showChattingRoom = false
@@ -129,7 +126,6 @@ class ConsultationViewModel: ChattingViewModel {
                 debugPrint("Transaction successfully committed!")
                 self.showChattingRoom = true
             }
-        }
-        
+        })
     }
 }

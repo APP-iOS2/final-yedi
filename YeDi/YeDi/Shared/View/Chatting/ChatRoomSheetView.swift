@@ -13,8 +13,8 @@ struct ChatRoomSheetView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
-        NavigationStack{
-            VStack{
+        NavigationStack {
+            VStack {
                 ChatRoomView(chatRoomId: chatRoomId)
                     .onDisappear {
                         consultationViewModel.showChattingRoom = false

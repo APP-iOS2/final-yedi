@@ -20,13 +20,11 @@ final class ChattingListRoomViewModel: ObservableObject {
     let storeService = Firestore.firestore()
     
     var getUnReadTotalCount: Int {
-        get {
-            var totalCount = 0
-            for key in unReadCount.keys {
-                totalCount += unReadCount[key] ?? 0
-            }
-            return totalCount
+        var totalCount = 0
+        for key in unReadCount.keys {
+            totalCount += unReadCount[key] ?? 0
         }
+        return totalCount
     }
     
     /// 채팅리스트 및 채팅방 메세지를 가지고오는 메소드
@@ -63,13 +61,13 @@ final class ChattingListRoomViewModel: ObservableObject {
             docRef = storeService.collection("designers").document(uid)
         }
         
-        docRef.addSnapshotListener{[weak self] (snapshot, error) in
+        docRef.addSnapshotListener {[weak self] (snapshot, error) in
             if let error = error {
                 debugPrint("Error getting cahtRooms: \(error)")
             } else if let document = snapshot, document.exists {
                 guard var chatRooms = document.data()?["chatRooms"] as? [String] else { return }
                 
-                chatRooms = chatRooms.compactMap{ $0.trimmingCharacters(in: .whitespaces) }.filter({ !$0.isEmpty })
+                chatRooms = chatRooms.compactMap {$0.trimmingCharacters(in: .whitespaces)}.filter({ !$0.isEmpty })
                 self?.fetchUserInfo(login: loginType, chatRooms: chatRooms)
                 if chatRooms.count < 1 {
                     self?.isEmptyChattingList = true
@@ -93,7 +91,7 @@ final class ChattingListRoomViewModel: ObservableObject {
         let bubblePath = "chatRooms/\(id)/bubbles"
         let ref = storeService.collection(bubblePath).order(by: "date", descending: true).limit(to: 1)
         
-        ref.addSnapshotListener{[weak self] snapshot, error in
+        ref.addSnapshotListener {[weak self] snapshot, error in
             var bubbles: [CommonBubble] = []
             
             if let error = error {
@@ -147,7 +145,7 @@ final class ChattingListRoomViewModel: ObservableObject {
         let colRef: CollectionReference
         
         // MARK: 상대방 유저정보가 필요 하므로 로그인한 계정과 반대인 Collection 탐색
-        if type == .client{
+        if type == .client {
             colRef = storeService.collection("designers")
         } else {
             colRef = storeService.collection("clients")

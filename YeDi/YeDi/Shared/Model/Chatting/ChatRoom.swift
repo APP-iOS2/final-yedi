@@ -12,4 +12,3 @@ struct ChatRoom: Codable, Equatable {
     var chattingBubles: [CommonBubble]?
     var totalUnReadCount: Int?
 }
-
