@@ -27,7 +27,8 @@ class ChattingViewModel: ObservableObject {
     
     var isFirstListening: Bool = true ///현재 채팅을 불러오는 것이 처음 인지를 체크하기 위한 변수
     
-    deinit { ///deinit 확인용 메서드
+    ///deinit 확인용 메서드
+    deinit {
         //print("deinit ChattingViewModel()")
     }
     
@@ -42,13 +43,13 @@ class ChattingViewModel: ObservableObject {
             .order(by: "date")
             .addSnapshotListener { [weak self] querySnapshot, error in
                 guard let querySnapshot = querySnapshot else {
-                    print("Error fetching documents: fetchFirstChattingBubbles()")
+                    print("Error fetching documents: fetchFirstChattingBubbles() : \(String(describing: error))")
                     return
                 }
                 
                 querySnapshot.documentChanges.forEach { diff in
                     guard let bubble = try? diff.document.data(as: CommonBubble.self) else {
-                        print("Error decoding bubble data : fetchFirstChattingBubbles()")
+                        print("Error decoding bubble data : fetchFirstChattingBubbles() : \(String(describing: error))")
                         return
                     }
                     
@@ -64,9 +65,10 @@ class ChattingViewModel: ObservableObject {
                     }
                 }
                 
-                if ((self?.isFirstListening) != nil) { ///첫 Listener 호출
+                ///첫 리스너 호출
+                if (self?.isFirstListening) != nil {
                     self!.isFirstListening = false
-                }
+                }   
             }
         self.anyMoreChat() /// 더 불러올 채팅이 없는지 검사
     }
@@ -85,7 +87,7 @@ class ChattingViewModel: ObservableObject {
             .order(by: "date")          ///채팅의 순서 date 기준
             .getDocuments { [weak self] querySnapshot, error in
                 guard let documents = querySnapshot?.documents else {
-                    print("Error fetching documents: fetchMoreChattingBubble()")
+                    print("Error fetching documents: fetchMoreChattingBubble() : \(String(describing: error))")
                     return
                 }
                 let moreBubbles = documents.compactMap { try? $0.data(as: CommonBubble.self) }
@@ -108,7 +110,7 @@ class ChattingViewModel: ObservableObject {
             .order(by: "date") ///채팅의 순서 date 기준
             .getDocuments { [weak self] querySnapshot, error in
                 guard let documents = querySnapshot?.documents else {
-                    print("Error fetching documents: fetchMoreChattingBubble()")
+                    print("Error fetching documents: fetchMoreChattingBubble() : \(String(describing: error))")
                     return
                 }
                 if documents.first != nil {
@@ -122,7 +124,7 @@ class ChattingViewModel: ObservableObject {
     /// 모든 상대방 버블을 조회하여 "isRead" 필드의 값을 변경하는 함수
     func updateChattingBubbleReadState() {
         for documentId in receivedBubbleId {
-            storeService.collection(storePath).document(documentId).updateData(["isRead" : true])
+            storeService.collection(storePath).document(documentId).updateData(["isRead": true])
         }
     }
     
@@ -160,9 +162,9 @@ class ChattingViewModel: ObservableObject {
     func sendBoardBubble(content: String, imagePath: String, sender: String) {
         let instance = FirebaseDateFomatManager.sharedDateFommatter
         
-        let bubble = CommonBubble(content: content, imagePath: imagePath, date: "\(instance.firebaseDate(from: Date()))", sender: sender, isRead: false
-                                  
-        )
+        let bubble = CommonBubble(content: content, imagePath: imagePath,
+                                  date: "\(instance.firebaseDate(from: Date()))",
+                                  sender: sender, isRead: false)
         
         sendBubble(bubble: bubble, chatRoomId: chatRoomId)
     }
@@ -175,11 +177,10 @@ class ChattingViewModel: ObservableObject {
         
         self.storageRef = storageRef.child("\(bubble.id).jpg")
         
-        _ = storageRef.putData(imageData, metadata: nil) {
-            [weak self] metadata, error in
+        _ = storageRef.putData(imageData, metadata: nil) { [weak self] metadata, error in
             
             guard metadata != nil else {
-                print("이미지 업로드 중 에러 발생")
+                print("sendImageBubble() 이미지 업로드 중 에러 발생: \(String(describing: error))")
                 return
             }
             
@@ -187,13 +188,15 @@ class ChattingViewModel: ObservableObject {
             self?.storageRef.downloadURL { [weak self] url, error in
                 
                 guard url != nil else {
-                    print("이미지 URL생성 중 에러 발생")
+                    print("sendImageBubble() 이미지 URL생성 중 에러 발생: \(String(describing: error))")
                     return
                 }
                 
                 let imageURL = "\(String(describing: url!))"
                 
-                let updatedBubble = CommonBubble(imagePath: "\(imageURL)", date: "\(instance.firebaseDate(from: Date()))", sender: sender, isRead: false)
+                let updatedBubble = CommonBubble(imagePath: "\(imageURL)", 
+                                                 date: "\(instance.firebaseDate(from: Date()))",
+                                                 sender: sender, isRead: false)
                 
                 self?.sendBubble(bubble: updatedBubble, chatRoomId: id)
                 
@@ -208,10 +211,10 @@ class ChattingViewModel: ObservableObject {
         let databasePosts = Firestore.firestore().collection("posts/\(postID)")
         
         ///게시물을 지정된 구조체형에 맞게 변환
-        databasePosts.getDocuments { [weak self] snapshot, error in
+        databasePosts.getDocuments { [weak self] snapshot, _ in
             let id = postID
             
-            if let docData = snapshot?.documents as? [String:Any],
+            if let docData = snapshot?.documents as? [String: Any],
                let designerID = docData["designerID"] as? String,
                let location = docData["location"] as? String,
                let title = docData["title"] as? String,
@@ -219,7 +222,7 @@ class ChattingViewModel: ObservableObject {
                let hairCategory = docData["hairCategory"] as? HairCategory,
 
                let price = docData["price"] as? Int,
-               let photosDataArray = docData["photos"] as? [[String:Any]] {
+               let photosDataArray = docData["photos"] as? [[String: Any]] {
                 
                 // photos 필드 처리
                 var photos: [Photo] = []
@@ -234,7 +237,9 @@ class ChattingViewModel: ObservableObject {
                     }
                 }
                 
-                let post = Post(id: id, designerID: designerID, location: location, title: title, description: description, photos: photos, comments: 0, timestamp: "", hairCategory: hairCategory, price: price)
+                let post = Post(id: id, designerID: designerID, location: location, title: title,
+                                description: description, photos: photos, comments: 0,
+                                timestamp: "", hairCategory: hairCategory, price: price)
                 ///새로 생성된 채팅방에 바로 게시물 버블 보내기
                 self?.sendBoardBubble(content: "이 게시물 보고 상담하러 왔어요", imagePath: post.photos[0].imageURL, sender: sender)
             }
@@ -259,7 +264,7 @@ class ChattingViewModel: ObservableObject {
         let colRef: CollectionReference
         
         // MARK: 상대방 유저정보가 필요 하므로 로그인한 계정과 반대인 Collection 탐색
-        if type == UserType.client{
+        if type == UserType.client {
             colRef = storeService.collection("designers")
         } else {
             colRef = storeService.collection("clients")
@@ -318,5 +323,3 @@ class ChattingViewModel: ObservableObject {
         return date
     }
 }
-
-
