@@ -63,4 +63,3 @@ class CMLikePostListViewModel: ObservableObject {
             }
     }
 }
-

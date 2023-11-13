@@ -166,12 +166,11 @@ class CMDesignerProfileViewModel: ObservableObject {
                     print("No documents")
                     return
                 }
-                self.reviews = documents.compactMap{ document in
+                self.reviews = documents.compactMap { document in
                     try? document.data(as: Review.self)
                 }
             }
     }
-    
     
     func fetchKeywords(designerUID: String) {
         let db = Firestore.firestore()
@@ -207,6 +206,4 @@ class CMDesignerProfileViewModel: ObservableObject {
                 }
             }
     }
-    
-    
 }

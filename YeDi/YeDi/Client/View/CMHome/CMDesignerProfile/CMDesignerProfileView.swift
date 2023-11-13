@@ -165,8 +165,6 @@ struct CMDesignerProfileView: View {
                                     Image(systemName: isShowingMap ? "chevron.up" : "chevron.down")
                                         .foregroundStyle(.gray)
                                 }
-
-                            
                         }
                         if isShowingMap {
                             Map(coordinateRegion: $region, annotationItems: markers) { marker in
@@ -212,7 +210,7 @@ struct CMDesignerProfileView: View {
                         }
                     }
                 }
-                .padding(.horizontal, 5)
+                .padding([.leading, .trailing], 5)
             }
         }
         .navigationTitle("")
@@ -300,7 +298,6 @@ struct RatingView: View {
         }
     }
 }
-
 
 #Preview {
     CMDesignerProfileView(designer: Designer(name: "양파쿵야", email: "", phoneNumber: "", designerScore: 0, reviewCount: 0, followerCount: 15430020, skill: [], chatRooms: [], birthDate: "", gender: "", rank: .Owner, designerUID: ""))

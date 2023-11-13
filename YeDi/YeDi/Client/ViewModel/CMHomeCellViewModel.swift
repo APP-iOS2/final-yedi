@@ -24,35 +24,34 @@ class CMHomeCellViewModel: ObservableObject {
         
         do {
             let document = try await designerRef.getDocument()
-                // Initialize the designer model using Codable
-                designer = try? document.data(as: Designer.self)
-                
-                // "shop" 하위 컬렉션을 가져오기
-                let shopCollectionRef = designerRef.collection("shop")
-                let shopSnapshot = try await shopCollectionRef.getDocuments()
-                let shopData = shopSnapshot.documents.compactMap { document in
-                    return try? document.data(as: Shop.self)
-                }
-                
-                // "shop" 정보를 디자이너 모델에 할당
-                designer?.shop = shopData.first
+            // Initialize the designer model using Codable
+            designer = try? document.data(as: Designer.self)
+            
+            // "shop" 하위 컬렉션을 가져오기
+            let shopCollectionRef = designerRef.collection("shop")
+            let shopSnapshot = try await shopCollectionRef.getDocuments()
+            let shopData = shopSnapshot.documents.compactMap { document in
+                return try? document.data(as: Shop.self)
+            }
+            
+            // "shop" 정보를 디자이너 모델에 할당
+            designer?.shop = shopData.first
             
         } catch {
             print("Error fetching designer document: \(error)")
         }
     }
-
     
     // 게시물의 찜 여부 확인
     func checkIfLiked(forClientID clientID: String, post: Post) async {
         let db = Firestore.firestore()
-
+        
         do {
             let querySnapshot = try await db.collection("likedPosts")
                 .whereField("clientID", isEqualTo: clientID)
                 .whereField("postID", isEqualTo: post.id ?? "")
                 .getDocuments()
-
+            
             if !querySnapshot.isEmpty {
                 // Firestore에서 해당 게시물을 찜되어 있는 경우
                 self.isLiked = true
@@ -64,7 +63,6 @@ class CMHomeCellViewModel: ObservableObject {
             print("Error checking liked post: \(error)")
         }
     }
-
     
     // 게시물 찜 관리
     func likePost(forClientID clientID: String, post: Post) {
@@ -130,4 +128,3 @@ class CMHomeCellViewModel: ObservableObject {
             }
     }
 }
-

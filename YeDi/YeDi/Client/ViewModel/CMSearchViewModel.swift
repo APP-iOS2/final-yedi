@@ -17,7 +17,6 @@ class CMSearchViewModel: ObservableObject {
     @Published var recentItems: [RecentItem] = []
     @Published var isTextFieldActive: Bool = false
     
-    
     private let db = Firestore.firestore()
     
     var filterDesigners: [Designer] {
@@ -76,7 +75,6 @@ class CMSearchViewModel: ObservableObject {
                 }
             }
             
-            
             // Wait for all tasks to complete
             dispatchGroup.notify(queue: .main) {
                 // The designersWithShops array contains all designers with related shop data
@@ -122,7 +120,6 @@ class CMSearchViewModel: ObservableObject {
             UserDefaults.standard.set(recentItems.map { $0.text }, forKey: "RecentItems")
         }
     }
-    
     
     // 최근 방문 디자이너 삭제
     func removeRecentDesigner(_ designer: Designer) {

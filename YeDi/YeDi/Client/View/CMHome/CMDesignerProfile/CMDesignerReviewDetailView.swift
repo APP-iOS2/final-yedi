@@ -29,7 +29,6 @@ struct CMDesignerReviewDetailView: View {
                     
                 }
                 
-                
                 if review.imageURLStrings.count == 1 {
                     AsnycCacheImage(url: review.imageURLStrings[0])
                         .scaledToFill()

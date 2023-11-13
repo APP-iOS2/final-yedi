@@ -21,7 +21,6 @@ struct CMRecommendPostView: View {
                                 if post.id == postViewModel.posts.last?.id {
                                     await postViewModel.fetchPosts()
                                     
-                                    
                                 }
                             }
                     }
