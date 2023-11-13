@@ -105,7 +105,7 @@ private struct CMHomeCellHeaderView: View {
                             .font(.callout)
                             .foregroundStyle(.gray)
                     }
-                    .padding(.leading,4)
+                    .padding(.leading, 4)
                     Spacer()
                 }
                 .padding(.horizontal)
@@ -167,7 +167,7 @@ private struct CMHomeCellPostImageView: View {
                                         }
                                         .padding()
                                 }
-                                    .frame(maxWidth: .infinity, alignment: .topTrailing),alignment: .topTrailing
+                                    .frame(maxWidth: .infinity, alignment: .topTrailing), alignment: .topTrailing
                             )
                     }
                 }

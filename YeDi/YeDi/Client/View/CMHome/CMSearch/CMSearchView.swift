@@ -47,9 +47,9 @@ private struct SearchTextFieldView: View {
                     }
                 
                 if !viewModel.searchText.isEmpty {
-                    Button(action: {
+                    Button {
                         viewModel.searchText = ""
-                    }) {
+                    } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundColor(.gray)
                     }
@@ -78,10 +78,10 @@ private struct SearchRecentItemView: View {
                         .foregroundStyle(Color.primaryLabel)
                     Spacer()
                     if !viewModel.recentItems.isEmpty {
-                        Button(action: {
+                        Button {
                             viewModel.removeAllRecentItems()
                             viewModel.recentDesigners.removeAll()
-                        }) {
+                        } label: {
                             Text("전체 삭제")
                                 .foregroundColor(Color.primaryLabel)
                         }
@@ -233,7 +233,7 @@ private struct SearchResultView: View {
                                                 .foregroundStyle(.gray)
                                         }
                                     }
-                                    .padding(.leading,5)
+                                    .padding(.leading, 5)
                                     Spacer()
                                 }
                             }
@@ -255,7 +255,6 @@ private struct SearchResultView: View {
         }
     }
 }
-
 
 #Preview {
     CMSearchView()

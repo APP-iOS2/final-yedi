@@ -58,7 +58,6 @@ struct CMLikePostListView: View {
     }
 }
 
-
 #Preview {
     CMLikePostListView()
         .environmentObject(UserAuth())

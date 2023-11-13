@@ -54,9 +54,9 @@ struct CMDesignerProfileReviewView: View {
                         .padding(.horizontal)
                     }
                     if !showAllKeywords && keywordCount.count > 4 {
-                        Button(action: {
+                        Button {
                             showAllKeywords = true
-                        }) {
+                        } label: {
                             Image(systemName: "chevron.down")
                                 .foregroundStyle(Color.primaryLabel)
                         }
@@ -162,9 +162,9 @@ struct CMDesignerProfileReviewView: View {
                         }
                     }
                     if !showAllReviews && reviews.count > 4 {
-                        Button(action: {
+                        Button {
                             showAllReviews = true
-                        }) {
+                        } label: {
                             Image(systemName: "chevron.down")
                                 .foregroundStyle(Color.primaryLabel)
                         }
