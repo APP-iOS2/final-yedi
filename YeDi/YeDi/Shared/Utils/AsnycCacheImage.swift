@@ -52,7 +52,7 @@ struct AsnycCacheImage: View {
     
     // MARK: - 스켈레톤 뷰
     var skeletonView: some View {
-        GeometryReader { geometry in
+        GeometryReader { _ in
             let gradient = Gradient(colors: [Color.gray.opacity(0.5), Color.gray.opacity(0.3), Color.gray.opacity(0.5)])
             let startPoint = skeletonAnimationTrigger ? UnitPoint(x: -1, y: 0.5) : UnitPoint(x: 0, y: 0.5)
             let endPoint = skeletonAnimationTrigger ? UnitPoint(x: 1, y: 0.5) : UnitPoint(x: 2, y: 0.5)
