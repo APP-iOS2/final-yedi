@@ -45,7 +45,7 @@ struct LoginView: View {
             Text(cautionLoginFailed)
                 .cautionTextStyle()
             
-            LoginButton(.client)
+            loginButton
         }
         .padding(.horizontal)
     }
@@ -58,7 +58,7 @@ struct LoginView: View {
             Text(cautionLoginFailed)
                 .cautionTextStyle()
             
-            LoginButton(.designer)
+            loginButton
         }
         .padding(.horizontal)
     }
@@ -101,7 +101,7 @@ struct LoginView: View {
         }
     }
     
-    private func LoginButton(_ userType: UserType) -> some View {
+    private var loginButton: some View {
         VStack {
             Button {
                 userAuth.signIn(email, password, userType) { success in

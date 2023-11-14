@@ -24,7 +24,15 @@ struct AuthHomeView: View {
                     .foregroundStyle(Color.separator)
                     .padding(.horizontal)
                 
-                navigationLinkView
+                HStack {
+                    resetPasswordView
+                    
+                    Text(" · ")
+                        .foregroundStyle(Color.gray5)
+                    
+                    registerView
+                }
+                .padding(.top)
                 
                 Spacer()
             }
@@ -75,37 +83,32 @@ struct AuthHomeView: View {
             
             LoginView(userType: selectedSegment)
         }
-        .padding(.bottom, 50)
+        .padding(.bottom, 30)
     }
     
-    private var navigationLinkView: some View {
-        HStack {
-            NavigationLink {
-                ResetPasswordView()
-            } label: {
-                Text("비밀번호 찾기")
-            }
-            
-            Text("|")
-                .foregroundStyle(Color.gray5)
-            
-            switch selectedSegment {
-            case .client:
-                NavigationLink {
-                    RegisterView(userType: selectedSegment)
-                } label: {
-                    Text("고객 회원가입")
-                }
-            case .designer:
-                NavigationLink {
-                    RegisterView(userType: selectedSegment)
-                } label: {
-                    Text("디자이너 회원가입")
-                }
-            }
-            
+    private var resetPasswordView: some View {
+        NavigationLink {
+            ResetPasswordView(userType: selectedSegment)
+        } label: {
+            Text("비밀번호 찾기")
         }
-        .padding(.vertical)
+    }
+    
+    private var registerView: some View {
+        switch selectedSegment {
+        case .client:
+            NavigationLink {
+                RegisterView(userType: selectedSegment)
+            } label: {
+                Text("고객 회원가입")
+            }
+        case .designer:
+            NavigationLink {
+                RegisterView(userType: selectedSegment)
+            } label: {
+                Text("디자이너 회원가입")
+            }
+        }
     }
 }
 

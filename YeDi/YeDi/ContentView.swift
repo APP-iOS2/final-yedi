@@ -20,35 +20,23 @@ struct ContentView: View {
     @EnvironmentObject var chattingListRoomViewModel: ChattingListRoomViewModel
     
     var body: some View {
-        if userAuth.isLogin {
-            if $userAuth.userSession != nil {
-                switch userAuth.userType {
-                case .client:
-                    ClientMainTabView()
-                        .environmentObject(locationManager)
-                        .environmentObject(cmProfileViewModel)
-                        .environmentObject(cmHistoryViewModel)
-                        .environmentObject(reviewViewModel)
-                case .designer:
-                    DesignerMainTabView()
-                        .environmentObject(locationManager)
-                        .environmentObject(dmPostViewModel)
-                case .none:
-                    EmptyView()
-                }
+        if userAuth.isClientLogin {
+            if userAuth.clientSession != nil {
+                ClientMainTabView()
+                    .environmentObject(locationManager)
+                    .environmentObject(cmProfileViewModel)
+                    .environmentObject(cmHistoryViewModel)
+                    .environmentObject(reviewViewModel)
+            }
+        } else if userAuth.isDesignerLogin {
+            if userAuth.designerSession != nil {
+                DesignerMainTabView()
+                    .environmentObject(locationManager)
+                    .environmentObject(dmPostViewModel)
             }
         } else {
             AuthHomeView()
         }
-//        let _ = print(
-//            """
-//            ================================================================
-//            user type: \(String(describing: userAuth.userType))
-//            user session: \(String(describing: userAuth.userSession?.uid))
-//            client id: \(String(describing: userAuth.currentClientID))
-//            designer id: \(String(describing: userAuth.currentDesignerID))
-//            """
-//        )
     }
 }
 
