@@ -141,7 +141,6 @@
 		DC76954F2AD088DB00D2FB69 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC76954E2AD088DB00D2FB69 /* AuthViewModel.swift */; };
 		DC7695532AD08A3600D2FB69 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695522AD08A3600D2FB69 /* RegisterView.swift */; };
 		DC7695B32ADC007900D2FB69 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695B22ADC007900D2FB69 /* ResetPasswordView.swift */; };
-		DC7695B52ADC148300D2FB69 /* UpdatePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695B42ADC148300D2FB69 /* UpdatePasswordView.swift */; };
 		DC7695B92ADCD56A00D2FB69 /* AuthRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695B82ADCD56A00D2FB69 /* AuthRegex.swift */; };
 		DC7695BD2ADCF1CA00D2FB69 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695BC2ADCF1CA00D2FB69 /* View.swift */; };
 		DC7695C12ADCFBED00D2FB69 /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7695C02ADCFBED00D2FB69 /* DismissButton.swift */; };
@@ -284,7 +283,6 @@
 		DC76954E2AD088DB00D2FB69 /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		DC7695522AD08A3600D2FB69 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		DC7695B22ADC007900D2FB69 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
-		DC7695B42ADC148300D2FB69 /* UpdatePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordView.swift; sourceTree = "<group>"; };
 		DC7695B82ADCD56A00D2FB69 /* AuthRegex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRegex.swift; sourceTree = "<group>"; };
 		DC7695BC2ADCF1CA00D2FB69 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		DC7695C02ADCFBED00D2FB69 /* DismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissButton.swift; sourceTree = "<group>"; };
@@ -733,7 +731,6 @@
 				DC7695452AD0888800D2FB69 /* LoginView.swift */,
 				DC7695522AD08A3600D2FB69 /* RegisterView.swift */,
 				DC7695B22ADC007900D2FB69 /* ResetPasswordView.swift */,
-				DC7695B42ADC148300D2FB69 /* UpdatePasswordView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -995,7 +992,6 @@
 				09CA54B02AD661F300796113 /* CMSearchViewModel.swift in Sources */,
 				3BCF2C8A2ACD4248009C18C2 /* CMClientInfoEditView.swift in Sources */,
 				965ECCF12AD93EEB00BC0D41 /* DMProfileEditView.swift in Sources */,
-				DC7695B52ADC148300D2FB69 /* UpdatePasswordView.swift in Sources */,
 				3BCF2C692ACD4248009C18C2 /* PostDetailViewModel.swift in Sources */,
 				9691C5D62ADE554A00434377 /* BreakTimeSettingVM.swift in Sources */,
 				9615C78A2AD6A1D600DD4F37 /* HCustomCalendar.swift in Sources */,
