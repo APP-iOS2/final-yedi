@@ -9,7 +9,6 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 
-
 //MARK: - Reservation History View Model
 
 class ReservationVM: ObservableObject {
@@ -92,7 +91,7 @@ class ReservationVM: ObservableObject {
 }
 
 //sample structure
-/// -  sample task
+// -  sample task
 //struct Tasks: Identifiable {
 //    var id: UUID = .init()
 //    var dateAdded: Date
@@ -109,6 +108,3 @@ class ReservationVM: ObservableObject {
 //    let hairStyle: [HairStyle]
 //    let isFinished: Bool
 //}
-
-
-

@@ -134,7 +134,6 @@ struct DMAccountInfoEditView: View {
     }
 }
 
-
 #Preview {
     DMProfileEditView()
 }

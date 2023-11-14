@@ -50,7 +50,6 @@ final class FirebaseDateFomatManager {
         }
     }
     
-    
     func changeStringToDate(dateString: String) -> Date {
         if let date = dateFormatter.date(from: dateString) {
             return date

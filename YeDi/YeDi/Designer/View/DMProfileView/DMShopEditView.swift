@@ -4,9 +4,7 @@
 //
 //  Created by 김성준 on 10/18/23.
 //
-
-
-// TODO: 휴무일 설정 필요
+// ToDo: 휴무일 설정 필요
 
 import SwiftUI
 
@@ -47,9 +45,9 @@ struct DMShopEditView: View {
     private let ranks: [Rank] = [.Owner, .Principal, .Designer, .Intern]
     
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 5){
+                VStack(alignment: .leading, spacing: 5) {
                     HStack(alignment: .center) {
                         HStack {
                             Text("직급")
@@ -189,8 +187,7 @@ struct DMShopEditView: View {
                             TextField("상세주소 ", text: $shop.detailAddress)
                                 .textFieldModifier()
                         }
-                        
-                      
+                          
                     }
                     .padding(.vertical, 8)
                     

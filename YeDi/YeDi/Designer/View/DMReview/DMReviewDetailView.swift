@@ -8,7 +8,6 @@
 import SwiftUI
 import FirebaseFirestore
 
-
 struct DMReviewDetailView: View {
     
     var review: Review

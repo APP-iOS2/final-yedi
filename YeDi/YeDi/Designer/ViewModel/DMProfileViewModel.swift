@@ -81,9 +81,9 @@ class DMProfileViewModel: ObservableObject {
             try await designerRef.setData([
                 "id": designer.id ?? "",
                 "name": designer.name,
-                "email": designer.email ,
+                "email": designer.email,
                 "imageURLString": designer.imageURLString ?? "",
-                "phoneNumber": designer.phoneNumber ,
+                "phoneNumber": designer.phoneNumber,
                 "description": designer.description ?? "",
                 "designerScore": designer.designerScore,
                 "reviewCount": designer.reviewCount,
@@ -195,7 +195,7 @@ class DMProfileViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.shop = Shop(
                             shopName: shopData["shopName"] as? String ?? "",
-                            headAddress: shopData["headAddress"] as! String ,
+                            headAddress: shopData["headAddress"] as! String,
                             subAddress: shopData["subAddress"] as? String ?? "",
                             detailAddress: shopData["detailAddress"] as? String ?? "",
                             telNumber: shopData["telNumber"] as? String,

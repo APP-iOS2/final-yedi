@@ -40,7 +40,7 @@ struct PhotoPicker: UIViewControllerRepresentable {
             
             if let itemProvider = results.first?.itemProvider {
                 if itemProvider.canLoadObject(ofClass: UIImage.self) {
-                    itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
+                    itemProvider.loadObject(ofClass: UIImage.self) { (object, _) in
                         if let image = object as? UIImage, let imageURL = self.saveImageToTemporaryDirectory(image: image) {
                             self.onImagePicked(imageURL)
                         }

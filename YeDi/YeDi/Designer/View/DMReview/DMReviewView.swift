@@ -54,8 +54,8 @@ struct DMReviewCell: View {
                 .frame(width: 70, height: 70)
                 .clipShape(RoundedRectangle(cornerRadius: 5))
             
-            VStack(alignment: .leading){
-                HStack(spacing: 0.5){
+            VStack(alignment: .leading) {
+                HStack(spacing: 0.5) {
                     ForEach(1...5, id: \.self) { index in
                         Image(systemName: index <= review.designerScore ? "star.fill" : "star")
                             .foregroundStyle(index <= review.designerScore ? .yellow : Color(white: 0.9))
