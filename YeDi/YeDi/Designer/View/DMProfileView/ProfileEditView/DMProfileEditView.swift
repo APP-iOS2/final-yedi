@@ -57,7 +57,7 @@ struct DMProfileEditView: View {
         let imageName = UUID().uuidString
         let imageRef = storageRef.child("profile_images/\(imageName).jpg")
         
-        imageRef.putData(imageData, metadata: nil) { (metadata, error) in
+        imageRef.putData(imageData, metadata: nil) { ( _, error) in
             if let error = error {
                 print("Firebase Storage에 이미지 업로드 실패: \(error.localizedDescription)")
                 completion(nil)

@@ -22,7 +22,7 @@ struct DMPostView: View {
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
         .onAppear {
-            // TODO: Fetch Data
+            // ToDo: Fetch Data
         }
     }
 }

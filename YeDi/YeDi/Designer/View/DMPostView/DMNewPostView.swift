@@ -116,7 +116,7 @@ struct DMNewPostView: View {
                 
                 Text("가격")
                     .fontWeight(.semibold)
-                TextField("가격", text:$price)
+                TextField("가격", text: $price)
                     .textFieldModifier()
             }
             .padding([.leading, .trailing], 20)
@@ -143,7 +143,7 @@ struct DMNewPostView: View {
     
     /// 시술 카테고리 피커 뷰
     private var categoryPickerView: some View {
-        HStack{
+        HStack {
             Text("시술 카테고리")
                 .fontWeight(.semibold)
             Spacer()
@@ -237,13 +237,13 @@ struct TextEditorView: View {
     
     // MARK: - Body
     var body: some View {
-        ZStack (alignment: .topLeading) {
+        ZStack(alignment: .topLeading) {
             TextEditor(text: $text)
                 .focused($focusedField, equals: .editor)
                 .onChange(of: text) { newValue in
                     showPlaceholder = newValue.isEmpty
                 }
-                .onAppear() {
+                .onAppear {
                     // 키보드를 가능한 빨리 표시
                     DispatchQueue.main.async {
                         focusedField = .editor

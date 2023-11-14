@@ -13,7 +13,7 @@ struct DMProfileEditView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var profileVM: DMProfileViewModel
     
-    @State private var selectedPhoto: PhotosPickerItem? = nil
+    @State private var selectedPhoto: PhotosPickerItem?
     @State private var selectedPhotoData: Data = Data()
     
     @State private var designerName: String = "루디"
@@ -133,7 +133,6 @@ struct DMAccountInfoEditView: View {
             .textFieldStyle(RoundedBorderTextFieldStyle())
     }
 }
-
 
 #Preview {
     DMProfileEditView()

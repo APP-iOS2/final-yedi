@@ -11,8 +11,8 @@ import CoreLocation
 /// 위치 권한 및 위치 관련 작동을 처리하는 클래스
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     // MARK: - Properties
-    @Published var authorizationStatus : CLAuthorizationStatus = .notDetermined
-    @Published var coordinate : CLLocationCoordinate2D?
+    @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
+    @Published var coordinate: CLLocationCoordinate2D?
     private let locationManager = CLLocationManager()
     
     // MARK: - Initializer
@@ -25,7 +25,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     // MARK: - Methods
     /// 위치 권한 요청하는 메서드
-    func requestLocationPermission()  {
+    func requestLocationPermission() {
         locationManager.requestWhenInUseAuthorization()
     }
     
@@ -47,7 +47,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     /// 위치 > 좌표 변환 메서드
-    func getCoordinate(addressString : String, completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void) {
+    func getCoordinate(addressString: String, completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void) {
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(addressString) { (placemarks, error) in
             if error == nil {

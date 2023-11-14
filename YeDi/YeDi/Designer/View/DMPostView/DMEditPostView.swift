@@ -133,7 +133,7 @@ struct DMEditPostView: View {
                 
                 Text("가격")
                     .fontWeight(.semibold)
-                TextField("가격", text:$price)
+                TextField("가격", text: $price)
                     .textFieldModifier()
             }
             .padding([.leading, .trailing], 20)
@@ -142,7 +142,7 @@ struct DMEditPostView: View {
     
     /// 시술 카테고리 피커 뷰
     private var categoryPickerView: some View {
-        HStack{
+        HStack {
             Text("시술 카테고리")
                 .fontWeight(.semibold)
             Spacer()

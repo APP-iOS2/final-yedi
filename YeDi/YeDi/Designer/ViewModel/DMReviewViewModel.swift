@@ -28,16 +28,13 @@ final class ReviewModel: ObservableObject {
             }
             
             if let snapshot = snapshot, !snapshot.isEmpty {
-                self?.reviews = snapshot.documents.compactMap{ try? $0.data(as: Review.self)}
+                self?.reviews = snapshot.documents.compactMap { try? $0.data(as: Review.self)}
             }
         }
     }
-        
         
     final func fetchUserUID() -> String? {
         return  Auth.auth().currentUser?.uid
     }
     
 }
-
-
