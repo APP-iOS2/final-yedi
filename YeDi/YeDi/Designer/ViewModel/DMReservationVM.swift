@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 
-//MARK: - Reservation History View Model
+// MARK: - Reservation History View Model
 
 class ReservationVM: ObservableObject {
     /// - 예약 목록 변수

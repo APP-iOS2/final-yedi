@@ -26,24 +26,24 @@ struct CommonBubble: Codable, Identifiable, Hashable {
         case messageType
     }
     
-    init(from decoder : Decoder) throws {
-        let values = try decoder.container(keyedBy:CodingKeys.self)
-        id = try values.decode(String.self, forKey:.id)
-        date = try values.decode(String.self, forKey:.date)
-        sender = try values.decode(String.self, forKey:.sender)
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decode(String.self, forKey: .id)
+        date = try values.decode(String.self, forKey: .date)
+        sender = try values.decode(String.self, forKey: .sender)
         isRead = try values.decode(Bool.self, forKey: .isRead)
         
-        let typeString = try values.decode(String.self, forKey:.messageType)
-        messageType = MessageType(rawValue:typeString) ?? .textBubble
+        let typeString = try values.decode(String.self, forKey: .messageType)
+        messageType = MessageType(rawValue: typeString) ?? .textBubble
         
         switch messageType {
         case .imageBubble:
-            imagePath = try? values.decode(String.self, forKey:.imagePath)
+            imagePath = try? values.decode(String.self, forKey: .imagePath)
         case .textBubble:
-            content  =  try? values.decode(String.self, forKey:.content)
+            content  =  try? values.decode(String.self, forKey: .content)
         case .boardBubble:
-            imagePath = try? values.decode(String.self, forKey:.imagePath)
-            content  =  try? values.decode(String.self, forKey:.content)
+            imagePath = try? values.decode(String.self, forKey: .imagePath)
+            content  =  try? values.decode(String.self, forKey: .content)
         }
     }
     
@@ -72,5 +72,4 @@ struct CommonBubble: Codable, Identifiable, Hashable {
         self.messageType = MessageType.boardBubble
     }
 
-    
 }
