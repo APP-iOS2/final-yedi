@@ -31,7 +31,7 @@ struct DMGridView: View {
                         }
                     }
                 }
-                .onAppear() {
+                .onAppear {
                     postViewModel.fetchPostsFromFirestore(userAuth: userAuth)
                 }
         }

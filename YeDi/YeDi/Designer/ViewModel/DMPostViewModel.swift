@@ -58,7 +58,7 @@ class DMPostViewModel: ObservableObject {
             
             let localFile = URL(string: url)!
             
-            let uploadTask = URLSession.shared.dataTask(with: localFile) { data, response, error in
+            let uploadTask = URLSession.shared.dataTask(with: localFile) { data, _, error in
                 guard let data = data else { return }
                 
                 let localJpeg = UIImage(data: data)?.jpegData(compressionQuality: 0.7)
@@ -99,7 +99,7 @@ class DMPostViewModel: ObservableObject {
             
             let localFile = URL(string: url)!
             
-            let uploadTask = URLSession.shared.dataTask(with: localFile) { data, response, error in
+            let uploadTask = URLSession.shared.dataTask(with: localFile) { data, _, error in
                 guard let data = data else { return }
                 
                 let localJpeg = UIImage(data: data)?.jpegData(compressionQuality: 0.7)
@@ -135,7 +135,7 @@ class DMPostViewModel: ObservableObject {
         guard let postId = selectedPost.id else { return }
         
         // Firestore에서 게시글 삭제
-        collectionRef.document(postId).delete() { error in
+        collectionRef.document(postId).delete { error in
             if let error = error {
                 print("Error removing post: \(error)")
             } else {

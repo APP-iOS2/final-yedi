@@ -14,7 +14,7 @@ struct DMReviewDetailView: View {
     
     var body: some View {
         List {
-            Group{
+            Group {
                 Section("평점") {
                     averageScore
                 }
@@ -58,7 +58,7 @@ struct DMReviewDetailView: View {
     }
     
     var reviewContent: some View {
-        VStack(alignment: .leading){
+        VStack(alignment: .leading) {
             Text("\(review.content)")
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 180))], alignment: .leading) {
                 ForEach(review.keywordReviews) { keywordReview in
@@ -77,7 +77,7 @@ struct DMReviewDetailView: View {
     
     var attachedImage: some View {
         ScrollView(.horizontal) {
-            HStack{
+            HStack {
                 ForEach(review.imageURLStrings, id: \.self) { urlString in
                     AsnycCacheImage(url: urlString)
                         .aspectRatio(contentMode: .fill)
