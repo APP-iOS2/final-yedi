@@ -18,6 +18,7 @@ final class ChattingListRoomViewModel: ObservableObject {
     @Published var isEmptyChattingList: Bool = true
     
     let storeService = Firestore.firestore()
+    var sotreListener: ListenerRegistration?
     
     var getUnReadTotalCount: Int {
         var totalCount = 0
@@ -50,6 +51,10 @@ final class ChattingListRoomViewModel: ObservableObject {
         return  Auth.auth().currentUser?.uid
     }
     
+    final func removeListener() {
+        sotreListener?.remove()
+    }
+    
     /// 전달된 user UUID 값으로 채팅방 UUID리스트를 추출
     /// - 유저 Document의 이벤트 리스너가 채팅방 리스트가 추가 될 때마다 채팅방 정보를 갱신
     private final func fetchChattingRoomIdList(user uid: String, loginType: UserType) {
@@ -61,7 +66,7 @@ final class ChattingListRoomViewModel: ObservableObject {
             docRef = storeService.collection("designers").document(uid)
         }
         
-        docRef.addSnapshotListener {[weak self] (snapshot, error) in
+        docRef.addSnapshotListener { [weak self] (snapshot, error) in
             if let error = error {
                 debugPrint("Error getting cahtRooms: \(error)")
             } else if let document = snapshot, document.exists {
@@ -88,6 +93,8 @@ final class ChattingListRoomViewModel: ObservableObject {
     /// 채팅방의 메세지 내역을 가지고오는 메소드
     /// - 채팅방에서 가장 최근 메세지 한 개만 조회
     private final func fetchChattingBubble(chatRoom id: String) {
+        chattingRooms.removeAll()
+        
         let bubblePath = "chatRooms/\(id)/bubbles"
         let ref = storeService.collection(bubblePath).order(by: "date", descending: true).limit(to: 1)
         

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct BubbleCell: View {
-    var chat: CommonBubble
-    var isMyBubble: Bool
+    let chat: CommonBubble
+    let isMyBubble: Bool
     
     private var chatTime: String {
         let instance = FirebaseDateFomatManager.sharedDateFommatter
@@ -61,7 +61,7 @@ struct BubbleCell: View {
     }
     
     private var chatDateMark: some View {
-        Text("\(chatTime)")
+        Text(changetoDateFormat(chat.date))
             .font(.caption2)
             .foregroundStyle(.gray)
     }
@@ -70,5 +70,32 @@ struct BubbleCell: View {
         Circle()
             .frame(width: 8, height: 8)
             .foregroundStyle(Color.subColor)
+    }
+    
+    /// 채팅방  최근 메세지 날짜 표출형식 커스텀 메소드
+    private func changetoDateFormat(_ messageDate: String) -> String {
+        let dateFomatter = FirebaseDateFomatManager.sharedDateFommatter.firebaseDateFormat()
+        let date = dateFomatter.date(from: messageDate) ?? Date()
+        let calendar = Calendar.current
+        
+        if calendar.isDateInToday(date) {
+            dateFomatter.dateFormat = "HH:mm"
+            return dateFomatter.string(from: date)
+        } else if calendar.isDateInYesterday(date) {
+            return "어제"
+        } else {
+            let currentYear = calendar.component(.year, from: Date())
+            let messageYear = calendar.component(.year, from: date)
+            // 올해 년도의 메세지인 경우 월/일 반환
+            if currentYear == messageYear {
+                dateFomatter.dateFormat = "MM/dd HH:mm"
+                return dateFomatter.string(from: date)
+            } else {
+                // 그 외 올해가 아닌 데이터 날짜는 년.월, 일 형식의 String을 반환
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy.MM.dd HH:mm"
+                return formatter.string(from: date)
+            }
+        }
     }
 }

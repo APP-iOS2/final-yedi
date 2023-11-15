@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ImageBubbleCell: View {
-    var imagePath: String
+    let imagePath: String
     
     var body: some View {
         AsnycCacheImage(url: imagePath)
