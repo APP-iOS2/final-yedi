@@ -74,12 +74,13 @@ struct CMDesignerProfileReviewView: View {
                         NavigationLink(destination: CMDesignerReviewDetailView(review: review)) {
                             HStack {
                                 VStack(alignment: .leading) {
+                                    RatingView(score: review.designerScore, maxScore: 5, filledColor: .yellow)
+                                        .padding(.bottom, 5)
                                     HStack {
                                         Text(review.style)
                                             .fontWeight(.bold)
                                             .foregroundStyle(Color.primaryLabel)
-                                        Spacer()
-                                        RatingView(score: review.designerScore, maxScore: 5, filledColor: .yellow)
+                                            .lineLimit(1)
                                     }
                                     Text(review.content)
                                         .foregroundStyle(Color.primaryLabel)
@@ -92,6 +93,7 @@ struct CMDesignerProfileReviewView: View {
                                 }
                                 .padding(.vertical)
                                 .padding(.leading)
+                                Spacer()
                                 ZStack(alignment: .topTrailing) {
                                     AsnycCacheImage(url: review.imageURLStrings[0])
                                         .scaledToFill()
@@ -118,14 +120,14 @@ struct CMDesignerProfileReviewView: View {
                     ForEach(reviews.prefix(4)) { review in
                         NavigationLink(destination: CMDesignerReviewDetailView(review: review)) {
                             HStack {
-                                
                                 VStack(alignment: .leading) {
+                                    RatingView(score: review.designerScore, maxScore: 5, filledColor: .yellow)
+                                        .padding(.bottom, 5)
                                     HStack {
                                         Text(review.style)
                                             .fontWeight(.bold)
                                             .foregroundStyle(Color.primaryLabel)
-                                        Spacer()
-                                        RatingView(score: review.designerScore, maxScore: 5, filledColor: .yellow)
+                                            .lineLimit(1)
                                     }
                                     Text(review.content)
                                         .foregroundStyle(Color.primaryLabel)
@@ -138,6 +140,7 @@ struct CMDesignerProfileReviewView: View {
                                 }
                                 .padding(.vertical)
                                 .padding(.leading)
+                                Spacer()
                                 NavigationLink(destination: CMDesignerReviewDetailView(review: review)) {
                                     ZStack(alignment: .topTrailing) {
                                         AsnycCacheImage(url: review.imageURLStrings[0])

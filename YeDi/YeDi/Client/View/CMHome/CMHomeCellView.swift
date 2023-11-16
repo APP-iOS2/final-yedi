@@ -73,21 +73,12 @@ private struct CMHomeCellHeaderView: View {
             NavigationLink(destination: CMDesignerProfileView(designer: designer)) {
                 HStack {
                     // 디자이너 프로필 이미지
+                    
                     if let imageURLString = designer.imageURLString {
-                        AsyncImage(url: URL(string: "\(imageURLString)")) { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(maxWidth: 50, maxHeight: 50)
-                                .clipShape(Circle())
-                        } placeholder: {
-                            Text(String(designer.name.first ?? " ").capitalized)
-                                        .font(.title3)
-                                        .fontWeight(.bold)
-                                        .frame(width: 50, height: 50)
-                                        .background(Circle().fill(Color.quaternarySystemFill))
-                                        .foregroundColor(Color.primaryLabel)
-                        }
+                        AsnycCacheImage(url: imageURLString)
+                            .aspectRatio(contentMode: .fill)
+                            .frame(maxWidth: 50, maxHeight: 50)
+                            .clipShape(Circle())
                     } else {
                         Text(String(designer.name.first ?? " ").capitalized)
                                     .font(.title3)
