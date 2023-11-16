@@ -148,10 +148,12 @@ merge hotfix type: REVERSE tag: "v1.0.1"
 
 1) 버블 메시지를 저장시킬 데이터베이스 채택 Realtime Database vs. Cloud Firestore
 
-- 초기에 Realtime Database를 이용하여 채팅을 구현했습니다. 하지만 채팅 버블의 양이 늘게 되면 문제가 발생했습니다. 채팅 메시지를 전송하면 Realtime Database의 데이터가 새롭게 업데이트 되면서 데이터를 하나의 큰 JSON 트리로 저장하는 Realtime Database 특징에 따라 모든 채팅 데이터를 다시 불러오게 되었고 이에 따라 네트워크 사용량이 비약적으로 상승하는 문제를 발견하였습니다.
-- 또한, 메시지 데이터를 불러오는 것뿐만 아니라 메시지 읽음 처리 기능을 구현하기 위해서는 지속적으로 데이터를 변경해야 하는 작업이 필요하였고, Realtime Database를 사용하면 더 많은 네트워크 사용량이 필요할 것으로 예상하였습니다.
-- 원하는 채팅 기능을 구현하는 데 있어 Realtime Database의 기술적 한계를 경험한 이후 Realtime Database와 Cloud FireStore의 특징과 장단점을 비교하였고, 두 데이터베이스 모두 사용해 보면서 분석한 그래프를 통해 Cloud FireStore를 최종 채택하게 되었습니다.
-- Realtime Database와 Cloud FireStore 특징과 장단점 비교
+- 초기에 Realtime Database를 이용하여 채팅기능을 구현했지만 여러가지 문제가 발생했습니다.
+    - 채팅에 새로운 버블이 생길 때 마다 모든 채팅을 다시 불러오는 방식을 사용해서 채팅 버블 개수가 증가함에 따라 네트워크 사용량 증가
+    - 페이지네이션, 추가된 버블만 감지해서 추가 등을 시도해봤으나 실패
+    - 메세지 업데이트 기능 구현(읽음 처리, 수정 등)에 한계를 느낌
+- Realtime과 FireStore 중 고민하게 되었고 다음과 같은 결과를 얻을 수 있었습니다.
+- Realtime Database와 Cloud FireStore 특징과 장단점 비교 그래프
     
     
     | DB | Realtime Database | Cloud FireStore |
