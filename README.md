@@ -30,15 +30,6 @@ Yedi는 헤어 디자이너와 소비자를 연결해 소통을 원활하게 해
 - `채팅`: 상담을 원하는 고객과 채팅을 통해 소통을 할 수 있습니다.
 - `프로필`: 내 정보와 샵 정보를 수정하과 확인할 수 있습니다.
 
-### 화면 미리보기
-|`로그인/회원가입`|
-|:----:|
-| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/1c1d9f36-8689-4ccc-bdb8-6a9d87b58a08" width="150"> <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/d45d1e67-213f-452e-a550-816d997816df" width="150"> |
-
-|`게시물 상담 채팅`|`채팅방 내 바로예약`|`채팅방 내 사진 전송`|
-|:----:|:----:|:----:|
-| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/aa254997-04c0-4df4-8084-d32c21d9b875" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/b34e717c-a4bf-4861-b427-889e7f3cf63d" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/a9bf0d9a-f731-41ee-87cb-9f68b37b954a" width="150"> |
-
 # Architecture
 
 # 파일 디렉토리 구조
@@ -126,7 +117,12 @@ checkout main
 merge hotfix type: REVERSE tag: "v1.0.1"
 ```
 
-# 주요 기능 상세
+# 주요 화면 및 기능 상세
+## 로그인/회원가입
+|`로그인/회원가입`|
+|:----:|
+| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/1c1d9f36-8689-4ccc-bdb8-6a9d87b58a08" width="150"> <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/d45d1e67-213f-452e-a550-816d997816df" width="150"> |
+
 ## 고객
 - 내용
 
@@ -134,7 +130,11 @@ merge hotfix type: REVERSE tag: "v1.0.1"
 - 내용
 
 ## 채팅
-**구현 기능**
+|`게시물 상담 채팅`|`채팅방 내 바로예약`|`채팅방 내 사진 전송`|
+|:----:|:----:|:----:|
+| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/aa254997-04c0-4df4-8084-d32c21d9b875" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/b34e717c-a4bf-4861-b427-889e7f3cf63d" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/a9bf0d9a-f731-41ee-87cb-9f68b37b954a" width="150"> |
+
+#### 구현 기능
 
 1) 채팅방 리스트, 탭바 아이콘에 읽지 않은 메세지 개수 표출
 
@@ -152,7 +152,7 @@ merge hotfix type: REVERSE tag: "v1.0.1"
 
 - 메시지를 입력하면 FireStore Database에 누가 보냈는지에 대한 필드 데이터와 함께 `isRead`라는 필드 데이터도 저장을 시킵니다. 채팅방을 들어갔을 때 누가 보냈는지에 대한 필드 데이터와 현재 로그인한 유저의 id를 비교하여 isRead의 값을 변경시켜 메시지 읽음 처리를 구현하였습니다.
 
-**고민한 점**
+#### 고민한 점
 
 1) 버블 메시지를 저장시킬 데이터베이스 채택 Realtime Database vs. Cloud Firestore
 
@@ -181,7 +181,7 @@ merge hotfix type: REVERSE tag: "v1.0.1"
     | 페이지네이션 구현 여부 | 어려움 | 가능 |
     | 읽음처리(업데이트) | 어려움 | 가능 |
 
-**Trouble Shooting**
+#### Trouble Shooting
 
 1) 페이지네이션과 읽음처리 기능 병합
 
@@ -189,24 +189,26 @@ merge hotfix type: REVERSE tag: "v1.0.1"
 - `querySnapshot.documentChanges.forEach { diff in` 를 이용하여 `diff.type`의 값이 `.added`인 경우 메시지를 추가해주고 `.modified`인 경우 해당 메시지 내용을 업데이트 해주어 읽음처리 기능도 추가할 수 있었습니다.
 - 그런데 앱이 채팅 내역을 처음 불러오는 경우 모든 채팅 버블이 .added 타입을 가져서 한 번에 모든 채팅들을 불러오게 되어 페이지네이션의 기능과 목적 둘 다 모두 잃게 되는 상황이 벌어졌습니다.
 - `.limit(toLast: limitLength)` 를 이용해 처음 채팅을 불러올 때 길이의 제한을 두어 페이지네이션이 가능하도록 구현했습니다.
+
 ## 싱글톤 데이트 포맷
-**구현기능**
+#### 구현기능
 
 - 파이어 베이스 날짜 형식과 앱에서 처리하는 날짜 형식 통일 및 성능 향상을 위해 Singleton으로 관리 할 수 있는 DateFomatter 개발
 
-**고민한점**
+#### 고민한점
 
 1) 데이터 포맷 형식
 
 - 초기엔 파이어베이스에 저장되는 날짜 형식이 통일되지 않아 개발하는데 어려움이 있었습니다. 이를 해결하고자 데이트 포맷 형식을 강제화하는 기능이 필요하다 생각해 싱글톤으로 데이트 포맷을 설정하였고 포맷은 국제적으로 사용하는 ISO8601(yyyy-MM-dd'T'HH:mm:ssZ)을 사용하는 것으로 DateFomatter를 개발하였습니다.
 - 하지만 예외상황이 존재. 데이트 포맷에 자유를 줄 것인가?
     - 싱글톤으로 만든 Datefomatter로만 활용해 날짜 변환하는 메소드들을 개발했지만 저희 앱에선 예약하고 예약을 관리하는 복잔한 플로우가 존재했습니다. 싱글톤으로 개발한 DateFomatter 클래스 메소드만 활용해 처리하기엔 한계가 있었습니다. 따라서 한국 표준시간대로만 설정된 DateFomatter에 접근할 수 있는 메소드를 추가해 별도로 메소드 없이 각 ViewModel이 처리 할 수 있는 DateFomatter를 활용하게 예외를 두었습니다.
+
 ## 이미지 캐싱
-**구현기능**
+#### 구현기능
 
 - SwiftUI AsnycImage 사용시 메모리캐싱 우선 조회 및 캐싱처리
 
-**고민한점**
+#### 고민한점
 
 1) totalCostLimit vs. CountLimit
 
