@@ -230,7 +230,7 @@ struct CMFeedDetailContentView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
                 .navigationDestination(isPresented: $isPresentedNavigation, destination: {
-                    CMReservationDateTimeView(designerID: postDetailViewModel.designer?.designerUID ?? "", isPresentedAlert: $isPresentedAlert, isPresentedNavigation: $isPresentedNavigation)
+                    CMReservationDateTimeView(isPresentedAlert: $isPresentedAlert, isPresentedNavigation: $isPresentedNavigation, designerID: postDetailViewModel.designer?.designerUID ?? "")
                         .environmentObject(postDetailViewModel)
                 })
                 .buttonStyle(.automatic)
@@ -240,7 +240,7 @@ struct CMFeedDetailContentView: View {
             .frame(maxWidth: .infinity)
         }
     }
-    
+
     private var imageDetailView: some View {
         ZStack {
             Color.black
@@ -264,7 +264,7 @@ struct CMFeedDetailContentView: View {
                         .padding()
                 }
                     .padding(.top, safeArea.top)
-                ,alignment: .topTrailing
+                ,alignment: .topLeading
             )
         }
     }

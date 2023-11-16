@@ -15,13 +15,13 @@ final class CMReservationViewModel: ObservableObject {
     @Published var openingTime: Int = 0
     @Published var closingTime: Int = 0
     @Published var impossibleTime: Set<Int> = []
+    
     private let db = Firestore.firestore()
     private var closedDay: ClosedDay = ClosedDay(id: "", designerUid: "", closedDay: [])
     private var currentUserUid: String? {
         return Auth.auth().currentUser?.uid
     }
     
-    @MainActor
     func createReservation(reservation: Reservation) async {
         guard let uid = currentUserUid else { return }
         do {
@@ -45,7 +45,6 @@ final class CMReservationViewModel: ObservableObject {
                 let date = FirebaseDateFomatManager.sharedDateFommatter.changeStringToDate(dateString: day)
                 self.dates.append(date)
             }
-            print(dates)
         } catch {
             print("fetchCalendar Error: \(error)")
         }
@@ -87,8 +86,6 @@ final class CMReservationViewModel: ObservableObject {
         }
     }
     
-    // TODO: -
-    @MainActor
     private func fetchBreakTime(designerUID: String) async {
         do {
             let querySnapshot = try await db.collection("breakTimes").whereField("designerUID", isEqualTo: designerUID).getDocuments()
@@ -106,7 +103,7 @@ final class CMReservationViewModel: ObservableObject {
                 }
             }
         } catch {
-            // 오류 처리
+            
         }
     }
 

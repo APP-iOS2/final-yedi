@@ -139,7 +139,7 @@ struct CMDesignerProfileView: View {
                         }
                         
                         .navigationDestination(isPresented: $isPresentedNavigation, destination: {
-                            CMReservationDateTimeView(designerID: designer.designerUID, isPresentedAlert: $isPresentedAlert, isPresentedNavigation: $isPresentedNavigation)
+                            CMReservationDateTimeView(isPresentedAlert: $isPresentedAlert, isPresentedNavigation: $isPresentedNavigation, designerID: designer.designerUID)
                                 .environmentObject(postDetailViewModel)
                         })
                         .padding(.leading, 1)
