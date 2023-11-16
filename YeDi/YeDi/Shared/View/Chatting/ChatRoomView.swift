@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ChatRoomView: View {
-    var chatRoomId: String
+    let chatRoomId: String
     
     @StateObject var chattingVM = ChattingViewModel()
-    @ObservedObject var chattingListRoomViewModel = ChattingListRoomViewModel()
+    @StateObject var chattingListRoomViewModel = ChattingListRoomViewModel()
     @EnvironmentObject var userAuth: UserAuth
     
     @State private var inputText: String = ""
@@ -43,7 +43,6 @@ struct ChatRoomView: View {
     }
     
     var body: some View {
-        let _ = print("============= chat room : \(chatRoomId)")
         VStack(spacing: 0) {
             chatScroll
             inputchatTextField
@@ -104,7 +103,7 @@ struct ChatRoomView: View {
     
     private var chatScroll: some View {
         ScrollView {
-            VStack{
+            VStack {
                 if chattingVM.anyMoreChats {
                     ZStack {
                         Divider()

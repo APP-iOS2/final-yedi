@@ -90,6 +90,9 @@ struct ChattingListRoomView: View {
         .onAppear {
             chattingListRoomViewModel.fetchChattingList(login: userAuth.userType)
         }
+        .onDisappear {
+            chattingListRoomViewModel.removeListener()
+        }
     }
     
     /// 채팅방 리스트 최근 메세지 날짜 표출형식 커스텀 메소드

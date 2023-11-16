@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct ChatRoomSheetView: View {
-    @State var chatRoomId: String
     @EnvironmentObject var consultationViewModel: ConsultationViewModel
     @Environment(\.colorScheme) var colorScheme
+    
+    @State var chatRoomId: String
     
     var body: some View {
         NavigationStack {

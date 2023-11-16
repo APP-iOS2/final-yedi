@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct BoardBubbleCell: View {
-    var boardBubble: CommonBubble
-    var isMyBubble: Bool
+    let boardBubble: CommonBubble
+    let isMyBubble: Bool
     
     var body: some View {
         VStack(alignment: .leading) {

@@ -9,9 +9,9 @@ import SwiftUI
 import PhotosUI
 
 struct ChatUtilityMenuView: View {
-    var userID: String
-    var designerID: String
-    var chatRoomId: String
+    let userID: String
+    let designerID: String
+    let chatRoomId: String
     
     @EnvironmentObject var userAuth: UserAuth
     @StateObject var chattingVM = ChattingViewModel()
@@ -22,14 +22,12 @@ struct ChatUtilityMenuView: View {
     @State private var isPresentedNavigation: Bool = false
     
     var body: some View {
-        
-        let _ = print("======================== menu : \(chatRoomId)")
         HStack {
             Spacer()
             
             PhotosPicker(selection: $selectedItem, matching: .images) {
                 VStack {
-                    VStack{
+                    VStack {
                         Image(systemName: "photo.circle.fill")
                             .resizable()
                             .scaledToFit()
@@ -62,7 +60,7 @@ struct ChatUtilityMenuView: View {
                     isPresentedAlert.toggle()
                 }, label: {
                     VStack {
-                        VStack{
+                        VStack {
                             Image(systemName: "clock.fill")
                                 .resizable()
                                 .scaledToFit()

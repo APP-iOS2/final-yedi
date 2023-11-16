@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct DateDeviderCell: View {
+    let chat: CommonBubble
+    let chattingVM: ChattingViewModel
     
-    var chat: CommonBubble
-    var chattingVM: ChattingViewModel
     @Binding var devideDate: String
     
     private var chatDate: String {
@@ -20,18 +20,17 @@ struct DateDeviderCell: View {
     }
     
     var body: some View {
-        VStack{
+        VStack {
             if chatDate == devideDate { //다른 경우
                 Text("\(chatDate)")
             } else {
                 if !chattingVM.anyMoreChats && chatDate != devideDate {
                     Text("\(chatDate)")
-                        .onAppear{
-                        devideDate = chatDate
-                    }
+                        .onAppear {
+                            devideDate = chatDate
+                        }
                 }
             }
         }
     }
 }
-
