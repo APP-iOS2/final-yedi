@@ -1,35 +1,43 @@
 # YeDi
-![Frame 3](https://github.com/APPSCHOOL3-iOS/final-yedi/assets/68881093/ab057b7d-2601-4049-8c1c-065c8cf2798c)
+![Frame 3](https://github.com/APP-iOS2/final-yedi/assets/68881093/bb2b92c1-e9db-45e0-be1c-e0133162445f)
+
 
 # 프로젝트 소개
 Yedi는 헤어 디자이너와 소비자를 연결해 소통을 원활하게 해주고 홍보, 예약, 결제 시스템을 갖춘 앱입니다.
 
-# 기술 스택
-- 개발 환경
-  - iOS: Swift 5, xcode 15.0
-  - 디자인 툴: Figma
-  - 협업 툴: Github, Notion, Discord
-- 데이터베이스
-  - Firebase, UserDefaults
-- Deployment Target
-  - iOS 16.4
- 
-# 팀원 소개
-<table>
-  <tbody>
-    <tr>
-      <td align="center"><a href="https://github.com/Rudy-009"><img src="https://avatars.githubusercontent.com/u/54970536?v=4" width="150px;" alt=""/><br /><sub><b>PM 이승준</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/SonYoonho"><img src="https://avatars.githubusercontent.com/u/94930261?v=4" width="150px;" alt=""/><br /><sub><b>PO 손윤호</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/choala"><img src="https://avatars.githubusercontent.com/u/72439620?v=4" width="150px;" alt=""/><br /><sub><b>팀원 박채영</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/Jaehui-Yu"><img src="https://avatars.githubusercontent.com/u/134610315?v=4" width="150px;" alt=""/><br /><sub><b>팀원 유재희</b></sub></a><br /></td>
-     <tr/>
-      <td align="center"><a href="https://github.com/ParkChanH"><img src="https://avatars.githubusercontent.com/u/133861988?v=4" width="150px;" alt=""/><br /><sub><b>팀장 박찬호</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/APP-iOS2/final-yedi/edit/dev/README.md"><img src="https://avatars.githubusercontent.com/u/133854543?v=4" width="150px;" alt=""/><br /><sub><b>팀원 송성욱</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/yunjikimm"><img src="https://avatars.githubusercontent.com/u/68881093?v=4" width="150px;" alt=""/><br /><sub><b>팀장 김윤지</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/ksj0109188"><img src="https://avatars.githubusercontent.com/u/48472569?v=4" width="150px;" alt=""/><br /><sub><b>팀원 김성준</b></sub></a><br /></td>
-    </tr>
-  </tbody>
-</table>
+### 개발 환경 및 기술
+```
+- iOS: Swift 5, xcode 15.0
+- 디자인 툴: Figma
+- 협업 툴: Github, Notion, Discord
+- 라이브러리: SwiftLint, Firebase, UserDefaults
+- Deployment Target: iOS 16.4
+- 다크모드 지원, 가로모드 미지원
+```
+
+### 기능 모아보기
+#### 1) 고객
+- `홈`: 추천 디자이너 게시물과 내가 팔로잉한 디자이너의 게시물을 모아볼 수 있습니다.
+- `검색`: 디자이너를 검색하여 해당 디자이너의 프로필을 볼 수 있습니다.
+- `예약내역`: 예약한 내역과 지난 예약을 모아볼 수 있습니다.
+- `채팅`: 디자이너와 채팅 상담을 통해 소통할 수 있습니다.
+- `프로필`: 내 정보와 찜한 게시물, 팔로잉한 디자이너, 내가 남긴 리뷰를 볼 수 있습니다.
+
+#### 2) 디자이너
+- `내 리뷰`: 다자이너에게 시술을 완료한 고객이 남긴 리뷰를 모아볼 수 있습니다.
+- `내 게시물`: 헤어 스타일에 관련된 게시물을 업로드/수정/삭제할 수 있습니다.
+- `예약현황`: 고객이 예약한 현황과 휴무일/휴게시간을 설정할 수 있습니다.
+- `채팅`: 상담을 원하는 고객과 채팅을 통해 소통을 할 수 있습니다.
+- `프로필`: 내 정보와 샵 정보를 수정하과 확인할 수 있습니다.
+
+### 화면 미리보기
+|`로그인/회원가입`|
+|:----:|
+| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/1c1d9f36-8689-4ccc-bdb8-6a9d87b58a08" width="150"> <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/d45d1e67-213f-452e-a550-816d997816df" width="150"> |
+
+|`게시물 상담 채팅`|`채팅방 내 바로예약`|`채팅방 내 사진 전송`|
+|:----:|:----:|:----:|
+| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/aa254997-04c0-4df4-8084-d32c21d9b875" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/b34e717c-a4bf-4861-b427-889e7f3cf63d" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/a9bf0d9a-f731-41ee-87cb-9f68b37b954a" width="150"> |
 
 # Architecture
 
@@ -118,30 +126,13 @@ checkout main
 merge hotfix type: REVERSE tag: "v1.0.1"
 ```
 
-# 주요 화면 및 기능
-### 기능 모아보기
-#### 1) 고객
-- `홈`: 추천 디자이너 게시물과 내가 팔로잉한 디자이너의 게시물을 모아볼 수 있습니다.
-- `검색`: 디자이너를 검색하여 해당 디자이너의 프로필을 볼 수 있습니다.
-- `예약내역`: 예약한 내역과 지난 예약을 모아볼 수 있습니다.
-- `채팅`: 디자이너와 채팅 상담을 통해 소통할 수 있습니다.
-- `프로필`: 내 정보와 찜한 게시물, 팔로잉한 디자이너, 내가 남긴 리뷰를 볼 수 있습니다.
-
-#### 2) 디자이너
-- `내 리뷰`: 다자이너에게 시술을 완료한 고객이 남긴 리뷰를 모아볼 수 있습니다.
-- `내 게시물`: 헤어 스타일에 관련된 게시물을 업로드/수정/삭제할 수 있습니다.
-- `예약현황`: 고객이 예약한 현황과 휴무일/휴게시간을 설정할 수 있습니다.
-- `채팅`: 상담을 원하는 고객과 채팅을 통해 소통을 할 수 있습니다.
-- `프로필`: 내 정보와 샵 정보를 수정하과 확인할 수 있습니다.
-
-### 화면 미리보기
-
-<br/>
-
+# 주요 기능 상세
 ## 고객
 - 내용
+
 ## 디자이너
 - 내용
+
 ## 채팅
 **구현 기능**
 
@@ -180,7 +171,8 @@ merge hotfix type: REVERSE tag: "v1.0.1"
     | 단점 | - 복잡한 계층적 데이터를 대규모로 정리하기가 보다 어려움 <br> - 정렬 및 필터링 기능이 제한적임 <br> - 데이터 세트가 커짐에 따라 특정 쿼리의 성능이 저하됨 |  |
 
 
-  - Realtime Database와 Cloud FireStore를 각각 사용하여 조건 분석한 결과  
+- Realtime Database와 Cloud FireStore를 각각 사용하여 조건 분석한 결과
+
     | 조건 | Realtime Database | Cloud Firestore |
     | --- | --- | --- |
     | 조건에 맞는 데이터를 잘 받아오는가? | 프로퍼티로 필터링 잘 안됨 | 매우 정확 |
@@ -223,3 +215,20 @@ merge hotfix type: REVERSE tag: "v1.0.1"
 2) 싱글톤 디자인패턴 채택
 
 - 이미지 캐싱 뿐만 아니라 다른 텍스트(예로 채팅방 텍스트) 캐싱 가능성도 염두해 확장성을 고려해야 했습니다. 결과로 어느 곳에서 가져다 캐싱 할 수 있는 싱글톤 인스턴스로 캐싱 부분을 개발하였습니다.
+
+# 팀원 소개
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://github.com/Rudy-009"><img src="https://avatars.githubusercontent.com/u/54970536?v=4" width="150px;" alt=""/><br /><sub><b>PM 이승준</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/SonYoonho"><img src="https://avatars.githubusercontent.com/u/94930261?v=4" width="150px;" alt=""/><br /><sub><b>PO 손윤호</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/choala"><img src="https://avatars.githubusercontent.com/u/72439620?v=4" width="150px;" alt=""/><br /><sub><b>팀원 박채영</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/Jaehui-Yu"><img src="https://avatars.githubusercontent.com/u/134610315?v=4" width="150px;" alt=""/><br /><sub><b>팀원 유재희</b></sub></a><br /></td>
+     <tr/>
+      <td align="center"><a href="https://github.com/ParkChanH"><img src="https://avatars.githubusercontent.com/u/133861988?v=4" width="150px;" alt=""/><br /><sub><b>팀장 박찬호</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/APP-iOS2/final-yedi/edit/dev/README.md"><img src="https://avatars.githubusercontent.com/u/133854543?v=4" width="150px;" alt=""/><br /><sub><b>팀원 송성욱</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/yunjikimm"><img src="https://avatars.githubusercontent.com/u/68881093?v=4" width="150px;" alt=""/><br /><sub><b>팀장 김윤지</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/ksj0109188"><img src="https://avatars.githubusercontent.com/u/48472569?v=4" width="150px;" alt=""/><br /><sub><b>팀원 김성준</b></sub></a><br /></td>
+    </tr>
+  </tbody>
+</table>
