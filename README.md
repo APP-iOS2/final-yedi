@@ -153,7 +153,7 @@ merge hotfix type: REVERSE tag: "v1.0.1"
     - 페이지네이션, 추가된 버블만 감지해서 추가 등을 시도해봤으나 실패
     - 메세지 업데이트 기능 구현(읽음 처리, 수정 등)에 한계를 느낌
 - Realtime과 FireStore 중 고민하게 되었고 다음과 같은 결과를 얻을 수 있었습니다.
-- Realtime Database와 Cloud FireStore 특징과 장단점 비교 그래프
+- Realtime Database와 Cloud FireStore 특징과 장단점 비교 그래프 
     
     
     | DB | Realtime Database | Cloud FireStore |
