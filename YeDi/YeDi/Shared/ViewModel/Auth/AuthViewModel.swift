@@ -13,16 +13,21 @@ enum UserType: String {
     case client, designer
 }
 
-final class UserAuth: ObservableObject {
+class UserAuth: ObservableObject {
+    @Published var userType: UserType?
+    @Published var clientSession: FirebaseAuth.User?
+    @Published var designerSession: FirebaseAuth.User?
     @Published var currentClientID: String?
     @Published var currentDesignerID: String?
-    @Published var userType: UserType?
-    @Published var userSession: FirebaseAuth.User?
-    @Published var isLogin: Bool = false
+    @Published var isClientLogin: Bool = false
+    @Published var isDesignerLogin: Bool = false
     
     private let auth = Auth.auth()
     private let storeService = Firestore.firestore()
     private let userDefaults: UserDefaults = UserDefaults.standard
+    
+    private let collectionClients: CollectionReference = Firestore.firestore().collection("clients")
+    private let collectionDesigners: CollectionReference = Firestore.firestore().collection("designers")
     
     init() {
         fetchUserTypeinUserDefaults()
@@ -32,15 +37,17 @@ final class UserAuth: ObservableObject {
     func fetchUser() {
         auth.addStateDidChangeListener { [weak self] _, user in
             if let user = user {
-                self?.userSession = user
                 self?.userType = self?.userType
-                self?.isLogin = true
                 
                 switch self?.userType {
                 case .client:
-                    self?.currentClientID = user.uid
+                    self?.clientSession = user
+                    self?.currentClientID = self?.clientSession?.uid
+                    self?.isClientLogin = true
                 case .designer:
-                    self?.currentDesignerID = user.uid
+                    self?.designerSession = user
+                    self?.currentDesignerID = self?.designerSession?.uid
+                    self?.isDesignerLogin = true
                 case nil:
                     return
                 }
@@ -51,9 +58,9 @@ final class UserAuth: ObservableObject {
     }
     
     func signIn(_ email: String, _ password: String, _ type: UserType, _ completion: @escaping (Bool) -> Void) {
-        auth.signIn(withEmail: email, password: password) { result, error in
+        auth.signIn(withEmail: email, password: password) { [weak self] result, error in
             if let error = error {
-                print("DEBUG: signIn Error \(error.localizedDescription)")
+                print("(AuthViewModel) DEBUG: signIn Error \(error.localizedDescription)")
                 completion(false)
             }
             
@@ -65,39 +72,38 @@ final class UserAuth: ObservableObject {
             /// user type에 따라서 각 고객, 디자이너 정보 가져오기
             let collectionName = type.rawValue + "s"
             
-            self.storeService.collection(collectionName).whereField("email", isEqualTo: email).getDocuments { snapshot, error in
+            self?.storeService.collection(collectionName).whereField("email", isEqualTo: email).getDocuments { snapshot, error in
                 if let error = error {
-                    print("Firestore query error:", error.localizedDescription)
+                    print("(AuthViewModel) Firestore query error:", error.localizedDescription)
                     completion(false)
                 }
                 
-                guard let documents = snapshot?.documents,
-                      let userData = documents.first?.data() else {
-                    print("User data not found")
-                    completion(false)
-                    return
-                }
-                
-                if let name = userData["name"] as? String,
-                   let email = userData["email"] as? String{
-                    print("Name:", name)
-                    print("Email:", email)
+                if let documents = snapshot?.documents,
+                   let userData = documents.first?.data(),
+                   let name = userData["name"] as? String,
+                   let email = userData["email"] as? String {
+                    
+                    print("(AuthViewModel) signIn Name:", name)
+                    print("(AuthViewModel) signIn Email:", email)
                     
                     switch type {
                     case .client:
-                        self.currentClientID = user.uid
+                        self?.clientSession = user
+                        self?.currentClientID = self?.clientSession?.uid
+                        self?.isClientLogin = true
                     case .designer:
-                        self.currentDesignerID = user.uid
+                        self?.designerSession = user
+                        self?.currentDesignerID = self?.designerSession?.uid
+                        self?.isDesignerLogin = true
                     }
                     
-                    self.userSession = user
-                    self.userType = type
-                    self.saveUserTypeinUserDefaults(type.rawValue)
-                    self.isLogin = true
+                    self?.userType = type
+                    self?.saveUserTypeinUserDefaults(type.rawValue)
                     
                     completion(true)
+                    
                 } else {
-                    print("Invalid user data")
+                    print("(AuthViewModel) User data not found")
                     completion(false)
                 }
             }
@@ -105,15 +111,15 @@ final class UserAuth: ObservableObject {
     }
     
     func registerClient(client: Client, password: String, completion: @escaping (Bool) -> Void) {
-        auth.createUser(withEmail: client.email, password: password) { result, error in
+        auth.createUser(withEmail: client.email, password: password) { [weak self] result, error in
             if let error = error {
                 completion(false)
-                print("DEBUG: Error registering new user: \(error.localizedDescription)")
+                print("(AuthViewModel) DEBUG: Error registering new user: \(error.localizedDescription)")
             } else {
                 completion(true)
                 
                 guard let user = result?.user else { return }
-                print("DEBUG: Registered User successfully")
+                print("(AuthViewModel) DEBUG: Registered User successfully")
                 
                 let data: [String: Any] = [
                     "id": user.uid,
@@ -127,26 +133,25 @@ final class UserAuth: ObservableObject {
                     "chatRooms": client.chatRooms
                 ]
                 
-                self.storeService.collection("clients")
+                self?.collectionClients
                     .document(user.uid)
                     .setData(data, merge: true)
                 
-                self.userSession = nil
-                self.isLogin = false
+                self?.resetUserInfo()
             }
         }
     }
     
     func registerDesigner(designer: Designer, shop: Shop, password: String, completion: @escaping (Bool) -> Void) {
-        auth.createUser(withEmail: designer.email, password: password) { result, error in
+        auth.createUser(withEmail: designer.email, password: password) { [weak self] result, error in
             if let error = error {
                 completion(false)
-                print("DEBUG: Error registering new user: \(error.localizedDescription)")
+                print("(AuthViewModel) DEBUG: Error registering new user: \(error.localizedDescription)")
             } else {
                 completion(true)
                 
                 guard let user = result?.user else { return }
-                print("DEBUG: Registered User successfully")
+                print("(AuthViewModel) DEBUG: Registered User successfully")
                 
                 let data: [String: Any] = [
                     "id": user.uid,
@@ -166,46 +171,79 @@ final class UserAuth: ObservableObject {
                     "designerUID": user.uid,
                 ]
                 
-                self.storeService.collection("designers")
+                self?.collectionDesigners
                     .document(user.uid)
                     .setData(data, merge: true)
                 
-                self.storeService.collection("designers").document(user.uid).collection("shop")
-                    .addDocument(data: self.designerShopDataSet(shop: shop), completion: { _ in
-                        self.userSession = nil
-                        self.isLogin = false
-                    })
+                guard let dataSet = self?.designerShopDataSet(shop: shop) else {
+                    return
+                }
+                
+                self?.collectionDesigners.document(user.uid).collection("shop")
+                    .addDocument(data: dataSet) { _ in
+                        self?.resetUserInfo()
+                    }
             }
         }
     }
     
-    func resetPassword(forEmail email: String, completion: @escaping (Bool) -> Void) {
+    func resetPassword(forEmail email: String, userType: UserType, completion: @escaping (Bool) -> Void) {
+        let clientsQuery = collectionClients.whereField("email", isEqualTo: email)
+        let designersQuery = collectionDesigners.whereField("email", isEqualTo: email)
+        
+        switch userType {
+        case .client:
+            checkExistEmail(query: clientsQuery, email: email) { exists in
+                if exists {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            }
+        case .designer:
+            checkExistEmail(query: designersQuery, email: email) { exists in
+                if exists {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            }
+        }
+    }
+    
+    func checkExistEmail(query: Query, email: String, completion: @escaping (Bool) -> Void) {
+        query.addSnapshotListener { [weak self] querySnapshot, error in
+            if let error = error {
+                print("(AuthViewModel) \(error.localizedDescription)")
+                completion(false)
+            }
+            
+            guard let querySnapshot = querySnapshot else {
+                completion(false)
+                return
+            }
+            
+            if querySnapshot.documents.isEmpty {
+                completion(false)
+            } else {
+                self?.sendPasswordReset(email: email) { success in
+                    if success {
+                        completion(true)
+                    } else {
+                        completion(false)
+                    }
+                }
+            }
+        }
+    }
+    
+    func sendPasswordReset(email: String, completion: @escaping (Bool) -> Void) {
         auth.sendPasswordReset(withEmail: email) { error in
             if let error = error {
-                print(error.localizedDescription)
+                print("(AuthViewModel) \(error.localizedDescription)")
                 completion(false)
             } else {
                 completion(true)
-            }
-        }
-    }
-    
-    func updatePassword(_ email: String, _ currentPassword: String, _ newPassword: String, _ completion: @escaping (Bool) -> Void) {
-        let credential: AuthCredential = EmailAuthProvider.credential(withEmail: email, password: currentPassword)
-        
-        auth.currentUser?.reauthenticate(with: credential) { result, error in
-            if let error = error {
-                print("reauthenticate error: \(error.localizedDescription)")
-                completion(false)
-            } else {
-                self.auth.currentUser?.updatePassword(to: newPassword) { error in
-                    if let error = error {
-                        print("update error: \(error.localizedDescription)")
-                        completion(false)
-                    } else {
-                        completion(true)
-                    }
-                }
             }
         }
     }
@@ -215,43 +253,69 @@ final class UserAuth: ObservableObject {
         try? auth.signOut()
     }
     
+    // TODO: 1.함수명 변경 2.아이디와 연결된 모든 데이터를 삭제하는 로직 필요
     func deleteClientAccount() {
         guard let user = Auth.auth().currentUser else { return }
         
         if let currentClientID {
-            storeService
-                .collection("clients")
+            collectionClients
                 .document(currentClientID).delete()
         }
         
         if let currentDesignerID {
-            storeService
-                .collection("designers")
+            collectionDesigners
                 .document(currentDesignerID).delete()
         }
         
         user.delete { error in
             if let error = error {
-                print("DEBUG: Error deleting user account: \(error.localizedDescription)")
+                print("(AuthViewModel) DEBUG: Error deleting user account: \(error.localizedDescription)")
                 return
             }
             
-            print("DEBUG: User account deleted")
+            print("(AuthViewModel) DEBUG: User account deleted")
             
             self.signOut()
         }
     }
     
     func resetUserInfo() {
-        userSession = nil
         userType = nil
+        
+        clientSession = nil
+        designerSession = nil
+        
         currentClientID = nil
         currentDesignerID = nil
-        isLogin = false
+        
+        isClientLogin = false
+        isDesignerLogin = false
         
         removeUserTypeinUserDefaults()
     }
     
+    func designerShopDataSet(shop: Shop) -> [String: Any] {
+        let dateFomatter = FirebaseDateFomatManager.sharedDateFommatter
+     
+        let changedDateFomatOpenHour = dateFomatter.changeDateString(transition: "HH", from: shop.openingHour)
+        let changedDateFomatClosingHour = dateFomatter.changeDateString(transition: "HH", from: shop.closingHour)
+        
+        let shopData: [String: Any] = [
+            "shopName": shop.shopName,
+            "headAddress": shop.headAddress,
+            "subAddress": shop.subAddress,
+            "detailAddress": shop.detailAddress,
+            "longitude": shop.longitude ?? 0.0,
+            "latitude": shop.latitude ?? 0.0,
+            "openingHour": changedDateFomatOpenHour,
+            "closingHour": changedDateFomatClosingHour,
+            "closedDays": shop.closedDays
+        ]
+        
+        return shopData
+    }
+    
+    // MARK: - UserDefaults related functions
     func fetchUserTypeinUserDefaults() {
         if let type = userDefaults.value(forKey: "UserType") {
             let typeToString = String(describing: type)
@@ -265,26 +329,5 @@ final class UserAuth: ObservableObject {
     
     func removeUserTypeinUserDefaults() {
         userDefaults.removeObject(forKey: "UserType")
-    }
-    
-    func designerShopDataSet(shop: Shop) -> [String: Any] {
-        let dateFomatter = FirebaseDateFomatManager.sharedDateFommatter
-     
-        let changedDateFomatOpenHour = dateFomatter.changeDateString(transition: "HH", from: shop.openingHour)
-        let changedDateFomatClosingHour = dateFomatter.changeDateString(transition: "HH", from: shop.closingHour)
-        
-        let shopData : [String: Any] = [ "shopName" : shop.shopName,
-                                         "headAddress" : shop.headAddress,
-                                         "subAddress" : shop.subAddress,
-                                         "detailAddress" : shop.detailAddress,
-                                         // "telNumber" : "",
-                                         "longitude" : shop.longitude,
-                                         "latitude" : shop.latitude,
-                                         "openingHour" : changedDateFomatOpenHour,
-                                         "closingHour" : changedDateFomatClosingHour,
-                                         // "messangerLinkURL" : ["": ""],
-                                         "closedDays" : shop.closedDays]
-        
-        return shopData
     }
 }

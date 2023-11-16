@@ -25,6 +25,7 @@ struct RegisterView: View {
     @State private var doubleCheckPassword: String = ""
     /// 고객 프로퍼티 (연산프로퍼티 birthDate 포함)
     @State private var selectedGender: String = "여성"
+    
     /// 디자이너 프로퍼티
     @State private var description: String = ""
     @State private var rank: Rank = .Owner
@@ -73,13 +74,13 @@ struct RegisterView: View {
     private var registerForClient: some View {
         VStack(alignment: .leading) {
             ScrollView {
-                inputUserInfo(.client)
+                inputUserInfo
             }
             .onTapGesture {
                 hideKeyboard()
             }
             
-            RegisterButton(.client)
+            registerButton
         }
         .navigationTitle("고객 회원가입")
         .navigationBarBackButtonHidden()
@@ -93,7 +94,7 @@ struct RegisterView: View {
     private var registerForDesigner: some View {
         VStack(alignment: .leading) {
             ScrollView {
-                inputUserInfo(.designer)
+                inputUserInfo
                 inputDesignerDescription
                 inputShopInfo
             }
@@ -101,7 +102,7 @@ struct RegisterView: View {
                 hideKeyboard()
             }
             
-            RegisterButton(.designer)
+            registerButton
         }
         .navigationTitle("디자이너 회원가입")
         .navigationBarBackButtonHidden()
@@ -112,7 +113,7 @@ struct RegisterView: View {
         }
     }
     
-    private func inputUserInfo(_ userType: UserType) -> some View {
+    private var inputUserInfo: some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading, spacing: 5) {
                 HStack {
@@ -315,8 +316,6 @@ struct RegisterView: View {
         .padding(.horizontal)
     }
     
-    
-    
     private var inputDesignerDescription: some View {
         VStack(alignment: .leading) {
             Text("소개글")
@@ -343,19 +342,18 @@ struct RegisterView: View {
                     .background {
                         RoundedRectangle(cornerRadius: 4)
                             .fill(Color.pointColor)
-//                            .stroke(Color.pointColor, lineWidth: 2)
                     }
             }
         }
         .padding([.horizontal, .bottom])
-        .sheet(isPresented: $isShowDesignerShopEditView){
+        .sheet(isPresented: $isShowDesignerShopEditView) {
             DMShopEditView(shop: $shop,
                            rank: $rank,
                            isShowDesignerShopEditView: $isShowDesignerShopEditView)
         }
     }
     
-    private func RegisterButton(_ userType: UserType) -> some View {
+    private var registerButton: some View {
         VStack {
             Button {
                 pressedButtonRegister(userType)
@@ -375,7 +373,7 @@ struct RegisterView: View {
     private func pressedButtonRegister(_ userType: UserType) {
         switch userType {
         case .client:
-            if checkEmail() && checkPassword() && doubleCheckPasswordValid() && checkEmptyName() && checkPhoneNumber() && checkBirth()  {
+            if checkEmail() && checkPassword() && doubleCheckPasswordValid() && checkEmptyName() && checkPhoneNumber() && checkBirth() {
                 let client = Client(
                     id: UUID().uuidString,
                     name: name,
@@ -389,7 +387,6 @@ struct RegisterView: View {
                 )
                 userAuth.registerClient(client: client, password: password) { success in
                     if success {
-                        cautionEmail = "사용 가능한 이메일입니다."
                         dismiss()
                     } else {
                         cautionEmail = "이미 존재하는 이메일입니다."
@@ -418,7 +415,6 @@ struct RegisterView: View {
                 
                 userAuth.registerDesigner(designer: designer, shop: shop, password: password) { success in
                     if success {
-                        cautionEmail = "사용 가능한 이메일입니다."
                         dismiss()
                     } else {
                         cautionEmail = "이미 존재하는 이메일입니다."

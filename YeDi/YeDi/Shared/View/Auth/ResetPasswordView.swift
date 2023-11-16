@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ResetPasswordView: View {
+    let userType: UserType
+    
     @EnvironmentObject var userAuth: UserAuth
     @Environment(\.dismiss) private var dismiss
     
@@ -21,7 +23,7 @@ struct ResetPasswordView: View {
             Text("""
                 비밀번호를 잃어버리셨나요? 걱정마세요.
                 비밀번호를 재설정할 수 있는 링크를 이메일로 보내드립니다.
-
+                
                 가입하신 이메일을 입력해주세요.
                 """)
             
@@ -37,8 +39,9 @@ struct ResetPasswordView: View {
             
             Button {
                 if !email.isEmpty {
-                    userAuth.resetPassword(forEmail: email) { success in
+                    userAuth.resetPassword(forEmail: email, userType: userType) { success in
                         if success {
+                            cautionEmail = ""
                             isShowingEmailSentSuccessAlert.toggle()
                         } else {
                             cautionEmail = "올바르지 않은 이메일 주소입니다."
@@ -71,5 +74,5 @@ struct ResetPasswordView: View {
 }
 
 #Preview {
-    ResetPasswordView()
+    ResetPasswordView(userType: .client)
 }

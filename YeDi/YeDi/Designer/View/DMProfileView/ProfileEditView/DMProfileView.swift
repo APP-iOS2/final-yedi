@@ -210,12 +210,7 @@ struct DMProfileView: View {
             // MARK: - Fetch Data on Appear
             .onAppear {
                 Task {
-                    // 디자이너 정보가 변경되지 않았다면 로딩하지 않음
-                    if profileVM.designer.id == nil {
-                        await profileVM.fetchDesignerProfile(userAuth: userAuth)
-                    }
-                    
-                    // 샵 정보를 항상 업데이트
+                    await profileVM.fetchDesignerProfile(userAuth: userAuth)
                     await profileVM.fetchShopInfo(userAuth: userAuth)
                     
                     // 현재 사용자의 유형에 따라 적절한 ID를 가져옵니다.
