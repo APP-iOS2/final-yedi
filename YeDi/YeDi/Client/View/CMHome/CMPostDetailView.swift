@@ -19,9 +19,6 @@ struct CMFeedDetailView: View {
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
-        .onAppear {
-            // TODO: Fetch Data
-        }
     }
 }
 

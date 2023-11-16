@@ -77,7 +77,7 @@ struct ChatUtilityMenuView: View {
                     }
                 })
                 .navigationDestination(isPresented: $isPresentedNavigation, destination: {
-                    CMReservationDateTimeView(designerID: designerID, isPresentedAlert: $isPresentedAlert, isPresentedNavigation: $isPresentedNavigation)
+                    CMReservationDateTimeView(isPresentedAlert: $isPresentedAlert, isPresentedNavigation: $isPresentedNavigation, designerID: designerID)
                         .environmentObject(postDetailViewModel)
                 })
                 .buttonStyle(.automatic)
