@@ -18,7 +18,7 @@ Yedi는 헤어 디자이너와 소비자를 연결해 소통을 원활하게 해
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>PM 이승준</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/Rudy-009"><img src="" width="100px;" alt=""/><br /><sub><b>PM 이승준</b></sub></a><br /></td>
       <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>PO 손윤호</b></sub></a><br /></td>
       <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>팀장 박채영</b></sub></a><br /></td>
       <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>팀원 유재희</b></sub></a><br /></td>
