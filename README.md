@@ -23,10 +23,10 @@ Yedi는 헤어 디자이너와 소비자를 연결해 소통을 원활하게 해
       <td align="center"><a href="https://github.com/choala"><img src="https://avatars.githubusercontent.com/u/72439620?v=4" width="100px;" alt=""/><br /><sub><b>팀장 박채영</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/Jaehui-Yu"><img src="https://avatars.githubusercontent.com/u/134610315?v=4" width="100px;" alt=""/><br /><sub><b>팀원 유재희</b></sub></a><br /></td>
      <tr/>
-      <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>팀장 박찬호</b></sub></a><br /></td>
-      <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>팀원 송성욱</b></sub></a><br /></td>
-      <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>팀장 김윤지</b></sub></a><br /></td>
-      <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>팀원 김성준</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/ParkChanH"><img src="https://avatars.githubusercontent.com/u/133861988?v=4" width="100px;" alt=""/><br /><sub><b>팀장 박찬호</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/APP-iOS2/final-yedi/edit/dev/README.md"><img src="https://avatars.githubusercontent.com/u/133854543?v=4" width="100px;" alt=""/><br /><sub><b>팀원 송성욱</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/yunjikimm"><img src="https://avatars.githubusercontent.com/u/68881093?v=4" width="100px;" alt=""/><br /><sub><b>팀장 김윤지</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/ksj0109188"><img src="https://avatars.githubusercontent.com/u/48472569?v=4" width="100px;" alt=""/><br /><sub><b>팀원 김성준</b></sub></a><br /></td>
     </tr>
   </tbody>
 </table>
