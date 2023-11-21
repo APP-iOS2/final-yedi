@@ -24,7 +24,7 @@ struct YeDiApp: App {
     @StateObject var locationManager = LocationManager()
     @StateObject var consultationViewModel = ConsultationViewModel()
     @StateObject var cmProfileViewModel: CMProfileViewModel = CMProfileViewModel()
-    @StateObject var cmHistoryViewModel: CMHistoryViewModel = CMHistoryViewModel()
+    @StateObject var cmHistoryViewModel: CMReservationHistoryViewModel = CMReservationHistoryViewModel()
     @StateObject var reviewViewModel: CMReviewViewModel = CMReviewViewModel()
     @StateObject var dmPostViewModel: DMPostViewModel = DMPostViewModel()
     @StateObject var chattingListRoomViewModel = ChattingListRoomViewModel()

@@ -16,6 +16,7 @@ struct CMAccountInfoEditView: View {
     // MARK: - Body
     var body: some View {
         VStack {
+            // MARK: - 이메일 수정
             HStack {
                 Text("이메일")
                     .padding(.trailing, 30)
@@ -24,9 +25,9 @@ struct CMAccountInfoEditView: View {
             }
             .padding(.bottom, 15)
             
+            // MARK: - 휴대폰 번호 수정
             HStack {
-                Text("휴대폰")
-                    .padding(.trailing, 30)
+                Text("휴대폰 번호")
                 TextField("휴대폰 번호", text: $clientPhoneNumber)
                     .textFieldStyle(CMCustomTextFieldStyle())
             }

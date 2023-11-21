@@ -1,5 +1,5 @@
 //
-//  CMHistoryViewModel.swift
+//  CMReservationHistoryViewModel.swift
 //  YeDi
 //
 //  Created by 박채영 on 2023/10/24.
@@ -9,25 +9,14 @@ import SwiftUI
 import FirebaseFirestore
 
 /// 예약 내역 뷰 모델
-class CMHistoryViewModel: ObservableObject {
+class CMReservationHistoryViewModel: ObservableObject {
     // MARK: - Properties
     /// 예약 목록 변수
     @Published var reservations: [Reservation] = []
     /// 디자이너 변수
-    @Published var designer: Designer = Designer(
-        name: "",
-        email: "",
-        phoneNumber: "",
-        designerScore: 0,
-        reviewCount: 0,
-        followerCount: 0,
-        skill: [],
-        chatRooms: [],
-        birthDate: "",
-        gender: "",
-        rank: Rank.Owner,
-        designerUID: ""
-    )
+    @Published var designer: Designer?
+    /// 샵 변수
+    @Published var shop: Shop?
     /// 리뷰 변수
     @Published var review: Review?
     
@@ -66,8 +55,8 @@ class CMHistoryViewModel: ObservableObject {
     func checkReservationStatus() {
         for index in 0..<reservations.count {
             let singleTonDF = FirebaseDateFomatManager.sharedDateFommatter
-            var reservationTime = singleTonDF.changeDateString(transition: "MM-dd HH:mm", from: reservations[index].reservationTime)
-            var currentTime = singleTonDF.changeDateString(transition: "MM-dd HH:mm", from: singleTonDF.firebaseDate(from: Date()))
+            let reservationTime = singleTonDF.changeDateString(transition: "MM-dd HH:mm", from: reservations[index].reservationTime)
+            let currentTime = singleTonDF.changeDateString(transition: "MM-dd HH:mm", from: singleTonDF.firebaseDate(from: Date()))
             
             if reservationTime < currentTime {
                 reservations[index].isFinished = true
@@ -78,6 +67,9 @@ class CMHistoryViewModel: ObservableObject {
     /// 디자이너 패치 메서드
     @MainActor
     func fetchDesigner(designerId: String) async {
+        designer = nil
+        shop = nil
+        
         let docRef = dCollectionRef.document(designerId)
         do {
             let document = try await docRef.getDocument()
@@ -91,7 +83,7 @@ class CMHistoryViewModel: ObservableObject {
                     return try? document.data(as: Shop.self)
                 }
                 
-                designer.shop = shopData.first
+                shop = shopData.first
             }
         } catch {
             print("Error fetching designer info: \(error)")

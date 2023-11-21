@@ -14,7 +14,7 @@ struct ContentView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var cmProfileViewModel: CMProfileViewModel
-    @EnvironmentObject var cmHistoryViewModel: CMHistoryViewModel
+    @EnvironmentObject var cmHistoryViewModel: CMReservationHistoryViewModel
     @EnvironmentObject var reviewViewModel: CMReviewViewModel
     @EnvironmentObject var dmPostViewModel: DMPostViewModel
     @EnvironmentObject var chattingListRoomViewModel: ChattingListRoomViewModel

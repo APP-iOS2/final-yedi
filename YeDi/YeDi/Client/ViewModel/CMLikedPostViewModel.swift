@@ -1,5 +1,5 @@
 //
-//  CMLikedPostListViewModel.swift
+//  CMLikedPostViewModel.swift
 //  YeDi
 //
 //  Created by Jaehui Yu on 10/6/23.
@@ -8,7 +8,7 @@
 import SwiftUI
 import FirebaseFirestore
 
-class CMLikePostListViewModel: ObservableObject {
+class CMLikedPostViewModel: ObservableObject {
     @Published var likedPosts: [Post] = []
     
     // 클라이언트가 찜한 게시물만 불러오기

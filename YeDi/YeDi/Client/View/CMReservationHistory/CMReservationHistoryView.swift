@@ -7,11 +7,13 @@
 
 import SwiftUI
 
-/// 예약 내역 뷰
+/// 고객 예약 내역 뷰
 struct CMReservationHistoryView: View {
     // MARK: - Properties
+    /// 유저 Auth 관리 뷰 모델
     @EnvironmentObject var userAuth: UserAuth
-    @EnvironmentObject var cmHistoryViewModel: CMHistoryViewModel
+    /// 고객 예약 내역 뷰 모델
+    @EnvironmentObject var reservationHistoryViewModel: CMReservationHistoryViewModel
     
     @State var selectedSegment: String = "다가오는 예약"
     
@@ -21,7 +23,7 @@ struct CMReservationHistoryView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                // MARK: - 세그먼티트 컨트롤 섹션
+                // MARK: - 세그먼티트 컨트롤
                 HStack(spacing: 0) {
                     ForEach(segments, id: \.self) { segment in
                         Button(action: {
@@ -39,7 +41,7 @@ struct CMReservationHistoryView: View {
                     }
                 }
                 
-                // MARK: - 예약 내역 섹션
+                // MARK: - 선택한 세그먼트에 따른 뷰
                 switch selectedSegment {
                 case "다가오는 예약":
                     CMUpcomingReservationListView()
@@ -50,13 +52,13 @@ struct CMReservationHistoryView: View {
                 }
             }
             .padding(.top)
-            .navigationTitle("예약내역")
         }
     }
 }
 
 #Preview {
     CMReservationHistoryView()
-        .environmentObject(CMHistoryViewModel())
+        .environmentObject(UserAuth())
+        .environmentObject(CMReservationHistoryViewModel())
 }
 

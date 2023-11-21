@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// 고객 리뷰 내용 작성 뷰
 struct CMReviewWriteContentView: View {
     // MARK: - Properties
     @Binding var reviewContent: String

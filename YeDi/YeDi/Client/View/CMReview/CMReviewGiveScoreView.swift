@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// 고객 리뷰 별점 선택 뷰
 struct CMReviewGiveScoreView: View {
     // MARK: - Properties
     @Binding var reviewScore: Int
