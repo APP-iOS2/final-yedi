@@ -31,7 +31,8 @@ class DMPostViewModel: ObservableObject {
         
         collectionRef
           .whereField("designerID", isEqualTo: currentDesignerID) // 현재 디자이너 아이디로 필터링
-          .addSnapshotListener { querySnapshot, error in
+          .order(by: "timestamp", descending: true)
+          .addSnapshotListener { [weak self] querySnapshot, error in
             if let error = error {
                 print("Error fetching documents: \(error)")
                 return
@@ -42,7 +43,7 @@ class DMPostViewModel: ObservableObject {
                 return
             }
             
-            self.posts = documents.compactMap { queryDocumentSnapshot in
+            self?.posts = documents.compactMap { queryDocumentSnapshot in
                 try? queryDocumentSnapshot.data(as: Post.self)
             }
         }

@@ -13,7 +13,6 @@ import FirebaseStorage
 // MARK: - DMProfileViewModel
 /// 디자이너 프로필에 대한 데이터를 관리하는 ViewModel 클래스입니다.
 class DMProfileViewModel: ObservableObject {
-    static let shared = DMProfileViewModel() // 싱글톤 인스턴스 생성
     var previousFollowerCount: Int = 0
     
     // MARK: - Published Properties
@@ -239,8 +238,6 @@ class DMProfileViewModel: ObservableObject {
                 
                 if followerCountFromFirebase != self.previousFollowerCount {
                     try await designerRef.updateData(["followerCount": followerCountFromFirebase])
-                    self.designer.followerCount = followerCountFromFirebase
-                    print("팔로워 수가 \(followerCountFromFirebase)로 업데이트되었습니다.")
                     self.previousFollowerCount = followerCountFromFirebase
                 } else {
                     print("팔로워 수가 변경되지 않았습니다.")

@@ -56,18 +56,16 @@ class ReservationVM: ObservableObject {
         }
     }
     
-    func getClientData(for clientUID: String, completion: @escaping ([String: Any]?) -> Void) {
+    func getClientData(for clientUID: String, completion: @escaping (Client) -> Void) {
         clientCol.document(clientUID).getDocument { (document, error) in
             if let error = error {
                 print("Error getting client data: \(error)")
-                completion(nil)
             } else {
-                if let document = document, document.exists {
-                    let data = document.data()
+                if let document = document, document.exists,
+                   let data = try? document.data(as: Client.self) {
                     completion(data)
                 } else {
                     print("클라이언트 데이터를 찾을 수 없음")
-                    completion(nil)
                 }
             }
         }
@@ -89,22 +87,3 @@ class ReservationVM: ObservableObject {
         return  Auth.auth().currentUser?.uid
     }
 }
-
-//sample structure
-// -  sample task
-//struct Tasks: Identifiable {
-//    var id: UUID = .init()
-//    var dateAdded: Date
-//    var reservationName: String
-//    var reservationDC: String
-//
-//}
-
-//struct Reservation: Codable, Identifiable {
-//    @DocumentID var id: String?
-//    var clientUID: String
-//    let designerUID: String
-//    let reservationTime: String
-//    let hairStyle: [HairStyle]
-//    let isFinished: Bool
-//}

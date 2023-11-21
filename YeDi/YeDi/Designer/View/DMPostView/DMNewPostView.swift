@@ -17,7 +17,7 @@ struct DMNewPostView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var postViewModel: DMPostViewModel
 
-    @StateObject private var profileViewModel = DMProfileViewModel.shared
+    @StateObject private var profileViewModel: DMProfileViewModel = DMProfileViewModel()
     
     @State private var title = ""
     @State private var description = ""
@@ -41,7 +41,7 @@ struct DMNewPostView: View {
     
     // MARK: - Body
     var body: some View {
-        VStack {
+        ScrollView {
             contentForm
             
             Spacer()
@@ -118,6 +118,7 @@ struct DMNewPostView: View {
                     .fontWeight(.semibold)
                 TextField("가격", text: $price)
                     .textFieldModifier()
+                    .keyboardType(.numberPad)
             }
             .padding([.leading, .trailing], 20)
         }
@@ -130,10 +131,6 @@ struct DMNewPostView: View {
             Button("게시물 생성") {
                 createPost()
             }
-            //            .padding()
-            //            .frame(maxWidth: .infinity)
-            //            .background(isFormValid ? Color.black : Color.gray)
-            //            .foregroundStyle(.white)
             .buttonModifier(.mainColor)
             .cornerRadius(10)
             .padding([.horizontal, .bottom])

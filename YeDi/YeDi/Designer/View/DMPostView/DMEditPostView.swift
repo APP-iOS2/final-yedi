@@ -41,7 +41,7 @@ struct DMEditPostView: View {
     
     // MARK: - Body
     var body: some View {
-        VStack {
+        ScrollView {
             contentForm
             
             Spacer()
@@ -135,6 +135,7 @@ struct DMEditPostView: View {
                     .fontWeight(.semibold)
                 TextField("가격", text: $price)
                     .textFieldModifier()
+                    .keyboardType(.numberPad)
             }
             .padding([.leading, .trailing], 20)
         }

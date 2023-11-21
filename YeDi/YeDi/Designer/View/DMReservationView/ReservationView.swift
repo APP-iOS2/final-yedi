@@ -16,8 +16,8 @@ struct ReservationView: View {
     @State var showingRestDaySetting: Bool = false
     @State var showingBreakTimeSetting: Bool = false
     @State var selectedDate: Date = Date()
+    @State var clientName: String = ""
     @ObservedObject var reservationVM = ReservationVM()
-    
     
     // MARK: - Reservation List View
     var body: some View {
@@ -82,7 +82,7 @@ struct ReservationView: View {
         }
     }
     
-    //MARK: - Timeline View Row
+    // MARK: - Timeline View Row
     @ViewBuilder
     func TimelineViewRow(_ date: Date) -> some View {
         HStack(alignment: .top) {
@@ -120,12 +120,11 @@ struct ReservationView: View {
         .padding(.vertical, 15)
     }
     
-    
-    //MARK: - Reservation History Row
+    // MARK: - Reservation History Row
     @ViewBuilder
     func reservationRow(_ reservation: Reservation) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(reservation.clientUID)
+            Text(clientName)
                 .font(.headline)
                 .fontWeight(.bold)
             
@@ -148,7 +147,7 @@ struct ReservationView: View {
                     .font(.subheadline)
                     .fontWeight(.semibold)
                 Spacer()
-                Text("\(reservation.isFinished ? "예약완료" : "시술완료")")
+                Text("\(reservation.isFinished ? "시술완료" : "예약완료")")
                     .font(.system(size: 15))
                     .padding(3)
                     .foregroundStyle(Color.whiteMainColor)
@@ -170,6 +169,11 @@ struct ReservationView: View {
                     .fill(.gray)
                     .frame(width: 4)
                 
+            }
+        }
+        .onAppear {
+            reservationVM.getClientData(for: reservation.clientUID) { client in
+                clientName = client.name
             }
         }
     }
@@ -206,8 +210,6 @@ struct FloatingButton: View {
                 .shadow(radius: 5)
                 .sheet(isPresented: $showingRestDaySetting, content: {
                     WkDaySettingDetail(showingRestDaySetting: $showingRestDaySetting)
-                        .presentationCornerRadius(20)
-                        .presentationDetents([.fraction(0.6)])
                 })
                 
                 Button {
@@ -225,8 +227,6 @@ struct FloatingButton: View {
                 .shadow(radius: 5)
                 .sheet(isPresented: $showingBreakTimeSetting, content: {
                     TimeSettingDetail(showingBreakTimeSetting: $showingBreakTimeSetting)
-                        .presentationCornerRadius(20)
-                        .presentationDetents([.fraction(0.6)])
                 })
             }
             
