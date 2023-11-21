@@ -17,6 +17,7 @@ struct Reservation: Codable, Identifiable {
     var isFinished: Bool
     
     enum CodingKeys: CodingKey {
+        case id
         case clientUID
         case designerUID
         case reservationTime
