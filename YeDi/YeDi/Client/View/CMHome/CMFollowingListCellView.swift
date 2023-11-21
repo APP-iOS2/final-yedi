@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CMFollowingListButtonView: View {
+struct CMFollowingListCellView: View {
     @StateObject var postDetailViewModel: PostDetailViewModel = PostDetailViewModel()
     @State private var isLoaded = false
     let designer: Designer
@@ -85,5 +85,5 @@ struct CMFollowingListButtonView: View {
 }
     
 #Preview {
-    CMFollowingListButtonView(designer: Designer(name: "", email: "", phoneNumber: "", designerScore: 0, reviewCount: 0, followerCount: 0, skill: [], chatRooms: [], birthDate: "", gender: "", rank: .Owner, designerUID: ""))
+    CMFollowingListCellView(designer: Designer(name: "", email: "", phoneNumber: "", designerScore: 0, reviewCount: 0, followerCount: 0, skill: [], chatRooms: [], birthDate: "", gender: "", rank: .Owner, designerUID: ""))
 }

@@ -7,11 +7,13 @@
 
 import SwiftUI
 
-/// 다가오는 예약 목록 뷰
+/// 고객 다가오는 예약 목록 뷰
 struct CMUpcomingReservationListView: View {
     // MARK: - Properties
+    /// 유저 Auth 관리 뷰 모델
     @EnvironmentObject var userAuth: UserAuth
-    @EnvironmentObject var cmHistoryViewModel: CMHistoryViewModel
+    /// 고객 예약 내역 뷰 모델
+    @EnvironmentObject var reservationHistoryViewModel: CMReservationHistoryViewModel
     
     /// 다가오는 예약 목록 변수
     @State private var upcomingReservations: [Reservation] = []
@@ -25,11 +27,13 @@ struct CMUpcomingReservationListView: View {
                     .fontWeight(.bold)
             } else {
                 ScrollView {
-                    ForEach(upcomingReservations) { reservation in
+                    ForEach(upcomingReservations.indices, id: \.self) { index in
+                        let reservation = upcomingReservations[index]
+
                         NavigationLink {
                             CMReservationHistoryDetailView(reservation: reservation)
                         } label: {
-                            CMHistoryCellView(reservation: reservation)
+                            CMReservationHistoryCellView(reservation: reservation)
                                 .background(Color.gray6)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .padding([.leading, .trailing])
@@ -38,14 +42,15 @@ struct CMUpcomingReservationListView: View {
                     }
                 }
             }
+            
             Spacer()
         }
         .onAppear(perform: {
             Task {
-                await cmHistoryViewModel.fetchReservation(userAuth: userAuth)
+                await reservationHistoryViewModel.fetchReservation(userAuth: userAuth)
                 
                 // 다가오는 예약만 가져오도록 필터링
-                upcomingReservations = cmHistoryViewModel.reservations.filter({ $0.isFinished == false })
+                upcomingReservations = reservationHistoryViewModel.reservations.filter({ $0.isFinished == false })
                 // 다가오는 예약 > 예약 일시가 가까운 순으로 정렬
                 upcomingReservations = upcomingReservations.sorted { $0.reservationTime < $1.reservationTime }
             }
@@ -56,5 +61,5 @@ struct CMUpcomingReservationListView: View {
 #Preview {
     CMUpcomingReservationListView()
         .environmentObject(UserAuth())
-        .environmentObject(CMHistoryViewModel())
+        .environmentObject(CMReservationHistoryViewModel())
 }

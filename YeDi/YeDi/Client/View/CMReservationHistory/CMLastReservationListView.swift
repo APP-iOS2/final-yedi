@@ -8,11 +8,13 @@
 import SwiftUI
 import FirebaseFirestore
 
-/// 지난 예약 목록 뷰
+/// 고객 지난 예약 목록 뷰
 struct CMLastReservationListView: View {
     // MARK: - Properties
+    /// 유저 Auth 관리 뷰 모델
     @EnvironmentObject var userAuth: UserAuth
-    @EnvironmentObject var cmHistoryViewModel: CMHistoryViewModel
+    /// 고객 예약 내역 뷰 모델
+    @EnvironmentObject var reservationHistoryViewModel: CMReservationHistoryViewModel
     
     /// 지난 예약 목록 변수
     @State private var lastReservations: [Reservation] = []
@@ -26,11 +28,13 @@ struct CMLastReservationListView: View {
                     .fontWeight(.bold)
             } else {
                 ScrollView {
-                    ForEach(lastReservations) { reservation in
+                    ForEach(lastReservations.indices, id: \.self) { index in
+                        let reservation = lastReservations[index]
+                        Text(reservation.designerUID)
                         NavigationLink {
                             CMReservationHistoryDetailView(reservation: reservation)
                         } label: {
-                            CMHistoryCellView(reservation: reservation)
+                            CMReservationHistoryCellView(reservation: reservation)
                                 .background(Color.gray6)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .padding([.leading, .trailing])
@@ -39,14 +43,15 @@ struct CMLastReservationListView: View {
                     }
                 }
             }
+            
             Spacer()
         }
         .onAppear(perform: {
             Task {
-                await cmHistoryViewModel.fetchReservation(userAuth: userAuth)
+                await reservationHistoryViewModel.fetchReservation(userAuth: userAuth)
                 
                 // 지난 예약만 가져오도록 필터링
-                lastReservations = cmHistoryViewModel.reservations.filter({ $0.isFinished == true })
+                lastReservations = reservationHistoryViewModel.reservations.filter({ $0.isFinished == true })
                 // 지난 예약 > 예약 일시가 먼 순으로 정렬
                 lastReservations = lastReservations.sorted { $0.reservationTime > $1.reservationTime }
             }
@@ -56,4 +61,6 @@ struct CMLastReservationListView: View {
 
 #Preview {
     CMLastReservationListView()
+        .environmentObject(UserAuth())
+        .environmentObject(CMReservationHistoryViewModel())
 }

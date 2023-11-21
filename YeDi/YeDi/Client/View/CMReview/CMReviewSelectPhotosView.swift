@@ -8,10 +8,12 @@
 import SwiftUI
 import PhotosUI
 
+/// 고객 시술 사진 선택 뷰
 struct CMReviewSelectPhotosView: View {
     // MARK: - Properties
     @Binding var selectedPhotoURLs: [String]
     
+    /// 포토 피커용 Bool 타입 변수
     @State private var isShowingPhotoPicker: Bool = false
     
     // MARK: - Body

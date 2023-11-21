@@ -10,19 +10,22 @@ import SwiftUI
 /// 고객 설정 뷰
 struct CMSettingsView: View {
     // MARK: - Properties
+    /// 유저 Auth 관리 뷰 모델
     @EnvironmentObject var userAuth: UserAuth
-    
+    /// 오픈소스 라이선스 탭 여부를 나타내는 Bool 타입 변수
     @State private var isTappedOpenLicense: Bool = false
+    /// 이메일 문의 탭 여부를 나타내는 Bool 타입 변수
     @State private var isTappedEmailInquiry: Bool = false
-    
+    /// 로그아웃 Alert를 컨트롤하는 Bool 타입 변수
     @State private var isShowingSignOutAlert: Bool = false
+    /// 고객 계정 삭제 Alert를 컨트롤하는 Bool 타입 변수
     @State private var isShowingDeleteClientAccountAlert: Bool = false
     
     // MARK: - Body
     var body: some View {
         VStack {
             VStack(spacing: 5) {
-                // MARK: - 앱 버전 섹션
+                // MARK: - 앱 버전
                 HStack {
                     Text("앱 버전")
                     Spacer()
@@ -33,7 +36,7 @@ struct CMSettingsView: View {
                     .background(Color.systemFill)
                     .padding([.top, .bottom], 10)
                 
-                // MARK: - 개발자 정보 섹션
+                // MARK: - 개발자 정보
                 VStack {
                     HStack {
                         Text("개발자 정보")
@@ -45,7 +48,7 @@ struct CMSettingsView: View {
                     .background(Color.systemFill)
                     .padding([.top, .bottom], 10)
                 
-                // MARK: - 오픈소스 라이선스 섹션
+                // MARK: - 오픈소스 라이선스
                 VStack {
                     HStack {
                         Text("오픈소스 라이선스")
@@ -64,7 +67,7 @@ struct CMSettingsView: View {
                     .background(Color.systemFill)
                     .padding([.top, .bottom], 10)
                 
-                // MARK: - 이메일 문의 섹션
+                // MARK: - 이메일 문의
                 VStack {
                     HStack {
                         Text("이메일 문의")
@@ -75,7 +78,6 @@ struct CMSettingsView: View {
                         HStack {
                             Text("rofxnaos@gmail.com로 문의주세요.")
                                 .font(.subheadline)
-                                .accentColor(Color.primaryLabel)
                                 .padding(.leading)
                             Spacer()
                         }
@@ -93,7 +95,7 @@ struct CMSettingsView: View {
             
             Spacer()
             
-            // MARK: - 로그아웃, 계정 삭제 버튼 섹션
+            // MARK: - 로그아웃, 계정 삭제 버튼
             Group {
                 Button {
                     isShowingSignOutAlert.toggle()
@@ -151,7 +153,7 @@ struct CMSettingsView: View {
 /// 오픈소스 라이선스 섹션 컨텐츠
 struct OpenLicenseView: View {
     // MARK: - Properties
-    /// Firebase 라이선스 탭 여부를 나타내는 Bool타입 변수
+    /// Firebase 라이선스 탭 여부를 나타내는 Bool 타입 변수
     @State private var isTappedFirebaseLicense: Bool = false
     
     // MARK: - Body
@@ -176,8 +178,9 @@ struct OpenLicenseView: View {
         .padding([.top, .leading, .trailing])
     }
         
+    // MARK: - Methods
     /// .txt 파일을 읽어오는 함수
-    /// - filename: 파일 이름을 String 타입으로 넘김
+    /// - Parameter filename: String 타입의 파일 이름
     func readTextFile(filename: String) -> String {
         guard let path = Bundle.main.path(forResource: filename, ofType: nil) else { return "" }
         do {

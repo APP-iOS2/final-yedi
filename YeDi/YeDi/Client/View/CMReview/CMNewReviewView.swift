@@ -8,32 +8,40 @@
 import SwiftUI
 import PhotosUI
 
-/// 리뷰 작성 뷰
+/// 고객 리뷰 작성 뷰
 struct CMNewReviewView: View {
     // MARK: - Properties
+    /// 현재 프레젠테이션 dismiss용 환경 변수
     @Environment(\.dismiss) var dismiss
-    
+    /// 유저 Auth 관리 뷰 모델
     @EnvironmentObject var userAuth: UserAuth
+    /// 고객 리뷰 뷰 모델
     @EnvironmentObject var reviewViewModel: CMReviewViewModel
     
-    @State private var selectedPhotoURLs: [String] = []
-    @State private var selectedKeywords: [Keyword] = []
+    @State private var reviewPhotoURLs: [String] = []
+    @State private var reviewKeywords: [Keyword] = []
     @State private var reviewScore: Int = 0
     @State private var reviewContent: String = ""
     
+    /// 유효성 검사 결과 Alert용 Bool 타입 변수
     @State private var isShowingValidationAlert: Bool = false
+    /// 업로드 상태를 표시하는 Bool 타입 변수
     @State private var isUploading: Bool = false
     
+    /// 싱글톤 date formatter
+    private let dateFormatter = FirebaseDateFomatManager.sharedDateFommatter
+    
+    /// 표시할 예약 인스턴스
     var reservation: Reservation
     
     /// 업로드 상태에 따른 버튼 텍스트
-    var buttonText: String {
+    var uploadButtonText: String {
         return isUploading ? "업로드 중..." : "리뷰 등록"
     }
     
     /// 리뷰 유효성 검사
-    var isReadyToSave: Bool {
-        return !selectedPhotoURLs.isEmpty && !selectedKeywords.isEmpty && !reviewContent.isEmpty
+    var isReadyToUpload: Bool {
+        return !reviewPhotoURLs.isEmpty && !reviewKeywords.isEmpty && !reviewContent.isEmpty
     }
     
     // MARK: - Body
@@ -44,9 +52,9 @@ struct CMNewReviewView: View {
                 
                 Spacer(minLength: 10)
                 
-                CMReviewSelectPhotosView(selectedPhotoURLs: $selectedPhotoURLs)
+                CMReviewSelectPhotosView(selectedPhotoURLs: $reviewPhotoURLs)
                 
-                CMReviewSelectKeywordsView(selectedKeywords: $selectedKeywords)
+                CMReviewSelectKeywordsView(selectedKeywords: $reviewKeywords)
                 
                 CMReviewGiveScoreView(reviewScore: $reviewScore)
                 
@@ -54,7 +62,7 @@ struct CMNewReviewView: View {
                 
                 Spacer()
             }
-            saveButton
+            uploadButton
         }
         .onDisappear {
             isUploading.toggle()
@@ -75,10 +83,10 @@ struct CMNewReviewView: View {
         }
     }
     
-    // MARK: - Custom Save Button
-    private var saveButton: some View {
+    /// 리뷰 업로드용 커스텀 버튼
+    private var uploadButton: some View {
         Button(action: {
-            if isReadyToSave {
+            if isReadyToUpload {
                 isUploading.toggle()
                 
                 guard let reservationId = reservation.id else { return }
@@ -88,21 +96,22 @@ struct CMNewReviewView: View {
                     styles.append(hairStyle.name)
                 }
                 
-                // MARK: - 리뷰 저장 로직
                 if let clientId = userAuth.currentClientID {
+                    // MARK: - 새 리뷰 인스턴스 생성
                     let newReview = Review(
                         id: UUID().uuidString,
                         reviewer: clientId,
-                        date: FirebaseDateFomatManager.sharedDateFommatter.firebaseDate(from: Date()),
-                        keywordReviews: selectedKeywords,
+                        date: dateFormatter.firebaseDate(from: Date()),
+                        keywordReviews: reviewKeywords,
                         designerScore: reviewScore,
                         content: reviewContent,
-                        imageURLStrings: selectedPhotoURLs,
+                        imageURLStrings: reviewPhotoURLs,
                         reservationId: reservationId,
                         style: styles.joined(separator: ", "),
                         designer: reservation.designerUID
                     )
                     
+                    // MARK: - 리뷰 업로드 및 dismiss
                     Task {
                         await reviewViewModel.uploadReview(review: newReview)
                         dismiss()
@@ -112,7 +121,7 @@ struct CMNewReviewView: View {
                 isShowingValidationAlert.toggle()
             }
         }, label: {
-            Text(buttonText)
+            Text(uploadButtonText)
         })
         .buttonModifier(.mainColor)
         .padding()

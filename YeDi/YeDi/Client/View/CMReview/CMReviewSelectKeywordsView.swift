@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// 고객 키워드 리뷰 선택 뷰
 struct CMReviewSelectKeywordsView: View {
     // MARK: - Properties
     @Binding var selectedKeywords: [Keyword]
@@ -57,12 +58,14 @@ struct CMReviewSelectKeywordsView: View {
     }
 }
 
+/// 키워드 버튼
 struct KeywordButton: View {
     // MARK: - Properties
     @Binding var selectedKeywords: [Keyword]
     
     /// 키워드 선택에 따른 실시간 UI 처리용 배열
     @State private var displayingKeywords: [Keyword] = keywords
+    /// 키워드 선택 개수 제한 안내 Alert용 Bool 타입 변수
     @State private var isShowingCountLimitAlert: Bool = false
     
     var index: Int = 0

@@ -7,11 +7,17 @@
 
 import SwiftUI
 
+/// 고객 팔로잉 리스트 뷰
 struct CMFollowingListView: View {
     // MARK: - Properties
+    /// 고객 프로필 뷰 모델
     @EnvironmentObject var profileViewModel: CMProfileViewModel
+    /// 포스트 디테일 뷰 모델
     @StateObject var postDetailViewModel: PostDetailViewModel = PostDetailViewModel()
+    
+    /// 팔로잉 여부를 나타내는 Bool 타입 변수
     @State private var isFollowing: Bool = true
+    /// 업로드 상태를 나타내는 Bool 타입 변수
     @State private var isLoaded: Bool = false
     
     // MARK: - Body

@@ -7,39 +7,32 @@
 
 import SwiftUI
 
+/// 고객 리뷰 디테일 뷰
 struct CMReviewDetailView: View {
-    var review: Review
+    // MARK: - Properties
+    @State private var displayedImageIndex: Int = 0
     
-    private let imageDimension: CGFloat = (UIScreen.main.bounds.width) - 10
+    /// 싱글톤 date formatter
+    private let dateFormatter = FirebaseDateFomatManager.sharedDateFommatter
+    /// 스크린 width에 따른 이미즈 크기 지정 변수
+    private let imageDimension: CGFloat = screenWidth
     
-    @State private var selectedImageIndex: Int = 0
-
+    /// 표시할 리뷰 인스턴스
+    let review: Review
+    
+    // MARK: - Body
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading) {
-                HStack {
-                    Text(review.style)
-                        .font(.title3)
-                        .fontWeight(.bold)
-                    Spacer()
-                    VStack(alignment: .trailing) {
-                        RatingView(score: review.designerScore, maxScore: 5, filledColor: .yellow)
-                        Text("\(FirebaseDateFomatManager.sharedDateFommatter.changeDateString(transition: "yy.MM.dd", from: review.date))")
-                            .font(.footnote)
-                            .foregroundStyle(.gray)
-                    }
-                    
-                }
-                
-                
+            VStack(alignment: .leading, spacing: 0) {
+                // MARK: - 리뷰 이미지
                 if review.imageURLStrings.count == 1 {
                     AsnycCacheImage(url: review.imageURLStrings[0])
                         .scaledToFill()
                         .frame(width: imageDimension, height: imageDimension)
                         .clipped()
-                        .cornerRadius(8)
+                        .offset(y: -20)
                 } else {
-                    TabView(selection: $selectedImageIndex) {
+                    TabView(selection: $displayedImageIndex) {
                         ForEach(0..<review.imageURLStrings.count, id: \.self) { index in
                             AsnycCacheImage(url: review.imageURLStrings[index])
                                 .scaledToFill()
@@ -48,13 +41,23 @@ struct CMReviewDetailView: View {
                                 .tag(index)
                         }
                     }
-                    .cornerRadius(8)
-                    
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
                     .frame(height: imageDimension)
+                    .offset(y: -20)
                 }
+                
+                // MARK: - 리뷰 주요 컨텐츠
+                HStack {
+                    Text(review.style)
+                        .font(.title3)
+                        .fontWeight(.bold)
+                    Spacer()
+                    RatingView(score: review.designerScore, maxScore: 5, filledColor: .yellow)
+                }
+                .padding([.bottom, .leading, .trailing])
+                
                 Text(review.content)
-                    .padding(.bottom)
+                    .padding([.bottom, .leading, .trailing])
                 
                 ForEach(review.keywordReviews) { keyword in
                     HStack {
@@ -67,10 +70,17 @@ struct CMReviewDetailView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .fill(Color.quaternarySystemFill)
                     }
+                    .padding(EdgeInsets(top: 3, leading: 10, bottom: 3, trailing: 10))
                 }
                 
+                HStack {
+                    Spacer()
+                    Text("\(dateFormatter.changeDateString(transition: "yy.MM.dd", from: review.date)) 작성")
+                        .font(.footnote)
+                        .foregroundStyle(.gray)
+                }
+                .padding([.top, .leading, .trailing])
             }
-            .padding()
         }
         .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .tabBar)
@@ -83,5 +93,17 @@ struct CMReviewDetailView: View {
 }
 
 #Preview {
-    CMReviewDetailView(review: Review(reviewer: "", date: "", keywordReviews: [], designerScore: 0, content: "", imageURLStrings: [], reservationId: "", style: "", designer: ""))
+    CMReviewDetailView(
+        review: Review(
+            reviewer: "",
+            date: "",
+            keywordReviews: [],
+            designerScore: 0,
+            content: "",
+            imageURLStrings: [],
+            reservationId: "",
+            style: "",
+            designer: ""
+        )
+    )
 }
