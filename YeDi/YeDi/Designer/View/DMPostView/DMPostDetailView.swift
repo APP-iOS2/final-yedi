@@ -13,7 +13,7 @@ struct DMPostDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var postViewModel: DMPostViewModel
-    @StateObject var designerProfileViewModel = DMProfileViewModel.shared
+    @StateObject var designerProfileViewModel: DMProfileViewModel = DMProfileViewModel()
     
     let instance = FirebaseDateFomatManager.sharedDateFommatter
     
@@ -161,18 +161,18 @@ struct DMPostDetailView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text("카테고리")
-                    .fontWeight(.semibold)
+                    .foregroundColor(Color.secondaryLabel)
                 Spacer()
                 Text(selectedPost.hairCategory.rawValue)
-                    .foregroundColor(Color.secondaryLabel)
+                    .fontWeight(.semibold)
             }
             
             HStack {
                 Text("가격")
-                    .fontWeight(.semibold)
+                    .foregroundColor(Color.secondaryLabel)
                 Spacer()
                 Text("\(selectedPost.price)")
-                    .foregroundColor(Color.secondaryLabel)
+                    .fontWeight(.semibold)
             }
         }
         .padding()
@@ -188,21 +188,17 @@ struct DMPostDetailView: View {
     func refreshPost(post: Post) {
         // 게시글 ID 확인
         guard let postId = selectedPost.id else { return }
-        guard let currentDesignerID = userAuth.currentDesignerID else { return }
 
         // Firestore에서 게시글 정보 업데이트
         Firestore.firestore().collection("posts")
-            .whereField("designerID", isEqualTo: currentDesignerID) // 현재 디자이너의 게시물만 쿼리
-            .whereField("id", isEqualTo: postId) // 게시글 ID로 필터링
-            .getDocuments { (snapshot, error) in
+            .document(postId)
+            .addSnapshotListener { (snapshot, error) in
                 if let error = error {
                     print("Error fetching document: \(error)")
-                } else if let documents = snapshot?.documents, let document = documents.first {
-                    if let refreshedPost = try? document.data(as: Post.self) {
-                        selectedPost = refreshedPost
-                    } else {
-                        print("Error decoding post.")
-                    }
+                } else if let document = try? snapshot?.data(as: Post.self) {
+                    selectedPost = document
+                } else {
+                    print("Error decoding post.")
                 }
             }
     }

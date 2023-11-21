@@ -264,5 +264,5 @@ struct DMProfileEditView: View {
 #Preview {
     DMProfileEditView()
         .environmentObject(UserAuth())
-        .environmentObject(DMProfileViewModel.shared)
+        .environmentObject(DMProfileViewModel())
 }

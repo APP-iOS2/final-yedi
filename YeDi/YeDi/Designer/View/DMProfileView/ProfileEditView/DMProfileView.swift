@@ -13,7 +13,7 @@ struct DMProfileView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var locationManager: LocationManager
     
-    @StateObject var profileVM: DMProfileViewModel = DMProfileViewModel.shared
+    @StateObject var profileVM: DMProfileViewModel = DMProfileViewModel()
     
     @State private var region = MKCoordinateRegion()
     @State private var markers: [MapMarker] = []
