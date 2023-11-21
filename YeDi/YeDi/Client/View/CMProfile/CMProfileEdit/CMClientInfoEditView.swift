@@ -24,7 +24,7 @@ struct CMClientInfoEditView: View {
     @State private var isShowingDatePicker: Bool = false
     
     /// 싱글톤 date formatter
-    private let dateFormatter = SingleTonDateFormatter.sharedDateFommatter
+    private let dateFormatter = FirebaseDateFomatManager.sharedDateFommatter
     
     let genders: [String] = ["여성", "남성"]
     

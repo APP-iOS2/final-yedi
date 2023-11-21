@@ -60,7 +60,7 @@ struct LikedPostCellView: View {
         NavigationLink(destination: CMFeedDetailView(post: post)) {
             // 이미지와 아이콘을 겹치기 위해 ZStack 사용
             ZStack(alignment: .topTrailing) {
-                DMAsyncImage(url: post.photos[0].imageURL)
+                AsnycCacheImage(url: post.photos[0].imageURL)
                     .scaledToFill()
                     .frame(width: imageDimension, height: imageDimension)
                     .clipped()
