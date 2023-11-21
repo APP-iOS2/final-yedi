@@ -158,9 +158,9 @@ merge hotfix type: REVERSE tag: "v1.0.1"
 - 고객이 작성한 본인 리뷰들을 모아서 볼 수 있습니다.
 
 ## 채팅
-|`게시물 상담 채팅`|`채팅방 내 바로예약`|`채팅방 내 사진 전송`|
-|:----:|:----:|:----:|
-| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/aa254997-04c0-4df4-8084-d32c21d9b875" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/b34e717c-a4bf-4861-b427-889e7f3cf63d" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/a9bf0d9a-f731-41ee-87cb-9f68b37b954a" width="150"> |
+|`게시물 상담 채팅`|`채팅방 내 바로예약`|`채팅방 내 사진 전송`|`채팅방 리스트`|
+|:----:|:----:|:----:|:----:|
+| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/aa254997-04c0-4df4-8084-d32c21d9b875" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/b34e717c-a4bf-4861-b427-889e7f3cf63d" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/a9bf0d9a-f731-41ee-87cb-9f68b37b954a" width="150"> |<img src="https://github.com/APP-iOS2/final-yedi/assets/48472569/2481be8c-3ea0-444b-bb70-0ed2be3ce4a2" width="150"> |
 
 #### 구현 기능
 
@@ -240,7 +240,7 @@ merge hotfix type: REVERSE tag: "v1.0.1"
 
 1) totalCostLimit vs. CountLimit
 
-- evicated 되는 정책을 설정할 때 캐싱되는 수를 제한것과 용량 제한정책을 설정을  할 것인지 고민했습니다. 저희 앱에서 이미지 캐싱 목적은 네트워크 통신 최소화와 빠른 이미지 로딩 목적으로 이미지 캐싱 로직을 도입 했고 가장 많이 이미지 포출되는 뷰인 홈탭 게시글 목록에서 한 번에 이미지가 보이는 숫자가 10개 정도로 였습니다. 캐싱되는 갯수로 evicated를 설정하기엔 이미지 마다 데이터 크기 편차가 많아 잦은 evicated가 발생, overhead 가능성이 많아 애매모호 했고 용량을 제한하는 것을 택했습니다. 이미지가 가장 용량은 파이어스토지 용량 참고 당시 3-4MB였고 최악의 경우 한 번에 10 * 4MB = 40MB 저장하게 되니 여유 10MB를 더해 50MB로 정책 설정을 했습니다.
+- evicated 되는 정책을 설정할 때 캐싱되는 수를 제한것과 용량 제한정책을 설정을 할 것인지 고민했습니다. 저희 앱에서 이미지 캐싱 목적은 네트워크 통신 최소화와 빠른 이미지 로딩 목적으로 이미지 캐싱 로직을 도입 했고 처음 용량을 제한 하는 것으로 정책을 설정했지만 이미지마다 데이터 크기 편차가 많아 잦은 evicated가 발생해 overhead로 이어졌습니다. 따라서 캐싱되는 이미지 갯수를 제한하는 것으로 결정했습니다.
 
 2) 싱글톤 디자인패턴 채택
 
