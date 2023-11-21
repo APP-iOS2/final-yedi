@@ -22,7 +22,6 @@ struct CMDesignerProfileView: View {
     @State private var region = MKCoordinateRegion()
     @State private var markers: [MapMarker] = []
     @State private var isShowingMap = false
-    
     @State private var selectedSegment: String = "게시물"
     
     var body: some View {
@@ -32,20 +31,10 @@ struct CMDesignerProfileView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         if let imageURLString = designer.imageURLString {
-                            AsyncImage(url: URL(string: "\(imageURLString)")) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(maxWidth: 80, maxHeight: 80)
-                                    .clipShape(Circle())
-                            } placeholder: {
-                                Text(String(designer.name.first ?? " ").capitalized)
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                    .frame(width: 80, height: 80)
-                                    .background(Circle().fill(Color.quaternarySystemFill))
-                                    .foregroundColor(Color.primaryLabel)
-                            }
+                            AsnycCacheImage(url: imageURLString)
+                                .aspectRatio(contentMode: .fill)
+                                .frame(maxWidth: 80, maxHeight: 80)
+                                .clipShape(Circle())
                         } else {
                             Text(String(designer.name.first ?? " ").capitalized)
                                 .font(.title)
