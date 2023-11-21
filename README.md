@@ -130,6 +130,9 @@ merge hotfix type: REVERSE tag: "v1.0.1"
 
 
 ## 디자이너
+|`게시물|
+|:----:|
+| <img src="https://github.com/APP-iOS2/final-yedi/assets/54970536/71ed8bc0-3a5e-43ac-be8a-c6a35fc501a2" width="150"> |
 ### 게시물
 
 ---
