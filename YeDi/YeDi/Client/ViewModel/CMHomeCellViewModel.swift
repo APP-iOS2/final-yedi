@@ -78,52 +78,34 @@ class CMHomeCellViewModel: ObservableObject {
                 if let error = error {
                     print("Error checking liked post: \(error)")
                 } else {
-                    if (snapshot?.documents.first) != nil {
-                        // 이미 찜한 게시물이므로 아무 작업도 수행하지 않음
-                        // 여기에서 찜 상태를 변경하지 않고 함수 종료
-                        return
-                    }
-                    
-                    // 아직 찜하지 않은 게시물인 경우 Firestore에 추가
-                    let likedPostData: [String: Any] = [
-                        "clientID": clientID,
-                        "postID": post.id ?? "",
-                        "isLiked": isLiked,
-                        "timestamp": FieldValue.serverTimestamp()
-                    ]
-                    
-                    likeCollection.addDocument(data: likedPostData) { error in
-                        if let error = error {
-                            print("Error liking post: \(error)")
-                        } else {
-                            print("Post liked successfully.")
-                            
-                            if !self.isLiked {
-                                // isLiked가 false인 경우, 해당 게시물을 Firestore에서 삭제
-                                self.deleteFromFirestore(forClientID: clientID, post: post)
+                    if let document = snapshot?.documents.first {
+                        // 이미 찜한 게시물이므로 Firestore에서 삭제
+                        document.reference.delete { error in
+                            if let error = error {
+                                print("Error unliking post: \(error)")
+                            } else {
+                                print("Post unliked successfully.")
+                                self.isLiked = false
+                            }
+                        }
+                    } else {
+                        // 아직 찜하지 않은 게시물인 경우 Firestore에 추가
+                        let likedPostData: [String: Any] = [
+                            "clientID": clientID,
+                            "postID": post.id ?? "",
+                            "isLiked": true,
+                            "timestamp": FieldValue.serverTimestamp()
+                        ]
+                        
+                        likeCollection.addDocument(data: likedPostData) { error in
+                            if let error = error {
+                                print("Error liking post: \(error)")
+                            } else {
+                                print("Post liked successfully.")
+                                self.isLiked = true
                             }
                         }
                     }
-                }
-            }
-    }
-    
-    // 게시물 찜 취소
-    private func deleteFromFirestore(forClientID clientID: String, post: Post) {
-        let db = Firestore.firestore()
-        
-        db.collection("likedPosts")
-            .whereField("clientID", isEqualTo: clientID)
-            .whereField("postID", isEqualTo: post.id ?? "")
-            .getDocuments { snapshot, error in
-                if let error = error {
-                    print("Error deleting liked post: \(error)")
-                } else {
-                    for document in snapshot?.documents ?? [] {
-                        document.reference.delete()
-                    }
-                    
-                    print("Post unliked successfully.")
                 }
             }
     }
