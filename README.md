@@ -134,10 +134,15 @@ merge hotfix type: REVERSE tag: "v1.0.1"
 |:----:|:----:|
 | <img src="https://github.com/APP-iOS2/final-yedi/assets/72439620/4e8380af-ca57-438e-92c2-5008732f90b6" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/72439620/945d668e-d24e-428b-9586-dfe372eadeb7" width="150"> |
 
+### 프로필
+|`프로필 편집`|`찜한 게시물`|`팔로잉`|`리뷰`|
+|:----:|:----:|:----:|:----:|
+| <img src="https://github.com/APP-iOS2/final-yedi/assets/72439620/7115c3b9-2647-4ac2-bd73-6ab99aab3ee9" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/72439620/7ad6ed95-8560-43e6-a643-8312d7a7f40c" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/72439620/95916dca-8dcb-40bf-90ce-67c07617822d" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/72439620/2d23513c-7b96-48b5-90f3-5884ae6c537d" width="150"> |
+
 ### 리뷰
 |`리뷰 작성`|`리뷰 확인`|
 |:----:|:----:|
-| <img src="" width="150"> | <img src="" width="150"> |
+| <img src="https://github.com/APP-iOS2/final-yedi/assets/72439620/319d0256-35a5-4615-9739-69107a6d72f2" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/72439620/2d23513c-7b96-48b5-90f3-5884ae6c537d" width="150"> |
 
 ## 디자이너
 ### 리뷰
