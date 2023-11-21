@@ -89,7 +89,6 @@ struct CMFeedDetailContentView: View {
                     Task {
                         await postDetailViewModel.toggleLike(post: post)
                     }
-                    postDetailViewModel.isLiked.toggle()
                 }
         }
         .padding()

@@ -145,44 +145,39 @@ merge hotfix type: REVERSE tag: "v1.0.1"
 | <img src="https://github.com/APP-iOS2/final-yedi/assets/72439620/319d0256-35a5-4615-9739-69107a6d72f2" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/72439620/2d23513c-7b96-48b5-90f3-5884ae6c537d" width="150"> |
 
 ## 디자이너
-### 리뷰
 |`리뷰 확인`|
 |:----:|
 | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/0b7a32fd-bdba-4517-918b-7c15c708c11a" width="150"> |
 
-#### 구현 기능
-- 고객이 작성한 본인 리뷰들을 모아서 볼 수 있습니다.
-
-### 게시물
 |`게시물 생성`|`게시물 편집`|`게시물 삭제`|
 |:----:|:----:|:----:|
-| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/2d752da0-44ed-4d10-b3f9-a76f2a63cd17" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/4f67d0ef-4948-4b5a-924a-79cc7852b5e0" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/b8646056-c06e-4fb5-89a0-820e61fdb9ba" width="150">|
+| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/2d752da0-44ed-4d10-b3f9-a76f2a63cd17" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/0ebb8e7c-e882-4854-bc50-6f07d413f472" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/30ad011f-7653-4d4b-94e5-d01fa5341fdb" width="150"> |
 
-#### 구현 기능
-1) 게시물 생성
-  - 게시물을 작성하여 올릴 수 있습니다.
-  - 여러 로컬 이미지를 불러와 업로드 할 수 있습니다.
-2) 게시물 편집 & 삭제
-  - 이미지 텍스트를 직접 편집하여 게시물을 수정할 수 있습니다.
-
-### 예약 현황
-|`예약 확인`|`휴무일 설정`|`휴게시간 설정`|
+|`예약 현황 확인`|`휴무일 설정`|`휴게시간 설정`|
 |:----:|:----:|:----:|
 | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/b43f681c-ceac-4899-9f49-2f2426fe578d" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/bf34a431-9da3-42f1-ac64-3926a5c266db" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/c5396ba2-7e42-4b0d-8ef0-04314009703d" width="150"> |
 
-#### 구현기능
-1) 캘린더 뷰어
-  - SwiftUI로 직접 캘린더를 구현했습니다.
-  - 캘린더에서 날짜를 선택하여 해당 날짜의 예약들을 모두 확인할 수 있습니다.
-2) 휴무일 & 휴게시간 설정:
-  - 설정 버튼을 누르면 아래 기능들을 수행할 수 있게 버튼이 생성됩니다.
-  - 휴무일: 휴무일을 설정하여 고객이 휴무일에는 예약을 할 수 없게 만들었습니다.
-  - 휴게시간: 휴게시간을 설정하여 고객이 휴게시간에는 예약을 할 수 없게 만들었습니다.
+#### 구현 기능
+1) 고객이 작성한 리뷰 모아보기
+- 디자이너에게 예약과 시술을 마친 고객이 남긴 리뷰를 한 번에 확인할 수 있습니다.
+
+2) 게시물 생성, 편집 및 삭제
+- 디자이너만의 헤어 스타일에 대한 사진과 게시물 제목, 내용, 가격을 자유롭게 입력할 수 있습니다. `PhotoPicker`를 이용하여 로컬 사진를 불러올 수 있고 해당 화면에서 불러온 사진을 바로 확인 및 사진 삭제, 추가 작업을 이어서 진행할 수 있습니다.
+- `actionSheet`를 통해 게시물을 편집할 수 있는 화면으로 이동합니다. 해당 게시물에 대한 데이터 불러오고 생성 작업과 동일하게 사진 수정 및 텍스트 수정이 가능하도록 구현하였습니다.
+- `actionSheet`를 통해 해당 게시물을 삭제할 수 있습니다.
+
+3) 캘린더 뷰어로 예약 현황 모아보기
+- `Calendar`에 관련된 컴포넌트들을 이용하여 캘린더를 커스텀으로 구현하였고, 일별 타임라인을 구현하여 고객이 예약한 현황을 타임라인으로 스크롤하여 확인할 수 있습니다.
+
+4) 휴무일 & 휴게시간 설정:
+- 예약현황 탭에서 휴무일, 휴게시간 설정을 위한 플로팅 버튼을 구현하였습니다.
+- 휴무일 설정 버튼을 클릭하면 이번 달 휴무일을 설정할 수 있는 sheet가 뜹니다. `Calendar`에 관련된 컴포넌트들을 이용하여 캘린더를 커스텀으로 구현하였고, 일별 버튼으로 구현하여 원하는 휴무일을 선택 및 해제할 수 있습니다. 휴무일을 설정하면 고객이 해당 디자이너에게 예약할 때 디자이너가 설정한 휴무일에는 예약을 하지 못하도록 구현하였습니다.
+- 고정된 근무시간 중 휴게시간을 선택 설정할 수 있습니다. `Picker`를 이용하여 원하는 휴게 시간대를 선택할 수 있도록 구현하였습니다.
 
 ## 채팅
-|`게시물 상담 채팅`|`채팅방 내 바로예약`|`채팅방 내 사진 전송`|`채팅방 리스트`|
+|`채팅방 리스트`|`게시물 상담 채팅`|`채팅방 내 사진 전송`|`채팅방 내 바로예약`|
 |:----:|:----:|:----:|:----:|
-| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/aa254997-04c0-4df4-8084-d32c21d9b875" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/b34e717c-a4bf-4861-b427-889e7f3cf63d" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/a9bf0d9a-f731-41ee-87cb-9f68b37b954a" width="150"> |<img src="https://github.com/APP-iOS2/final-yedi/assets/48472569/2481be8c-3ea0-444b-bb70-0ed2be3ce4a2" width="150"> |
+|<img src="https://github.com/APP-iOS2/final-yedi/assets/48472569/2481be8c-3ea0-444b-bb70-0ed2be3ce4a2" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/aa254997-04c0-4df4-8084-d32c21d9b875" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/a9bf0d9a-f731-41ee-87cb-9f68b37b954a" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/b34e717c-a4bf-4861-b427-889e7f3cf63d" width="150"> |
 
 #### 구현 기능
 
