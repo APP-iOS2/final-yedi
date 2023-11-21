@@ -119,9 +119,9 @@ merge hotfix type: REVERSE tag: "v1.0.1"
 
 # 주요 화면 및 기능 상세
 ## 로그인/회원가입
-|`로그인/회원가입`|
-|:----:|
-| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/1c1d9f36-8689-4ccc-bdb8-6a9d87b58a08" width="150"> <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/d45d1e67-213f-452e-a550-816d997816df" width="150"> |
+|`고객 회원가입`|`디자이너 회원가입`|
+|:----:|:----:|
+| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/1c1d9f36-8689-4ccc-bdb8-6a9d87b58a08" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/d45d1e67-213f-452e-a550-816d997816df" width="150"> |
 
 ## 고객
 |`예약`|
@@ -130,42 +130,39 @@ merge hotfix type: REVERSE tag: "v1.0.1"
 
 
 ## 디자이너
-|`게시물 생성`|`게시물 편집`|`게시물 삭제`|`예약 확인`|
-|:----:|:----:|:----:|:----:|
-| <img src="https://github.com/APP-iOS2/final-yedi/assets/54970536/71ed8bc0-3a5e-43ac-be8a-c6a35fc501a2" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/54970536/6f1c3cf5-2a65-462e-927b-f12dbf39824c" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/54970536/cba57974-7b66-400e-b8b3-0132685c8ca0" width="150">| <img src="https://github.com/APP-iOS2/final-yedi/assets/54970536/76f253fd-b12e-44cd-973e-e830787d6e04" width="150">|
+### 리뷰
+|`리뷰 확인`|
+|:----:|
+| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/0b7a32fd-bdba-4517-918b-7c15c708c11a" width="150"> |
+
+#### 구현 기능
+- 고객이 작성한 본인 리뷰들을 모아서 볼 수 있습니다.
 
 ### 게시물
+|`게시물 생성`|`게시물 편집`|`게시물 삭제`|
+|:----:|:----:|:----:|
+| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/2d752da0-44ed-4d10-b3f9-a76f2a63cd17" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/4f67d0ef-4948-4b5a-924a-79cc7852b5e0" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/b8646056-c06e-4fb5-89a0-820e61fdb9ba" width="150">|
 
----
+#### 구현 기능
+1) 게시물 생성
+- 게시물을 작성하여 올릴 수 있습니다.
+- 여러 로컬 이미지를 불러와 업로드 할 수 있습니다.
+2) 게시물 편집 & 삭제
+- 이미지 텍스트를 직접 편집하여 게시물을 수정할 수 있습니다.
 
-**구현 기능**
+### 예약 현황
+|`예약 확인`|`휴무일 설정`|`휴게시간 설정`|
+|:----:|:----:|:----:|
+| <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/b43f681c-ceac-4899-9f49-2f2426fe578d" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/bf34a431-9da3-42f1-ac64-3926a5c266db" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/68881093/c5396ba2-7e42-4b0d-8ef0-04314009703d" width="150"> |
 
-- 게시물 생성
-    - 게시물을 작성하여 올릴 수 있습니다.
-    - 여러 로컬 이미지를 불러와 업로드 할 수 있습니다.
-- 게시물 편집 & 삭제
-    - 이미지 텍스트를 직접 편집하여 게시물을 수정할 수 있습니다.
-
-### 예약
-
----
-
-**구현기능**
-
-- 캘린더 뷰어
-    - SwiftUI로 직접 캘린더를 구현했습니다.
-    - 캘린더에서 날짜를 선택하여 해당 날짜의 예약들을 모두 확인할 수 있습니다.
-- 휴게 & 휴무 설정:
-    - 설정 버튼을 누르면 아래 기능들을 수행할 수 있게 버튼이 생성됩니다.
-    - 휴게: 휴게시간을 설정하여 고객이 휴게시간에는 예약을 할 수 없게 만들었습니다.
-    - 휴뮤: 휴무일을 설정하여 고객이 휴무일에는 예약을 할 수 없게 만들었습니다.
-### 리뷰
-
----
-
-**설명**
-
-- 고객이 작성한 본인 리뷰들을 모아서 볼 수 있습니다.
+#### 구현기능
+1) 캘린더 뷰어
+- SwiftUI로 직접 캘린더를 구현했습니다.
+- 캘린더에서 날짜를 선택하여 해당 날짜의 예약들을 모두 확인할 수 있습니다.
+2) 휴무일 & 휴게시간 설정:
+- 설정 버튼을 누르면 아래 기능들을 수행할 수 있게 버튼이 생성됩니다.
+- 휴무일: 휴무일을 설정하여 고객이 휴무일에는 예약을 할 수 없게 만들었습니다.
+- 휴게시간: 휴게시간을 설정하여 고객이 휴게시간에는 예약을 할 수 없게 만들었습니다.
 
 ## 채팅
 |`게시물 상담 채팅`|`채팅방 내 바로예약`|`채팅방 내 사진 전송`|`채팅방 리스트`|
