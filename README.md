@@ -154,7 +154,7 @@ merge hotfix type: REVERSE tag: "v1.0.1"
 |:----:|:----:|
 | <img src="https://github.com/APP-iOS2/final-yedi/assets/72439620/319d0256-35a5-4615-9739-69107a6d72f2" width="150"> | <img src="https://github.com/APP-iOS2/final-yedi/assets/72439620/2d23513c-7b96-48b5-90f3-5884ae6c537d" width="150"> |
 
-#### 설명 및 구현 기능
+### 설명 및 구현 기능
 1) 홈
 
 **설명**
