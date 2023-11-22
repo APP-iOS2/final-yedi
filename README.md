@@ -132,7 +132,7 @@ merge hotfix type: REVERSE tag: "v1.0.1"
 ### 검색
 |`디자이너 검색`|`디자이너 정보 보기`|
 |:----:|:----:|
-| <img src="https://github.com/APP-iOS2/final-yedi/assets/134610315/6d3a8bd5-cd4e-413b-b368-9352dd00edda" width="150"> |<img src="https://github.com/APP-iOS2/final-yedi/assets/134610315/3bbe808c-93e3-416d-ad06-f4cc27d595e6" width="150"> |
+| <img src="https://github.com/APP-iOS2/final-yedi/assets/134610315/5bc11bdf-0478-4876-9e96-6c7a5df4bd36" width="150"> |<img src="https://github.com/APP-iOS2/final-yedi/assets/134610315/03a6f316-bd3e-4755-ad65-c6f62b192506" width="150"> |
 
 ### 예약
 |`바로 예약`|
