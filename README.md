@@ -127,7 +127,7 @@ merge hotfix type: REVERSE tag: "v1.0.1"
 ### 홈
 |`게시물`|`게시물 상세`|
 |:----:|:----:|
-| <img src="https://github.com/APP-iOS2/final-yedi/assets/134610315/5f878020-7507-4fac-91f6-41cf251fe327" width="150"> |<img src="https://github.com/APP-iOS2/final-yedi/assets/134610315/2885ab99-0de3-4459-9391-8fa3b65e415f" width="150"> |
+| <img src="https://github.com/APP-iOS2/final-yedi/assets/134610315/7260f017-ce82-440f-9615-6552dd0ebc2e" width="150"> |<img src="https://github.com/APP-iOS2/final-yedi/assets/134610315/bc50ecd-4452-4479-948b-ae40da07440d" width="150"> |
 
 ### 검색
 |`디자이너 검색`|`디자이너 정보 보기`|
